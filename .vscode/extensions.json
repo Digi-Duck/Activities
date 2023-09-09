@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    "naumovs.color-highlight",
+    "SirTori.indenticator",
+    "xabikos.JavaScriptSnippets",
+    "ryannaddy.laravel-artisan",
+    "onecentlin.laravel-blade",
+    "amiralizadeh9480.laravel-extra-intellisense",
+    "codingyu.laravel-goto-view",
+    "onecentlin.laravel5-snippets",
+    "xdebug.php-debug",
+    "bmewburn.vscode-intelephense-client",
+    "MehediDracula.php-namespace-resolver",
+    "bradlc.vscode-tailwindcss",
+    "alexdima.copy-relative-path",
+    "nhedger.inertia",
+    "SimonSiefke.svg-preview",
+    "hollowtree.vue-snippets",
+    "Vue.volar"
+  ]
+}
