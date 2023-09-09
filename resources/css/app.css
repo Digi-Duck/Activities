@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 所見即所得呈現區塊樣式 */
+.wysiwyg-customize-block img {
+  display: inline-block;
+  height: revert-layer;
+}
+
+.wysiwyg-customize-block iframe {
+  display: inline-block;
+}
+
+.wysiwyg-customize-block ul {
+  list-style: disc;
+  padding-left: 40px;
+}
+
+.wysiwyg-customize-block ol {
+  list-style: decimal;
+  padding-left: 40px;
+}
+
+@media (max-width: 640px) {
+  .wysiwyg-customize-block img {
+    height: auto;
+  }
+
+  .wysiwyg-customize-block iframe {
+    width: 100%;
+  }
+}
