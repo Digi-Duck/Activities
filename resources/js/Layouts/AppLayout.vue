@@ -22,7 +22,7 @@ export default {
 
 <template>
   <section id="app-layout">
-    <header id="header">
+    <header id="header" class="fixed">
       <button type="button" id="logo">Logo</button>
       <div id="header-top">
         <button type="button" class="btn">會員中心</button>
@@ -77,7 +77,7 @@ export default {
 }
 
 #main {
-  @apply h-[calc(100dvh-42px)] bg-[#FAFAFA];
+  @apply bg-[#FAFAFA];
 }
 
 #header {
