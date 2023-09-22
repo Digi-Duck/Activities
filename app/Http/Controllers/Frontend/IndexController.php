@@ -14,4 +14,14 @@ class IndexController extends Controller
 
         return Inertia::render('Frontend/Index', ['response' => rtFormat($testData)]);
     }
+
+    public function activity_details()
+    {
+        return Inertia::render('Frontend/ActivityDetail');
+    }
+
+    public function create_activity()
+    {
+        return Inertia::render('Frontend/Presenter/CreateActivity');
+    }
 }

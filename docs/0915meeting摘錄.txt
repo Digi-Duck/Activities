@@ -1,0 +1,44 @@
+0915meeting摘錄
+
+role的名稱也要加英文
+然後也要型別
+
+Role不用是複數
+
+Status狀態數字要反過來 1/0
+
+管理方也要status
+
+擴充性較好
+
+每一張表都要一個uid (帳號管理漏掉了
+
+Roles的個別也要加入user_id
+
+活動的presenter_id漏刪掉
+
+講師的活動的activity_id要改成activity_details
+
+講師的活動資訊只需要存在一個講師帳號就好
+
+不需要額外開一個table
+
+在用戶行為存一個name
+
+Type_id要改成1:講師/2:學員之類的
+
+活動照片的名稱要改
+
+活動報名的status可以有default(1)已報名
+
+QRcode的activity_id要連到活動報名的uid
+
+一個活動報名只有一個活動ＱＲＣＯＤＥ 一對一
+
+已收藏活動跟已報名活動的資料不需要繁體字那一條
+
+收藏的活動可以改成type顯示1已收藏2已報名
+
+雙複數
+
+QRcode的括號改成小寫
