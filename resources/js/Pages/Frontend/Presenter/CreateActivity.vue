@@ -1,3 +1,5 @@
+<!-- 講師建立活動頁面 -->
+
 <script>
 import activity_address from '/images/icon/activity_address.svg';
 import activity_end_time from '/images/icon/activity_end_time.svg';
@@ -7,34 +9,25 @@ import highest_number_of_people from '/images/icon/highest_number_of_people.svg'
 import lowest_number_of_people from '/images/icon/lowest_number_of_people.svg';
 import register_time from '/images/icon/register_time.svg';
 import exclamation_triangle from '/images/icon/exclamation_triangle.svg';
-import { Swiper, SwiperSlide } from 'swiper/vue';
+// import { Swiper, SwiperSlide } from 'swiper/vue';
 
 // Import Swiper styles
-import 'swiper/css';
+// import 'swiper/css';
 
-import 'swiper/css/navigation';
+// import 'swiper/css/navigation';
 
 // import './style.css';
 
 // import required modules
-import { Navigation } from 'swiper/modules';
+// import { Navigation } from 'swiper/modules';
 
 export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
   props: {
     response: {
       type: Object,
       required: false,
       default: () => ({}),
     },
-  },
-  setup() {
-    return {
-      modules: [Navigation],
-    };
   },
   data() {
     return {
@@ -57,7 +50,7 @@ export default {
 </script>
 
 <template>
-  <Swiper :navigation="true" :modules="modules" class="mySwiper">
+  <Swiper class="mySwiper">
     <SwiperSlide>Slide 1</SwiperSlide>
     <SwiperSlide>Slide 2</SwiperSlide>
     <SwiperSlide>Slide 3</SwiperSlide>
@@ -71,7 +64,7 @@ export default {
 
   <section id="test" class="flex flex-col">
     <div id="activity-photo-swiper" class="flex justify-center gap-5 mb-5">
-      <div class="swiper w-full h-[900px] bg-gray-600 flex flex-col relative items-center">
+      <div class="banner w-full h-[900px] bg-gray-600 flex flex-col relative items-center">
         <div id="classificaiton" class="absolute top-[89px] left-0 flex">
           <div class="w-[175px] h-[41px] bg-white after:w-[20px] flex justify-center items-center text-xl border-e-2">活動分類</div>
           <div id="triangle" class="bg-transparent">

@@ -1,3 +1,5 @@
+<!-- 活動詳細頁面 -->
+
 <script>
 export default {
   props: {

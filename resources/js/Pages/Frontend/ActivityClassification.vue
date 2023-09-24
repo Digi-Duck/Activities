@@ -1,3 +1,5 @@
+<!-- 活動分類頁面 -->
+
 <script>
 export default {
   props: {
