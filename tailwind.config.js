@@ -13,7 +13,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Microsoft JhengHei'],
+        sans: ['Times New Roman','Microsoft JhengHei'],
       },
     },
   },
