@@ -11,8 +11,6 @@ Route::get('/create_activity', [IndexController::class, 'create_activity'])->nam
 
 Route::get('/activity_classification', [IndexController::class, 'activity_classification'])->name('activity_classification');
 
-Route::get('/edit_activity', [IndexController::class, 'edit_activity'])->name('edit_activity');
-
-Route::get('/swiper_test', [IndexController::class, 'swiper_test'])->name('swiper_test');
+// Route::get('/swiper_test', [IndexController::class, 'swiper_test'])->name('swiper_test');
 
 Route::get('/test', [IndexController::class, 'test'])->name('test');

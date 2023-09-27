@@ -24,20 +24,16 @@ class IndexController extends Controller
     {
         return Inertia::render('Frontend/Presenter/CreateActivity');
     }
-    public function edit_activity()
-    {
-        return Inertia::render('Frontend/Presenter/EditActivity');
-    }
     
     public function activity_classification()
     {
         return Inertia::render('Frontend/ActivityClassification');
     }
     
-    public function swiper_test()
-    {
-        return Inertia::render('Frontend/SwiperTest');
-    }
+    // public function swiper_test()
+    // {
+    //     return Inertia::render('Frontend/SwiperTest');
+    // }
 
     public function test()
     {

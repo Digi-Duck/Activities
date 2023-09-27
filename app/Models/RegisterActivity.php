@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class RegisterActivity
- * 
+ *
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $student_email
  * @property string $student_additional_remark
  * @property int $registration_status
- * 
+ *
  * @property ActivityDetail $activityDetail
  * @property UserRoleStudent $userRoleStudent
  *

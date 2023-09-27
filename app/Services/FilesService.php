@@ -42,7 +42,7 @@ class FilesService
         $middleName = $uid ? "-{$uid}-" : '-';
 
         // 檔案名稱會被重新命名
-        $data->path = '/upload/' . $dir . '/' . time() . $middleName . $data->name;
+        $data->path = '/upload/' . $dir . '/' . time() . rand(10, 99) . $middleName . $data->name;
         // 移動到指定路徑
         move_uploaded_file($file, public_path() . $data->path);
         // 回傳 資料庫儲存用的路徑格式

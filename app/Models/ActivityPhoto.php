@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class ActivityPhoto
- * 
+ *
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int $activity_id
  * @property string $activity_img_path
- * 
+ *
  * @property ActivityDetail $activityDetail
  *
  * @package App\Models
