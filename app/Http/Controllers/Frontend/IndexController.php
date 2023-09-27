@@ -15,17 +15,17 @@ class IndexController extends Controller
         return Inertia::render('Frontend/Index', ['response' => rtFormat($testData)]);
     }
 
-    public function activity_details()
+    public function activityDetails()
     {
         return Inertia::render('Frontend/ActivityDetail');
     }
 
-    public function create_activity()
+    public function createActivity()
     {
         return Inertia::render('Frontend/Presenter/CreateActivity');
     }
     
-    public function activity_classification()
+    public function activityClassification()
     {
         return Inertia::render('Frontend/ActivityClassification');
     }
