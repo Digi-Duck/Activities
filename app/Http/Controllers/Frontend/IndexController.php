@@ -24,6 +24,10 @@ class IndexController extends Controller
     {
         return Inertia::render('Frontend/Presenter/CreateActivity');
     }
+    public function edit_activity()
+    {
+        return Inertia::render('Frontend/Presenter/EditActivity');
+    }
     
     public function activity_classification()
     {

@@ -1,10 +1,7 @@
-<!-- 講師修改活動的頁面 -->
+<!-- 講師掃描QRcode頁面 -->
 
 <script>
-import CountDown from '@/Components/Public/CountDown.vue';
-
 export default {
-  components: { CountDown },
   props: {
     response: {
       type: Object,
@@ -17,31 +14,38 @@ export default {
       title: 'Hello World !',
     };
   },
+  created() {
+  },
 };
 </script>
 
 <template>
-  <section id="create-activity" class="relative flex flex-col">
-    <!-- 建立活動資訊填寫 -->
+  <section id="presenter-scanner" class="flex flex-col items-center gap-5">
     <CountDown class="absolute mt-[5%] left-[75%]"></CountDown>
-    <ActivityDetailSwiper>
-    </ActivityDetailSwiper>
-    <!-- 編輯工具列；所見即所得區 -->
-    <Editor></Editor>
-    <div class="flex w-full justify-end gap-[45px] px-20 py-5">
-      <div class="pe-[35%] flex gap-5">
-        <button type="button" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消修改</button>
-        <button type="button" class="px-[30px] py-[15px] bg-[#095269] rounded-[5px] flex justify-center items-center text-white">確認修改</button>
+    <ActivityDetailSwiper></ActivityDetailSwiper>
+    <!-- 掃描區域 -->
+    <div class="w-full h-[997px] p-5 bg-[#194e694e] flex flex-col items-center gap-5">
+      <!-- 顯示報到狀況人數 -->
+      <div class="flex gap-[100px] text-[35px]">
+        <div class="flex items-center gap-3">
+          <img src="" class="w-[50px] h-[50px] bg-[yellow]" alt="">
+          總報名人數</div>
+        <div class="flex items-center gap-3">
+          <img src="" class="w-[50px] h-[50px] bg-[yellow]" alt="">
+          已報到人數</div>
       </div>
-      <button type="button" class="px-[30px] py-[15px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white">刪除活動</button>
+      <!-- 這是掃描區域 -->
+      <div class="w-full h-[800px] bg-black"></div>
+      <button type="button" class="w-[299px] h-[54px] bg-[#1C8AAD] rounded-[5px] text-white flex justify-center items-center">掃描報到</button>
     </div>
+    <!-- 活動的參加名單 -->
+    <ActivityDetailTable></ActivityDetailTable>
   </section>
 </template>
 
 <style lang="scss" scoped>
-#create-activity {
-    @apply w-full h-full overflow-y-auto overflow-x-hidden;
-  }
+#presenter-scanner {
+  @apply w-full h-full overflow-y-auto;
 
   .title {
     @apply text-[6.25rem] text-center;
@@ -50,4 +54,5 @@ export default {
   .btn-base {
     @apply p-1.5 border-2 rounded-md border-green-500 cursor-pointer;
   }
+}
 </style>
