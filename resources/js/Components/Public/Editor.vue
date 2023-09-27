@@ -1,4 +1,4 @@
-<!-- 所見及所得文字編輯器 -->
+<!-- 所見即所得文字編輯器 -->
 
 <script setup>
 import { router } from '@inertiajs/vue3';
@@ -6,22 +6,22 @@ import editorCss from '/css/editor.css?inline';
 import editor from '@tinymce/tinymce-vue';
 
 const props = defineProps({
-  editorData: {
-    type: String,
-    required: false,
-    default: '',
-  },
   editorOption: {
     type: Object,
     required: false,
     default: () => {
       return {
-        image: false,
-        media: false,
+        image: true,
+        media: true,
         resize: false,
         code: false,
       };
     },
+  },
+  editorData: {
+    type: String,
+    required: false,
+    default: '',
   },
   editorId: {
     type: String,

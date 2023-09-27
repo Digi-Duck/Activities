@@ -20,25 +20,45 @@ export default {
 </script>
 
 <template>
-  <section id="activity-classification" class="flex flex-col px-[182px]">
-    <div class="w-full h-[164px] bg-black flex flex-col">
-      <div class="bg-white text-5xl text-black">當前類型</div>
-      <div class="w-full">
-        <button type="button" class="btn">熱門</button>
-        <button type="button" class="btn">美術</button>
-        <button type="button" class="btn">科技</button>
-        <div>Search</div>
+  <section class="flex flex-col px-[250px] pt-[75px]">
+    <!-- 功能按鈕 -->
+    <div class="w-full pb-3 flex flex-col">
+      <div class="pb-[10px] bg-white border-b-4 text-5xl text-black font-bold">當前類型</div>
+      <div class="w-full pt-3 px-3 flex justify-between">
+        <div class="flex gap-3">
+          <button type="button" class="w-[112px] h-[44px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold btn">熱門</button>
+          <button type="button" class="w-[112px] h-[44px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold btn">美術</button>
+          <button type="button" class="w-[112px] h-[44px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold btn">科技</button>
+        </div>
+        <div class="flex items-center">
+          <input type="search" name="" id="" placeholder="Search">
+          <img src="" alt="我是放大鏡">
+        </div>
       </div>
     </div>
-    <div class="container flex flex-col items-center">
-      <div class="w-[80%] h-[345px] bg-pink-500 flex flex-row">
+    <!-- 主要卡片區 -->
+    <!-- 正轉卡片 -->
+    <div class="pt-3 pb-3 border-b-8 flex flex-col items-center">
+      <div class="w-full h-[345px] bg-pink-500 flex flex-row">
         <img src="" alt="" class="w-[200%] bg-slate-500">
-        <div class="w-full h-[345px] bg-yellow-500 p-16 flex flex-col justify-between border-b-4">
+        <div class="w-full h-[345px] bg-yellow-500 p-16 flex flex-col justify-between">
           <div class="w-full text-white text-[24px]">活動名稱</div>
           <div class="w-full text-black text-[14px]">活動截止時間</div>
           <div class="w-full text-white text-[14px]">活動info</div>
           <button type="button" class="text-black bg-[#a9bcc64f]">活動詳情</button>
         </div>
+      </div>
+    </div>
+    <!-- 逆轉卡片 -->
+    <div class="pt-3 pb-3 border-b-8 flex flex-col items-center">
+      <div class="w-full h-[345px] bg-pink-500 flex flex-row">
+        <div class="w-full h-[345px] bg-yellow-500 p-16 flex flex-col justify-between">
+          <div class="w-full text-white text-[24px]">活動名稱</div>
+          <div class="w-full text-black text-[14px]">活動截止時間</div>
+          <div class="w-full text-white text-[14px]">活動info</div>
+          <button type="button" class="text-black bg-[#a9bcc64f]">活動詳情</button>
+        </div>
+        <img src="" alt="" class="w-[200%] bg-slate-500">
       </div>
     </div>
   </section>

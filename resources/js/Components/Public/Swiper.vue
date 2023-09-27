@@ -15,12 +15,12 @@ const props = defineProps({
   slidesPerView: {
     type: Number,
     required: false,
-    default: 3,
+    default: 1,
   },
   spaceBetween: {
     type: Number,
     required: false,
-    default: 50,
+    default: 0,
   },
   autoplay: {
     type: Boolean,
@@ -56,7 +56,7 @@ const props = defineProps({
     default: '',
   },
 });
-
+console.log(props);
 const modules = [Navigation, Pagination, A11y, Autoplay];
 const onSwiper = (swiper) => {
   nextTick(() => {
@@ -70,6 +70,7 @@ const onSwiper = (swiper) => {
     swiper.navigation.init();
     swiper.pagination.init();
     swiper.pagination.render();
+    console.log(swiper);
   });
 };
 </script>
@@ -81,7 +82,7 @@ const onSwiper = (swiper) => {
     :slides-per-view="props.slidesPerView"
     :space-between="props.spaceBetween"
     :autoplay="props.autoplay && {
-      delay: 5000,
+      delay: 1000,
       disableOnInteraction: false,
     }"
     :pagination="{

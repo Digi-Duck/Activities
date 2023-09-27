@@ -29,4 +29,14 @@ class IndexController extends Controller
     {
         return Inertia::render('Frontend/ActivityClassification');
     }
+    
+    public function swiper_test()
+    {
+        return Inertia::render('Frontend/SwiperTest');
+    }
+
+    public function test()
+    {
+        return Inertia::render('Frontend/Test');
+    }
 }
