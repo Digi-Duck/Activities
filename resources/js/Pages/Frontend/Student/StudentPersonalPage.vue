@@ -1,4 +1,4 @@
-<!-- 學員活動報名頁面 -->
+<!-- 學員會員介面 -->
 
 <script>
 export default {
@@ -20,18 +20,18 @@ export default {
 </script>
 
 <template>
-  <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
-    <CountDown class="absolute mt-[5%] left-[75%]"></CountDown>
-    <ActivityDetailSwiper></ActivityDetailSwiper>
-    <!-- 這裡是活動詳情 -->
-    <div class="w-full h-[811px] bg-[pink]"></div>
-    <!-- 學員活動資訊填寫區 -->
-    <ActivityEnroll></ActivityEnroll>
+  <section id="presenter-personal-page" class="flex flex-col items-center">
+    <!-- 這個是已報名還沒去的活動 -->
+    <ActivitySwiper></ActivitySwiper>
+    <!-- 這個是已收藏的活動 -->
+    <ActivitySwiper></ActivitySwiper>
+    <ActivityDetailTable></ActivityDetailTable>
+    <ActivitySwiper></ActivitySwiper>
   </section>
 </template>
 
 <style lang="scss" scoped>
-#presenter-finished-activity {
+#presenter-personal-page {
   @apply w-full h-full overflow-y-auto;
 
   .title {

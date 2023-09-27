@@ -117,7 +117,7 @@ export default {
         </div>
       </div>
       <Swiper :slide-data="[1, 2]" class="absolute opacity-60" :btn-prev="prevButton" :btn-next="nextButton">
-        <SwiperSlide>
+        <SwiperSlide class="m-auto">
           <img src="https://picsum.photos/1980/901" alt="產業類別圖片">
         </SwiperSlide>
       </Swiper>
