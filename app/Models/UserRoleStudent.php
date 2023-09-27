@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class UserRoleStudent
- * 
+ *
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $user_name
  * @property string|null $img_path
  * @property string $phone_number
- * 
+ *
  * @property User $user
  * @property Collection|QrcodeDetail[] $qrcodeDetails
  * @property Collection|RegisterActivity[] $registerActivities

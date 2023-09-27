@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class QrcodeDetail
- * 
+ *
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $qrcode_number
  * @property string $qrcode_path
  * @property bool $qrcode_status
- * 
+ *
  * @property ActivityDetail $activityDetail
  * @property UserRoleStudent $userRoleStudent
  *
@@ -34,7 +34,7 @@ class QrcodeDetail extends Model
     protected $casts = [
         'activity_id' => 'int',
         'student_id' => 'int',
-        'qrcode_status' => 'bool'
+        'qrcode_status' => 'int'
     ];
 
     protected $fillable = [
