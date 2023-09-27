@@ -1,13 +1,6 @@
+<!-- 講師創建活動的頁面 -->
+
 <script>
-import activity_address from '/images/icon/activity_address.svg';
-import activity_end_time from '/images/icon/activity_end_time.svg';
-import activity_presenter from '/images/icon/activity_presenter.svg';
-import activity_start_time from '/images/icon/activity_start_time.svg';
-import highest_number_of_people from '/images/icon/highest_number_of_people.svg';
-import lowest_number_of_people from '/images/icon/lowest_number_of_people.svg';
-import register_time from '/images/icon/register_time.svg';
-import exclamation_triangle from '/images/icon/exclamation_triangle.svg';
-import swiper_test from '/images/icon/swiper_test.jpg.svg';
 
 export default {
   props: {
@@ -20,29 +13,13 @@ export default {
   data() {
     return {
       title: 'Hello World !',
-      images: {
-        activity_address,
-        activity_end_time,
-        activity_presenter,
-        activity_start_time,
-        highest_number_of_people,
-        lowest_number_of_people,
-        register_time,
-        exclamation_triangle,
-        swiper_test,
-      },
     };
-  },
-  methods: {
-    test(event) {
-      console.log(event);
-    },
   },
 };
 </script>
 
 <template>
-  <section class="flex flex-col">
+  <section id="create-activity" class="flex flex-col">
     <!-- 建立活動資訊填寫 -->
     <ActivityDetailSwiper></ActivityDetailSwiper>
     <!-- <div class="relative mt-5 flex">
@@ -118,25 +95,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-#swiper-test {
-  @apply w-full h-full overflow-y-auto;
-  #triangle {
-    #triangle-top {
-      border-width: 10px;
-      border-style: solid;
-      border-right-color: transparent;
-      border-top-color: transparent;
-      border-bottom-color: white;
-      border-left-color: white;
-    }
-    #triangle-bottom {
-      border-width: 10px;
-      border-style: solid;
-      border-right-color: transparent;
-      border-top-color: white;
-      border-bottom-color: transparent;
-      border-left-color: white;
-    }
+#create-activity {
+    @apply w-full h-full overflow-y-auto;
   }
 
   .title {
@@ -146,5 +106,4 @@ export default {
   .btn-base {
     @apply p-1.5 border-2 rounded-md border-green-500 cursor-pointer;
   }
-}
 </style>

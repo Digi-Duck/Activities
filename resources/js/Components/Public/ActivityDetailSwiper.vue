@@ -53,7 +53,7 @@ export default {
 </script>
 
 <template>
-  <section id="activity-detail-swiper" class="flex flex-col">
+  <section id="activity-detail-swiper" class="relative flex flex-col">
     <!-- 建立活動資訊填寫 -->
     <div class="relative mt-5 flex flex-col">
       <div class="relative w-full z-10">
@@ -65,14 +65,14 @@ export default {
         </div>
         <div class="absolute left-[265px] top-[131px] w-[288px] h-[219px] flex flex-col justify-between items-start">
           <div class="text-[72px] font-bold">活動名稱</div>
-          <div class="text-[24px]">活動Slogan</div>
+          <div class="w-[100%] bg-[#ffffff9b] text-[24px]">活動Slogan</div>
           <button type="button" class="w-[136px] h-[56px] bg-[#FFFFFF] text-[18px] font-semibold">更改圖片</button>
         </div>
         <div class="absolute left-[50px] top-[415px] w-[95%] flex justify-between">
-          <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] rounded-[50px] bg-white" type="button">
+          <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] z-50 rounded-[50px] bg-white" type="button">
             <img :src="images.arrow_left" alt="活動照片海報向左移動按鈕">
           </button>
-          <button ref="btnNext" id="nextBtn" class="h-[50px] w-[50px] rounded-[50px] bg-white" type="button">
+          <button ref="btnNext" id="nextBtn" class="h-[50px] w-[50px] z-50 rounded-[50px] bg-white" type="button">
             <img :src="images.arrow_right" alt="活動照片海報向右移動按鈕">
           </button>
         </div>
