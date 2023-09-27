@@ -44,7 +44,8 @@ export default {
 <template>
   <section class="flex flex-col">
     <!-- 建立活動資訊填寫 -->
-    <div class="relative mt-5 flex">
+    <ActivityDetailSwiper></ActivityDetailSwiper>
+    <!-- <div class="relative mt-5 flex">
       <div class="absolute w-full z-10">
         <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">活動分類
           <div id="triangle" class="absolute left-[175px] -top-[0px] w-[10px] h-[10px]">
@@ -105,9 +106,10 @@ export default {
           <img src="https://picsum.photos/1980/901" alt="產業類別圖片">
         </div>
       </swiper>
-    </div>
+    </div> -->
     <!-- 編輯工具列；所見即所得區 -->
-    <editor v-model="editorValue" :init="editorInit" class="min-h-[500px]" @update-content="test" />
+    <Editor></Editor>
+    <!-- <editor v-model="editorValue" :init="editorInit" class="min-h-[500px]" @update-content="test" /> -->
     <div class="flex w-full justify-center gap-[45px] py-5">
       <button type="button" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消開課</button>
       <button type="button" class="px-[30px] py-[15px] bg-[#095269] rounded-[5px] flex justify-center items-center text-white">確認開課</button>

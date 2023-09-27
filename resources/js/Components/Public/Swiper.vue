@@ -56,7 +56,7 @@ const props = defineProps({
     default: '',
   },
 });
-console.log(props);
+// console.log(props);
 const modules = [Navigation, Pagination, A11y, Autoplay];
 const onSwiper = (swiper) => {
   nextTick(() => {
@@ -70,7 +70,6 @@ const onSwiper = (swiper) => {
     swiper.navigation.init();
     swiper.pagination.init();
     swiper.pagination.render();
-    console.log(swiper);
   });
 };
 </script>

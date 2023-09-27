@@ -107,7 +107,9 @@ setToolbar();
 </script>
 
 <template>
-  <editor v-model="editorValue" :init="editorInit" />
+  <div class="h-[500px]">
+    <editor v-model="editorValue" :init="editorInit" />
+  </div>
 </template>
 
 <style lang="scss">

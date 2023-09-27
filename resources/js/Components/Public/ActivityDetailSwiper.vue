@@ -9,7 +9,8 @@ import highest_number_of_people from '/images/icon/highest_number_of_people.svg'
 import lowest_number_of_people from '/images/icon/lowest_number_of_people.svg';
 import register_time from '/images/icon/register_time.svg';
 import exclamation_triangle from '/images/icon/exclamation_triangle.svg';
-import swiper_test from '/images/icon/swiper_test.jpg.svg';
+import arrow_left from '/images/icon/icon-arrow-left.svg';
+import arrow_right from '/images/icon/icon-arrow-right.svg';
 
 export default {
   props: {
@@ -22,6 +23,8 @@ export default {
   data() {
     return {
       title: 'Hello World !',
+      prevButton: null, // 在这里定义 prevButton 和 nextButton
+      nextButton: null,
       images: {
         activity_address,
         activity_end_time,
@@ -31,23 +34,29 @@ export default {
         lowest_number_of_people,
         register_time,
         exclamation_triangle,
-        swiper_test,
+        arrow_left,
+        arrow_right,
       },
     };
   },
-  methods: {
-    test(event) {
-      console.log(event);
-    },
+  mounted() {
+    // 通过类名或其他方式获取按钮元素并赋值给 prevButton 和 nextButton
+    this.prevButton = this.$refs.btnPrev;
+    this.nextButton = this.$refs.btnNext;
   },
+  // methods: {
+  //   test(event) {
+  //     console.log(event);
+  //   },
+  // },
 };
 </script>
 
 <template>
-  <section class="flex flex-col">
+  <section id="activity-detail-swiper" class="flex flex-col">
     <!-- 建立活動資訊填寫 -->
-    <div class="relative mt-5 flex">
-      <div class="absolute w-full z-10">
+    <div class="relative mt-5 flex flex-col">
+      <div class="relative w-full z-10">
         <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">活動分類
           <div id="triangle" class="absolute left-[175px] -top-[0px] w-[10px] h-[10px]">
             <div id="triangle-top"></div>
@@ -60,9 +69,14 @@ export default {
           <button type="button" class="w-[136px] h-[56px] bg-[#FFFFFF] text-[18px] font-semibold">更改圖片</button>
         </div>
         <div class="absolute left-[50px] top-[415px] w-[95%] flex justify-between">
-          <button ref="btnPrev" class="h-[50px] w-[50px] rounded-[50px] bg-red-500" type="button">前面</button>
-          <button ref="btnNext" class="h-[50px] w-[50px] rounded-[50px] bg-red-500" type="button">後面</button>
+          <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] rounded-[50px] bg-white" type="button">
+            <img :src="images.arrow_left" alt="活動照片海報向左移動按鈕">
+          </button>
+          <button ref="btnNext" id="nextBtn" class="h-[50px] w-[50px] rounded-[50px] bg-white" type="button">
+            <img :src="images.arrow_right" alt="活動照片海報向右移動按鈕">
+          </button>
         </div>
+        <!-- 活動資訊框 -->
         <div class="absolute left-[100px] top-[495px] w-[90%] h-[289px] pt-[10px] px-[60px] bg-[#f2f2f2b2] flex flex-wrap gap-5">
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
             <img :src="images.lowest_number_of_people" alt="開課門檻" class="w-[10%] pe-1">
@@ -102,17 +116,17 @@ export default {
           </div>
         </div>
       </div>
-      <swiper :slide-data="[1, 2]" class="absolute opacity-20" :btn-next="$refs.btnNext">
-        <div>
+      <Swiper :slide-data="[1, 2]" class="absolute opacity-60" :btn-prev="prevButton" :btn-next="nextButton">
+        <SwiperSlide>
           <img src="https://picsum.photos/1980/901" alt="產業類別圖片">
-        </div>
-      </swiper>
+        </SwiperSlide>
+      </Swiper>
     </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
-#swiper-test {
+#activity-detail-swiper {
   @apply w-full h-full overflow-y-auto;
   #triangle {
     #triangle-top {
