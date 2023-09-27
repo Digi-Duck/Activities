@@ -1,9 +1,9 @@
 <!-- 各別活動輪播Swiper -->
 <script>
 import heart from '/images/icon/icon-heart.svg';
-import filled_heart from '/images/icon/icon-filled-heart.svg';
-import arrow_left from '/images/icon/icon-arrow-left.svg';
-import arrow_right from '/images/icon/icon-arrow-right.svg';
+import filledHeart from '/images/icon/icon-filled-heart.svg';
+import arrowLeft from '/images/icon/icon-arrow-left.svg';
+import arrowRight from '/images/icon/icon-arrow-right.svg';
 
 export default {
   props: {
@@ -20,9 +20,9 @@ export default {
       nextButton: null,
       images: {
         heart,
-        filled_heart,
-        arrow_left,
-        arrow_right,
+        filledHeart,
+        arrowLeft,
+        arrowRight,
       },
     };
   },
@@ -41,10 +41,10 @@ export default {
     </div>
     <div class="absolute top-[50%] z-10 w-[97.5%] flex justify-between">
       <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] rounded-[50px] bg-white" type="button">
-        <img :src="images.arrow_left" alt="活動照片海報向左移動按鈕">
+        <img :src="images.arrowLeft" alt="活動照片海報向左移動按鈕">
       </button>
       <button ref="btnNext" id="nextBtn" class="h-[50px] w-[50px] rounded-[50px] bg-white" type="button">
-        <img :src="images.arrow_right" alt="活動照片海報向右移動按鈕">
+        <img :src="images.arrowRight" alt="活動照片海報向右移動按鈕">
       </button>
     </div>
     <Swiper :slide-data="[1, 2, 3, 4, 5, 6, 7, 8]" slides-per-view="5" :btn-prev="prevButton" :btn-next="nextButton">

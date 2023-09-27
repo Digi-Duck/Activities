@@ -1,16 +1,16 @@
 <!-- 活動詳細資訊Swiper的頁面 -->
 
 <script>
-import activity_address from '/images/icon/activity_address.svg';
-import activity_end_time from '/images/icon/activity_end_time.svg';
-import activity_presenter from '/images/icon/activity_presenter.svg';
-import activity_start_time from '/images/icon/activity_start_time.svg';
-import highest_number_of_people from '/images/icon/highest_number_of_people.svg';
-import lowest_number_of_people from '/images/icon/lowest_number_of_people.svg';
-import register_time from '/images/icon/register_time.svg';
-import exclamation_triangle from '/images/icon/exclamation_triangle.svg';
-import arrow_left from '/images/icon/icon-arrow-left.svg';
-import arrow_right from '/images/icon/icon-arrow-right.svg';
+import activityAddress from '/images/icon/activity_address.svg';
+import activityEndTime from '/images/icon/activity_end_time.svg';
+import activityPresenter from '/images/icon/activity_presenter.svg';
+import activityStartTime from '/images/icon/activity_start_time.svg';
+import highestNumberOfPeople from '/images/icon/highest_number_of_people.svg';
+import lowestNumberOfPeople from '/images/icon/lowest_number_of_people.svg';
+import registerTime from '/images/icon/register_time.svg';
+import exclamationTriangle from '/images/icon/exclamation_triangle.svg';
+import arrowLeft from '/images/icon/icon-arrow-left.svg';
+import arrowRight from '/images/icon/icon-arrow-right.svg';
 
 export default {
   props: {
@@ -26,16 +26,16 @@ export default {
       prevButton: null, // 在这里定义 prevButton 和 nextButton
       nextButton: null,
       images: {
-        activity_address,
-        activity_end_time,
-        activity_presenter,
-        activity_start_time,
-        highest_number_of_people,
-        lowest_number_of_people,
-        register_time,
-        exclamation_triangle,
-        arrow_left,
-        arrow_right,
+        activityAddress,
+        activityEndTime,
+        activityPresenter,
+        activityStartTime,
+        highestNumberOfPeople,
+        lowestNumberOfPeople,
+        registerTime,
+        exclamationTriangle,
+        arrowLeft,
+        arrowRight,
       },
     };
   },
@@ -70,48 +70,48 @@ export default {
         </div>
         <div class="absolute left-[50px] top-[415px] w-[95%] flex justify-between">
           <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] z-50 rounded-[50px] bg-white" type="button">
-            <img :src="images.arrow_left" alt="活動照片海報向左移動按鈕">
+            <img :src="images.arrowLeft" alt="活動照片海報向左移動按鈕">
           </button>
           <button ref="btnNext" id="nextBtn" class="h-[50px] w-[50px] z-50 rounded-[50px] bg-white" type="button">
-            <img :src="images.arrow_right" alt="活動照片海報向右移動按鈕">
+            <img :src="images.arrowRight" alt="活動照片海報向右移動按鈕">
           </button>
         </div>
         <!-- 活動資訊框 -->
         <div class="absolute left-[100px] top-[495px] w-[90%] h-[289px] pt-[10px] px-[60px] bg-[#f2f2f2b2] flex flex-wrap gap-5">
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.lowest_number_of_people" alt="開課門檻" class="w-[10%] pe-1">
+            <img :src="images.lowestNumberOfPeople" alt="開課門檻" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入開課門檻">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.highest_number_of_people" alt="人數上限" class="w-[10%] pe-1">
+            <img :src="images.highestNumberOfPeople" alt="人數上限" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入人數上限">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.register_time" alt="報名開始時間" class="w-[10%] pe-1">
+            <img :src="images.registerTime" alt="報名開始時間" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入報名開始時間">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.register_time" alt="報名截止時間" class="w-[10%] pe-1">
+            <img :src="images.registerTime" alt="報名截止時間" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入報名截止時間">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activity_presenter" alt="主講者" class="w-[10%] pe-1">
+            <img :src="images.activityPresenter" alt="主講者" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入主講者">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activity_start_time" alt="活動開始時間" class="w-[10%] pe-1">
+            <img :src="images.activityStartTime" alt="活動開始時間" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請點選活動開始時間">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activity_end_time" alt="活動結束時間" class="w-[10%] pe-1">
+            <img :src="images.activityEndTime" alt="活動結束時間" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請點選活動結束時間">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activity_address" alt="活動地點" class="w-[10%] pe-1">
+            <img :src="images.activityAddress" alt="活動地點" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入活動地點">
           </div>
           <div class="w-full h-[56px] flex items-center bg-[#ffffff5a] rounded-[14px] px-2">
-            <img :src="images.exclamation_triangle" alt="參加須知" class="w-[40px] h-[40px]">
+            <img :src="images.exclamationTriangle" alt="參加須知" class="w-[40px] h-[40px]">
             <input type="text" name="" id="" placeholder="請輸入參加須知" class="w-full">
           </div>
         </div>
