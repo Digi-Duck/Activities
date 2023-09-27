@@ -40,7 +40,7 @@ export default {
     <!-- 正轉卡片 -->
     <div class="pt-3 pb-3 border-b-8 flex flex-col items-center">
       <div class="w-full h-[345px] bg-pink-500 flex flex-row">
-        <img src="" alt="" class="w-[200%] bg-slate-500">
+        <img src="" alt="活動封面圖" class="w-[200%] bg-slate-500">
         <div class="w-full h-[345px] bg-yellow-500 p-16 flex flex-col justify-between">
           <div class="w-full text-white text-[24px]">活動名稱</div>
           <div class="w-full text-black text-[14px]">活動截止時間</div>
@@ -58,7 +58,7 @@ export default {
           <div class="w-full text-white text-[14px]">活動info</div>
           <button type="button" class="text-black bg-[#a9bcc64f]">活動詳情</button>
         </div>
-        <img src="" alt="" class="w-[200%] bg-slate-500">
+        <img src="" alt="活動封面圖" class="w-[200%] bg-slate-500">
       </div>
     </div>
   </section>

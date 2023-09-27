@@ -36,10 +36,10 @@ export default {
               <div class="text-[24px]">網站流量</div>
             </div>
             <!-- 資料icon -->
-            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="">
+            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="數據圖標">
           </div>
           <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
-            <img src="" class="w-[33px] h-[33px]" alt="">
+            <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
         <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
@@ -49,10 +49,10 @@ export default {
               <div class="text-[24px]">網站流量</div>
             </div>
             <!-- 資料icon -->
-            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="">
+            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="數據圖標">
           </div>
           <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
-            <img src="" class="w-[33px] h-[33px]" alt="">
+            <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
         <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
@@ -62,10 +62,10 @@ export default {
               <div class="text-[24px]">網站流量</div>
             </div>
             <!-- 資料icon -->
-            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="">
+            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="數據圖標">
           </div>
           <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
-            <img src="" class="w-[33px] h-[33px]" alt="">
+            <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
         <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
@@ -75,10 +75,10 @@ export default {
               <div class="text-[24px]">網站流量</div>
             </div>
             <!-- 資料icon -->
-            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="">
+            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="數據圖標">
           </div>
           <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
-            <img src="" class="w-[33px] h-[33px]" alt="">
+            <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@ export default {
           <!-- 最新消息內容 -->
           <div class="w-full h-[112px] p-5 bg-[#4D7F95] text-[16px] flex flex-row justify-between items-center">
             <!-- 會員頭像 -->
-            <img src="" class="w-[66px] h-[66px] rounded-full bg-white" alt="">
+            <img src="" class="w-[66px] h-[66px] rounded-full bg-white" alt="數據圖標">
             <!-- 會員資訊 -->
             <div class="w-[45%] ps-10 flex-initial flex flex-col">
               <div>會員姓名</div>

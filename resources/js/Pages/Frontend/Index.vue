@@ -19,7 +19,7 @@ export default {
 </script>
 
 <template>
-  <section class="flex justify-center items-center flex-col">
+  <section class="flex justify-center items-center flex-col gap-5">
     <!-- 熱門活動Swiper -->
     <div class="relative w-full h-[602px] bg-[#031926] overflow-hidden">
       <div class="absolute left-[1223px] top-[88px] text-[64px] text-white">
@@ -31,9 +31,9 @@ export default {
         </div>
       </div>
       <Swiper :slide-data="[1, 2, 3, 4, 5, 6]" slides-per-view="4" space-between="30" class="absolute -left-[50px] top-[400px] rotate-[10deg]" :btn-prev="$refs.btnPrev" :btn-next="$refs.btnNext">
-        <div>
+        <SwiperSlide>
           <img src="https://picsum.photos/1980/901" class="w-[512px] h-[384px] object-cover" alt="產業類別圖片">
-        </div>
+        </SwiperSlide>
       </Swiper>
     </div>
     <!-- 活動行事曆 -->
@@ -43,7 +43,7 @@ export default {
       <!-- 活動快速資訊 -->
       <div class="text-[17px] flex gap-1">
         <div class="text-[17px]">活動類型</div>
-        <img src="" alt="">
+        <img src="" alt="活動收藏熱門進度條">
         <div class="text-[17px]">課程熱度</div>
       </div>
       <div class="flex flex-col items-center">

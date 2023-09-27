@@ -63,39 +63,39 @@ export default {
         </div>
         <div class="absolute left-[100px] top-[495px] w-[90%] h-[289px] pt-[10px] px-[60px] bg-[#f2f2f2b2] flex flex-wrap gap-5">
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.lowest_number_of_people" alt="" class="w-[10%] pe-1">
+            <img :src="images.lowest_number_of_people" alt="開課門檻" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入開課門檻">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.highest_number_of_people" alt="" class="w-[10%] pe-1">
+            <img :src="images.highest_number_of_people" alt="人數上限" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入人數上限">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.register_time" alt="" class="w-[10%] pe-1">
+            <img :src="images.register_time" alt="報名開始時間" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入報名開始時間">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.register_time" alt="" class="w-[10%] pe-1">
+            <img :src="images.register_time" alt="報名截止時間" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入報名截止時間">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activity_presenter" alt="" class="w-[10%] pe-1">
+            <img :src="images.activity_presenter" alt="主講者" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入主講者">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activity_start_time" alt="" class="w-[10%] pe-1">
+            <img :src="images.activity_start_time" alt="活動開始時間" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請點選活動開始時間">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activity_end_time" alt="" class="w-[10%] pe-1">
-            <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請點選活動開始時間">
+            <img :src="images.activity_end_time" alt="活動結束時間" class="w-[10%] pe-1">
+            <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請點選活動結束時間">
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activity_address" alt="" class="w-[10%] pe-1">
+            <img :src="images.activity_address" alt="活動地點" class="w-[10%] pe-1">
             <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入活動地點">
           </div>
           <div class="w-full h-[56px] flex items-center bg-[#ffffff5a] rounded-[14px] px-2">
-            <img :src="images.exclamation_triangle" alt="" class="w-[40px] h-[40px]">
+            <img :src="images.exclamation_triangle" alt="參加須知" class="w-[40px] h-[40px]">
             <input type="text" name="" id="" placeholder="請輸入參加須知" class="w-full">
           </div>
         </div>
