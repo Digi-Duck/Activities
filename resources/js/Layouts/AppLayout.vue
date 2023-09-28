@@ -5,6 +5,7 @@ import instagram from '/images/icon/icon-instagram.svg';
 import youtube from '/images/icon/icon-youtube.svg';
 import envelope from '/images/icon/envelope-regular.svg';
 import { Link } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 
 export default {
   components: { Link },
@@ -18,7 +19,11 @@ export default {
       },
     };
   },
-  methods: {},
+  methods: {
+    logout() {
+      router.post(route('logout'));
+    },
+  },
 };
 </script>
 
@@ -29,15 +34,36 @@ export default {
         Logo
       </Link>
       <nav class="h-[37.313%] pe-5 bg-[#FFFFFF] flex justify-end items-center gap-3">
-        <Link href="" class="btn">會員中心</Link>
-        <Link :href="route('login')" class="btn">登出/登入</Link>
+        <div v-if="!$page.props.auth.user" class="flex gap-3">
+          <Link :href="route('register')" class="btn">註冊</Link>
+          <Link :href="route('login')" class="btn">登入</Link>
+        </div>
+        <div v-else class="flex gap-3">
+          <Link href="" class="btn">會員中心</Link>
+          <Link class="btn" @click="logout()">登出</Link>
+        </div>
       </nav>
+      <!-- <nav v-if="$page.props.auth.user.user_role === 1" class="pt-6 pe-5 flex justify-end gap-3">
+        <Link href="" class="function-btn">資訊總覽</Link>
+        <Link href="" class="function-btn">學員管理</Link>
+        <Link href="" class="function-btn">講師管理</Link>
+        <Link href="" class="function-btn">活動管理</Link>
+      </nav> -->
       <nav class="pt-6 pe-5 flex justify-end gap-3">
         <Link href="" class="function-btn">首頁</Link>
         <Link href="" class="function-btn">活動建立</Link>
         <Link href="" class="function-btn">我的活動</Link>
         <Link href="" class="function-btn">報到掃描</Link>
       </nav>
+      <!-- <nav v-else-if="$page.props.auth.user.user_role === 3" class="pt-6 pe-5 flex justify-end gap-3">
+        <Link href="" class="function-btn">首頁</Link>
+        <Link href="" class="function-btn">活動分類</Link>
+        <Link href="" class="function-btn">我的活動</Link>
+      </nav>
+      <nav v-else class="pt-6 pe-5 flex justify-end gap-3">
+        <Link href="" class="function-btn">首頁</Link>
+        <Link href="" class="function-btn">活動分類</Link>
+      </nav> -->
     </header>
     <main id="main">
       <slot />

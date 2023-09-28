@@ -4,6 +4,7 @@ import { useForm } from '@inertiajs/vue3';
 const form = useForm({
   name: '',
   email: '',
+  user_role: '',
   password: '',
   password_confirmation: '',
 });
@@ -18,7 +19,7 @@ const submit = () => {
 <template>
   <form @submit.prevent="submit" class="p-10">
     <div>
-      <InputLabel for="name" value="Name" />
+      <InputLabel for="name" value="暱稱" />
 
       <TextInput
         id="name"
@@ -31,6 +32,23 @@ const submit = () => {
       />
 
       <InputError class="mt-2" :message="form.errors.name" />
+    </div>
+
+    <div class="mt-4">
+      <InputLabel for="user_role" value="角色選擇" />
+
+      <select id="user_role"
+        class="mt-1 block w-full"
+        v-model="form.user_role"
+        required
+        placeholder="活動角色選擇"
+        autocomplete="username">
+        <option disabled selected value>- 請選擇活動角色 -</option>
+        <option value="2">我是講師</option>
+        <option value="3">我是學員</option>
+      </select>
+
+      <InputError class="mt-2" :message="form.errors.email" />
     </div>
 
     <div class="mt-4">
@@ -49,7 +67,7 @@ const submit = () => {
     </div>
 
     <div class="mt-4">
-      <InputLabel for="password" value="Password" />
+      <InputLabel for="password" value="密碼" />
 
       <TextInput
         id="password"
@@ -64,7 +82,7 @@ const submit = () => {
     </div>
 
     <div class="mt-4">
-      <InputLabel for="password_confirmation" value="Confirm Password" />
+      <InputLabel for="password_confirmation" value="確認密碼" />
 
       <TextInput
         id="password_confirmation"
