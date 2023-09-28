@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class RegisterActivity
@@ -62,5 +63,10 @@ class RegisterActivity extends Model
     public function userBehavior()
     {
         return $this->hasMany(UserBehavior::class, 'type_id');
+    }
+
+    public function qrcodeDetail(): HasOne
+    {
+        return $this->hasOne(QrcodeDetail::class);
     }
 }

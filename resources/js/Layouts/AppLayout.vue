@@ -30,7 +30,7 @@ export default {
       </Link>
       <nav class="h-[37.313%] pe-5 bg-[#FFFFFF] flex justify-end items-center gap-3">
         <Link href="" class="btn">會員中心</Link>
-        <Link href="" class="btn">登出/登入</Link>
+        <Link :href="route('login')" class="btn">登出/登入</Link>
       </nav>
       <nav class="pt-6 pe-5 flex justify-end gap-3">
         <Link href="" class="function-btn">首頁</Link>

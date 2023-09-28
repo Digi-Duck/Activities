@@ -19,11 +19,6 @@ class IndexController extends Controller
     {
         return Inertia::render('Frontend/ActivityDetail');
     }
-
-    public function createActivity()
-    {
-        return Inertia::render('Frontend/Presenter/CreateActivity');
-    }
     
     public function activityClassification()
     {

@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class QrcodeDetail
@@ -53,5 +54,10 @@ class QrcodeDetail extends Model
     public function userRoleStudent()
     {
         return $this->belongsTo(UserRoleStudent::class, 'student_id');
+    }
+
+    public function registerActivity(): HasOne
+    {
+        return $this->hasOne(RegisterActivity::class);
     }
 }
