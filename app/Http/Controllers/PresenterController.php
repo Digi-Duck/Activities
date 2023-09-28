@@ -31,8 +31,13 @@ class PresenterController extends Controller
 
     public function activityStore(Request $request)
     {
+        // $user = $request->user();
+        // dd($user = $request->user()->userRolePresenter->id);
         // dd($request->all());
         $request->validate([
+            'activityName' => 'required',
+            'activityInfo' => 'required',
+            'activityType' => 'required',
             'activityPresenter' => 'required',
             'activityLowestNumberOfPeople' => 'required|numeric',
             'activityHighestNumberOfPeople' => 'required|numeric',
@@ -42,19 +47,27 @@ class PresenterController extends Controller
             'activityEndTime' => 'required',
             'activityAddress' => 'required',
             'activityInstruction' => 'required',
+            'activityInformation' => 'required',
         ]);
+        dd($request->all());
 
         $activity = ActivityDetail::create([
-            'presenterId' => $request->presenter_id,
-            'activityPresenter' => $request->activity_presenter,
-            'activityLowestNumberOfPeople' => $request->activity_lowest_number_of_people,
-            'activityHighestNumberOfPeople' => $request->activity_highest_number_of_people,
-            'activityStartRegistrationTime' => $request->activity_start_registration_time,
-            'activityEndRegistrationTime' => $request->activity_end_registration_time,
-            'activityStartTime' => $request->activity_start_time,
-            'activityEndTime' => $request->activity_end_time,
-            'activityAddress' => $request->activity_address,
-            'activityInstruction' => $request->activity_instruction,
+            'activity_name' => $request->activityName,
+            'activity_info' => $request->activityInfo,
+            'activity_type' => $request->activityType,
+            'presenter_id' => $request->user()->userRolePresenter->id,
+            'activity_phone_number' => $request->user()->userRolePresenter->phone_number,
+            'activity_email' => $request->user()->email,
+            'activity_presenter' => $request->activityPresenter,
+            'activity_lowest_number_of_people' => $request->activityLowestNumberOfPeople,
+            'activity_highest_number_of_people' => $request->activityHighestNumberOfPeople,
+            'activity_start_registration_time' => $request->activityStartRegistrationTime,
+            'activity_end_registration_time' => $request->activityEndRegistrationTime,
+            'activity_start_time' => $request->activityStartTime,
+            'activity_end_time' => $request->activityEndTime,
+            'activity_address' => $request->activityAddress,
+            'activity_instruction' => $request->activityInstruction,
+            'activity_information' => $request->activityInformation,
         ]);
 
         return back()->with(['message' => rtFormat($activity)]);

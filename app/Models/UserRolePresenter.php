@@ -50,7 +50,7 @@ class UserRolePresenter extends Model
 
     public function activityDetails()
     {
-        return $this->hasMany(ActivityDetail::class, 'presenter_id');
+        return $this->hasMany(ActivityDetail::class, 'user_id', 'presenter_id');
     }
 
     public function studentActivities()

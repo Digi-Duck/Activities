@@ -28,10 +28,9 @@ export default {
       prevButton: null, // 在这里定义 prevButton 和 nextButton
       nextButton: null,
       formData: {
-        // activityName: '',
-        // activityInfo: '',
-        // activityType: '',
-        presenterId: '1',
+        activityName: '',
+        activityInfo: '',
+        activityType: '',
         activityPresenter: '',
         activityLowestNumberOfPeople: '',
         activityHighestNumberOfPeople: '',
@@ -41,7 +40,7 @@ export default {
         activityEndTime: '',
         activityAddress: '',
         activityInstruction: '',
-        // activityInformation: '',
+        activityInformation: '',
       },
       images: {
         activityAddress,
@@ -84,6 +83,10 @@ export default {
         },
       });
     },
+    information(data) {
+      console.log(data);
+      this.formData.activityInformation = data;
+    },
   },
 };
 </script>
@@ -94,15 +97,31 @@ export default {
     <form @submit.prevent="submitData()" action="">
       <div class="relative mt-5 flex flex-col">
         <div class="relative w-full z-10">
-          <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">活動分類
+          <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">
+            <select v-model="formData.activityType" name="activity_type" class="h-full text-[10px] flex justify-center" placeholder="活動分類">
+              <option disabled selected value>- 請選擇活動類型 -</option>
+              <option value="1">文化與藝術</option>
+              <option value="2">學術與培訓</option>
+              <option value="3">社交與社團</option>
+              <option value="4">旅遊與戶外</option>
+              <option value="5">健康與福祉</option>
+              <option value="6">商業與職業發展</option>
+              <option value="7">娛樂與文化慶典</option>
+              <option value="8">科技與創新</option>
+              <option value="9">其他</option>
+            </select>
             <div id="triangle" class="absolute left-[175px] -top-[0px] w-[10px] h-[10px]">
               <div id="triangle-top"></div>
               <div id="triangle-bottom"></div>
             </div>
           </div>
           <div class="absolute left-[265px] top-[131px] w-[288px] h-[219px] flex flex-col justify-between items-start">
-            <div class="text-[72px] font-bold">活動名稱</div>
-            <div class="w-[100%] bg-[#ffffff9b] text-[24px]">活動Slogan</div>
+            <div class="text-[72px] font-bold">
+              <input v-model="formData.activityName" type="text" name="activity_name" id="" class="text-[72px] font-bold" placeholder="請輸入活動名稱">
+            </div>
+            <div class="w-[100%] bg-[#ffffff9b] text-[24px]">
+              <input v-model="formData.activityInfo" type="text" name="activity_info" id="" class="text-[24px] font-semibold" placeholder="請輸入活動Slogan">
+            </div>
             <button type="button" class="w-[136px] h-[56px] bg-[#FFFFFF] text-[18px] font-semibold">更改圖片</button>
           </div>
           <div class="absolute left-[50px] top-[415px] w-[95%] flex justify-between">
@@ -161,7 +180,7 @@ export default {
         </Swiper>
       </div>
       <!-- 編輯工具列；所見即所得區 -->
-      <Editor></Editor>
+      <Editor @update-content="information"></Editor>
       <!-- <editor v-model="editorValue" :init="editorInit" class="min-h-[500px]" @update-content="test" /> -->
       <div class="flex w-full justify-center gap-[45px] py-5">
         <button type="button" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消開課</button>

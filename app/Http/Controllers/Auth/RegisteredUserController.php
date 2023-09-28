@@ -8,6 +8,9 @@ use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
+use App\Models\UserRoleAdmin;
+use App\Models\UserRolePresenter;
+use App\Models\UserRoleStudent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
@@ -41,8 +44,28 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_role' =>$request->user_role,
+            'user_role' => $request->user_role,
         ]);
+        if ($user->user_role === '3') {
+            UserRoleStudent::create([
+                'user_id' => $user->id,
+                'user_name' => $user->name,
+                'phone_number' => '',
+            ]);
+        }
+        elseif ($user->user_role === '2') {
+            UserRolePresenter::create([
+                'user_id' => $user->id,
+                'user_name' => $user->name,
+                'phone_number' => '',
+            ]);
+        }
+        else {
+            UserRoleAdmin::create([
+                'user_id' => $user->id,
+                'user_name' => $user->name,
+            ]);
+        }
 
         event(new Registered($user));
 

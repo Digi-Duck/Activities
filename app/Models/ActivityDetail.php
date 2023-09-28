@@ -80,7 +80,7 @@ class ActivityDetail extends Model
 
     public function userRolePresenter()
     {
-        return $this->belongsTo(UserRolePresenter::class, 'presenter_id');
+        return $this->belongsTo(UserRolePresenter::class, 'presenter_id' , 'user_id');
     }
 
     public function activityPhotos()
