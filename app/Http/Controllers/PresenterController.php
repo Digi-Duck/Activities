@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivityDetail;
+use App\Models\ActivityPhoto;
+use App\Services\FilesService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PresenterController extends Controller
 {
+    public function __construct(protected FilesService $filesService)
+    {
+        
+    }
     /**
      * Display a listing of the resource.
      */
@@ -44,6 +50,7 @@ class PresenterController extends Controller
             'activityName' => 'required',
             'activityInfo' => 'required',
             'activityType' => 'required',
+            'activityPhoto' => 'required',
             'activityPresenter' => 'required',
             'activityLowestNumberOfPeople' => 'required|numeric',
             'activityHighestNumberOfPeople' => 'required|numeric',
@@ -75,6 +82,18 @@ class PresenterController extends Controller
             'activity_instruction' => $request->activityInstruction,
             'activity_information' => $request->activityInformation,
         ]);
+
+        // $activity_photo = ActivityPhoto::create([
+        //     'activity_img_path' => $this->filesService->base64Upload($request->activityPhoto[0], 'activity'),
+        // ]);
+
+        foreach ($request->activityPhoto ?? [] as $value) {
+            ActivityPhoto::create([
+                'activity_id' => $activity->id,
+                'activity_img_path' => $this->filesService->base64Upload($value['activity_img_path'], 'otherProduct'),
+                // 'sort' => 1,
+            ]);
+        }
 
         return back()->with(['message' => rtFormat($activity)]);
     }
