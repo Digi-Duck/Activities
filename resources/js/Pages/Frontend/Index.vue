@@ -19,6 +19,7 @@ export default {
 </script>
 
 <template>
+  {{ response }}
   <section class="flex justify-center items-center flex-col gap-5">
     <!-- 熱門活動Swiper -->
     <div class="relative w-full h-[602px] bg-[#031926] overflow-hidden">
