@@ -81,7 +81,7 @@ const onSwiper = (swiper) => {
     :slides-per-view="props.slidesPerView"
     :space-between="props.spaceBetween"
     :autoplay="props.autoplay && {
-      delay: 1000,
+      delay: 3000,
       disableOnInteraction: false,
     }"
     :pagination="{

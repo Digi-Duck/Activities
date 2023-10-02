@@ -15,19 +15,42 @@ export default {
   data() {
     return {
       title: 'Hello World !',
+      formData: {
+        activityName: this.response?.rt_data?.activityName ?? '',
+        activityInfo: this.response?.rt_data?.activityInfo ?? '',
+        activityType: this.response?.rt_data?.activityType ?? '',
+        activityPresenter: this.response?.rt_data?.activityPresenter ?? '',
+        activityLowestNumberOfPeople: this.response?.rt_data?.activityLowestNumberOfPeople ?? '',
+        activityHighestNumberOfPeople: this.response?.rt_data?.activityHighestNumberOfPeople ?? '',
+        activityStartRegistrationTime: this.response?.rt_data?.activityStartRegistrationTime ?? '',
+        activityEndRegistrationTime: this.response?.rt_data?.activityEndRegistrationTime ?? '',
+        activityStartTime: this.response?.rt_data?.activityStartTime ?? '',
+        activityEndTime: this.response?.rt_data?.activityEndTime ?? '',
+        activityAddress: this.response?.rt_data?.activityAddress ?? '',
+        activityInstruction: this.response?.rt_data?.activityInstruction ?? '',
+        activityInformation: this.response?.rt_data?.activityInformation ?? '',
+      },
     };
+  },
+  methods: {
+    information(data) {
+      console.log(data);
+      this.formData.activityInformation = data;
+    },
   },
 };
 </script>
 
 <template>
+  {{ response }}
   <section id="create-activity" class="relative flex flex-col">
     <!-- 建立活動資訊填寫 -->
     <CountDown class="absolute mt-[5%] left-[75%]"></CountDown>
     <ActivityDetailSwiper>
+      {{ response.rt_data }}
     </ActivityDetailSwiper>
     <!-- 編輯工具列；所見即所得區 -->
-    <Editor></Editor>
+    <Editor @update-content="information"></Editor>
     <div class="flex w-full justify-end gap-[45px] px-20 py-5">
       <div class="pe-[35%] flex gap-5">
         <button type="button" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消修改</button>

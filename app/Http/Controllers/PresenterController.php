@@ -14,6 +14,12 @@ class PresenterController extends Controller
     public function index()
     {
         //
+        $activity = ActivityDetail::orderBy('id','desc')->get()->map(function($item) {
+            $item->timeFormat = $item->created_at->format('Y/m/d');
+            return $item;
+        });
+
+        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', [ 'response' => rtFormat($activity)]);;
     }
 
     /**
@@ -49,7 +55,7 @@ class PresenterController extends Controller
             'activityInstruction' => 'required',
             'activityInformation' => 'required',
         ]);
-        dd($request->all());
+        // dd($request->all());
 
         $activity = ActivityDetail::create([
             'activity_name' => $request->activityName,
@@ -92,9 +98,12 @@ class PresenterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function activityEdit($id)
     {
         //
+        $activity = ActivityDetail::find($id);
+
+        return Inertia::render('Frontend/Presenter/EditActivity', [ 'response' => rtFormat($activity)]);
     }
 
     /**

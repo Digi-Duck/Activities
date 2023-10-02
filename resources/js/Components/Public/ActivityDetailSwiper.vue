@@ -127,7 +127,7 @@ export default {
 
 <style lang="scss" scoped>
 #activity-detail-swiper {
-  @apply w-full h-full overflow-y-auto;
+  @apply w-full h-full;
   #triangle {
     #triangle-top {
       border-width: 10px;

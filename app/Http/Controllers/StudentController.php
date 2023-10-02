@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityDetail;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class StudentController extends Controller
 {
@@ -12,6 +14,8 @@ class StudentController extends Controller
     public function index()
     {
         //
+        $activity = ActivityDetail::get();
+        return Inertia::render('Frontend/Student/ActivityDetail', [ 'response' => rtFormat($activity) ]);
     }
 
     /**

@@ -29,6 +29,7 @@ export default {
 
 <template>
   <section id="app-layout">
+    <!-- {{ $page.props.auth.user.user_role }} -->
     <header class="relative h-[160.8px] bg-[#F9565C] flex flex-col">
       <Link href="" class="absolute top-[10px] left-[10px] h-[98px] w-[239px] rounded-[15px] bg-[#AB4C4C] opacity-75 text-5xl text-center leading-loose">
         Logo
@@ -39,7 +40,7 @@ export default {
           <Link :href="route('login')" class="btn">登入</Link>
         </div>
         <div v-else class="flex gap-3">
-          <Link href="" class="btn">會員中心</Link>
+          <Link :href="route('logout')" class="btn">會員中心</Link>
           <Link class="btn" @click="logout()">登出</Link>
         </div>
       </nav>
@@ -48,22 +49,22 @@ export default {
         <Link href="" class="function-btn">學員管理</Link>
         <Link href="" class="function-btn">講師管理</Link>
         <Link href="" class="function-btn">活動管理</Link>
-      </nav> -->
-      <nav class="pt-6 pe-5 flex justify-end gap-3">
+      </nav>
+      <nav v-else-if="$page.props.auth.user.user_role === 2" class="pt-6 pe-5 flex justify-end gap-3">
         <Link href="" class="function-btn">首頁</Link>
         <Link href="" class="function-btn">活動建立</Link>
         <Link href="" class="function-btn">我的活動</Link>
         <Link href="" class="function-btn">報到掃描</Link>
       </nav>
-      <!-- <nav v-else-if="$page.props.auth.user.user_role === 3" class="pt-6 pe-5 flex justify-end gap-3">
+      <nav v-else-if="$page.props.auth.user.user_role === 3" class="pt-6 pe-5 flex justify-end gap-3">
         <Link href="" class="function-btn">首頁</Link>
         <Link href="" class="function-btn">活動分類</Link>
         <Link href="" class="function-btn">我的活動</Link>
-      </nav>
-      <nav v-else class="pt-6 pe-5 flex justify-end gap-3">
+      </nav> -->
+      <nav class="pt-6 pe-5 flex justify-end gap-3">
         <Link href="" class="function-btn">首頁</Link>
         <Link href="" class="function-btn">活動分類</Link>
-      </nav> -->
+      </nav>
     </header>
     <main id="main">
       <slot />
