@@ -50,28 +50,32 @@ export default {
         <img :src="images.arrowRight" alt="活動照片海報向右移動按鈕">
       </button>
     </div>
-    {{ slideData }}
+    <!-- {{ slideData }} -->
     <Swiper v-slot="{ slide }" :slide-data="slideData ?? []" :slides-per-view=5 :btn-prev="prevButton" :btn-next="nextButton">
-      <div class="relative m-auto w-[296px] p-3 bg-white border flex flex-col items-center">
+      <Link class="relative m-auto w-[296px] p-3 bg-white border flex flex-col items-center" :href="route('studentActivityDetails', { id: slide.id })">
         <img :src="slide.activityPhotos[0].activity_img_path" class="w-[275px] h-[275px] object-cover" alt="產業類別圖片">
         <div class="w-full ps-3 flex flex-col gap-1">
           <div class="text-[16px] font-semibold">
-            {{ slide.activityPhotos[0].activity_img_path }}
-            <slot name="activity_name">活動名稱
+            <!-- {{ slide.activityPhotos[0].activity_img_path }} -->
+            {{ slide.activity_name }}
+            <slot name="activity_name">
+              <!-- {{ slide.activity_name }} -->
             </slot>
           </div>
           <div class="text-[10px]">
-            <slot name="activity_start_time">活動時間</slot>
+            {{ slide.activity_start_time }}
+            <slot name="activity_start_time"></slot>
           </div>
           <div class="text-[10px]">
-            <slot name="activity_address">活動地點</slot>
+            {{ slide.activity_address }}
+            <slot name="activity_address"></slot>
           </div>
         </div>
         <div class="absolute bottom-[2px] right-[6px] w-[40px] h-[18px] px-1 rounded-[15px] bg-[#D19191] flex justify-between items-center">
           <img :src="images.heart" class="w-[20px] h-[20px]" alt="收藏人數">
           1
         </div>
-      </div>
+      </Link>
     </Swiper>
   </div>
 </template>

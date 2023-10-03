@@ -20,13 +20,12 @@ export default {
 
 <template>
   {{ response.rt_data }}
-  <hr>
-  <div class="flex" v-for="(item, index) in response.rt_data" :key="index">
+  <!-- <div class="flex" v-for="(item, index) in response.rt_data" :key="index">
     <Link class="w-[150px] h-[150px] bg-[pink] rounded-full" :href="route('studentActivityDetails', { id: item.id })">
       {{ index + 1 }}
       {{ response.rt_data[index].activity_presenter }}
     </Link>
-  </div>
+  </div> -->
   <section class="flex justify-center items-center flex-col gap-5">
     <!-- 熱門活動Swiper -->
     <div class="relative w-full h-[602px] bg-[#031926] overflow-hidden">
@@ -38,9 +37,10 @@ export default {
           活動Slogan
         </div>
       </div>
-      <Swiper :slide-data="response?.rt_data ?? ''" :slides-per-view=4 :space-between=30 class="absolute -left-[50px] top-[400px] rotate-[10deg]">
+      <Swiper v-slot="{ slide }" :slide-data="response?.rt_data ?? ''" :slides-per-view=4 :space-between=30 class="absolute -left-[50px] top-[400px] rotate-[10deg]">
         <div>
-          <img :src="response.rt_data[0]" class="w-[512px] h-[384px] object-cover" alt="產業類別圖片">
+          <!-- {{ slide.activityPhotos[0].activity_img_path }} -->
+          <img :src="slide.activityPhotos[0].activity_img_path" class="w-[512px] h-[384px] object-cover" alt="產業類別圖片">
         </div>
       </Swiper>
     </div>
@@ -56,28 +56,28 @@ export default {
       </div>
       <div class="flex flex-col items-center">
         <div class="text-[55px]">
-          活動名稱
+          {{ response.rt_data[0].activity_name }}
         </div>
         <div class="text-[55px]">
-          主講者
+          {{ response.rt_data[0].activity_presenter }}
         </div>
         <div class="text-[30px]">
-          活動開始時間
+          {{ response.rt_data[0].activity_start_time }}
         </div>
+        <!-- {{ response.rt_data[0].activityPhotos[0].activity_img_path }} -->
       </div>
       <div class="relative mb-[50px] w-full h-[388px] flex">
         <div class="absolute w-[770px] h-full rounded-[64px] bg-green-600"></div>
-        <div class="absolute ms-[25%] w-[770px] h-full z-10 rounded-[64px] bg-red-600"></div>
+        <img :src="response.rt_data[0].activityPhotos[0].activity_img_path" class="absolute ms-[25%] w-[770px] h-full z-10 rounded-[64px] bg-red-600" alt="">
         <div class="absolute end-0 w-[770px] h-full rounded-[64px] bg-blue-600"></div>
       </div>
     </div>
     <!-- 近期活動Swiper -->
-    {{ response.rt_data[0].activityPhotos[0].activity_img_path }}
+    <!-- {{ response.rt_data[0].activityPhotos[0].activity_img_path }}
     <img :src="response.rt_data[0].activityPhotos[0].activity_img_path" alt="">
-    {{ response.rt_data }}
-    <hr>
+    {{ response.rt_data }} -->
     <ActivitySwiper :slide-data="response.rt_data">
-      <template #activity_name>
+      <!-- <template #activity_name>
         <span>
           {{ response.rt_data[2].activity_name }}
         </span>
@@ -91,13 +91,39 @@ export default {
         <span>
           {{ response.rt_data[2].activity_address }}
         </span>
-      </template>
+      </template> -->
     </ActivitySwiper>
     <!-- 近期活動查詢表 -->
-    <ActivityDetailTable>
+    <!-- {{ response.rt_data }} -->
+    <ActivityDetailTable :table-data="response.rt_data">
       <template #activity_title_type>
         <span>
           主講人
+        </span>
+      </template>
+      <template #activity_name>
+        <span>
+          {{ response.rt_data[0].activity_name }}
+        </span>
+      </template>
+      <template #activity_type>
+        <span>
+          {{ response.rt_data[0].activity_presenter }}
+        </span>
+      </template>
+      <template #activity_end_registration_time>
+        <span>
+          {{ response.rt_data[0].activity_end_registration_time }}
+        </span>
+      </template>
+      <template #activity_lowest_number_of_people>
+        <span>
+          {{ response.rt_data[0].activity_lowest_number_of_people }}
+        </span>
+      </template>
+      <template #activity_highest_number_of_people>
+        <span>
+          {{ response.rt_data[0].activity_highest_number_of_people }}
         </span>
       </template>
     </ActivityDetailTable>

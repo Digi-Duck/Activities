@@ -7,6 +7,7 @@ export default {
       required: false,
       default: () => ({}),
     },
+    tableData: Object,
   },
   data() {
     return {
@@ -61,25 +62,19 @@ export default {
         </div>
       </div>
       <!-- 詳細搜尋內容 -->
-      <div class="w-full h-[53px] flex">
+      <div v-for="(item, index) in tableData" :key="index" class="w-full h-[53px] flex">
         <div class="flex-none w-[50%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
-          <slot name="activity_name">
-            活動名稱
-          </slot>
+          {{ item.activity_name }}
         </div>
         <div class="flex-initial w-[10%] border bg-[#82acc27d] flex justify-center items-center text-[16px] font-semibold">
-          <slot name="activity_type">
-            活動類型
-          </slot>
+          {{ item.activity_presenter }}
         </div>
         <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
-          <slot name="activity_end_registration_time">
-            報名截止時間
-          </slot>
+          {{ item.activity_end_registration_time }}
         </div>
         <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
-          開課門檻:<slot name="activity_lowest_number_of_people">開課門檻</slot>
-          人數限制:<slot name="activity_highest_number_of_people">人數限制</slot>
+          開課門檻:{{ item.activity_lowest_number_of_people }}
+          人數限制:{{ item.activity_highest_number_of_people }}
         </div>
       </div>
       <Pagination :pagination-data="paginationData" class="pt-3" />

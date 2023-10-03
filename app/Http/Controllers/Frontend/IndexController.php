@@ -24,10 +24,12 @@ class IndexController extends Controller
         return Inertia::render('Frontend/Index', [ 'response' => rtFormat($activity)]);
     }
 
-    public function activityDetails()
-    {
-        return Inertia::render('Frontend/ActivityDetail');
-    }
+    // public function globalActivityDetails($id)
+    // {
+    //     $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id',$id)->get();
+    //     return Inertia::render('Frontend/GlobalActivityDetail', [ 'response' => rtFormat($activity) ]);
+    //     // return Inertia::render('Frontend/GlobalActivityDetail');
+    // }
     
     public function activityClassification()
     {

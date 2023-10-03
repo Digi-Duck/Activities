@@ -16,7 +16,7 @@ class StudentController extends Controller
     // 這是各活動系項
     {
         //
-        $activity = ActivityDetail::find($id);
+        $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id',$id)->get();
         return Inertia::render('Frontend/Student/ActivityDetail', [ 'response' => rtFormat($activity) ]);
     }
 

@@ -19,6 +19,7 @@ export default {
       required: false,
       default: () => ({}),
     },
+    slideData: Object,
   },
   data() {
     return {
@@ -71,7 +72,7 @@ export default {
           <div class="w-[100%] bg-[#ffffff9b] text-[24px]">
             <slot name="activity_info">活動Slogan</slot>
           </div>
-          <button type="button" class="w-[136px] h-[56px] bg-[#FFFFFF] text-[18px] font-semibold">更改圖片</button>
+          <!-- <button type="button" class="w-[136px] h-[56px] bg-[#FFFFFF] text-[18px] font-semibold">更改圖片</button> -->
         </div>
         <div class="absolute left-[50px] top-[415px] w-[95%] flex justify-between">
           <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] z-50 rounded-[50px] bg-white" type="button">
@@ -139,10 +140,11 @@ export default {
           </div>
         </div>
       </div>
-      <Swiper :slide-data="[1, 2]" class="absolute opacity-60" :btn-prev="prevButton" :btn-next="nextButton">
-        <SwiperSlide class="m-auto">
-          <img src="https://picsum.photos/1980/901" alt="產業類別圖片">
-        </SwiperSlide>
+      <Swiper v-slot="{ slide }" :slide-data="slideData ?? []" class="w-[full] max-w-[1600px] h-[1000px]" :btn-prev="prevButton" :btn-next="nextButton">
+        <div class="opacity-60 w-full flex justify-center items-center">
+          <!-- {{ slide }} -->
+          <img :src="slide.activityPhotos[0].activity_img_path" alt="產業類別圖片">
+        </div>
       </Swiper>
     </div>
   </section>
