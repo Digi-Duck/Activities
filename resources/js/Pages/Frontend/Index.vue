@@ -19,7 +19,7 @@ export default {
 </script>
 
 <template>
-  {{ response.rt_data[0] }}
+  {{ response.rt_data }}
   <hr>
   <div class="flex" v-for="(item, index) in response.rt_data" :key="index">
     <Link class="w-[150px] h-[150px] bg-[pink] rounded-full" :href="route('studentActivityDetails', { id: item.id })">
@@ -38,10 +38,10 @@ export default {
           活動Slogan
         </div>
       </div>
-      <Swiper :slide-data="response.rt_data[0]" slides-per-view="4" space-between="30" class="absolute -left-[50px] top-[400px] rotate-[10deg]" :btn-prev="$refs.btnPrev" :btn-next="$refs.btnNext">
-        <SwiperSlide>
+      <Swiper :slide-data="response?.rt_data ?? ''" :slides-per-view=4 :space-between=30 class="absolute -left-[50px] top-[400px] rotate-[10deg]">
+        <div>
           <img :src="response.rt_data[0]" class="w-[512px] h-[384px] object-cover" alt="產業類別圖片">
-        </SwiperSlide>
+        </div>
       </Swiper>
     </div>
     <!-- 活動行事曆 -->
@@ -72,9 +72,35 @@ export default {
       </div>
     </div>
     <!-- 近期活動Swiper -->
-    <ActivitySwiper></ActivitySwiper>
+    {{ response.rt_data[0].activityPhotos[0].activity_img_path }}
+    <img :src="response.rt_data[0].activityPhotos[0].activity_img_path" alt="">
+    {{ response.rt_data }}
+    <hr>
+    <ActivitySwiper :slide-data="response.rt_data">
+      <template #activity_name>
+        <span>
+          {{ response.rt_data[2].activity_name }}
+        </span>
+      </template>
+      <template #activity_start_time>
+        <span>
+          {{ response.rt_data[2].activity_start_time }}
+        </span>
+      </template>
+      <template #activity_address>
+        <span>
+          {{ response.rt_data[2].activity_address }}
+        </span>
+      </template>
+    </ActivitySwiper>
     <!-- 近期活動查詢表 -->
-    <ActivityDetailTable></ActivityDetailTable>
+    <ActivityDetailTable>
+      <template #activity_title_type>
+        <span>
+          主講人
+        </span>
+      </template>
+    </ActivityDetailTable>
   </section>
 </template>
 

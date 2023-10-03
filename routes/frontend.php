@@ -19,4 +19,5 @@ Route::middleware('auth', 'role.weight:2')->prefix('/presenter')->group(function
 
 Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
 Route::post('/registerStore', [StudentController::class, 'create'])->name('registerStore');
+// Route::get('/')
 

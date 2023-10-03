@@ -105,12 +105,8 @@ export default {
           // id: this.formData.activityPhoto.length + 1,
           id: Math.max(0, ...this.formData.activityPhoto.map(item => item.id)) + 1,
           activity_img_path: reader.result,
-          // sort: this.formData.activityPhoto.length + 1,
-          // size: event.target.files[0].size,
         });
-        // this.imageSize += event.target.files[0].size;
       };
-      console.log(activity_img_path);
     },
     removeImage(id) {
       this.imageSize -= this.formData.activityPhoto.find((item) => item.id === id).size;
@@ -124,7 +120,7 @@ export default {
   <section id="create-activity" class="flex flex-col">
     <!-- 建立活動資訊填寫 -->
     <form @submit.prevent="submitData()" action="">
-      <div class="relative mt-5 flex flex-col">
+      <div class="relative mt-5 h-[901px] flex flex-col">
         <div class="relative w-full z-10">
           <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">
             <select v-model="formData.activityType" name="activity_type" class="h-full text-[10px] flex justify-center" required placeholder="活動分類">
@@ -215,15 +211,14 @@ export default {
           </div>
         </div>
         <!-- Swiper引用 -->
-        <Swiper :slide-data="[formData.activityPhoto]" class="w-[full] max-w-[1400px] h-[1000px]" :btn-prev="prevButton" :btn-next="nextButton">
-          <SwiperSlide v-for="(item, index) in formData.activityPhoto" :key="index" class="opacity-60 w-full">
-            {{ index + 1 }}測試測試測試測試測試測試測試測試測試
-            <img :slide="item" :src="item.activity_img_path" alt="測試圖片">
-          </SwiperSlide>
+        <Swiper v-slot="{ slide }" :slide-data="formData.activityPhoto" class="w-[full] max-w-[1600px] h-[1000px]" :btn-prev="prevButton" :btn-next="nextButton">
+          <div class="opacity-60 w-full flex justify-center items-center">
+            <img :src="slide.activity_img_path" class="w-full h-full" alt="測試圖片">
+          </div>
         </Swiper>
       </div>
       <!-- 編輯工具列；所見即所得區 -->
-      <Editor class="relative" @update-content="information"></Editor>
+      <Editor class="h-[500px]" @update-content="information"></Editor>
       <!-- <editor v-model="editorValue" :init="editorInit" class="min-h-[500px]" @update-content="test" /> -->
       <div class="flex w-full justify-center gap-[45px] py-5">
         <button type="button" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消開課</button>

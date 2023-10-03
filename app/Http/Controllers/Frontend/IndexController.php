@@ -17,7 +17,7 @@ class IndexController extends Controller
         //     $item->timeFormat = $item->created_at->format('Y/m/d');
         //     return $item;
         // });
-        $activity = ActivityDetail::orderBy('id', 'desc')->where('activity_status', 1)->get();
+        $activity = ActivityDetail::orderBy('id', 'desc')->where('activity_status', 1)->with('activityPhotos:id,activity_id,activity_img_path')->get();
         // $activityPhoto = ActivityPhoto::orderBy('id', 'desc')->where('activity_id', $activity->id)->get();
         
         // return Inertia::render('Frontend/Index', [ 'response' => rtFormat($activity) ]);

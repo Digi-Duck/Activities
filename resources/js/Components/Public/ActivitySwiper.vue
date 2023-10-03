@@ -12,6 +12,7 @@ export default {
       required: false,
       default: () => ({}),
     },
+    slideData: Object,
   },
   data() {
     return {
@@ -49,12 +50,15 @@ export default {
         <img :src="images.arrowRight" alt="活動照片海報向右移動按鈕">
       </button>
     </div>
-    <Swiper :slide-data="[1, 2, 3, 4, 5, 6, 7, 8]" slides-per-view="5" :btn-prev="prevButton" :btn-next="nextButton">
-      <SwiperSlide class="relative m-auto w-[296px] h-[358px] p-3 bg-white border flex flex-col items-center">
-        <img src="https://picsum.photos/1980/901" class="w-[275px] h-[275px] object-cover" alt="產業類別圖片">
+    {{ slideData }}
+    <Swiper v-slot="{ slide }" :slide-data="slideData ?? []" :slides-per-view=5 :btn-prev="prevButton" :btn-next="nextButton">
+      <div class="relative m-auto w-[296px] p-3 bg-white border flex flex-col items-center">
+        <img :src="slide.activityPhotos[0].activity_img_path" class="w-[275px] h-[275px] object-cover" alt="產業類別圖片">
         <div class="w-full ps-3 flex flex-col gap-1">
           <div class="text-[16px] font-semibold">
-            <slot name="activity_name">活動名稱</slot>
+            {{ slide.activityPhotos[0].activity_img_path }}
+            <slot name="activity_name">活動名稱
+            </slot>
           </div>
           <div class="text-[10px]">
             <slot name="activity_start_time">活動時間</slot>
@@ -67,7 +71,7 @@ export default {
           <img :src="images.heart" class="w-[20px] h-[20px]" alt="收藏人數">
           1
         </div>
-      </SwiperSlide>
+      </div>
     </Swiper>
   </div>
 </template>
