@@ -1,6 +1,6 @@
 <!-- 學員活動報名頁面 -->
-
 <script>
+import { router } from '@inertiajs/vue3';
 export default {
   props: {
     response: {
@@ -12,14 +12,43 @@ export default {
   data() {
     return {
       title: 'Hello World !',
+      formData: {
+        studentName: '',
+        studentPhoneNumber: '',
+        studentEmail: '',
+        studentAdditionalRemark: '',
+      },
     };
   },
-  created() {
+  methods: {
+    submitData() {
+      router.visit(route('registerStore'), {
+        method: 'post',
+        data: { ...this.formData, activity_id: this.response.rt_data.id },
+        preserveState: true,
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire({
+              title: '新增成功',
+              showDenyButton: true,
+              confirmButtonText: '回列表',
+              denyButtonText: '取消',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                router.get(route('index'));
+              }
+            });
+          }
+        },
+      });
+    },
   },
 };
 </script>
 
 <template>
+  <!-- {{ $page.props.auth.user }} -->
+  <hr>
   {{ response.rt_data }}
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
     <CountDown class="absolute mt-[5%] left-[75%]"></CountDown>
@@ -114,7 +143,47 @@ export default {
       <div v-html="response.rt_data.activity_information"></div>
     </div>
     <!-- 學員活動資訊填寫區 -->
-    <ActivityEnroll></ActivityEnroll>
+    <form @submit.prevent="submitData()" action="" class="w-full h-[819px] px-10 py-5 bg-[#A9BCC6] flex flex-col gap-3 text-[24px]">
+      <!-- 填入會員預設資料 -->
+      <div class="w-full h-[30px] flex justify-end items-center gap-3">
+        <div class="w-[274px] h-full bg-white flex justify-center items-center">代入會員資料</div>
+        <input type="checkbox" class="w-[25px] h-[25px] rounded-full" name="" id="">
+      </div>
+      <!-- 填入活動報名資訊 -->
+      <div class="w-full h-[30px] flex gap-[150px]">
+        <div class="w-[274px] h-full bg-white flex justify-center items-center">姓名</div>
+        <slot name="studentName">
+          <input v-model="formData.studentName" type="text" class="w-full" name="" id="">
+        </slot>
+      </div>
+      <div class="w-full h-[30px] flex gap-[150px]">
+        <div class="w-[274px] h-full bg-white flex justify-center items-center">連絡電話</div>
+        <slot name="studentPhoneNumber">
+          <input v-model="formData.studentPhoneNumber" type="tel" class="w-full" name="" id="">
+        </slot>
+      </div>
+      <div class="w-full h-[30px] flex gap-[150px]">
+        <div class="w-[274px] h-full bg-white flex justify-center items-center">電子信箱</div>
+        <slot name="studentEmail">
+          <input v-model="formData.studentEmail" type="email" class="w-full" name="" id="">
+        </slot>
+      </div>
+      <!-- 額外備註的地方 -->
+      <div class="w-full h-[300px] flex flex-col justify-start gap-[25px]">
+        <div class="w-[217.5px] h-[50px] bg-white flex justify-center items-center">額外備註</div>
+        <slot name="studentAdditionalRemark">
+          <textarea v-model="formData.studentAdditionalRemark" name="" id="" class="w-full h-full" cols="30" rows="10" resize="false"></textarea>
+        </slot>
+      </div>
+      <div class="w-full h-[30px] flex gap-[150px]">
+        <div class="w-[274px] h-full bg-white flex justify-center items-center">確認事項</div>
+        <input type="text" class="w-full" name="" id="">
+      </div>
+      <div class="pt-10 w-full flex justify-center gap-5 text-[24px]">
+        <button type="button" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px]">回上一頁</button>
+        <button type="submit" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px]">確認報名</button>
+      </div>
+    </form>
   </section>
 </template>
 

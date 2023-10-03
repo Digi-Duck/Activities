@@ -215,10 +215,10 @@ export default {
           </div>
         </div>
         <!-- Swiper引用 -->
-        <Swiper :slide-data="[formData.activityPhoto]" class="w-[full] h-[1000px]" :btn-prev="prevButton" :btn-next="nextButton">
-          <SwiperSlide v-for="(slide, index) in formData.activityPhoto" :key="index" class="opacity-60 w-full">
+        <Swiper :slide-data="[formData.activityPhoto]" class="w-[full] max-w-[1400px] h-[1000px]" :btn-prev="prevButton" :btn-next="nextButton">
+          <SwiperSlide v-for="(item, index) in formData.activityPhoto" :key="index" class="opacity-60 w-full">
             {{ index + 1 }}測試測試測試測試測試測試測試測試測試
-            <img :slide="slide" :src="slide.activity_img_path" alt="測試圖片">
+            <img :slide="item" :src="item.activity_img_path" alt="測試圖片">
           </SwiperSlide>
         </Swiper>
       </div>

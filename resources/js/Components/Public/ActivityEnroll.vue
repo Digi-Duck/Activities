@@ -6,6 +6,9 @@ export default {
       required: false,
       default: () => ({}),
     },
+    name: String,
+    phone: String,
+    email: String,
   },
   data() {
     return {
@@ -28,20 +31,28 @@ export default {
       <!-- 填入活動報名資訊 -->
       <div class="w-full h-[30px] flex gap-[150px]">
         <div class="w-[274px] h-full bg-white flex justify-center items-center">姓名</div>
-        <input type="text" class="w-full" name="" id="">
+        <slot name="student_name">
+          <input type="text" class="w-full" name="" id="">
+        </slot>
       </div>
       <div class="w-full h-[30px] flex gap-[150px]">
         <div class="w-[274px] h-full bg-white flex justify-center items-center">連絡電話</div>
-        <input type="tel" class="w-full" name="" id="">
+        <slot name="student_phone_number">
+          <input type="tel" class="w-full" name="" id="">
+        </slot>
       </div>
       <div class="w-full h-[30px] flex gap-[150px]">
         <div class="w-[274px] h-full bg-white flex justify-center items-center">電子信箱</div>
-        <input type="email" class="w-full" name="" id="">
+        <slot name="student_email">
+          <input type="email" class="w-full" name="" id="">
+        </slot>
       </div>
       <!-- 額外備註的地方 -->
       <div class="w-full h-[300px] flex flex-col justify-start gap-[25px]">
         <div class="w-[217.5px] h-[50px] bg-white flex justify-center items-center">額外備註</div>
-        <textarea name="" id="" class="w-full h-full" cols="30" rows="10" resize="false"></textarea>
+        <slot name="student_additional_remark">
+          <textarea name="" id="" class="w-full h-full" cols="30" rows="10" resize="false"></textarea>
+        </slot>
       </div>
       <div class="w-full h-[30px] flex gap-[150px]">
         <div class="w-[274px] h-full bg-white flex justify-center items-center">確認事項</div>

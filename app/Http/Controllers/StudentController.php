@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivityDetail;
+use App\Models\RegisterActivity;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -22,9 +23,28 @@ class StudentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        // dd($request->all());
+        $request->validate([
+            'studentName' => 'required',
+            'studentPhoneNumber' => 'required',
+            'studentEmail' => 'required',
+            'activity_id' => 'required',
+        ]);
+        // dd($request->all());
+
+        $register = RegisterActivity::create([
+            'activity_id' => $request->activity_id,
+            'student_id' => $request->user()->userRoleStudent->id,
+            'student_name' => $request->studentName,
+            'student_phone_number' => $request->studentPhoneNumber,
+            'student_email' => $request->studentEmail,
+            'student_additional_remark' => $request->studentAdditionalRemark,
+        ]);
+
+        return back()->with(['message' => rtFormat($register)]);
     }
 
     /**
