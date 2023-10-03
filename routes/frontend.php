@@ -17,5 +17,5 @@ Route::middleware('auth', 'role.weight:2')->prefix('/presenter')->group(function
   Route::get('/activityEdit/{id}', [PresenterController::class, 'activityEdit'])->name('activityEdit');
 });
 
-Route::get('/studentActivityDetails', [StudentController::class, 'index'])->name('studentActivityDetails');
+Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
 

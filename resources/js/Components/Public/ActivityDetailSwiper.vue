@@ -64,8 +64,13 @@ export default {
           </div>
         </div>
         <div class="absolute left-[265px] top-[131px] w-[288px] h-[219px] flex flex-col justify-between items-start">
-          <div class="text-[72px] font-bold">活動名稱</div>
-          <div class="w-[100%] bg-[#ffffff9b] text-[24px]">活動Slogan</div>
+          <div class="text-[72px] font-bold">
+            <slot name="activity_name">活動名稱</slot>
+            <!-- <slot name="activity_name"></slot> -->
+          </div>
+          <div class="w-[100%] bg-[#ffffff9b] text-[24px]">
+            <slot name="activity_info">活動Slogan</slot>
+          </div>
           <button type="button" class="w-[136px] h-[56px] bg-[#FFFFFF] text-[18px] font-semibold">更改圖片</button>
         </div>
         <div class="absolute left-[50px] top-[415px] w-[95%] flex justify-between">

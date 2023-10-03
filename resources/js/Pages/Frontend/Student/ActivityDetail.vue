@@ -22,9 +22,20 @@ export default {
 <template>
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
     <CountDown class="absolute mt-[5%] left-[75%]"></CountDown>
-    <ActivityDetailSwiper></ActivityDetailSwiper>
+    <ActivityDetailSwiper>
+      <template #activity_name>
+        <span>
+          我是活動名稱
+        </span>
+      </template>
+      <template #activity_info>
+        <span>
+          我是活動Slogan
+        </span>
+      </template>
+    </ActivityDetailSwiper>
     <!-- 這裡是活動詳情 -->
-    <div class="w-full h-[811px] bg-[pink]"></div>
+    <div class="w-full h-[811px] bg-[yellow]"></div>
     <!-- 學員活動資訊填寫區 -->
     <ActivityEnroll></ActivityEnroll>
   </section>

@@ -22,7 +22,19 @@ export default {
 <template>
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
     <CountDown class="absolute mt-[5%] left-[75%]"></CountDown>
-    <ActivityDetailSwiper></ActivityDetailSwiper>
+    <ActivityDetailSwiper>
+      <!-- <template #header>
+        <span>
+          我是誰
+        </span> -->
+      </template>
+      <!-- <slot #activity_name>
+        <h3>興大的BootCamp</h3>
+      </slot>
+      <template #activity_info>
+        <h3>興大的Slogan</h3>
+      </template> -->
+    </ActivityDetailSwiper>
     <!-- 這裡是活動詳情 -->
     <div class="w-full h-[811px] bg-[pink]"></div>
     <!-- 學員活動資訊填寫區 -->

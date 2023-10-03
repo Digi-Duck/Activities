@@ -19,7 +19,14 @@ export default {
 </script>
 
 <template>
-  {{ response }}
+  {{ response.rt_data[0] }}
+  <hr>
+  <div class="flex" v-for="(item, index) in response.rt_data" :key="index">
+    <Link class="w-[150px] h-[150px] bg-[pink] rounded-full" :href="route('studentActivityDetails', { id: item.id })">
+      {{ index + 1 }}
+      {{ response.rt_data[index].activity_presenter }}
+    </Link>
+  </div>
   <section class="flex justify-center items-center flex-col gap-5">
     <!-- 熱門活動Swiper -->
     <div class="relative w-full h-[602px] bg-[#031926] overflow-hidden">
@@ -31,9 +38,9 @@ export default {
           活動Slogan
         </div>
       </div>
-      <Swiper :slide-data="[1, 2, 3, 4, 5, 6]" slides-per-view="4" space-between="30" class="absolute -left-[50px] top-[400px] rotate-[10deg]" :btn-prev="$refs.btnPrev" :btn-next="$refs.btnNext">
+      <Swiper :slide-data="response.rt_data[0]" slides-per-view="4" space-between="30" class="absolute -left-[50px] top-[400px] rotate-[10deg]" :btn-prev="$refs.btnPrev" :btn-next="$refs.btnNext">
         <SwiperSlide>
-          <img src="https://picsum.photos/1980/901" class="w-[512px] h-[384px] object-cover" alt="產業類別圖片">
+          <img :src="response.rt_data[0]" class="w-[512px] h-[384px] object-cover" alt="產業類別圖片">
         </SwiperSlide>
       </Swiper>
     </div>

@@ -77,7 +77,7 @@ export default {
               denyButtonText: '取消',
             }).then((result) => {
               if (result.isConfirmed) {
-                router.get(route('activityDetails'));
+                router.get(route('index'));
               }
             });
           }
@@ -216,9 +216,9 @@ export default {
         </div>
         <!-- Swiper引用 -->
         <Swiper :slide-data="[formData.activityPhoto]" class="w-[full] h-[1000px]" :btn-prev="prevButton" :btn-next="nextButton">
-          <SwiperSlide v-for="(item, index) in formData.activityPhoto" :key="index" class="opacity-60 w-full">
+          <SwiperSlide v-for="(slide, index) in formData.activityPhoto" :key="index" class="opacity-60 w-full">
             {{ index + 1 }}測試測試測試測試測試測試測試測試測試
-            <img :src="item.activity_img_path" alt="測試圖片">
+            <img :slide="slide" :src="slide.activity_img_path" alt="測試圖片">
           </SwiperSlide>
         </Swiper>
       </div>

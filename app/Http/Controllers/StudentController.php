@@ -12,6 +12,7 @@ class StudentController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+    // 這是各活動系項
     {
         //
         $activity = ActivityDetail::get();
