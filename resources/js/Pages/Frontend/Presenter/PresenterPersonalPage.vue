@@ -30,6 +30,11 @@ export default {
   </div>
   <section id="presenter-personal-page" class="flex flex-col items-center">
     <ActivitySwiper>
+      <template #activity_title_name>
+        <span>
+          近期活動
+        </span>
+      </template>
       <template #activity_name>
         <span>
           我是新的活動名稱
@@ -79,6 +84,11 @@ export default {
       </template>
     </ActivityDetailTable>
     <ActivitySwiper>
+      <template #activity_title_name>
+        <span>
+          已上完的活動
+        </span>
+      </template>
       <template #activity_name>
         <span>
           我是上過的活動名稱

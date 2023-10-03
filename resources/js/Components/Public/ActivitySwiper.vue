@@ -37,7 +37,9 @@ export default {
 <template>
   <div id="activity-swiper" class="relative p-5 flex flex-col items-center">
     <div class="pb-5 text-[48px] self-start ps-[400px]">
-      近期活動
+      <slot name="activity_title_name">
+        近期活動
+      </slot>
     </div>
     <div class="absolute top-[50%] z-10 w-[97.5%] flex justify-between">
       <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] rounded-[50px] bg-white" type="button">
