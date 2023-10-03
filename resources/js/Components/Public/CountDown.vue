@@ -20,7 +20,9 @@ export default {
 <template>
   <section id="count-down">
     <div class="z-50 w-[300px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">倒數
-      <div class="ps-5 flex flex-row">10天！</div>
+      <div class="ps-5 flex flex-row">
+        <slot #count-down>10天！</slot>
+      </div>
     </div>
   </section>
 </template>

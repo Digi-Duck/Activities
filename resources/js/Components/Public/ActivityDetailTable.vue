@@ -51,7 +51,7 @@ export default {
           活動名稱
         </div>
         <div class="flex-initial w-[10%] border bg-[#82ACC2] flex justify-center items-center text-[24px]">
-          主講人
+          <slot name="activity_title_type">活動類型</slot>
         </div>
         <div class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
           報名截止時間
@@ -63,16 +63,23 @@ export default {
       <!-- 詳細搜尋內容 -->
       <div class="w-full h-[53px] flex">
         <div class="flex-none w-[50%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
-          活動名稱
+          <slot name="activity_name">
+            活動名稱
+          </slot>
         </div>
         <div class="flex-initial w-[10%] border bg-[#82acc27d] flex justify-center items-center text-[16px] font-semibold">
-          主講人
+          <slot name="activity_type">
+            活動類型
+          </slot>
         </div>
         <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
-          報名截止時間
+          <slot name="activity_end_registration_time">
+            報名截止時間
+          </slot>
         </div>
         <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
-          人數/狀/況
+          開課門檻:<slot name="activity_lowest_number_of_people">開課門檻</slot>
+          人數限制:<slot name="activity_highest_number_of_people">人數限制</slot>
         </div>
       </div>
       <Pagination :pagination-data="paginationData" class="pt-3" />

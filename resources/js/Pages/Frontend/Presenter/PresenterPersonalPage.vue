@@ -46,7 +46,38 @@ export default {
         </span>
       </template>
     </ActivitySwiper>
-    <ActivityDetailTable></ActivityDetailTable>
+    <ActivityDetailTable>
+      <template #activity_title_type>
+        <span>
+          活動類型
+        </span>
+      </template>
+      <template #activity_name>
+        <span>
+          我自己寫活動名稱
+        </span>
+      </template>
+      <template #activity_type>
+        <span>
+          我自己寫活動類型
+        </span>
+      </template>
+      <template #activity_end_registration_time>
+        <span>
+          我自己寫活動時間
+        </span>
+      </template>
+      <template #activity_lowest_number_of_people>
+        <span>
+          50
+        </span>
+      </template>
+      <template #activity_highest_number_of_people>
+        <span>
+          150
+        </span>
+      </template>
+    </ActivityDetailTable>
     <ActivitySwiper>
       <template #activity_name>
         <span>
