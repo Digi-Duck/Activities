@@ -29,9 +29,41 @@ export default {
     </Link>
   </div>
   <section id="presenter-personal-page" class="flex flex-col items-center">
-    <ActivitySwiper></ActivitySwiper>
+    <ActivitySwiper>
+      <template #activity_name>
+        <span>
+          我是新的活動名稱
+        </span>
+      </template>
+      <template #activity_start_time>
+        <span>
+          我是新的活動時間
+        </span>
+      </template>
+      <template #activity_address>
+        <span>
+          我是新的活動地點
+        </span>
+      </template>
+    </ActivitySwiper>
     <ActivityDetailTable></ActivityDetailTable>
-    <ActivitySwiper></ActivitySwiper>
+    <ActivitySwiper>
+      <template #activity_name>
+        <span>
+          我是上過的活動名稱
+        </span>
+      </template>
+      <template #activity_start_time>
+        <span>
+          我是上過的活動時間
+        </span>
+      </template>
+      <template #activity_address>
+        <span>
+          我是上過的活動地點
+        </span>
+      </template>
+    </ActivitySwiper>
   </section>
 </template>
 

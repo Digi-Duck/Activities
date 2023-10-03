@@ -17,10 +17,10 @@ class PresenterController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $activity = ActivityDetail::orderBy('id','desc')->get()->map(function($item) {
+        $activity = ActivityDetail::orderBy('id','desc')->where('presenter_id',$request->user()->UserRolePresenter->id)->get()->map(function($item) {
             $item->timeFormat = $item->created_at->format('Y/m/d');
             return $item;
         });
