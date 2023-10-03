@@ -57,7 +57,8 @@ export default {
     <!-- 建立活動資訊填寫 -->
     <div class="relative mt-5 flex flex-col">
       <div class="relative w-full z-10">
-        <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">活動分類
+        <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">
+          <slot name="activity_type">活動類型</slot>
           <div id="triangle" class="absolute left-[175px] -top-[0px] w-[10px] h-[10px]">
             <div id="triangle-top"></div>
             <div id="triangle-bottom"></div>
@@ -66,7 +67,6 @@ export default {
         <div class="absolute left-[265px] top-[131px] w-[288px] h-[219px] flex flex-col justify-between items-start">
           <div class="text-[72px] font-bold">
             <slot name="activity_name">活動名稱</slot>
-            <!-- <slot name="activity_name"></slot> -->
           </div>
           <div class="w-[100%] bg-[#ffffff9b] text-[24px]">
             <slot name="activity_info">活動Slogan</slot>
@@ -85,39 +85,57 @@ export default {
         <div class="absolute left-[100px] top-[495px] w-[90%] h-[289px] pt-[10px] px-[60px] bg-[#f2f2f2b2] flex flex-wrap gap-5">
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
             <img :src="images.lowestNumberOfPeople" alt="開課門檻" class="w-[10%] pe-1">
-            <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入開課門檻">
+            <div type="text" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <slot name="activity_lowest_number_of_people">開課門檻</slot>
+            </div>
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
             <img :src="images.highestNumberOfPeople" alt="人數上限" class="w-[10%] pe-1">
-            <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入人數上限">
+            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <slot name="activity_highest_number_of_people">人數上限</slot>
+            </div>
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
             <img :src="images.registerTime" alt="報名開始時間" class="w-[10%] pe-1">
-            <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入報名開始時間">
+            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <slot name="activity_start_registration_time">報名開始時間</slot>
+            </div>
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
             <img :src="images.registerTime" alt="報名截止時間" class="w-[10%] pe-1">
-            <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入報名截止時間">
+            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <slot name="activity_end_registration_time">報名截止時間</slot>
+            </div>
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
             <img :src="images.activityPresenter" alt="主講者" class="w-[10%] pe-1">
-            <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入主講者">
+            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <slot name="activity_presenter">講者</slot>
+            </div>
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activityStartTime" alt="活動開始時間" class="w-[10%] pe-1">
-            <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請點選活動開始時間">
+            <img :src="images.activityStartTime" alt="開始時間" class="w-[10%] pe-1">
+            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <slot name="activity_start_time">開始時間</slot>
+            </div>
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activityEndTime" alt="活動結束時間" class="w-[10%] pe-1">
-            <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請點選活動結束時間">
+            <img :src="images.activityEndTime" alt="結束時間" class="w-[10%] pe-1">
+            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <slot name="activity_end_time">結束時間</slot>
+            </div>
           </div>
           <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activityAddress" alt="活動地點" class="w-[10%] pe-1">
-            <input type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold" placeholder="請輸入活動地點">
+            <img :src="images.activityAddress" alt="地點" class="w-[10%] pe-1">
+            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <slot name="activity_address">地點</slot>
+            </div>
           </div>
           <div class="w-full h-[56px] flex items-center bg-[#ffffff5a] rounded-[14px] px-2">
             <img :src="images.exclamationTriangle" alt="參加須知" class="w-[40px] h-[40px]">
-            <input type="text" name="" id="" placeholder="請輸入參加須知" class="w-full">
+            <div type="text" name="" id="" placeholder="請輸入參加須知" class="w-full">
+              <slot name="activity_instruction">參加須知</slot>
+            </div>
           </div>
         </div>
       </div>

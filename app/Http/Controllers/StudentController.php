@@ -11,11 +11,11 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     // 這是各活動系項
     {
         //
-        $activity = ActivityDetail::get();
+        $activity = ActivityDetail::find($id);
         return Inertia::render('Frontend/Student/ActivityDetail', [ 'response' => rtFormat($activity) ]);
     }
 
