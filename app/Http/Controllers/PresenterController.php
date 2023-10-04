@@ -12,7 +12,6 @@ class PresenterController extends Controller
 {
     public function __construct(protected FilesService $filesService)
     {
-        
     }
     /**
      * Display a listing of the resource.
@@ -20,12 +19,13 @@ class PresenterController extends Controller
     public function index(Request $request)
     {
         //
-        $activity = ActivityDetail::orderBy('id','desc')->where('presenter_id',$request->user()->UserRolePresenter->id)->get()->map(function($item) {
+        $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRolePresenter->id)->get()->map(function ($item) {
             $item->timeFormat = $item->created_at->format('Y/m/d');
             return $item;
         });
 
-        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', [ 'response' => rtFormat($activity)]);;
+        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', [ 'response' => rtFormat($activity)]);
+        ;
     }
 
     /**

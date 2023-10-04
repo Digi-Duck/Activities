@@ -19,7 +19,7 @@ class IndexController extends Controller
         // });
         $activity = ActivityDetail::orderBy('id', 'desc')->where('activity_status', 1)->with('activityPhotos:id,activity_id,activity_img_path')->get();
         // $activityPhoto = ActivityPhoto::orderBy('id', 'desc')->where('activity_id', $activity->id)->get();
-        
+
         // return Inertia::render('Frontend/Index', [ 'response' => rtFormat($activity) ]);
         return Inertia::render('Frontend/Index', [ 'response' => rtFormat($activity)]);
     }
@@ -30,7 +30,7 @@ class IndexController extends Controller
     //     return Inertia::render('Frontend/GlobalActivityDetail', [ 'response' => rtFormat($activity) ]);
     //     // return Inertia::render('Frontend/GlobalActivityDetail');
     // }
-    
+
     public function activityClassification()
     {
         return Inertia::render('Frontend/ActivityClassification');

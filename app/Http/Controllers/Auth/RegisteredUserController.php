@@ -52,15 +52,13 @@ class RegisteredUserController extends Controller
                 'user_name' => $user->name,
                 'phone_number' => '',
             ]);
-        }
-        elseif ($user->user_role === '2') {
+        } elseif ($user->user_role === '2') {
             UserRolePresenter::create([
                 'user_id' => $user->id,
                 'user_name' => $user->name,
                 'phone_number' => '',
             ]);
-        }
-        else {
+        } else {
             UserRoleAdmin::create([
                 'user_id' => $user->id,
                 'user_name' => $user->name,
