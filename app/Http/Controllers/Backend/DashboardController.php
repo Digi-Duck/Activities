@@ -12,4 +12,16 @@ class DashboardController extends Controller
     {
         return Inertia::render('Backend/Dashboard');
     }
+    public function activityMange()
+    {
+        return Inertia::render('Backend/ActivityManage');
+    }
+    public function studentMange()
+    {
+        return Inertia::render('Backend/StudentManage');
+    }
+    public function presenterMange()
+    {
+        return Inertia::render('Backend/PresenterManage');
+    }
 }
