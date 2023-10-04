@@ -138,7 +138,7 @@ export default {
             <div class="w-[100%] bg-[#ffffff9b] text-[24px]">
               <input v-model="formData.activityInfo" type="text" name="activity_info" id="" class="border-none text-[24px] font-semibold" required placeholder="請輸入活動Slogan">
             </div>
-            <label class="border border-dashed w-[136px] h-[56px] aspect-[4/3] bg-[#FFF] rounded-[8px] flex justify-center items-center text-[16px] text-[#072F54] cursor-pointer">
+            <label class="border border-dashed w-[136px] h-[56px] aspect-[4/3] bg-[#FFF] rounded-[8px] flex justify-center items-center text-[16px] text-[#072F54] font-semibold cursor-pointer">
               新增圖片
               <input type="file" class="hidden" name="" id="" @change="(event) => uploadOtherImage(event)">
             </label>
