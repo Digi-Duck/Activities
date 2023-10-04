@@ -18,8 +18,8 @@ Route::middleware('auth', 'role.weight:2')->prefix('/presenter')->group(function
     Route::get('/activityScanner', [PresenterController::class, 'activityScanner'])->name('activityScanner');
 });
 
+Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
 Route::middleware('auth', 'role.weight:3')->prefix('/student')->group(function () {
-    Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
     Route::get('/personalPage', [StudentController::class, 'personalPage'])->name('studentPersonalPage');
     Route::post('/registerStore', [StudentController::class, 'create'])->name('registerStore');
 });

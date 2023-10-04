@@ -20,38 +20,37 @@ export default {
 </script>
 
 <template>
-  {{ $props.response.rt_data }}
-  <div v-for="(item, index) in response.rt_data" :key="item.id">
+  <!-- {{ response.rt_data }} -->
+  <!-- {{ $props.response.rt_data }} -->
+  <!-- <div v-for="(item, index) in response.rt_data" :key="item.id">
     <div>{{ index + 1 }}</div>
     <Link :href="route('activityEdit', { id: item.id })">
       <button type="button" class="border border-black px-3 py-2 rounded-[5px]">編輯</button>
       <div class="w-[300px] h-[300px] bg-[blue]">{{ item.activity_name }}</div>
     </Link>
-  </div>
+  </div> -->
   <section id="presenter-personal-page" class="flex flex-col items-center">
-    <ActivitySwiper>
+    <!-- {{ response.rt_data.registerActivity }} -->
+    <!-- <hr> -->
+    <!-- {{ response.rt_data.regiterActivityDetails }} -->
+    <!-- <hr> -->
+    <!-- {{ response.rt_data.activity }} -->
+    <ActivitySwiper :slide-data="response.rt_data.regiterActivityDetails">
       <template #activity_title_name>
         <span>
-          近期活動
-        </span>
-      </template>
-      <template #activity_name>
-        <span>
-          我是新的活動名稱
-        </span>
-      </template>
-      <template #activity_start_time>
-        <span>
-          我是新的活動時間
-        </span>
-      </template>
-      <template #activity_address>
-        <span>
-          我是新的活動地點
+          已報名活動
         </span>
       </template>
     </ActivitySwiper>
-    <ActivityDetailTable>
+    <!-- {{ response.rt_data.favoriteActivity }} -->
+    <ActivitySwiper :slide-data="response.rt_data.favoriteActivityDetails">
+      <template #activity_title_name>
+        <span>
+          已收藏活動
+        </span>
+      </template>
+    </ActivitySwiper>
+    <ActivityDetailTable :table-data="response.rt_data.allActivityDetails">
       <template #activity_title_type>
         <span>
           活動類型
@@ -86,7 +85,7 @@ export default {
     <ActivitySwiper>
       <template #activity_title_name>
         <span>
-          已上完的活動
+          已上過的活動
         </span>
       </template>
       <template #activity_name>

@@ -33,7 +33,7 @@ export default {
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
             Swal.fire({
-              title: '新增成功',
+              title: '報名成功',
               showDenyButton: true,
               confirmButtonText: '回列表',
               denyButtonText: '取消',

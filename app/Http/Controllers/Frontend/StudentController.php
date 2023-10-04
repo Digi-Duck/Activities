@@ -27,9 +27,23 @@ class StudentController extends Controller
         //     $item->timeFormat = $item->created_at->format('Y/m/d');
         //     return $item;
         // });
+        $registerActivity = StudentActivity::where('student_id', $request->user()->UserRoleStudent->id)->where('activity_type',2)->with('registerActivities')->first();
+        $regiterActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id',$registerActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
 
+        $favoriteActivity = StudentActivity::where('student_id', $request->user()->UserRoleStudent->id)->where('activity_type',1)->with('registerActivities')->first();
+        $favoriteActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id',$favoriteActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
+
+        $allActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id',$favoriteActivity->id)->orwhere('id',$registerActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
+
+        $data = (object)[
+            'registerActivity' => $registerActivity,
+            'regiterActivityDetails' => $regiterActivityDetails,
+            'favoriteActivity' => $favoriteActivity,
+            'favoriteActivityDetails' => $favoriteActivityDetails,
+            'allActivityDetails' => $allActivityDetails,
+        ];
         // return Inertia::render('Frontend/Presenter/PresenterPersonalPage', [ 'response' => rtFormat($activity)]);
-        return Inertia::render('Frontend/Student/StudentPersonalPage');
+        return Inertia::render('Frontend/Student/StudentPersonalPage', [ 'response' => rtFormat($data)]);
     }
 
     /**
@@ -44,15 +58,18 @@ class StudentController extends Controller
             'studentPhoneNumber' => 'required',
             'studentEmail' => 'required',
             'activity_id' => 'required',
+            // 'student_id' => 
         ]);
         // dd($request->all());
+
+        // 判斷是否已經出現在table裡面
 
         // dd($request->all());
         // dd($request->activity_id);
         StudentActivity::create([
             'student_id' => $request->user()->userRoleStudent->id,
             'activity_id' => $request->activity_id,
-            'activity_type' => $request->registered,
+            'activity_type' => $request->favorited,
         ]);
         $register = RegisterActivity::create([
             'activity_id' => $request->activity_id,
