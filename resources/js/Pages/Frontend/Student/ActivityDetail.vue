@@ -19,8 +19,8 @@ export default {
         studentAdditionalRemark: '',
       },
       activityType: {
-        favorite: 1,
-        register: 2,
+        favorited: 1,
+        registered: 2,
       },
     };
   },

@@ -48,10 +48,11 @@ class StudentController extends Controller
         // dd($request->all());
 
         // dd($request->all());
+        // dd($request->activity_id);
         StudentActivity::create([
             'student_id' => $request->user()->userRoleStudent->id,
             'activity_id' => $request->activity_id,
-            'activity_type' => $request->register,
+            'activity_type' => $request->registered,
         ]);
         $register = RegisterActivity::create([
             'activity_id' => $request->activity_id,

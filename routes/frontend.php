@@ -15,6 +15,7 @@ Route::middleware('auth', 'role.weight:2')->prefix('/presenter')->group(function
     Route::get('/createActivity', [PresenterController::class, 'createActivity'])->name('createActivity');
     Route::post('/activityStore', [PresenterController::class, 'activityStore'])->name('activityStore');
     Route::get('/activityEdit/{id}', [PresenterController::class, 'activityEdit'])->name('activityEdit');
+    Route::get('/activityScanner', [PresenterController::class, 'activityScanner'])->name('activityScanner');
 });
 
 Route::middleware('auth', 'role.weight:3')->prefix('/student')->group(function () {

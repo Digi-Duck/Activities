@@ -114,6 +114,12 @@ class PresenterController extends Controller
     {
         //
     }
+    
+    public function activityScanner()
+    {
+        
+        return Inertia::render('Frontend/Presenter/ScannerPage');
+    }
 
     /**
      * Show the form for editing the specified resource.

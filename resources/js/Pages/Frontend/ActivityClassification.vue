@@ -20,6 +20,8 @@ export default {
 </script>
 
 <template>
+  <!-- {{ response.rt_data }} -->
+  {{ response.rt_data }}
   <section class="flex flex-col px-[250px] pt-[75px]">
     <!-- 功能按鈕 -->
     <div class="w-full pb-3 flex flex-col">
@@ -38,17 +40,18 @@ export default {
     </div>
     <!-- 主要卡片區 -->
     <!-- 正轉卡片 -->
-    <div class="pt-3 pb-3 border-b-8 flex flex-col items-center">
+    <Link v-for="(item, index) in response.rt_data.activity" :key="index" :href="route('studentActivityDetails', { id: item.id })" class="pt-3 pb-3 border-b-8 flex flex-col items-center">
+      {{ item.activityPhotos }}
       <div class="w-full h-[345px] bg-pink-500 flex flex-row">
-        <img src="" alt="活動封面圖" class="w-[200%] bg-slate-500">
+        <img :src="item.activityPhotos[0].activity_img_path" alt="活動封面圖" class="w-[300%] max-w-[937.438px] object-fill bg-slate-500">
         <div class="w-full h-[345px] bg-yellow-500 p-16 flex flex-col justify-between">
-          <div class="w-full text-white text-[24px]">活動名稱</div>
-          <div class="w-full text-black text-[14px]">活動截止時間</div>
-          <div class="w-full text-white text-[14px]">活動info</div>
+          <div class="w-full text-white text-[24px]">{{ item.activity_name }}</div>
+          <div class="w-full text-black text-[14px]">{{ item.activity_end_registration_time }}</div>
+          <div class="w-full text-white text-[14px]">{{ item.activity_info }}</div>
           <button type="button" class="text-black bg-[#a9bcc64f]">活動詳情</button>
         </div>
       </div>
-    </div>
+    </Link>
     <!-- 逆轉卡片 -->
     <div class="pt-3 pb-3 border-b-8 flex flex-col items-center">
       <div class="w-full h-[345px] bg-pink-500 flex flex-row">

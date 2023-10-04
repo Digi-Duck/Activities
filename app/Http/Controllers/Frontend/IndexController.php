@@ -39,7 +39,14 @@ class IndexController extends Controller
 
     public function activityClassification()
     {
-        return Inertia::render('Frontend/ActivityClassification');
+        $activity = ActivityDetail::orderBy('id', 'desc')->where('activity_status', 1)->with('activityPhotos:id,activity_id,activity_img_path')->get();
+        // return Inertia::render('Frontend/ActivityClassification');
+        $acitvityPhoto = ActivityPhoto::orderBy('id', 'desc')->first();
+        $data = (object)[
+            'activity' => $activity,
+            'acitvityPhoto' => $acitvityPhoto,
+        ];
+        return Inertia::render('Frontend/ActivityClassification', ['response' => rtFormat($data)]);
     }
 
     public function test()
