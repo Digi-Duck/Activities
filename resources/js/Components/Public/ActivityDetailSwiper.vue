@@ -19,7 +19,7 @@ export default {
       required: false,
       default: () => ({}),
     },
-    slideData: Object,
+    slideData: Array,
   },
   data() {
     return {
@@ -45,11 +45,6 @@ export default {
     this.prevButton = this.$refs.btnPrev;
     this.nextButton = this.$refs.btnNext;
   },
-  // methods: {
-  //   test(event) {
-  //     console.log(event);
-  //   },
-  // },
 };
 </script>
 
@@ -140,10 +135,11 @@ export default {
           </div>
         </div>
       </div>
-      <Swiper v-slot="{ slide }" :slide-data="slideData ?? []" class="w-[full] max-w-[1600px] h-[1000px]" :btn-prev="prevButton" :btn-next="nextButton">
-        <div class="opacity-60 w-full flex justify-center items-center">
+      <!-- {{ slideData[0].activityPhotos }} -->
+      <Swiper v-slot="{ slide }" :slide-data="slideData[0].activityPhotos ?? []" class="w-[full] max-w-[1600px] h-full max-h-[900px]" :btn-prev="prevButton" :btn-next="nextButton">
+        <div class="opacity-60 w-full h-full flex justify-center items-center">
           <!-- {{ slide }} -->
-          <img :src="slide.activityPhotos[0].activity_img_path" alt="產業類別圖片">
+          <img :src="slide.activity_img_path" class="w-full h-full" alt="產業類別圖片">
         </div>
       </Swiper>
     </div>

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use App\Models\ActivityDetail;
 use App\Models\ActivityPhoto;
 use App\Services\FilesService;

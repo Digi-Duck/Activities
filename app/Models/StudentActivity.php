@@ -41,9 +41,9 @@ class StudentActivity extends Model
         'activity_type'
     ];
 
-    public function userRolePresenter()
+    public function registerActivities()
     {
-        return $this->belongsTo(UserRolePresenter::class, 'activity_id');
+        return $this->belongsTo(RegisterActivity::class, 'activity_id');
     }
 
     public function userRoleStudent()

@@ -18,10 +18,16 @@ class IndexController extends Controller
         //     return $item;
         // });
         $activity = ActivityDetail::orderBy('id', 'desc')->where('activity_status', 1)->with('activityPhotos:id,activity_id,activity_img_path')->get();
+        $hottestActivity = ActivityDetail::orderBy('id', 'desc')->where('activity_status', 1)->with('activityPhotos:id,activity_id,activity_img_path')->first();
         // $activityPhoto = ActivityPhoto::orderBy('id', 'desc')->where('activity_id', $activity->id)->get();
 
+        $data = (object)[
+            'activity' => $activity,
+            'hottestActivity' => $hottestActivity,
+        ];
+
         // return Inertia::render('Frontend/Index', [ 'response' => rtFormat($activity) ]);
-        return Inertia::render('Frontend/Index', [ 'response' => rtFormat($activity)]);
+        return Inertia::render('Frontend/Index', ['response' => rtFormat($data)]);
     }
 
     // public function globalActivityDetails($id)

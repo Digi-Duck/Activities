@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\IndexController;
-use App\Http\Controllers\PresenterController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Frontend\PresenterController;
+use App\Http\Controllers\Frontend\StudentController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
@@ -19,5 +19,6 @@ Route::middleware('auth', 'role.weight:2')->prefix('/presenter')->group(function
 
 Route::middleware('auth', 'role.weight:3')->prefix('/student')->group(function () {
     Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
+    Route::get('/personalPage', [StudentController::class, 'personalPage'])->name('studentPersonalPage');
     Route::post('/registerStore', [StudentController::class, 'create'])->name('registerStore');
 });

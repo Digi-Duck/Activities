@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\ActivityDetail;
 use App\Models\RegisterActivity;
-use Illuminate\Http\Request;
+use App\Models\StudentActivity;
 use Inertia\Inertia;
 
 class StudentController extends Controller
@@ -16,8 +18,18 @@ class StudentController extends Controller
     public function index($id)
     {
         //
-        $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->get();
+        $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->first();
         return Inertia::render('Frontend/Student/ActivityDetail', [ 'response' => rtFormat($activity) ]);
+    }
+    public function personalPage(Request $request)
+    {
+        // $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRoleStudent->id)->get()->map(function ($item) {
+        //     $item->timeFormat = $item->created_at->format('Y/m/d');
+        //     return $item;
+        // });
+
+        // return Inertia::render('Frontend/Presenter/PresenterPersonalPage', [ 'response' => rtFormat($activity)]);
+        return Inertia::render('Frontend/Student/StudentPersonalPage');
     }
 
     /**
@@ -35,6 +47,12 @@ class StudentController extends Controller
         ]);
         // dd($request->all());
 
+        // dd($request->all());
+        StudentActivity::create([
+            'student_id' => $request->user()->userRoleStudent->id,
+            'activity_id' => $request->activity_id,
+            'activity_type' => $request->register,
+        ]);
         $register = RegisterActivity::create([
             'activity_id' => $request->activity_id,
             'student_id' => $request->user()->userRoleStudent->id,
@@ -43,6 +61,7 @@ class StudentController extends Controller
             'student_email' => $request->studentEmail,
             'student_additional_remark' => $request->studentAdditionalRemark,
         ]);
+
 
         return back()->with(['message' => rtFormat($register)]);
     }
