@@ -1,6 +1,7 @@
 <!-- 學員活動報名頁面 -->
 <script>
 import { router } from '@inertiajs/vue3';
+import Swal from 'sweetalert2';
 export default {
   props: {
     response: {

@@ -84,7 +84,7 @@ export default {
     <!-- 活動行事曆 -->
     <div class="w-full h-[340px] bg-white"></div>
     <!-- 最夯活動Banner -->
-    <div class="w-[1440px] h-[765px] pt-[38px] bg-[#F3F3F1] flex flex-col justify-between items-center">
+    <div v-if="response.rt_data.hottestActivity" class="w-[1440px] h-[765px] pt-[38px] bg-[#F3F3F1] flex flex-col justify-between items-center">
       <!-- 活動快速資訊 -->
       <div class="text-[17px] flex gap-1">
         <!-- 活動類型 -->
@@ -137,8 +137,10 @@ export default {
         <div class="absolute end-0 w-[770px] h-full rounded-[64px] bg-blue-600"></div>
       </div>
     </div>
+    <div v-else></div>
 
     <ActivitySwiper :slide-data="response.rt_data.activity">
+
     </ActivitySwiper>
 
     <!-- 近期活動查詢表 -->

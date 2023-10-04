@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('student_id')->references('id')->on('user_role_students')->onDelete('cascade');
             $table->unsignedBigInteger('activity_id')->comment('活動id');
             // user_id會對應到users的id欄位，並在users的id欄位被刪除時，user_id也會同時被刪除
-            $table->foreign('activity_id')->references('id')->on('user_role_presenters')->onDelete('cascade');
+            $table->foreign('activity_id')->references('id')->on('activity_details')->onDelete('cascade');
             $table->integer('activity_type')->comment('1:已收藏的活動/2:已報名的活動');
         });
     }

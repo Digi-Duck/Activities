@@ -98,6 +98,12 @@ class ActivityDetail extends Model
         return $this->hasMany(RegisterActivity::class, 'activity_id');
     }
 
+    public function studentActivities()
+    {
+        return $this->hasMany(StudentActivity::class, 'activity_id');
+    }
+
+
     public function userBehavior()
     {
         return $this->hasMany(UserBehavior::class, 'type_id');

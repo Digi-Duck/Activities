@@ -27,13 +27,13 @@ class StudentController extends Controller
         //     $item->timeFormat = $item->created_at->format('Y/m/d');
         //     return $item;
         // });
-        $registerActivity = StudentActivity::where('student_id', $request->user()->UserRoleStudent->id)->where('activity_type',2)->with('registerActivities')->first();
-        $regiterActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id',$registerActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
+        $registerActivity = StudentActivity::where('student_id', $request->user()->UserRoleStudent->id)->where('activity_type', 2)->with('registerActivities')->first();
+        $regiterActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id', $registerActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
 
-        $favoriteActivity = StudentActivity::where('student_id', $request->user()->UserRoleStudent->id)->where('activity_type',1)->with('registerActivities')->first();
-        $favoriteActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id',$favoriteActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
+        $favoriteActivity = StudentActivity::where('student_id', $request->user()->UserRoleStudent->id)->where('activity_type', 1)->with('registerActivities')->first();
+        $favoriteActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id', $favoriteActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
 
-        $allActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id',$favoriteActivity->id)->orwhere('id',$registerActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
+        $allActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id', $favoriteActivity->id)->orwhere('id', $registerActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
 
         $data = (object)[
             'registerActivity' => $registerActivity,
@@ -58,7 +58,7 @@ class StudentController extends Controller
             'studentPhoneNumber' => 'required',
             'studentEmail' => 'required',
             'activity_id' => 'required',
-            // 'student_id' => 
+            // 'student_id' =>
         ]);
         // dd($request->all());
 
