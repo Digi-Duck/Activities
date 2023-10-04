@@ -11,6 +11,7 @@ import registerTime from '/images/icon/register_time.svg';
 import exclamationTriangle from '/images/icon/exclamation_triangle.svg';
 import arrowLeft from '/images/icon/icon-arrow-left.svg';
 import arrowRight from '/images/icon/icon-arrow-right.svg';
+import registeredPeople from '/images/icon/user-group-solid.svg';
 
 export default {
   props: {
@@ -37,6 +38,7 @@ export default {
         exclamationTriangle,
         arrowLeft,
         arrowRight,
+        registeredPeople,
       },
     };
   },
@@ -55,16 +57,16 @@ export default {
       <div class="relative w-full z-10">
         <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">
           <slot name="activity_type">活動類型</slot>
-          <div id="triangle" class="absolute left-[175px] -top-[0px] w-[10px] h-[10px]">
+          <div id="triangle" class="absolute left-[175px] -top-[0px] w-[10px] h-[10px] border-s">
             <div id="triangle-top"></div>
             <div id="triangle-bottom"></div>
           </div>
         </div>
-        <div class="absolute left-[265px] top-[131px] w-[288px] h-[219px] flex flex-col justify-between items-start">
+        <div class="absolute left-[265px] top-[131px] w-[full] h-[219px] flex flex-col justify-between items-start">
           <div class="text-[72px] font-bold">
             <slot name="activity_name">活動名稱</slot>
           </div>
-          <div class="w-[100%] bg-[#ffffff9b] text-[24px]">
+          <div class="w-full bg-[#ffffff9b] text-[24px]">
             <slot name="activity_info">活動Slogan</slot>
           </div>
           <!-- <button type="button" class="w-[136px] h-[56px] bg-[#FFFFFF] text-[18px] font-semibold">更改圖片</button> -->
@@ -127,11 +129,23 @@ export default {
               <slot name="activity_address">地點</slot>
             </div>
           </div>
-          <div class="w-full h-[56px] flex items-center bg-[#ffffff5a] rounded-[14px] px-2">
-            <img :src="images.exclamationTriangle" alt="參加須知" class="w-[40px] h-[40px]">
-            <div type="text" name="" id="" placeholder="請輸入參加須知" class="w-full">
-              <slot name="activity_instruction">參加須知</slot>
+          <div class="w-full h-[56px] flex items-center rounded-[14px] px-2">
+            <!-- 活動須知 -->
+            <div class="flex w-[50%]">
+              <img :src="images.exclamationTriangle" alt="參加須知" class="w-[40px] h-[40px]">
+              <div type="text" name="" id="" placeholder="請輸入參加須知" class="w-full">
+                <slot name="activity_instruction">參加須知</slot>
+              </div>
             </div>
+            <figure class="w-[45%] h-[90%] text-[30px] font-semibold flex justify-center items-center">
+              <img :src="images.registeredPeople" class="w-[15%] p-1" alt="">
+              已報名人數:
+            </figure>
+            <!-- <div class="w-[25%] h-[90%] flex justify-center items-center">
+              <div class="w-[208px] h-[56px] bg-[#072F54] rounded-[8px] text-[20px] text-white font-semibold flex justify-center items-center">
+                立即加入
+              </div>
+            </div> -->
           </div>
         </div>
       </div>

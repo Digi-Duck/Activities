@@ -71,10 +71,9 @@ export default {
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
             Swal.fire({
-              title: '新增成功',
-              showDenyButton: true,
-              confirmButtonText: '回列表',
-              denyButtonText: '取消',
+              title: '您成功創建了活動',
+              showDenyButton: false,
+              confirmButtonText: '回首頁',
             }).then((result) => {
               if (result.isConfirmed) {
                 router.get(route('index'));

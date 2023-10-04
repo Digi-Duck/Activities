@@ -146,7 +146,7 @@ export default {
     <ActivityDetailTable :table-data="response.rt_data.activity">
       <template #activity_title_type>
         <span>
-          主講人
+          主講者
         </span>
       </template>
     </ActivityDetailTable>

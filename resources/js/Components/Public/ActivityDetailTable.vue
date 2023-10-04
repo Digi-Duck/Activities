@@ -1,5 +1,7 @@
 <!-- 活動詳細資訊或個人活動資訊 -->
 <script>
+import magnifer from '/images/icon/magnifer.svg';
+
 export default {
   props: {
     response: {
@@ -12,6 +14,9 @@ export default {
   data() {
     return {
       title: 'Hello World !',
+      images: {
+        magnifer,
+      },
     };
   },
   computed: {
@@ -25,11 +30,11 @@ export default {
 
 <template>
   <section class="w-[1400px]">
-    <div class="m-auto w-full h-[505px] p-10 border flex flex-col items-center">
+    <div class="m-auto w-full h-[505px] p-10 flex flex-col items-center">
       <!-- 搜尋欄位 -->
-      <div class="w-full h-[48px] border flex justify-between">
+      <div class="mb-[5px] w-full h-[48px] pt-[10px] border-t-[#000] border-t-[1px] flex justify-between">
         <!-- 活動種類篩選器 -->
-        <select class="h-full text-[10px] flex justify-center" placeholder="活動分類">
+        <select class="h-full bg-[#80808012] text-[10px] flex justify-center" placeholder="活動分類">
           <option value="Taipei">文化與藝術</option>
           <option value="Taoyuan">學術與培訓</option>
           <option value="Hsinchu">社交與社團</option>
@@ -41,9 +46,9 @@ export default {
           <option value="Miaoli">其他</option>
         </select>
         <!-- 文字搜尋框 -->
-        <div class="w-[15%] h-full bg-[yellow] flex items-center">
-          <img src="" class="w-[20%]" alt="搜尋">
-          <input type="search" class="w-full">
+        <div class="w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-1">
+          <img :src="images.magnifer" class="w-[16px]" alt="搜尋">
+          <input type="search" class="w-[80%] h-[80%]">
         </div>
       </div>
       <!-- 搜尋的表頭 -->

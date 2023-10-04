@@ -56,7 +56,13 @@ export default {
   <!-- <hr> -->
   <!-- {{ response.rt_data.activityPhotos }} -->
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
-    <CountDown class="absolute mt-[5%] left-[75%]"></CountDown>
+    <CountDown class="absolute mt-[5%] left-[75%] z-50">
+      <template #count-down>
+        <span>
+          20
+        </span>
+      </template>
+    </CountDown>
     <ActivityDetailSwiper :slide-data="[response.rt_data]">
       <template #activity_type>
         <span v-if="response.rt_data.activity_type === 1">
@@ -144,11 +150,11 @@ export default {
       </template>
     </ActivityDetailSwiper>
     <!-- 這裡是活動詳情 -->
-    <div class="w-full h-[811px] p-[100px] bg-[yellow]">
+    <div class="w-full h-[811px] p-[100px] bg-[#d7a5a565]">
       <div v-html="response.rt_data.activity_information"></div>
     </div>
     <!-- 學員活動資訊填寫區 -->
-    <form @submit.prevent="submitData()" action="" class="w-full h-[819px] px-10 py-5 bg-[#A9BCC6] flex flex-col gap-3 text-[24px]">
+    <form @submit.prevent="submitData()" action="" class="w-full h-[700px] px-10 py-5 bg-[#A9BCC6] flex flex-col gap-3 text-[24px]">
       <!-- 填入會員預設資料 -->
       <div class="w-full h-[30px] flex justify-end items-center gap-3">
         <div class="w-[274px] h-full bg-white flex justify-center items-center">代入會員資料</div>
@@ -182,7 +188,7 @@ export default {
       </div>
       <div class="w-full h-[30px] flex gap-[150px]">
         <div class="w-[274px] h-full bg-white flex justify-center items-center">確認事項</div>
-        <input type="text" class="w-full" name="" id="">
+        <input type="text" class="w-full" name="" id="" :placeholder="response.rt_data.activity_instruction">
       </div>
       <div class="pt-10 w-full flex justify-center gap-5 text-[24px]">
         <button type="button" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px]">回上一頁</button>
