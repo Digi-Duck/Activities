@@ -88,16 +88,7 @@ export default {
       console.log(data);
       this.formData.activityInformation = data;
     },
-    // uploadImage(event) {
-    //   const reader = new FileReader();
-    //   reader.readAsDataURL(event.target.files[0]);
-    //   console.log(event.target.files[0]);
-    //   reader.onload = () => {
-    //     this.formData.activityPhoto = reader.result;
-    //   };
-    // },
     uploadOtherImage(event) {
-      // console.log(event.target.files[0].size);
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = () => {
@@ -120,10 +111,10 @@ export default {
   <section id="create-activity" class="flex flex-col">
     <!-- 建立活動資訊填寫 -->
     <form @submit.prevent="submitData()" action="">
-      <div class="relative mt-5 h-[901px] flex flex-col">
+      <div class="relative mt-5 h-[901px] bg-[#dac3c3] flex flex-col">
         <div class="relative w-full z-10">
           <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">
-            <select v-model="formData.activityType" name="activity_type" class="h-full text-[10px] flex justify-center" required placeholder="活動分類">
+            <select v-model="formData.activityType" name="activity_type" class="h-full text-[10px] border-none flex justify-center" required placeholder="活動分類">
               <option disabled selected value>- 請選擇活動類型 -</option>
               <option value="1">文化與藝術</option>
               <option value="2">學術與培訓</option>
@@ -135,31 +126,28 @@ export default {
               <option value="8">科技與創新</option>
               <option value="9">其他</option>
             </select>
-            <div id="triangle" class="absolute left-[175px] -top-[0px] w-[10px] h-[10px]">
+            <div id="triangle" class="absolute left-[175px] -top-[0px] w-[10px] h-[10px] border-s">
               <div id="triangle-top"></div>
               <div id="triangle-bottom"></div>
             </div>
           </div>
-          <div class="absolute left-[265px] top-[131px] w-[288px] h-[219px] flex flex-col justify-between items-start">
+          <div class="absolute left-[265px] top-[131px] w-[288px] h-[219px] flex flex-col justify-between items-start gap-3">
             <div class="text-[72px] font-bold">
-              <input v-model="formData.activityName" type="text" name="activity_name" id="" class="text-[72px] font-bold" required placeholder="請輸入活動名稱">
+              <input v-model="formData.activityName" type="text" name="activity_name" id="" class="border-none text-[72px] font-bold" required placeholder="請輸入活動名稱">
             </div>
             <div class="w-[100%] bg-[#ffffff9b] text-[24px]">
-              <input v-model="formData.activityInfo" type="text" name="activity_info" id="" class="text-[24px] font-semibold" required placeholder="請輸入活動Slogan">
+              <input v-model="formData.activityInfo" type="text" name="activity_info" id="" class="border-none text-[24px] font-semibold" required placeholder="請輸入活動Slogan">
             </div>
-            <div for="activity_photo" class="w-[136px] h-[56px] bg-[#FFFFFF] text-[18px] font-semibold">更改圖片</div>
-            <!-- <input type="file" class="w-[136px] h-[56px] bg-[#FFFFFF] text-[18px] font-semibold" name="activity_photo" id="activity_photo" required multiple @change="(event) => uploadImage(event)"> -->
-            <!-- 測試上傳多圖 -->
+            <label class="border border-dashed w-[136px] h-[56px] aspect-[4/3] bg-[#FFF] rounded-[8px] flex justify-center items-center text-[16px] text-[#072F54] cursor-pointer">
+              新增圖片
+              <input type="file" class="hidden" name="" id="" @change="(event) => uploadOtherImage(event)">
+            </label>
             <div class="flex flex-nowrap gap-[30px]">
               <div v-for="item in formData.activityPhoto" :key="item.id" class="relative">
-                <img :src="item.activity_img_path" alt="" class="border border-dashed w-[200px] aspect-[4/3] flex justify-center items-center text-[48px] cursor-pointer">
+                <img :src="item.activity_img_path" alt="" class="border border-dashed w-[150px] aspect-[4/3] flex justify-center items-center text-[48px] cursor-pointer">
                 <button type="button" class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 rounded-full w-[20px] h-[20px] flex justify-center items-center bg-[red] text-white" @click="removeImage(item.id)">X</button>
               </div>
             </div>
-            <label class="border border-dashed w-[200px] aspect-[4/3] flex justify-center items-center text-[48px] cursor-pointer">
-              +
-              <input type="file" class="hidden" name="" id="" @change="(event) => uploadOtherImage(event)">
-            </label>
             <!-- 測試上傳多圖完 -->
           </div>
           <div class="absolute left-[50px] top-[415px] w-[95%] flex justify-between">
@@ -171,7 +159,7 @@ export default {
             </button>
           </div>
           <!-- 活動資訊框 -->
-          <div class="absolute left-[100px] top-[495px] w-[90%] h-[289px] pt-[10px] px-[60px] bg-[#f2f2f2b2] flex flex-wrap gap-5">
+          <div class="absolute left-[100px] top-[495px] w-[90%] h-[289px] pt-[15px] px-[60px] rounded-[14px] bg-[#f2f2f2b2] flex flex-wrap gap-5">
             <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.lowestNumberOfPeople" alt="開課門檻" class="w-[10%] pe-1">
               <input v-model="formData.activityLowestNumberOfPeople" type="number" name="activity_lowest_number_of_people" id="" class="rounded-[5px] w-full text-2xl font-bold" min="0" required placeholder="請輸入開課門檻">
@@ -221,7 +209,7 @@ export default {
       <Editor class="h-[500px]" @update-content="information"></Editor>
       <!-- <editor v-model="editorValue" :init="editorInit" class="min-h-[500px]" @update-content="test" /> -->
       <div class="flex w-full justify-center gap-[45px] py-5">
-        <button type="button" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消開課</button>
+        <Link :href="route('index')" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消開課</Link>
         <button type="submit" class="px-[30px] py-[15px] bg-[#095269] rounded-[5px] flex justify-center items-center text-white">確認開課</button>
       </div>
     </form>
@@ -231,6 +219,24 @@ export default {
 <style lang="scss" scoped>
 #create-activity {
     @apply w-full h-full overflow-y-auto;
+    #triangle {
+    #triangle-top {
+      border-width: 10px;
+      border-style: solid;
+      border-right-color: transparent;
+      border-top-color: transparent;
+      border-bottom-color: white;
+      border-left-color: white;
+    }
+    #triangle-bottom {
+      border-width: 10px;
+      border-style: solid;
+      border-right-color: transparent;
+      border-top-color: white;
+      border-bottom-color: transparent;
+      border-left-color: white;
+    }
+  }
   }
 
   .title {

@@ -91,17 +91,14 @@ export default {
       </template>
       <template #activity_name>
         <span>
-          我是上過的活動名稱
         </span>
       </template>
       <template #activity_start_time>
         <span>
-          我是上過的活動時間
         </span>
       </template>
       <template #activity_address>
         <span>
-          我是上過的活動地點
         </span>
       </template>
     </ActivitySwiper>

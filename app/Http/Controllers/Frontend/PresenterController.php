@@ -15,15 +15,16 @@ class PresenterController extends Controller
     {
     }
     /**
-     * Display a listing of the resource.
+     * 講師的個人介面
      */
     public function index(Request $request)
     {
         //
-        $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRolePresenter->id)->get()->map(function ($item) {
-            $item->timeFormat = $item->created_at->format('Y/m/d');
-            return $item;
-        });
+        // $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRolePresenter->id)->with('activityPhotos:id,activity_id,activity_img_path')->get()->map(function ($item) {
+        //     $item->timeFormat = $item->created_at->format('Y/m/d');
+        //     return $item;
+        // });
+        $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRolePresenter->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
 
         return Inertia::render('Frontend/Presenter/PresenterPersonalPage', [ 'response' => rtFormat($activity)]);
         ;

@@ -67,7 +67,9 @@ export default {
           {{ item.activity_name }}
         </div>
         <div class="flex-initial w-[10%] border bg-[#82acc27d] flex justify-center items-center text-[16px] font-semibold">
-          {{ item.activity_presenter }}
+          <slot name="activity_info_type">
+            {{ item.activity_presenter }}
+          </slot>
         </div>
         <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
           {{ item.activity_end_registration_time }}
