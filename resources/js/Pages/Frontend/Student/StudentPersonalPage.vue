@@ -40,7 +40,7 @@ export default {
 
 <template>
   <section id="presenter-personal-page" class="flex flex-col items-center">
-    <ActivitySwiper :slide-data="registerActivityData?.data ?? []">
+    <ActivitySwiper :slide-data="registerActivityData?.data ?? []" href="studentActivityEdit">
       <template #activity_title_name>
         <span>
           已報名活動
@@ -48,7 +48,7 @@ export default {
       </template>
     </ActivitySwiper>
     <!-- {{ response.rt_data.favoriteActivity }} -->
-    <ActivitySwiper :slide-data="favoriteActivityData?.data ?? []">
+    <ActivitySwiper :slide-data="favoriteActivityData?.data ?? []" href="studentActivityDetails">
       <template #activity_title_name>
         <span>
           已收藏活動

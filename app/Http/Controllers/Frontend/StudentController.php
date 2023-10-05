@@ -27,10 +27,10 @@ class StudentController extends Controller
         $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->first();
 
         $registerPeople = ActivityDetail::orderBy('id', 'desc')
-        ->whereHas('registerActivities', function ($query) use ($id) {
+            ->whereHas('registerActivities', function ($query) use ($id) {
                 return $query->where('activity_id', $id);
             })
-        ->count();
+            ->count();
 
         $data = (object) [
             'activity' => $activity,
@@ -38,9 +38,62 @@ class StudentController extends Controller
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 
-        
+
         return Inertia::render('Frontend/Student/ActivityDetail', ['response' => rtFormat($data)]);
     }
+
+    public function activityEdit($id)
+    {
+        $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->first();
+
+        $registerPeople = ActivityDetail::orderBy('id', 'desc')
+            ->whereHas('registerActivities', function ($query) use ($id) {
+                return $query->where('activity_id', $id);
+            })
+            ->count();
+
+        $registerData = RegisterActivity::where('activity_id', $id)
+            ->first();
+        // dd($registerData);
+
+        $data = (object) [
+            'activity' => $activity,
+            'registerPeople' => $registerPeople,
+            'registerData' => $registerData,
+            'activityTypeData' => $this->activityPresenter->getTypeOption(),
+        ];
+
+        return Inertia::render('Frontend/Student/StudentEditActivity', ['response' => rtFormat($data)]);
+    }
+
+    public function registerUpdate(Request $request)
+    {
+        $request->validate([
+            'studentName' => 'required',
+            'studentPhoneNumber' => 'required',
+            'studentEmail' => 'required',
+            'activity_id' => 'required',
+        ]);
+
+        // dd($request->all());
+        // dd($request->all());
+        $registerData = RegisterActivity::find($request->user()->userRoleStudent->id);
+        // dd($request->studentName);
+        // dd($registerData);
+
+        $registerData->update([
+            'activity_id' => $request->activity_id,
+            'student_id' => $request->user()->userRoleStudent->id,
+            'student_name' => $request->studentName,
+            'student_phone_number' => $request->studentPhoneNumber,
+            'student_email' => $request->studentEmail,
+            'student_additional_remark' => $request->studentAdditionalRemark,
+        ]);
+        // dd($registerData);
+        
+        return back()->with(['message' => rtFormat($registerData)]);
+    }
+
     public function personalPage(Request $request)
     {
         // $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRoleStudent->id)->get()->map(function ($item) {
@@ -57,12 +110,12 @@ class StudentController extends Controller
         //      * 使用$query遍歷該資料
         //      * 使用$request將此function之外的變數拉進來
         //      */
-            // ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
-            //     return $query->where('id', $request->user()->userRoleStudent->id);
-            // })
-            // ->whereHas('studentActivities', function ($query) {
-            //     return $query->where('activity_type', 2);
-            // })
+        // ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
+        //     return $query->where('id', $request->user()->userRoleStudent->id);
+        // })
+        // ->whereHas('studentActivities', function ($query) {
+        //     return $query->where('activity_type', 2);
+        // })
         //     ->with('activityPhotos:id,activity_id,activity_img_path')
         //     ->get();
 
@@ -278,7 +331,6 @@ class StudentController extends Controller
             'studentPhoneNumber' => 'required',
             'studentEmail' => 'required',
             'activity_id' => 'required',
-            // 'student_id' =>
         ]);
         // dd($request->all());
 
@@ -299,7 +351,6 @@ class StudentController extends Controller
             'student_email' => $request->studentEmail,
             'student_additional_remark' => $request->studentAdditionalRemark,
         ]);
-
 
         return back()->with(['message' => rtFormat($register)]);
     }

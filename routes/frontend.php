@@ -23,5 +23,7 @@ Route::middleware('auth', 'role.weight:2')->prefix('/presenter')->group(function
 Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
 Route::middleware('auth', 'role.weight:3')->prefix('/student')->group(function () {
     Route::get('/personalPage', [StudentController::class, 'personalPage'])->name('studentPersonalPage');
+    Route::get('/activityEdit{id}', [StudentController::class, 'activityEdit'])->name('studentActivityEdit');
+    Route::put('/registerUpdate', [StudentController::class, 'registerUpdate'])->name('registerUpdate');
     Route::post('/registerStore', [StudentController::class, 'create'])->name('registerStore');
 });
