@@ -115,10 +115,10 @@ class PresenterController extends Controller
     {
         //
     }
-    
+
     public function activityScanner()
     {
-        
+
         return Inertia::render('Frontend/Presenter/ScannerPage');
     }
 
