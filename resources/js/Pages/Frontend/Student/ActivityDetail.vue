@@ -57,12 +57,30 @@ export default {
         },
       });
     },
+    favorite() {
+      router.visit(route('createFavorite'), {
+        method: 'post',
+        data: { ...this.rtData, activity_id: this.response.rt_data.activity.id, ...this.activityType },
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire({
+              title: '收藏成功',
+              showDenyButton: false,
+              confirmButtonText: '回列表',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                router.get(route('studentActivityDetails', { id: this.response.rt_data.activity.id }));
+              }
+            });
+          }
+        },
+      });
+    },
   },
 };
 </script>
 
 <template>
-  <!-- {{ rtData.activity }} -->
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
     <CountDown class="absolute mt-[5%] left-[75%] z-50">
       <template #count-down>
@@ -71,7 +89,7 @@ export default {
         </span>
       </template>
     </CountDown>
-    <button type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] flex justify-center items-center">
+    <button @click="favorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
       點我收藏
     </button>
     <ActivityDetailSwiper :slide-data="[activityData]">

@@ -32,6 +32,10 @@ class StudentController extends Controller
             })
             ->count();
 
+        $favoritePeople = StudentActivity::where('student_id',$id)
+        ->get();
+        // dd($favoritePeople);
+
         $data = (object) [
             'activity' => $activity,
             'registerPeople' => $registerPeople,
@@ -353,6 +357,21 @@ class StudentController extends Controller
         ]);
 
         return back()->with(['message' => rtFormat($register)]);
+    }
+
+    public function createFavorite(Request $request)
+    {
+        // $userInfo = $request->user()->userRoleStudent;
+        // dd($request->user()->userRoleStudent->id);
+        $request->validate([
+            'activity_id' => 'required',
+        ]);
+        $favorite = StudentActivity::create([
+            'student_id' => $request->user()->userRoleStudent->id,
+            'activity_id' => $request->activity_id,
+            'activity_type' => $request->favorited,
+        ]);
+        return back()->with(['message' => rtFormat($favorite)]);
     }
 
     public function registerDelete(Request $request)
