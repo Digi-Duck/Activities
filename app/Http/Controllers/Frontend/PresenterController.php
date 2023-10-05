@@ -176,12 +176,15 @@ class PresenterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function activityEdit()
+    public function activityEdit($id)
     {
         //
-        // $activity = ActivityDetail::find($id);
+        $activity = ActivityDetail::find($id)
+        ->with('activityPhotos:id,activity_id,activity_img_path')
+        ->where('id',$id)
+        ->first();
 
-        return Inertia::render('Frontend/Presenter/EditActivity');
+        return Inertia::render('Frontend/Presenter/EditActivity', ['response' => rtFormat($activity)]);
     }
 
     /**
