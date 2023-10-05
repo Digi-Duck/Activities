@@ -20,6 +20,7 @@ export default {
 </script>
 
 <template>
+  {{ response.rt_data }}
   <!-- {{ $props.response.rt_data[0].activityPhotos }} -->
   <!-- <div v-for="(item, index) in response.rt_data" :key="item.id">
     <div>{{ index + 1 }}</div>

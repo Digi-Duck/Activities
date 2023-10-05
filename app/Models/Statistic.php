@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Statistic
- *
+ * 
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at

@@ -20,7 +20,9 @@ export default {
 </script>
 
 <template>
-  <!-- {{ response.rt_data }} -->
+  {{ response.rt_data.allActivityDetails }}
+  <hr>
+  <!-- {{ response.rt_data.favoriteActivity }} -->
   <!-- {{ $props.response.rt_data }} -->
   <!-- <div v-for="(item, index) in response.rt_data" :key="item.id">
     <div>{{ index + 1 }}</div>
@@ -35,7 +37,7 @@ export default {
     <!-- {{ response.rt_data.regiterActivityDetails }} -->
     <!-- <hr> -->
     <!-- {{ response.rt_data.activity }} -->
-    <ActivitySwiper :slide-data="response.rt_data.regiterActivityDetails">
+    <ActivitySwiper :slide-data="response.rt_data.registerActivity">
       <template #activity_title_name>
         <span>
           已報名活動
@@ -43,7 +45,7 @@ export default {
       </template>
     </ActivitySwiper>
     <!-- {{ response.rt_data.favoriteActivity }} -->
-    <ActivitySwiper :slide-data="response.rt_data.favoriteActivityDetails">
+    <ActivitySwiper :slide-data="response.rt_data.favoriteActivity">
       <template #activity_title_name>
         <span>
           已收藏活動

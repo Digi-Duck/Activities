@@ -8,11 +8,10 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class RegisterActivity
- *
+ * 
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -23,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $student_email
  * @property string $student_additional_remark
  * @property int $registration_status
- *
+ * 
  * @property ActivityDetail $activityDetail
  * @property UserRoleStudent $userRoleStudent
  *
@@ -58,15 +57,5 @@ class RegisterActivity extends Model
     public function userRoleStudent()
     {
         return $this->belongsTo(UserRoleStudent::class, 'student_id');
-    }
-
-    public function userBehavior()
-    {
-        return $this->hasMany(UserBehavior::class, 'type_id');
-    }
-
-    public function qrcodeDetail(): HasOne
-    {
-        return $this->hasOne(QrcodeDetail::class);
     }
 }

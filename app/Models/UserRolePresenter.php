@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class UserRolePresenter
- *
+ * 
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -20,10 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $user_name
  * @property string|null $img_path
  * @property string $phone_number
- *
+ * 
  * @property User $user
  * @property Collection|ActivityDetail[] $activityDetails
- * @property Collection|StudentActivity[] $studentActivities
  *
  * @package App\Models
  */
@@ -50,11 +49,6 @@ class UserRolePresenter extends Model
 
     public function activityDetails()
     {
-        return $this->hasMany(ActivityDetail::class, 'user_id', 'presenter_id');
-    }
-
-    public function studentActivities()
-    {
-        return $this->hasMany(StudentActivity::class, 'activity_id');
+        return $this->hasMany(ActivityDetail::class, 'presenter_id');
     }
 }

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class UserBehavior
- *
+ * 
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -33,14 +33,4 @@ class UserBehavior extends Model
         'type_id',
         'behavior'
     ];
-
-    public function activityDetail()
-    {
-        return $this->belongsTo(ActivityDetail::class, 'id');
-    }
-
-    public function registerActivity()
-    {
-        return $this->belongsTo(RegisterActivity::class, 'id');
-    }
 }

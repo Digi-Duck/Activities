@@ -54,6 +54,7 @@ export default {
     </div>
     <!-- {{ slideData }} -->
     <Swiper v-slot="{ slide }" :slide-data="slideData ?? []" :slides-per-view=5 :btn-prev="prevButton" :btn-next="nextButton">
+      <!-- {{ slide.activityPhotos[0] }} -->
       <Link class="relative m-auto w-[296px] h-[387px] p-3 bg-white border flex flex-col items-center" :href="route('studentActivityDetails', { id: slide.id })">
         <figure>
           <img :src="slide.activityPhotos[0].activity_img_path" class="w-[275px] h-[275px] object-cover" alt="產業類別圖片">
@@ -62,7 +63,7 @@ export default {
               <!-- {{ slide.activityPhotos[0].activity_img_path }} -->
               {{ slide.activity_name }}
               <slot name="activity_name">
-                <!-- {{ slide.activity_name }} -->
+                <!-- {{ slide.activity_name }}  -->
               </slot>
             </div>
             <div class="text-[10px]">

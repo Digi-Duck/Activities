@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class ActivityDetail
- *
+ * 
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -33,11 +33,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $activity_instruction
  * @property string $activity_information
  * @property int $activity_status
- *
+ * 
  * @property UserRolePresenter $userRolePresenter
  * @property Collection|ActivityPhoto[] $activityPhotos
  * @property Collection|QrcodeDetail[] $qrcodeDetails
  * @property Collection|RegisterActivity[] $registerActivities
+ * @property Collection|StudentActivity[] $studentActivities
  *
  * @package App\Models
  */
@@ -80,7 +81,7 @@ class ActivityDetail extends Model
 
     public function userRolePresenter()
     {
-        return $this->belongsTo(UserRolePresenter::class, 'presenter_id', 'user_id');
+        return $this->belongsTo(UserRolePresenter::class, 'presenter_id');
     }
 
     public function activityPhotos()
@@ -101,11 +102,5 @@ class ActivityDetail extends Model
     public function studentActivities()
     {
         return $this->hasMany(StudentActivity::class, 'activity_id');
-    }
-
-
-    public function userBehavior()
-    {
-        return $this->hasMany(UserBehavior::class, 'type_id');
     }
 }

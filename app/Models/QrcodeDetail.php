@@ -8,11 +8,10 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class QrcodeDetail
- *
+ * 
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -21,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $qrcode_number
  * @property string $qrcode_path
  * @property bool $qrcode_status
- *
+ * 
  * @property ActivityDetail $activityDetail
  * @property UserRoleStudent $userRoleStudent
  *
@@ -35,7 +34,7 @@ class QrcodeDetail extends Model
     protected $casts = [
         'activity_id' => 'int',
         'student_id' => 'int',
-        'qrcode_status' => 'int'
+        'qrcode_status' => 'bool'
     ];
 
     protected $fillable = [
@@ -54,10 +53,5 @@ class QrcodeDetail extends Model
     public function userRoleStudent()
     {
         return $this->belongsTo(UserRoleStudent::class, 'student_id');
-    }
-
-    public function registerActivity(): HasOne
-    {
-        return $this->hasOne(RegisterActivity::class);
     }
 }
