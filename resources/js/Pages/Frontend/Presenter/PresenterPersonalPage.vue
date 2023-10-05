@@ -30,7 +30,7 @@ export default {
 
 <template>
   <section id="presenter-personal-page" class="flex flex-col items-center">
-    <ActivitySwiper :slide-data="activityData?.data ?? []">
+    <ActivitySwiper :slide-data="activityData?.data ?? []" href="activityEdit">
       <template #activity_title_name>
         <span>
           近期活動

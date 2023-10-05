@@ -123,7 +123,7 @@ export default {
     </Link>
     <div v-else></div>
 
-    <ActivitySwiper :slide-data="activityData?.data ?? []" />
+    <ActivitySwiper :slide-data="activityData?.data ?? []" href="studentActivityDetails" />
 
     <!-- 近期活動查詢表 -->
     <ActivityDetailTable :table-data="activityData" :type-data="activityTypeData">

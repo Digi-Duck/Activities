@@ -4,18 +4,25 @@ import heart from '/images/icon/icon-heart.svg';
 import filledHeart from '/images/icon/icon-filled-heart.svg';
 import arrowLeft from '/images/icon/icon-arrow-left.svg';
 import arrowRight from '/images/icon/icon-arrow-right.svg';
+import { Link, router } from '@inertiajs/vue3';
 
 export default {
+  components: { Link },
   props: {
     slideData: {
       type: Array,
       required: false,
       default: () => [],
     },
+    href: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
   data() {
     return {
-      prevButton: null, // 在这里定义 prevButton 和 nextButton
+      prevButton: null,
       nextButton: null,
       images: {
         heart,
@@ -29,11 +36,18 @@ export default {
     // 通过类名或其他方式获取按钮元素并赋值给 prevButton 和 nextButton
     this.prevButton = this.$refs.btnPrev;
     this.nextButton = this.$refs.btnNext;
+    console.log(this.slideData);
+  },
+  methods: {
+    linkHref(id) {
+      router.get(route(this.href, id));
+    },
   },
 };
 </script>
 
 <template>
+  <!-- :href="route('studentActivityDetails', { id: slide.id }) -->
   <div id="activity-swiper" class="relative p-5 flex flex-col items-center">
     <div class="pb-5 text-[48px] self-start ps-[400px]">
       <h2>
@@ -52,7 +66,7 @@ export default {
     </div>
 
     <Swiper v-slot="{ slide }" :slide-data="slideData ?? []" :slides-per-view=5 :btn-prev="prevButton" :btn-next="nextButton">
-      <Link class="relative m-auto w-[296px] h-[387px] p-3 bg-white border flex flex-col items-center" :href="route('studentActivityDetails', { id: slide.id })">
+      <Link type="button" class="relative m-auto w-[296px] h-[387px] p-3 bg-white border flex flex-col items-center" @click="linkHref(slide.id)">
         <figure>
           <img :src="slide.cover_photo" class="w-[275px] h-[275px] object-cover" alt="產業類別圖片">
           <div class="w-full ps-3 flex flex-col gap-1">

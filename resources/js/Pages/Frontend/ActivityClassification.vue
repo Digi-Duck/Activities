@@ -1,6 +1,7 @@
 <!-- 活動分類頁面 -->
 
 <script>
+import magnifer from '/images/icon/magnifer.svg';
 export default {
   props: {
     response: {
@@ -12,6 +13,9 @@ export default {
   data() {
     return {
       title: 'Hello World !',
+      images: {
+        magnifer,
+      },
     };
   },
   created() {
@@ -34,14 +38,14 @@ export default {
         </div>
         <div class="flex items-center">
           <input type="search" name="" id="" placeholder="Search">
-          <img src="" alt="我是放大鏡">
+          <img :src="images.magnifer" class="ms-[15px] w-[20px] h-[20px]" alt="我是放大鏡">
         </div>
       </div>
     </div>
     <!-- 主要卡片區 -->
     <!-- 正轉卡片 -->
     <Link v-for="(item, index) in response.rt_data.activity" :key="index" :href="route('studentActivityDetails', { id: item.id })" class="pt-3 pb-3 border-b-8 flex flex-col items-center">
-      {{ item.activityPhotos }}
+      <!-- {{ item.activityPhotos }} -->
       <div class="w-full h-[345px] bg-pink-500 flex flex-row">
         <img :src="item.activityPhotos[0].activity_img_path" alt="活動封面圖" class="w-[300%] max-w-[937.438px] object-fill bg-slate-500">
         <div class="w-full h-[345px] bg-[#974a4a] p-16 flex flex-col justify-center gap-2">

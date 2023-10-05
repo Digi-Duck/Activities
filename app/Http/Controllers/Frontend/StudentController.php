@@ -9,6 +9,7 @@ use App\Models\RegisterActivity;
 use App\Models\StudentActivity;
 use Inertia\Inertia;
 use App\Presenters\ActivityPresenter;
+use Carbon\Carbon;
 
 class StudentController extends Controller
 {
@@ -24,7 +25,21 @@ class StudentController extends Controller
     {
         //
         $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->first();
-        return Inertia::render('Frontend/Student/ActivityDetail', ['response' => rtFormat($activity)]);
+
+        $registerPeople = ActivityDetail::orderBy('id', 'desc')
+        ->whereHas('registerActivities', function ($query) use ($id) {
+                return $query->where('activity_id', $id);
+            })
+        ->count();
+
+        $data = (object) [
+            'activity' => $activity,
+            'registerPeople' => $registerPeople,
+            'activityTypeData' => $this->activityPresenter->typeOption,
+        ];
+
+        
+        return Inertia::render('Frontend/Student/ActivityDetail', ['response' => rtFormat($data)]);
     }
     public function personalPage(Request $request)
     {

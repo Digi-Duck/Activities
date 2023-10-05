@@ -12,7 +12,7 @@ export default {
   },
   data() {
     return {
-      title: 'Hello World !',
+      rtData: this.response?.rt_data ?? {},
       formData: {
         studentName: '',
         studentPhoneNumber: '',
@@ -24,6 +24,16 @@ export default {
         registered: 2,
       },
     };
+  },
+  computed: {
+    // 獲取活動資料陣列
+    activityData() {
+      return this.rtData.activity ?? {};
+    },
+    // 獲取活動類別資料陣列
+    activityTypeData() {
+      return this.rtData.activityTypeData ?? [];
+    },
   },
   methods: {
     submitData() {
@@ -52,10 +62,6 @@ export default {
 </script>
 
 <template>
-  <!-- {{ $page.props.auth.user }} -->
-  <!-- {{ response.rt_data }} -->
-  <!-- <hr> -->
-  <!-- {{ response.rt_data.activityPhotos }} -->
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
     <CountDown class="absolute mt-[5%] left-[75%] z-50">
       <template #count-down>
@@ -64,30 +70,30 @@ export default {
         </span>
       </template>
     </CountDown>
-    <ActivityDetailSwiper :slide-data="[response.rt_data]">
+    <ActivityDetailSwiper :slide-data="[activityData]">
       <template #activity_type>
-        <span v-if="response.rt_data.activity_type === 1">
+        <span v-if="activityData.activity_type === 1">
           文化與藝術
         </span>
-        <span v-else-if="response.rt_data.activity_type === 2">
+        <span v-else-if="activityData.activity_type === 2">
           學術與培訓
         </span>
-        <span v-else-if="response.rt_data.activity_type === 3">
+        <span v-else-if="activityData.activity_type === 3">
           社交與社團
         </span>
-        <span v-else-if="response.rt_data.activity_type === 4">
+        <span v-else-if="activityData.activity_type === 4">
           旅遊與戶外
         </span>
-        <span v-else-if="response.rt_data.activity_type === 5">
+        <span v-else-if="activityData.activity_type === 5">
           健康與福祉
         </span>
-        <span v-else-if="response.rt_data.activity_type === 6">
+        <span v-else-if="activityData.activity_type === 6">
           商業與職業發展
         </span>
-        <span v-else-if="response.rt_data.activity_type === 7">
+        <span v-else-if="activityData.activity_type === 7">
           娛樂與文化慶典
         </span>
-        <span v-else-if="response.rt_data.activity_type === 8">
+        <span v-else-if="activityData.activity_type === 8">
           科技與創新
         </span>
         <span v-else>
@@ -96,63 +102,68 @@ export default {
       </template>
       <template #activity_name>
         <span>
-          {{ response.rt_data.activity_name }}
+          {{ activityData.activity_name }}
         </span>
       </template>
       <template #activity_info>
         <span>
-          {{ response.rt_data.activity_info }}
+          {{ activityData.activity_info }}
         </span>
       </template>
       <template #activity_lowest_number_of_people>
         <span>
-          {{ response.rt_data.activity_lowest_number_of_people }}
+          {{ activityData.activity_lowest_number_of_people }}
         </span>
       </template>
       <template #activity_highest_number_of_people>
         <span>
-          {{ response.rt_data.activity_highest_number_of_people }}
+          {{ activityData.activity_highest_number_of_people }}
         </span>
       </template>
       <template #activity_start_registration_time>
         <span>
-          {{ response.rt_data.activity_start_registration_time }}
+          {{ activityData.activity_start_registration_time }}
         </span>
       </template>
       <template #activity_end_registration_time>
         <span>
-          {{ response.rt_data.activity_end_registration_time }}
+          {{ activityData.activity_end_registration_time }}
         </span>
       </template>
       <template #activity_presenter>
         <span>
-          {{ response.rt_data.activity_presenter }}
+          {{ activityData.activity_presenter }}
         </span>
       </template>
       <template #activity_start_time>
         <span>
-          {{ response.rt_data.activity_start_time }}
+          {{ activityData.activity_start_time }}
         </span>
       </template>
       <template #activity_end_time>
         <span>
-          {{ response.rt_data.activity_end_time }}
+          {{ activityData.activity_end_time }}
         </span>
       </template>
       <template #activity_address>
         <span>
-          {{ response.rt_data.activity_address }}
+          {{ activityData.activity_address }}
         </span>
       </template>
       <template #activity_instruction>
         <span>
-          {{ response.rt_data.activity_instruction }}
+          {{ activityData.activity_instruction }}
+        </span>
+      </template>
+      <template #registerPeople>
+        <span class="ps-[10px] text-[72px]">
+          {{ rtData.registerPeople }}
         </span>
       </template>
     </ActivityDetailSwiper>
     <!-- 這裡是活動詳情 -->
     <div class="w-full h-[811px] p-[100px] bg-[#d7a5a565]">
-      <div v-html="response.rt_data.activity_information"></div>
+      <div v-html="activityData.activity_information"></div>
     </div>
     <!-- 學員活動資訊填寫區 -->
     <form @submit.prevent="submitData()" action="" class="w-full h-[700px] px-10 py-5 bg-[#A9BCC6] flex flex-col gap-3 text-[24px]">
@@ -189,7 +200,7 @@ export default {
       </div>
       <div class="w-full h-[30px] flex gap-[150px]">
         <div class="w-[274px] h-full bg-white flex justify-center items-center">確認事項</div>
-        <input type="text" class="w-full" name="" id="" :placeholder="response.rt_data.activity_instruction">
+        <input type="text" class="w-full" name="" id="" :placeholder="activityData.activity_instruction">
       </div>
       <div class="pt-10 w-full flex justify-center gap-5 text-[24px]">
         <button type="button" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px]">回上一頁</button>

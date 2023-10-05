@@ -53,7 +53,7 @@ export default {
 <template>
   <section id="activity-detail-swiper" class="relative flex flex-col">
     <!-- 建立活動資訊填寫 -->
-    <div class="relative mt-5 flex flex-col">
+    <div class="relative mt-5 h-[901px] flex flex-col">
       <div class="relative w-full z-10">
         <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">
           <slot name="activity_type">活動類型</slot>
@@ -140,6 +140,7 @@ export default {
             <figure class="w-[45%] h-[90%] text-[30px] font-semibold flex justify-center items-center">
               <img :src="images.registeredPeople" class="w-[15%] p-1" alt="">
               已報名人數:
+              <slot name="registerPeople">0</slot>
             </figure>
             <!-- <div class="w-[25%] h-[90%] flex justify-center items-center">
               <div class="w-[208px] h-[56px] bg-[#072F54] rounded-[8px] text-[20px] text-white font-semibold flex justify-center items-center">
