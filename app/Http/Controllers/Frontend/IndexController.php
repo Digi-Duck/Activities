@@ -22,12 +22,18 @@ class IndexController extends Controller
     public function index()
     {
         // 活動列表資料
-        $activity = ActivityDetail::orderBy('id', 'desc')->where('activity_status', 1)->with(['activityPhotos:id,activity_id,activity_img_path', 'studentActivities'])->paginate(6)->through(function ($item) {
+        $activity = ActivityDetail::orderBy('id', 'desc')
+        ->where('activity_status', 1)
+        ->with(['activityPhotos:id,activity_id,activity_img_path', 'studentActivities'])
+        ->paginate(6)
+        ->through(function ($item) {
             // 找出第一張圖片
             $coverPhoto = $item->activityPhotos->first();
 
             // 找出已收藏的人數
             $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
+            // 找出已報名的人數
+            $registrationCount = $item->studentActivities->where('activity_type', 2)->count();
 
             return [
                 'id' => $item->id,
@@ -55,11 +61,14 @@ class IndexController extends Controller
                 'cover_photo' => $coverPhoto->activity_img_path ?? '',
                 // 活動收藏人數
                 'collection_count' => $collectionCount,
+                // 活動報名人數
+                'registration_count' => $registrationCount,
             ];
         });
 
         // 找出最熱門的活動
-        $hottestActivity = $activity->first();
+        $sortedActivity = $activity->sortByDesc('collection_count');
+        $hottestActivity = $sortedActivity->first();
 
         $data = (object) [
             'activity' => $activity,
@@ -70,18 +79,16 @@ class IndexController extends Controller
         return Inertia::render('Frontend/Index', ['response' => rtFormat($data)]);
     }
 
-    // public function globalActivityDetails($id)
-    // {
-    //     $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id',$id)->get();
-    //     return Inertia::render('Frontend/GlobalActivityDetail', [ 'response' => rtFormat($activity) ]);
-    //     // return Inertia::render('Frontend/GlobalActivityDetail');
-    // }
-
     public function activityClassification()
     {
-        $activity = ActivityDetail::orderBy('id', 'desc')->where('activity_status', 1)->with('activityPhotos:id,activity_id,activity_img_path')->get();
-        // return Inertia::render('Frontend/ActivityClassification');
-        $acitvityPhoto = ActivityPhoto::orderBy('id', 'desc')->first();
+        $activity = ActivityDetail::orderBy('id', 'desc')
+        ->where('activity_status', 1)
+        ->with('activityPhotos:id,activity_id,activity_img_path')
+        ->get();
+
+        $acitvityPhoto = ActivityPhoto::orderBy('id', 'desc')
+        ->first();
+
         $data = (object)[
             'activity' => $activity,
             'acitvityPhoto' => $acitvityPhoto,

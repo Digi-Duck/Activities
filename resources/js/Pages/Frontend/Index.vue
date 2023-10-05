@@ -89,7 +89,7 @@ export default {
     <!-- 活動行事曆 -->
     <div class="w-full h-[340px] bg-white"></div>
     <!-- 最夯活動Banner -->
-    <div v-if="hottestActivityData.activity_type_name" class="w-[1440px] h-[765px] pt-[38px] bg-[#F3F3F1] flex flex-col justify-between items-center">
+    <Link :href="route('studentActivityDetails', { id: hottestActivityData.id })" v-if="hottestActivityData.activity_type_name" class="w-[1440px] h-[765px] pt-[38px] bg-[#F3F3F1] flex flex-col justify-between items-center">
       <!-- 活動快速資訊 -->
       <div class="text-[17px] flex gap-1">
         <!-- 活動類型 -->
@@ -100,13 +100,16 @@ export default {
         <div class="text-[17px]">課程熱度</div>
       </div>
       <div class="flex flex-col items-center">
-        <div class="text-[55px]">
+        <b class="text-[55px]">
           {{ hottestActivityData.activity_name }}
-        </div>
-        <div class="text-[55px]">
+        </b>
+        <h2>
           {{ hottestActivityData.activity_presenter }}
-        </div>
+        </h2>
         <time class="text-[30px]">
+          <span class="text-[24px]">
+            活動開始時間：
+          </span>
           {{ hottestActivityData.activity_start_time }}
         </time>
       </div>
@@ -115,7 +118,7 @@ export default {
         <img :src="hottestActivityData.cover_photo" class="absolute ms-[25%] w-[770px] h-full z-10 rounded-[64px] bg-red-600" alt="">
         <div class="absolute end-0 w-[770px] h-full rounded-[64px] bg-blue-600"></div>
       </div>
-    </div>
+    </Link>
     <div v-else></div>
 
     <ActivitySwiper :slide-data="activityData?.data ?? []" />
