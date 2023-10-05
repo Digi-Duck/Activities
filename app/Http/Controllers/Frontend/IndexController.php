@@ -25,7 +25,7 @@ class IndexController extends Controller
         $activity = ActivityDetail::orderBy('id', 'desc')->where('activity_status', 1)->with(['activityPhotos:id,activity_id,activity_img_path', 'studentActivities'])->paginate(6)->through(function ($item) {
             // 找出第一張圖片
             $coverPhoto = $item->activityPhotos->first();
-            
+
             // 找出已收藏的人數
             $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
 
@@ -38,7 +38,7 @@ class IndexController extends Controller
                 // 活動講者
                 'activity_presenter' => $item->activity_presenter,
                 // 活動類型代號
-                'activity_type' =>  $item->activity_type,
+                'activity_type' => $item->activity_type,
                 // 活動類型名稱
                 'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
                 // 活動人數下限

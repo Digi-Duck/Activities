@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class ActivityDetail
- * 
+ *
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $activity_instruction
  * @property string $activity_information
  * @property int $activity_status
- * 
+ *
  * @property UserRolePresenter $userRolePresenter
  * @property Collection|ActivityPhoto[] $activityPhotos
  * @property Collection|QrcodeDetail[] $qrcodeDetails
