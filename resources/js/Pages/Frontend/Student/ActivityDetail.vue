@@ -71,6 +71,9 @@ export default {
         </span>
       </template>
     </CountDown>
+    <button type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] flex justify-center items-center">
+      點我收藏
+    </button>
     <ActivityDetailSwiper :slide-data="[activityData]">
       <template #activity_type>
         <span v-if="activityData.activity_type === 1">

@@ -70,6 +70,18 @@ export default {
         }
       });
     },
+    deleteRegister(id) {
+      Swal.fire({
+        title: `確認取消:  ${this.rtData.activity.activity_name ?? ''} 的報名 ?`,
+        showDenyButton: true,
+        confirmButtonText: '確定',
+        denyButtonText: '取消',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.visit(route('registerDelete'), { method: 'delete', data: { id: id } });
+        }
+      });
+    },
   },
 };
 </script>
@@ -215,9 +227,12 @@ export default {
         <div class="w-[274px] h-full bg-white flex justify-center items-center">確認事項</div>
         <input type="text" class="w-full" name="" id="" :placeholder="activityData.activity_instruction">
       </div>
-      <div class="pt-10 w-full flex justify-center gap-5 text-[24px]">
-        <button type="button" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px]">回上一頁</button>
-        <button type="submit" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px]">更新資訊</button>
+      <div class="flex w-full justify-center gap-[45px] px-20 py-5">
+        <div class="pe-[35%] flex gap-5">
+          <Link :href="route('studentPersonalPage')" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px] flex justify-center items-center">回個人頁</Link>
+          <button type="submit" class="w-[228px] h-[40px] bg-[#edc431] rounded-[5px]">更新資訊</button>
+        </div>
+        <button type="button" class="px-[30px] py-[15px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white" @click="deleteRegister(rtData.registerData.id)">取消報名</button>
       </div>
     </form>
   </section>

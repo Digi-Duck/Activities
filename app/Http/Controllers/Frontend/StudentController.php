@@ -355,6 +355,20 @@ class StudentController extends Controller
         return back()->with(['message' => rtFormat($register)]);
     }
 
+    public function registerDelete(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:register_activities,id'
+        ]);
+
+        $register = RegisterActivity::find($request->id);
+
+        $register->delete();
+
+        
+        return redirect(route('studentPersonalPage'));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
