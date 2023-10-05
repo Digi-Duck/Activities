@@ -13,14 +13,10 @@ return new class extends Migration
     {
         Schema::create('student_activities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained('user_role_students')->onDelete('cascade')->comment('學員id');
+            $table->foreignId('activity_id')->constrained('activity_details')->onDelete('cascade')->comment('活動id');
+            $table->unsignedTinyInteger('activity_type')->comment('1:已收藏的活動/2:已報名的活動');
             $table->timestamps();
-            $table->unsignedBigInteger('student_id')->comment('學員id');
-            // user_id會對應到users的id欄位，並在users的id欄位被刪除時，user_id也會同時被刪除
-            $table->foreign('student_id')->references('id')->on('user_role_students')->onDelete('cascade');
-            $table->unsignedBigInteger('activity_id')->comment('活動id');
-            // user_id會對應到users的id欄位，並在users的id欄位被刪除時，user_id也會同時被刪除
-            $table->foreign('activity_id')->references('id')->on('activity_details')->onDelete('cascade');
-            $table->integer('activity_type')->comment('1:已收藏的活動/2:已報名的活動');
         });
     }
 

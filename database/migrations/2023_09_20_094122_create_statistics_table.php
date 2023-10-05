@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('statistics', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('website_view')->comment('網站流量');
             $table->timestamps();
-            $table->integer('website_view')->comment('網站流量');
         });
     }
 

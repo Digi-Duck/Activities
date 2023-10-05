@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('activity_photos', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->unsignedBigInteger('activity_id')->comment('活動id');
-            // user_id會對應到users的id欄位，並在users的id欄位被刪除時，user_id也會同時被刪除
-            $table->foreign('activity_id')->references('id')->on('activity_details')->onDelete('cascade');
+            $table->foreignId('activity_id')->constrained('activity_details')->onDelete('cascade')->comment('活動id');
             $table->string('activity_img_path')->comment('活動照片路徑');
+            $table->timestamps();
         });
     }
 

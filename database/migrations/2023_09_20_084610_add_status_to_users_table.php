@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->integer('status')->default(1)->comment('0:停權/1:正常');
-            $table->integer('user_role')->default(3)->comment('1:管理方/2:講師/3:學員');
+            $table->boolean('status')->default(1)->after('remember_token')->comment('0:停權/1:正常');
+            $table->unsignedTinyInteger('user_role')->default(3)->after('remember_token')->comment('1:管理方/2:講師/3:學員');
         });
     }
 

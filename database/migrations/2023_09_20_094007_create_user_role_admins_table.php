@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('user_role_admins', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->comment('帳號id');
             $table->timestamps();
-            $table->unsignedBigInteger('user_id')->comment('帳號id');
-            // user_id會對應到users的id欄位，並在users的id欄位被刪除時，user_id也會同時被刪除
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
