@@ -64,23 +64,33 @@ export default {
   },
   methods: {
     submitData() {
-      router.visit(route('activityStore'), {
-        method: 'post',
-        data: this.formData,
-        preserveState: true,
-        onSuccess: ({ props }) => {
-          if (props.flash.message.rt_code === 1) {
-            Swal.fire({
-              title: '您成功創建了活動',
-              showDenyButton: false,
-              confirmButtonText: '回首頁',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                router.get(route('index'));
+      const { formData, response } = this;
+      Swal.fire({
+        title: `確認更新活動: ${response?.rt_data?.activity_name ?? ''}?`,
+        showDenyButton: true,
+        confirmButtonText: '更新',
+        denyButtonText: '取消',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.visit(route('activityUpdate'), {
+            method: 'put',
+            data: { formData, id: response.rt_data.id },
+            preserveState: true,
+            onSuccess: ({ props }) => {
+              if (props.flash.message.rt_code === 1) {
+                Swal.fire({
+                  title: '您成功修改了活動資訊',
+                  showDenyButton: false,
+                  confirmButtonText: '回首頁',
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    router.get(route('activityEdit', { id: response.rt_data.id }));
+                  }
+                });
               }
-            });
-          }
-        },
+            },
+          });
+        }
       });
     },
     information(data) {
@@ -101,12 +111,24 @@ export default {
       this.imageSize -= this.formData.activityPhoto.find((item) => item.id === id).size;
       this.formData.activityPhoto = this.formData.activityPhoto.filter((item) => item.id !== id);
     },
+    deleteActivity(id) {
+      Swal.fire({
+        title: `確認刪除要活動: ${this.rtData.activity_name ?? ''}?`,
+        showDenyButton: true,
+        confirmButtonText: '刪除',
+        denyButtonText: '取消',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.visit(route('activityDelete'), { method: 'delete', data: { id: id } });
+        }
+      });
+    },
   },
 };
 </script>
 
 <template>
-  {{ rtData }}
+  {{ rtData.id }}
   <section id="create-activity" class="flex flex-col">
     <!-- 建立活動資訊填寫 -->
     <form @submit.prevent="submitData()" action="">
@@ -209,10 +231,10 @@ export default {
       <!-- <editor v-model="editorValue" :init="editorInit" class="min-h-[500px]" @update-content="test" /> -->
       <div class="flex w-full justify-end gap-[45px] px-20 py-5">
         <div class="pe-[35%] flex gap-5">
-          <button type="button" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消修改</button>
-          <button type="button" class="px-[30px] py-[15px] bg-[#095269] rounded-[5px] flex justify-center items-center text-white">確認修改</button>
+          <Link :href="route('index')" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消修改</Link>
+          <button type="submit" class="px-[30px] py-[15px] bg-[#095269] rounded-[5px] flex justify-center items-center text-white">確認修改</button>
         </div>
-        <button type="button" class="px-[30px] py-[15px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white">刪除活動</button>
+        <button type="button" class="px-[30px] py-[15px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white" @click="deleteActivity(rtData.id)">刪除活動</button>
       </div>
     </form>
   </section>

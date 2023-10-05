@@ -180,11 +180,52 @@ class PresenterController extends Controller
     {
         //
         $activity = ActivityDetail::find($id)
-        ->with('activityPhotos:id,activity_id,activity_img_path')
-        ->where('id',$id)
-        ->first();
+            ->with('activityPhotos:id,activity_id,activity_img_path')
+            ->where('id', $id)
+            ->first();
 
         return Inertia::render('Frontend/Presenter/EditActivity', ['response' => rtFormat($activity)]);
+    }
+
+    public function activityUpdate(Request $request)
+    {
+
+        $request->validate([
+            'formData.activityName' => 'required',
+            'formData.activityInfo' => 'required',
+            'formData.activityType' => 'required',
+            'formData.activityPhoto' => 'required',
+            'formData.activityPresenter' => 'required',
+            'formData.activityLowestNumberOfPeople' => 'required|numeric',
+            'formData.activityHighestNumberOfPeople' => 'required|numeric',
+            'formData.activityStartRegistrationTime' => 'required',
+            'formData.activityEndRegistrationTime' => 'required',
+            'formData.activityStartTime' => 'required',
+            'formData.activityEndTime' => 'required',
+            'formData.activityAddress' => 'required',
+            'formData.activityInstruction' => 'required',
+            'formData.activityInformation' => 'required',
+        ]);
+
+        $activity = ActivityDetail::find($request->id);
+
+        $activity->update([
+            'activity_name' => $request->formData['activityName'],
+            'activity_info' => $request->formData['activityInfo'],
+            'activity_type' => $request->formData['activityType'],
+            'activity_presenter' => $request->formData['activityPresenter'],
+            'activity_lowest_number_of_people' => $request->formData['activityLowestNumberOfPeople'],
+            'activity_highest_number_of_people' => $request->formData['activityHighestNumberOfPeople'],
+            'activity_start_registration_time' => $request->formData['activityStartRegistrationTime'],
+            'activity_end_registration_time' => $request->formData['activityEndRegistrationTime'],
+            'activity_start_time' => $request->formData['activityStartTime'],
+            'activity_end_time' => $request->formData['activityEndTime'],
+            'activity_address' => $request->formData['activityAddress'],
+            'activity_instruction' => $request->formData['activityInstruction'],
+            'activity_information' => $request->formData['activityInformation'],
+        ]);
+
+        return back()->with(['message' => rtFormat($activity)]);
     }
 
     /**
@@ -198,8 +239,20 @@ class PresenterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function activityDelete(Request $request)
     {
         //
+        $request->validate([
+            'id' => 'required|exists:activity_details,id'
+        ]);
+        $activity = ActivityDetail::find($request->id);
+
+        // $activityPhoto = ActivityPhoto::where('activity_id',$request->id);
+        // dd($activityPhoto);
+        // $this->filesService->deleteUpload($activityPhoto->activity_img_path);
+        
+        $activity->delete();
+        
+        return redirect(route('index'));
     }
 }
