@@ -4,46 +4,37 @@ import magnifer from '/images/icon/magnifer.svg';
 
 export default {
   props: {
-    response: {
+    tableData: {
       type: Object,
       required: false,
       default: () => ({}),
     },
-    tableData: Object,
+    typeData: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
   },
   data() {
     return {
-      title: 'Hello World !',
       images: {
         magnifer,
       },
     };
   },
-  computed: {
-    // 後端傳來的分頁資料
-    paginationData() {
-      return this.response?.rt_data ?? {};
-    },
-  },
 };
 </script>
 
 <template>
-  <section class="w-[1400px]">
+  <section id="activity-details">
     <div class="m-auto w-full h-[505px] p-10 flex flex-col items-center">
       <!-- 搜尋欄位 -->
       <div class="mb-[5px] w-full h-[48px] pt-[10px] border-t-[#000] border-t-[1px] flex justify-between">
         <!-- 活動種類篩選器 -->
         <select class="h-full bg-[#80808012] text-[10px] flex justify-center" placeholder="活動分類">
-          <option value="Taipei">文化與藝術</option>
-          <option value="Taoyuan">學術與培訓</option>
-          <option value="Hsinchu">社交與社團</option>
-          <option value="Miaoli">旅遊與戶外</option>
-          <option value="Taipei">健康與福祉</option>
-          <option value="Taoyuan">商業與職業發展</option>
-          <option value="Hsinchu">娛樂與文化慶典</option>
-          <option value="Miaoli">科技與創新</option>
-          <option value="Miaoli">其他</option>
+          <option v-for="activityType in typeData" :key="activityType.id" :value="activityType.id">
+            {{ activityType.name }}
+          </option>
         </select>
         <!-- 文字搜尋框 -->
         <div class="w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-1">
@@ -67,7 +58,7 @@ export default {
         </div>
       </div>
       <!-- 詳細搜尋內容 -->
-      <div v-for="(item, index) in tableData" :key="index" class="w-full h-[53px] flex">
+      <div v-for="(item, index) in tableData?.data ?? []" :key="index" class="w-full h-[53px] flex">
         <div class="flex-none w-[50%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
           {{ item.activity_name }}
         </div>
@@ -84,21 +75,13 @@ export default {
           人數限制:{{ item.activity_highest_number_of_people }}
         </div>
       </div>
-      <Pagination :pagination-data="paginationData" class="pt-3" />
+      <Pagination :pagination-data="tableData" class="pt-3" />
     </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
-#Activity-details {
-  @apply w-full h-full overflow-y-auto;
-
-  .title {
-    @apply text-[6.25rem] text-center;
-  }
-
-  .btn-base {
-    @apply p-1.5 border-2 rounded-md border-green-500 cursor-pointer;
-  }
+#activity-details {
+  @apply w-[1400px];
 }
 </style>
