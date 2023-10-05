@@ -35,7 +35,7 @@ class StudentController extends Controller
         $data = (object) [
             'activity' => $activity,
             'registerPeople' => $registerPeople,
-            'activityTypeData' => $this->activityPresenter->typeOption,
+            'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 
         
