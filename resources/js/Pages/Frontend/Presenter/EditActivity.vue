@@ -42,13 +42,11 @@ export default {
 </script>
 
 <template>
-  {{ response }}
   <section id="create-activity" class="relative flex flex-col">
     <!-- 建立活動資訊填寫 -->
     <CountDown class="absolute mt-[5%] left-[75%]"></CountDown>
-    <ActivityDetailSwiper>
-      {{ response.rt_data }}
-    </ActivityDetailSwiper>
+    <!-- <ActivityDetailSwiper>
+    </ActivityDetailSwiper> -->
     <!-- 編輯工具列；所見即所得區 -->
     <Editor @update-content="information"></Editor>
     <div class="flex w-full justify-end gap-[45px] px-20 py-5">

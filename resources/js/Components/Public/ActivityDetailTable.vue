@@ -59,20 +59,23 @@ export default {
       </div>
       <!-- 詳細搜尋內容 -->
       <div v-for="(item, index) in tableData?.data ?? []" :key="index" class="w-full h-[53px] flex">
-        <div class="flex-none w-[50%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
+        <Link :href="route('studentActivityDetails', { id: item.id })" class="flex-none w-[50%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
           {{ item.activity_name }}
-        </div>
+        </Link>
         <div class="flex-initial w-[10%] border bg-[#82acc27d] flex justify-center items-center text-[16px] font-semibold">
           <slot name="activity_info_type">
-            {{ item.activity_presenter }}
+            {{ item.activity_presenter || item.activity_type_name }}
           </slot>
         </div>
         <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
           {{ item.activity_end_registration_time }}
         </div>
-        <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
-          開課門檻:{{ item.activity_lowest_number_of_people }}
-          人數限制:{{ item.activity_highest_number_of_people }}
+        <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-between items-center text-[16px]">
+          門檻:{{ item.activity_lowest_number_of_people }}
+          上限:{{ item.activity_highest_number_of_people }}
+          <div class="pe-3 flex items-center justify-center">
+            目前人數：{{ item.registration_count }}
+          </div>
         </div>
       </div>
       <Pagination :pagination-data="tableData" class="pt-3" />

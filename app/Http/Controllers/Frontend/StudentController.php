@@ -8,9 +8,14 @@ use App\Models\ActivityDetail;
 use App\Models\RegisterActivity;
 use App\Models\StudentActivity;
 use Inertia\Inertia;
+use App\Presenters\ActivityPresenter;
 
 class StudentController extends Controller
 {
+    public function __construct(
+        protected ActivityPresenter $activityPresenter,
+    ) {
+    }
     /**
      * Display a listing of the resource.
      * 這是各活動細項
@@ -27,18 +32,65 @@ class StudentController extends Controller
         //     $item->timeFormat = $item->created_at->format('Y/m/d');
         //     return $item;
         // });
-
-
         // $registerActivity = StudentActivity::where('student_id', $request->user()->UserRoleStudent->id)->where('activity_type', 2)->with('activityDetail.activityPhotos')->get();
-
         // dd($request->user());
+
+        // $registerActivity = ActivityDetail::orderBy('id', 'desc')
+        //     // ->where('id', $request->user()->userRoleStudent->id)
+        //     /**
+        //      * 關連到外部的model，藉由model中的function連接，
+        //      * 使用$query遍歷該資料
+        //      * 使用$request將此function之外的變數拉進來
+        //      */
+            // ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
+            //     return $query->where('id', $request->user()->userRoleStudent->id);
+            // })
+            // ->whereHas('studentActivities', function ($query) {
+            //     return $query->where('activity_type', 2);
+            // })
+        //     ->with('activityPhotos:id,activity_id,activity_img_path')
+        //     ->get();
+
+        // $favoriteActivity = ActivityDetail::orderBy('id', 'desc')
+        //     // ->where('id', $request->user()->userRoleStudent->id)
+        //     /**
+        //      * 關連到外部的model，藉由model中的function連接，
+        //      * 使用$query遍歷該資料
+        //      * 使用$request將此function之外的變數拉進來
+        //      */
+        //     ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
+        //         return $query->where('id', $request->user()->userRoleStudent->id);
+        //     })
+        //     ->whereHas('studentActivities', function ($query) {
+        //         return $query->where('activity_type', 1);
+        //     })
+        //     ->with('activityPhotos:id,activity_id,activity_img_path')
+        //     ->get();
+
+        // $allActivityDetails = ActivityDetail::orderBy('id', 'desc')
+        //     // ->where('id', $request->user()->userRoleStudent->id)
+        //     /**
+        //      * 關連到外部的model，藉由model中的function連接，
+        //      * 使用$query遍歷該資料
+        //      * 使用$request將此function之外的變數拉進來
+        //      */
+        //     ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
+        //         return $query->where('id', $request->user()->userRoleStudent->id);
+        //     })
+        //     ->with('activityPhotos:id,activity_id,activity_img_path')
+        //     ->get();
+
+        // $data = (object)[
+        //     'registerActivity' => $registerActivity,
+        //     // 'regiterActivityDetails' => $regiterActivityDetails,
+        //     'favoriteActivity' => $favoriteActivity,
+        //     // 'favoriteActivityDetails' => $favoriteActivityDetails,
+        //     'allActivityDetails' => $allActivityDetails,
+        // ];
+
+
+        // 活動列表資料
         $registerActivity = ActivityDetail::orderBy('id', 'desc')
-            // ->where('id', $request->user()->userRoleStudent->id)
-            /**
-             * 關連到外部的model，藉由model中的function連接，
-             * 使用$query遍歷該資料
-             * 使用$request將此function之外的變數拉進來
-             */
             ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
                 return $query->where('id', $request->user()->userRoleStudent->id);
             })
@@ -46,15 +98,50 @@ class StudentController extends Controller
                 return $query->where('activity_type', 2);
             })
             ->with('activityPhotos:id,activity_id,activity_img_path')
-            ->get();
+            ->paginate(5)
+            ->through(function ($item) {
+                // 找出第一張圖片
+                $coverPhoto = $item->activityPhotos->first();
+
+                // 找出已收藏的人數
+                $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
+                // 找出已報名的人數
+                $registrationCount = $item->studentActivities->where('activity_type', 2)->count();
+
+                return [
+                    'id' => $item->id,
+                    // 活動名稱
+                    'activity_name' => $item->activity_name,
+                    // 活動Slogan
+                    'activity_info' => $item->activity_info,
+                    // 活動類型代號
+                    'activity_type' => $item->activity_type,
+                    // 活動類型名稱
+                    'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
+                    // 活動人數下限
+                    'activity_lowest_number_of_people' => $item->activity_lowest_number_of_people,
+                    // 活動人數上限
+                    'activity_highest_number_of_people' => $item->activity_highest_number_of_people,
+                    // 活動報名開始時間
+                    'activity_start_registration_time' => date('Y-m-d H:i', strtotime($item->activity_start_registration_time)),
+                    // 活動報名截止時間
+                    'activity_end_registration_time' => date('Y-m-d H:i', strtotime($item->activity_end_registration_time)),
+                    // 活動開始時間
+                    'activity_start_time' => date('Y-m-d H:i', strtotime($item->activity_start_time)),
+                    // 活動結束時間
+                    'activity_end_time' => date('Y-m-d H:i', strtotime($item->activity_end_time)),
+                    // 活動地點
+                    'activity_address' => $item->activity_address,
+                    // 活動封面圖片
+                    'cover_photo' => $coverPhoto->activity_img_path ?? '',
+                    // 活動收藏人數
+                    'collection_count' => $collectionCount,
+                    // 活動報名人數
+                    'registration_count' => $registrationCount,
+                ];
+            });
 
         $favoriteActivity = ActivityDetail::orderBy('id', 'desc')
-            // ->where('id', $request->user()->userRoleStudent->id)
-            /**
-             * 關連到外部的model，藉由model中的function連接，
-             * 使用$query遍歷該資料
-             * 使用$request將此function之外的變數拉進來
-             */
             ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
                 return $query->where('id', $request->user()->userRoleStudent->id);
             })
@@ -62,45 +149,105 @@ class StudentController extends Controller
                 return $query->where('activity_type', 1);
             })
             ->with('activityPhotos:id,activity_id,activity_img_path')
-            ->get();
+            ->paginate(5)
+            ->through(function ($item) {
+                // 找出第一張圖片
+                $coverPhoto = $item->activityPhotos->first();
 
-        $allActivityDetails = ActivityDetail::orderBy('id', 'desc')
-            // ->where('id', $request->user()->userRoleStudent->id)
-            /**
-             * 關連到外部的model，藉由model中的function連接，
-             * 使用$query遍歷該資料
-             * 使用$request將此function之外的變數拉進來
-             */
+                // 找出已收藏的人數
+                $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
+                // 找出已報名的人數
+                $registrationCount = $item->studentActivities->where('activity_type', 2)->count();
+
+                return [
+                    'id' => $item->id,
+                    // 活動名稱
+                    'activity_name' => $item->activity_name,
+                    // 活動Slogan
+                    'activity_info' => $item->activity_info,
+                    // 活動類型代號
+                    'activity_type' => $item->activity_type,
+                    // 活動類型名稱
+                    'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
+                    // 活動人數下限
+                    'activity_lowest_number_of_people' => $item->activity_lowest_number_of_people,
+                    // 活動人數上限
+                    'activity_highest_number_of_people' => $item->activity_highest_number_of_people,
+                    // 活動報名開始時間
+                    'activity_start_registration_time' => date('Y-m-d H:i', strtotime($item->activity_start_registration_time)),
+                    // 活動報名截止時間
+                    'activity_end_registration_time' => date('Y-m-d H:i', strtotime($item->activity_end_registration_time)),
+                    // 活動開始時間
+                    'activity_start_time' => date('Y-m-d H:i', strtotime($item->activity_start_time)),
+                    // 活動結束時間
+                    'activity_end_time' => date('Y-m-d H:i', strtotime($item->activity_end_time)),
+                    // 活動地點
+                    'activity_address' => $item->activity_address,
+                    // 活動封面圖片
+                    'cover_photo' => $coverPhoto->activity_img_path ?? '',
+                    // 活動收藏人數
+                    'collection_count' => $collectionCount,
+                    // 活動報名人數
+                    'registration_count' => $registrationCount,
+                ];
+            });
+
+        $allActivity = ActivityDetail::orderBy('id', 'desc')
             ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
                 return $query->where('id', $request->user()->userRoleStudent->id);
             })
             ->with('activityPhotos:id,activity_id,activity_img_path')
-            ->get();
-        // dd($registerActivity);
-        // $responseForm = ActivityDetail::where(function($query) use($request){
-        //     return $query->where('lead_author_id', $request->user()->id)
-        //         ->orWhereHas('coworker',function($coQuery) use($request){
-        //             return $coQuery->where('coworker_id',$request->user()->id);
-        //         });
-        // })->find($request->id);
+            ->paginate(5)
+            ->through(function ($item) {
+                // 找出第一張圖片
+                $coverPhoto = $item->activityPhotos->first();
 
-        // dd($registerActivity);
-        // $regiterActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id', $registerActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
+                // 找出已收藏的人數
+                $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
+                // 找出已報名的人數
+                $registrationCount = $item->studentActivities->where('activity_type', 2)->count();
 
-        // $favoriteActivity = StudentActivity::where('student_id', $request->user()->UserRoleStudent->id)->where('activity_type', 1)->with('activityDetail.activityPhotos')->get();
-        // $favoriteActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id', $favoriteActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
+                return [
+                    'id' => $item->id,
+                    // 活動名稱
+                    'activity_name' => $item->activity_name,
+                    // 活動Slogan
+                    'activity_info' => $item->activity_info,
+                    // 活動類型代號
+                    'activity_type' => $item->activity_type,
+                    // 活動類型名稱
+                    'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
+                    // 活動人數下限
+                    'activity_lowest_number_of_people' => $item->activity_lowest_number_of_people,
+                    // 活動人數上限
+                    'activity_highest_number_of_people' => $item->activity_highest_number_of_people,
+                    // 活動報名開始時間
+                    'activity_start_registration_time' => date('Y-m-d H:i', strtotime($item->activity_start_registration_time)),
+                    // 活動報名截止時間
+                    'activity_end_registration_time' => date('Y-m-d H:i', strtotime($item->activity_end_registration_time)),
+                    // 活動開始時間
+                    'activity_start_time' => date('Y-m-d H:i', strtotime($item->activity_start_time)),
+                    // 活動結束時間
+                    'activity_end_time' => date('Y-m-d H:i', strtotime($item->activity_end_time)),
+                    // 活動地點
+                    'activity_address' => $item->activity_address,
+                    // 活動封面圖片
+                    'cover_photo' => $coverPhoto->activity_img_path ?? '',
+                    // 活動收藏人數
+                    'collection_count' => $collectionCount,
+                    // 活動報名人數
+                    'registration_count' => $registrationCount,
+                ];
+            });
 
-        // $allActivityDetails = ActivityDetail::orderBy('id', 'desc')->where('id', $favoriteActivity->id)->orwhere('id', $registerActivity->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
-
-        $data = (object)[
+        $data = (object) [
             'registerActivity' => $registerActivity,
-            // 'regiterActivityDetails' => $regiterActivityDetails,
             'favoriteActivity' => $favoriteActivity,
-            // 'favoriteActivityDetails' => $favoriteActivityDetails,
-            'allActivityDetails' => $allActivityDetails,
+            'allActivity' => $allActivity,
+            'activityTypeData' => $this->activityPresenter->typeOption,
         ];
-        // dd(rtFormat($data));
-        // return Inertia::render('Frontend/Presenter/PresenterPersonalPage', [ 'response' => rtFormat($activity)]);
+
+
         return Inertia::render('Frontend/Student/StudentPersonalPage', ['response' => rtFormat($data)]);
     }
 

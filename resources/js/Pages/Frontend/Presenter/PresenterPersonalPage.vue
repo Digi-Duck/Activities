@@ -11,61 +11,44 @@ export default {
   },
   data() {
     return {
-      title: 'Hello World !',
+      rtData: this.response?.rt_data ?? {},
     };
   },
-  created() {
+  computed: {
+    // 獲取活動資料陣列
+    activityData() {
+      return this.rtData.activity ?? {};
+    },
+
+    // 獲取活動類別資料陣列
+    activityTypeData() {
+      return this.rtData.activityTypeData ?? [];
+    },
   },
 };
 </script>
 
 <template>
-  {{ response.rt_data }}
-  <!-- {{ $props.response.rt_data[0].activityPhotos }} -->
-  <!-- <div v-for="(item, index) in response.rt_data" :key="item.id">
-    <div>{{ index + 1 }}</div>
-    <Link :href="route('activityEdit', { id: item.id })">
-      <button type="button" class="border border-black px-3 py-2 rounded-[5px]">編輯</button>
-      <div class="w-[300px] h-[300px] bg-[blue]">{{ item.activity_name }}</div>
-    </Link>
-  </div> -->
   <section id="presenter-personal-page" class="flex flex-col items-center">
-    <ActivitySwiper :slide-data="response.rt_data">
+    <ActivitySwiper :slide-data="activityData?.data ?? []">
       <template #activity_title_name>
         <span>
           近期活動
         </span>
       </template>
     </ActivitySwiper>
-    <ActivityDetailTable :table-data="response.rt_data">
+    <ActivityDetailTable :table-data="activityData" :type-data="activityTypeData">
       <template #activity_title_type>
         <span>
           講者名稱
         </span>
       </template>
-      <!-- <template #activity_info_type>
-        <span>
-          respon
-        </span>
-      </template> -->
     </ActivityDetailTable>
-    <!-- {{ response.rt_data[0] }} -->
-    <ActivitySwiper :slide-data="response.rt_data">
+    <!-- 已上完的活動資料尚未傳送 -->
+    <ActivitySwiper :slide-data="activityData?.data ?? []">
       <template #activity_title_name>
         <span>
           已上完的活動
-        </span>
-      </template>
-      <template #activity_name>
-        <span>
-        </span>
-      </template>
-      <template #activity_start_time>
-        <span>
-        </span>
-      </template>
-      <template #activity_address>
-        <span>
         </span>
       </template>
     </ActivitySwiper>

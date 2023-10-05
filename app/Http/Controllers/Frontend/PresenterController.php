@@ -8,26 +8,77 @@ use App\Models\ActivityPhoto;
 use App\Services\FilesService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Presenters\ActivityPresenter;
 
 class PresenterController extends Controller
 {
-    public function __construct(protected FilesService $filesService)
-    {
+    public function __construct(
+        protected FilesService $filesService,
+        protected ActivityPresenter $activityPresenter,
+    ) {
     }
     /**
      * 講師的個人介面
      */
     public function index(Request $request)
     {
-        //
-        // $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRolePresenter->id)->with('activityPhotos:id,activity_id,activity_img_path')->get()->map(function ($item) {
-        //     $item->timeFormat = $item->created_at->format('Y/m/d');
-        //     return $item;
-        // });
-        $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRolePresenter->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
+        // $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRolePresenter->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
 
-        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', [ 'response' => rtFormat($activity)]);
-        ;
+        // 活動列表資料
+        $activity = ActivityDetail::orderBy('id', 'desc')
+            ->where('presenter_id', $request->user()->UserRolePresenter->id)
+            ->with('activityPhotos:id,activity_id,activity_img_path')
+            ->paginate(5)
+            ->through(function ($item) {
+                // 找出第一張圖片
+                $coverPhoto = $item->activityPhotos->first();
+
+                // 找出已收藏的人數
+                $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
+                // 找出已報名的人數
+                $registrationCount = $item->studentActivities->where('activity_type', 2)->count();
+
+                return [
+                    'id' => $item->id,
+                    // 活動名稱
+                    'activity_name' => $item->activity_name,
+                    // 活動Slogan
+                    'activity_info' => $item->activity_info,
+                    // 活動講者
+                    'activity_presenter' => $item->activity_presenter,
+                    // 活動類型代號
+                    'activity_type' => $item->activity_type,
+                    // 活動類型名稱
+                    'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
+                    // 活動人數下限
+                    'activity_lowest_number_of_people' => $item->activity_lowest_number_of_people,
+                    // 活動人數上限
+                    'activity_highest_number_of_people' => $item->activity_highest_number_of_people,
+                    // 活動報名開始時間
+                    'activity_start_registration_time' => date('Y-m-d H:i', strtotime($item->activity_start_registration_time)),
+                    // 活動報名截止時間
+                    'activity_end_registration_time' => date('Y-m-d H:i', strtotime($item->activity_end_registration_time)),
+                    // 活動開始時間
+                    'activity_start_time' => date('Y-m-d H:i', strtotime($item->activity_start_time)),
+                    // 活動結束時間
+                    'activity_end_time' => date('Y-m-d H:i', strtotime($item->activity_end_time)),
+                    // 活動地點
+                    'activity_address' => $item->activity_address,
+                    // 活動封面圖片
+                    'cover_photo' => $coverPhoto->activity_img_path ?? '',
+                    // 活動收藏人數
+                    'collection_count' => $collectionCount,
+                    // 活動報名人數
+                    'registration_count' => $registrationCount,
+                ];
+            });
+
+        $data = (object) [
+            'activity' => $activity,
+            'activityTypeData' => $this->activityPresenter->typeOption,
+        ];
+
+        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', ['response' => rtFormat($data)]);;
     }
 
     /**
@@ -125,12 +176,12 @@ class PresenterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function activityEdit($id)
+    public function activityEdit()
     {
         //
-        $activity = ActivityDetail::find($id);
+        // $activity = ActivityDetail::find($id);
 
-        return Inertia::render('Frontend/Presenter/EditActivity', [ 'response' => rtFormat($activity)]);
+        return Inertia::render('Frontend/Presenter/EditActivity');
     }
 
     /**

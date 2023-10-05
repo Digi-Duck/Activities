@@ -11,33 +11,36 @@ export default {
   },
   data() {
     return {
-      title: 'Hello World !',
+      rtData: this.response?.rt_data ?? {},
     };
   },
-  created() {
+  computed: {
+    // 獲取已報名活動資料陣列
+    registerActivityData() {
+      return this.rtData.registerActivity ?? {};
+    },
+
+    // 獲取已收藏活動資料陣列
+    favoriteActivityData() {
+      return this.rtData.favoriteActivity ?? {};
+    },
+
+    // 獲取全部活動資料陣列
+    allActivityData() {
+      return this.rtData.allActivity ?? {};
+    },
+
+    // 獲取活動類別資料陣列
+    activityTypeData() {
+      return this.rtData.activityTypeData ?? [];
+    },
   },
 };
 </script>
 
 <template>
-  {{ response.rt_data.allActivityDetails }}
-  <hr>
-  <!-- {{ response.rt_data.favoriteActivity }} -->
-  <!-- {{ $props.response.rt_data }} -->
-  <!-- <div v-for="(item, index) in response.rt_data" :key="item.id">
-    <div>{{ index + 1 }}</div>
-    <Link :href="route('activityEdit', { id: item.id })">
-      <button type="button" class="border border-black px-3 py-2 rounded-[5px]">編輯</button>
-      <div class="w-[300px] h-[300px] bg-[blue]">{{ item.activity_name }}</div>
-    </Link>
-  </div> -->
   <section id="presenter-personal-page" class="flex flex-col items-center">
-    <!-- {{ response.rt_data.registerActivity }} -->
-    <!-- <hr> -->
-    <!-- {{ response.rt_data.regiterActivityDetails }} -->
-    <!-- <hr> -->
-    <!-- {{ response.rt_data.activity }} -->
-    <ActivitySwiper :slide-data="response.rt_data.registerActivity">
+    <ActivitySwiper :slide-data="registerActivityData?.data ?? []">
       <template #activity_title_name>
         <span>
           已報名活動
@@ -45,14 +48,14 @@ export default {
       </template>
     </ActivitySwiper>
     <!-- {{ response.rt_data.favoriteActivity }} -->
-    <ActivitySwiper :slide-data="response.rt_data.favoriteActivity">
+    <ActivitySwiper :slide-data="favoriteActivityData?.data ?? []">
       <template #activity_title_name>
         <span>
           已收藏活動
         </span>
       </template>
     </ActivitySwiper>
-    <ActivityDetailTable :table-data="response.rt_data.allActivityDetails">
+    <ActivityDetailTable :table-data="allActivityData" :type-data="activityTypeData">
       <template #activity_title_type>
         <span>
           活動類型
@@ -65,7 +68,6 @@ export default {
       </template>
       <template #activity_type>
         <span>
-          我自己寫活動類型
         </span>
       </template>
       <template #activity_end_registration_time>

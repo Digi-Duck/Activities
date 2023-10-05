@@ -81,9 +81,9 @@ export default {
       <!-- 這裡長了一個斜的Swiper -->
       <!-- 活動封面照片組合Swiper -->
       <Swiper v-slot="{ slide }" :slide-data="activityData.data ?? []" :slides-per-view=4 :space-between=30 class="relative -left-[50px] top-[400px] rotate-[10deg]" :btn-prev="prevButton" :btn-next="nextButton">
-        <div>
+        <Link :href="route('studentActivityDetails', { id: slide.id })">
           <img :src="slide.cover_photo" class="w-[512px] h-[384px] object-cover" alt="產業類別圖片">
-        </div>
+        </Link>
       </Swiper>
     </div>
     <!-- 活動行事曆 -->
@@ -97,7 +97,9 @@ export default {
           {{ hottestActivityData.activity_type_name }}
         </div>
         <img src="" alt="活動收藏熱門進度條">
-        <div class="text-[17px]">課程熱度</div>
+        <div class="text-[17px]">課程熱度
+          {{ hottestActivityData.collection_count }}
+        </div>
       </div>
       <div class="flex flex-col items-center">
         <b class="text-[55px]">
