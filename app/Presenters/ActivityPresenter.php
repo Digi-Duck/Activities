@@ -7,7 +7,7 @@ class ActivityPresenter
     /**
      * 活動類別選項陣列
      */
-    public $typeOption;
+    protected $typeOption;
 
     public function __construct()
     {
@@ -49,6 +49,14 @@ class ActivityPresenter
                 'name' => '其他',
             ],
         ];
+    }
+
+    /**
+     * 回傳活動類別選項陣列
+     * @return array 回傳活動類別選項陣列
+     */
+    public function getTypeOption() {
+        return $this->typeOption;
     }
 
     /**

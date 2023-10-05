@@ -74,7 +74,7 @@ class IndexController extends Controller
         $data = (object) [
             'activity' => $activity,
             'hottestActivity' => $hottestActivity,
-            'activityTypeData' => $this->activityPresenter->typeOption,
+            'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 
         return Inertia::render('Frontend/Index', ['response' => rtFormat($data)]);
