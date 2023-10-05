@@ -259,7 +259,7 @@ class StudentController extends Controller
             'registerActivity' => $registerActivity,
             'favoriteActivity' => $favoriteActivity,
             'allActivity' => $allActivity,
-            'activityTypeData' => $this->activityPresenter->typeOption,
+            'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 
 
