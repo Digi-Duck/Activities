@@ -31,7 +31,9 @@
     "dependencies": {
         "@tinymce/tinymce-vue": "^5.1.1",
         "echarts": "^5.4.3",
+        "html5-qrcode": "^2.3.8",
         "pinia": "^2.1.6",
+        "qrcode": "^1.5.3",
         "sweetalert2": "^11.7.31",
         "swiper": "^10.3.0",
         "tinymce": "^6.7.0"
