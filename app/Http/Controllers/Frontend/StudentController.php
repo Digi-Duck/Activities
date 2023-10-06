@@ -223,11 +223,13 @@ class StudentController extends Controller
             });
 
         $favoriteActivity = ActivityDetail::orderBy('id', 'desc')
-            ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
-                return $query->where('id', $request->user()->userRoleStudent->id);
-            })
-            ->whereHas('studentActivities', function ($query) {
-                return $query->where('activity_type', 1);
+            // ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
+            //     return $query->where('id', $request->user()->userRoleStudent->id);
+            // })
+            ->whereHas('studentActivities', function ($query) use($request) {
+                return $query
+                ->where('student_id', $request->user()->userRoleStudent->id)
+                ->where('activity_type', 1);
             })
             ->with('activityPhotos:id,activity_id,activity_img_path')
             ->paginate(5)

@@ -115,10 +115,10 @@ export default {
           {{ hottestActivityData.activity_start_time }}
         </time>
       </div>
-      <figure class="relative w-full h-[400px] flex">
-        <div class="absolute w-[770px] h-full rounded-[64px] bg-green-600"></div>
-        <img :src="hottestActivityData.cover_photo" class="absolute ms-[22.5%] w-[800px] h-full z-10 rounded-[64px] bg-red-600" alt="">
-        <div class="absolute end-0 w-[770px] h-full rounded-[64px] bg-blue-600"></div>
+      <figure class="relative w-full h-[450px] flex">
+        <img :src="hottestActivityData.cover_photo" class="absolute w-[770px] h-full rounded-[64px] opacity-[20%] bg-green-600" alt="">
+        <img :src="hottestActivityData.cover_photo" class="absolute ms-[20%] w-[900px] h-full z-10 rounded-[64px]" alt="">
+        <img :src="hottestActivityData.cover_photo" class="absolute end-0 w-[770px] h-full rounded-[64px] opacity-[20%] bg-blue-600" alt="">
       </figure>
     </Link>
     <div v-else></div>
