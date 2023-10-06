@@ -286,7 +286,7 @@ class StudentController extends Controller
                 $coverPhoto = $item->activityPhotos->first();
 
                 // 找出已收藏的人數
-                $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
+                // $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
                 // 找出已報名的人數
                 $registrationCount = $item->studentActivities->where('activity_type', 2)->count();
 
@@ -317,7 +317,7 @@ class StudentController extends Controller
                     // 活動封面圖片
                     'cover_photo' => $coverPhoto->activity_img_path ?? '',
                     // 活動收藏人數
-                    'collection_count' => $collectionCount,
+                    // 'collection_count' => $collectionCount,
                     // 活動報名人數
                     'registration_count' => $registrationCount,
                 ];
@@ -347,25 +347,23 @@ class StudentController extends Controller
             'studentEmail' => 'required',
             'activity_id' => 'required',
         ]);
-        // dd($request->all());
-
-        // 判斷是否已經出現在table裡面
-
-        // dd($request->all());
-        // dd($request->activity_id);
-        StudentActivity::create([
-            'student_id' => $request->user()->userRoleStudent->id,
-            'activity_id' => $request->activity_id,
-            'activity_type' => $request->registered,
-        ]);
-        $register = RegisterActivity::create([
-            'activity_id' => $request->activity_id,
-            'student_id' => $request->user()->userRoleStudent->id,
-            'student_name' => $request->studentName,
-            'student_phone_number' => $request->studentPhoneNumber,
-            'student_email' => $request->studentEmail,
-            'student_additional_remark' => $request->studentAdditionalRemark,
-        ]);
+        $register = [];
+        $test = RegisterActivity::where('student_id',$request->user()->userRoleStudent->id)->find($request->activity_id);
+        if (!$test) {
+            StudentActivity::create([
+                'student_id' => $request->user()->userRoleStudent->id,
+                'activity_id' => $request->activity_id,
+                'activity_type' => $request->registered,
+            ]);
+            $register = RegisterActivity::updateOrCreate([
+                'activity_id' => $request->activity_id,
+                'student_id' => $request->user()->userRoleStudent->id,
+                'student_name' => $request->studentName,
+                'student_phone_number' => $request->studentPhoneNumber,
+                'student_email' => $request->studentEmail,
+                'student_additional_remark' => $request->studentAdditionalRemark,
+            ]);
+        }
 
         return back()->with(['message' => rtFormat($register)]);
     }
