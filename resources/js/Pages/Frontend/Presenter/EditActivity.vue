@@ -131,6 +131,12 @@ export default {
   {{ rtData.id }}
   <section id="create-activity" class="flex flex-col">
     <!-- 建立活動資訊填寫 -->
+    <button v-if="!rtData.favoriteCheck" @click="favorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+      點我收藏
+    </button>
+    <button v-else @click="cancelFavorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+      取消收藏
+    </button>
     <form @submit.prevent="submitData()" action="">
       <div class="relative mt-5 h-[901px] bg-[#dac3c3] flex flex-col">
         <div class="relative w-full z-10">

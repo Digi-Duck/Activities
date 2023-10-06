@@ -82,6 +82,44 @@ export default {
         }
       });
     },
+    favorite() {
+      router.visit(route('createFavorite'), {
+        method: 'post',
+        data: { ...this.rtData, activity_id: this.response.rt_data.activity.id, ...this.activityType },
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire({
+              title: '收藏成功',
+              showDenyButton: false,
+              confirmButtonText: '回列表',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                router.get(route('studentActivityEdit', { id: this.response.rt_data.activity.id }));
+              }
+            });
+          }
+        },
+      });
+    },
+    cancelFavorite() {
+      router.visit(route('cancelFavorite'), {
+        method: 'delete',
+        data: { activity_id: this.response.rt_data.activity.id, ...this.activityType },
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire({
+              title: '取消成功',
+              showDenyButton: false,
+              confirmButtonText: '回列表',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                router.get(route('studentActivityEdit', { id: this.response.rt_data.activity.id }));
+              }
+            });
+          }
+        },
+      });
+    },
   },
 };
 </script>
@@ -95,6 +133,12 @@ export default {
         </span>
       </template>
     </CountDown>
+    <button v-if="!rtData.favoriteCheck" @click="favorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+      點我收藏
+    </button>
+    <button v-else @click="cancelFavorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+      取消收藏
+    </button>
     <ActivityDetailSwiper :slide-data="[activityData]">
       <template #activity_type>
         <span v-if="activityData.activity_type === 1">

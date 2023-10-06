@@ -21,7 +21,7 @@ class StudentController extends Controller
      * Display a listing of the resource.
      * 這是各活動細項
      */
-    public function index($id)
+    public function index($id,Request $request)
     {
         //
         $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->first();
@@ -32,13 +32,22 @@ class StudentController extends Controller
             })
             ->count();
 
-        $favoritePeople = StudentActivity::where('student_id',$id)
-        ->get();
-        // dd($favoritePeople);
+        // dd($request->user()->userRoleStudent->id);
+
+        $favoriteCheck = ActivityDetail::orderBy('id', 'desc')
+        ->whereHas('studentActivities', function ($query) use ($id,$request) {
+            return $query
+            ->where('activity_type' , 1)
+            ->where('activity_id', $id)
+            ->where('student_id', $request->user()->userRoleStudent->id);
+        })
+        ->first();
+
 
         $data = (object) [
             'activity' => $activity,
             'registerPeople' => $registerPeople,
+            'favoriteCheck' => $favoriteCheck,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 
@@ -372,6 +381,19 @@ class StudentController extends Controller
             'activity_type' => $request->favorited,
         ]);
         return back()->with(['message' => rtFormat($favorite)]);
+    }
+
+    public function cancelFavorite(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'activity_id' => 'required',
+        ]);
+        $cancelFavorite = StudentActivity::where('activity_type', 1)->where('student_id',$request->user()->userRoleStudent->id)->first();
+        // dd($cancelFavorite);
+        $cancelFavorite->delete();
+
+        return back()->with(['message' => rtFormat($cancelFavorite)]);
     }
 
     public function registerDelete(Request $request)

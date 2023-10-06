@@ -28,4 +28,5 @@ Route::middleware('auth', 'role.weight:3')->prefix('/student')->group(function (
     Route::delete('/registerDelete', [StudentController::class, 'registerDelete'])->name('registerDelete');
     Route::post('/registerStore', [StudentController::class, 'create'])->name('registerStore');
     Route::post('/createFavorite', [StudentController::class, 'createFavorite'])->name('createFavorite');
+    Route::delete('/cancelFavorite', [StudentController::class, 'cancelFavorite'])->name('cancelFavorite');
 });

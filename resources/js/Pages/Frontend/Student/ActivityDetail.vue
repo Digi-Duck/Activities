@@ -34,6 +34,10 @@ export default {
     activityTypeData() {
       return this.rtData.activityTypeData ?? [];
     },
+    // 確認是否已收藏
+    favoriteCheck() {
+      return this.rtData.favoriteCheck ?? [];
+    },
   },
   methods: {
     submitData() {
@@ -76,6 +80,25 @@ export default {
         },
       });
     },
+    cancelFavorite() {
+      router.visit(route('cancelFavorite'), {
+        method: 'delete',
+        data: { activity_id: this.response.rt_data.activity.id, ...this.activityType },
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire({
+              title: '取消成功',
+              showDenyButton: false,
+              confirmButtonText: '回列表',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                router.get(route('studentActivityDetails', { id: this.response.rt_data.activity.id }));
+              }
+            });
+          }
+        },
+      });
+    },
   },
 };
 </script>
@@ -89,8 +112,11 @@ export default {
         </span>
       </template>
     </CountDown>
-    <button @click="favorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+    <button v-if="!rtData.favoriteCheck" @click="favorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
       點我收藏
+    </button>
+    <button v-else @click="cancelFavorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+      取消收藏
     </button>
     <ActivityDetailSwiper :slide-data="[activityData]">
       <template #activity_type>
