@@ -64,7 +64,7 @@ class DashboardController extends Controller
             });
 
         $newBehaviors = UserBehavior::orderBy('id', 'desc')
-        ->take(6)
+        ->take(5)
         ->get();
         $behaviorRecord = UserBehavior::get();
 

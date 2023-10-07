@@ -25,7 +25,11 @@ class StudentController extends Controller
     public function index($id, Request $request)
     {
         //
-        $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->first();
+        $activity = ActivityDetail::find($id)
+        ->with('activityPhotos:id,activity_id,activity_img_path')
+        ->where('id', $id)
+        ->first();
+        // dd($activity->activity_start_registration_time->format('Y-m-d H:i'));
 
         $registerPeople = ActivityDetail::orderBy('id', 'desc')
             ->whereHas('registerActivities', function ($query) use ($id) {
@@ -302,7 +306,7 @@ class StudentController extends Controller
                 'type_id' => 2,
                 'user_type' => '學員',
                 'user_name' => $request->user()->userRoleStudent->user_name,
-                'behavior' => $request->user()->userRoleStudent->user_name . '報名了' . $activityDetail->activity_name,
+                'behavior' => $request->user()->userRoleStudent->user_name . '報名了' . $activityDetail->activity_name . '活動',
             ]);
             $register = RegisterActivity::updateOrCreate([
                 'activity_id' => $request->activity_id,

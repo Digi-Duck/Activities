@@ -216,13 +216,11 @@ class PresenterController extends Controller
         ]);
 
         $activity = ActivityDetail::find($request->id);
-
-
         UserBehavior::create([
             'type_id' => 1,
             'user_type' => '講師',
             'user_name' => $request->user()->userRolePresenter->user_name,
-            'behavior' => $request->user()->userRolePresenter->user_name . '修改了' . $request->formData['activityName'],
+            'behavior' => $request->user()->userRolePresenter->user_name . '修改了' . $activity->activity_name,
         ]);
 
 

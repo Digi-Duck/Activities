@@ -98,21 +98,21 @@ export default {
         <!-- 詳細圖表 -->
         <div class="w-[988px] rounded-[10px] bg-slate-400"></div>
         <!-- 最新消息 -->
-        <div class="w-[559px] rounded-[10px] border-2 border-[#000000] text-white flex flex-col gap-3">
+        <div class="w-[559px] rounded-[10px] border-2 border-[#000000] text-white overflow-hidden flex flex-col gap-3">
           <!-- 最新消息表頭 -->
           <div class="w-full h-[106px] ps-5 rounded-t-[10px] bg-[#397AC4] text-[48px] flex items-center">最新消息</div>
           <!-- 最新消息內容 -->
-          {{ newBehaviors }}
+          <!-- {{ newBehaviors }} -->
           <div v-for="(item, index) in newBehaviors" :key="index" class="w-full h-[112px] p-5 bg-[#4D7F95] text-[16px] flex flex-row justify-between items-center">
             <!-- 會員頭像 -->
             <img src="" class="w-[66px] h-[66px] rounded-full bg-white" alt="數據圖標">
             <!-- 會員資訊 -->
             <div class="w-[45%] ps-10 flex-initial flex flex-col">
-              <div>會員姓名</div>
-              <div>活動時間</div>
+              <div>{{ item.user_name }}</div>
+              <div>{{ item.created_at }}</div>
             </div>
             <!-- 會員行為 -->
-            <div class="w-[40%] flex-initial">報名了中興大學Bootcamp</div>
+            <div class="w-[40%] flex-initial">{{ item.behavior }}</div>
           </div>
         </div>
       </div>
