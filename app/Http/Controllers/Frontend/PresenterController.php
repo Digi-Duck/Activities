@@ -79,8 +79,7 @@ class PresenterController extends Controller
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 
-        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', ['response' => rtFormat($data)]);
-        ;
+        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', ['response' => rtFormat($data)]);;
     }
 
     /**
@@ -98,9 +97,6 @@ class PresenterController extends Controller
 
     public function activityStore(Request $request)
     {
-        // $user = $request->user();
-        // dd($user = $request->user()->userRolePresenter->id);
-        // dd($request->all());
         $request->validate([
             'activityName' => 'required',
             'activityInfo' => 'required',
@@ -109,14 +105,22 @@ class PresenterController extends Controller
             'activityPresenter' => 'required',
             'activityLowestNumberOfPeople' => 'required|numeric',
             'activityHighestNumberOfPeople' => 'required|numeric',
-            'activityStartRegistrationTime' => 'required',
-            'activityEndRegistrationTime' => 'required',
-            'activityStartTime' => 'required',
-            'activityEndTime' => 'required',
+            'activityStartRegistrationTime' => 'required|date_format:Y-m-d H:i', // 日期时间格式
+            'activityEndRegistrationTime' => 'required|date_format:Y-m-d H:i|after:activityStartRegistrationTime', // 需要晚于开始时间
+            'activityStartTime' => 'required|date_format:Y-m-d H:i',
+            'activityEndTime' => 'required|date_format:Y-m-d H:i|after:activityStartTime', // 需要晚于开始时间
             'activityAddress' => 'required',
             'activityInstruction' => 'required',
             'activityInformation' => 'required',
+        ],[
+            'activityStartRegistrationTime.date_format' => '時間格式為:2000-01-01 10:00',
+            'activityEndRegistrationTime.date_format' => '時間格式為:2000-01-01 10:00',
+            'activityEndRegistrationTime.after' => '需晚於開始註冊時間',
+            'activityStartTime.date_format' => '時間格式為:2000-01-01 10:00',
+            'activityEndTime.date_format' => '時間格式為:2000-01-01 10:00',
+            'activityEndTime.after' => '需晚於開始註冊時間',
         ]);
+        
 
         $activity = ActivityDetail::create([
             'activity_name' => $request->activityName,
@@ -141,11 +145,6 @@ class PresenterController extends Controller
             'type_id' => 1,
             'behavior' => $request->user()->userRolePresenter->user_name . '建立了' . $request->activityName,
         ]);
-
-
-        // $activity_photo = ActivityPhoto::create([
-        //     'activity_img_path' => $this->filesService->base64Upload($request->activityPhoto[0], 'activity'),
-        // ]);
 
         foreach ($request->activityPhoto ?? [] as $value) {
             ActivityPhoto::create([
@@ -176,6 +175,7 @@ class PresenterController extends Controller
 
     public function activityScanner()
     {
+
         return Inertia::render('Frontend/Presenter/ScannerPage');
     }
 
