@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityDetail;
 use App\Models\ActivityPhoto;
+use App\Models\UserBehavior;
 use App\Services\FilesService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -115,7 +116,6 @@ class PresenterController extends Controller
             'activityInstruction' => 'required',
             'activityInformation' => 'required',
         ]);
-        // dd($request->all());
 
         $activity = ActivityDetail::create([
             'activity_name' => $request->activityName,
@@ -135,6 +135,12 @@ class PresenterController extends Controller
             'activity_instruction' => $request->activityInstruction,
             'activity_information' => $request->activityInformation,
         ]);
+        
+        UserBehavior::create([
+            'type_id' => 1,
+            'behavior' => $request->user()->userRolePresenter->user_name.'建立了'.$request->activityName,
+        ]);
+
 
         // $activity_photo = ActivityPhoto::create([
         //     'activity_img_path' => $this->filesService->base64Upload($request->activityPhoto[0], 'activity'),
@@ -209,6 +215,13 @@ class PresenterController extends Controller
 
         $activity = ActivityDetail::find($request->id);
 
+        
+        UserBehavior::create([
+            'type_id' => 1,
+            'behavior' => $request->user()->userRolePresenter->user_name.'修改了'.$request->formData['activityName'],
+        ]);
+
+
         $activity->update([
             'activity_name' => $request->formData['activityName'],
             'activity_info' => $request->formData['activityInfo'],
@@ -250,6 +263,12 @@ class PresenterController extends Controller
         // $activityPhoto = ActivityPhoto::where('activity_id',$request->id);
         // dd($activityPhoto);
         // $this->filesService->deleteUpload($activityPhoto->activity_img_path);
+        
+        UserBehavior::create([
+            'type_id' => 1,
+            'behavior' => $request->user()->userRolePresenter->user_name.'刪除了'.$request->activityName,
+        ]);
+
         
         $activity->delete();
         

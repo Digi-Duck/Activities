@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ActivityDetail;
 use App\Models\RegisterActivity;
 use App\Models\StudentActivity;
+use App\Models\UserBehavior;
 use Inertia\Inertia;
 use App\Presenters\ActivityPresenter;
 use Carbon\Carbon;
@@ -21,7 +22,7 @@ class StudentController extends Controller
      * Display a listing of the resource.
      * 這是各活動細項
      */
-    public function index($id,Request $request)
+    public function index($id, Request $request)
     {
         //
         $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->first();
@@ -35,13 +36,13 @@ class StudentController extends Controller
         // dd($request->user()->userRoleStudent->id);
 
         $favoriteCheck = ActivityDetail::orderBy('id', 'desc')
-        ->whereHas('studentActivities', function ($query) use ($id,$request) {
-            return $query
-            ->where('activity_type' , 1)
-            ->where('activity_id', $id)
-            ->where('student_id', $request->user()->userRoleStudent->id);
-        })
-        ->first();
+            ->whereHas('studentActivities', function ($query) use ($id, $request) {
+                return $query
+                    ->where('activity_type', 1)
+                    ->where('activity_id', $id)
+                    ->where('student_id', $request->user()->userRoleStudent->id);
+            })
+            ->first();
 
 
         $data = (object) [
@@ -93,6 +94,12 @@ class StudentController extends Controller
         $registerData = RegisterActivity::find($request->user()->userRoleStudent->id);
         // dd($request->studentName);
         // dd($registerData);
+        $activityDetail = ActivityDetail::find($request->activity_id);
+
+        UserBehavior::create([
+            'type_id' => 2,
+            'behavior' => $request->user()->userRoleStudent->user_name . '修改了' . $activityDetail->activity_name . '的報名資訊',
+        ]);
 
         $registerData->update([
             'activity_id' => $request->activity_id,
@@ -103,7 +110,7 @@ class StudentController extends Controller
             'student_additional_remark' => $request->studentAdditionalRemark,
         ]);
         // dd($registerData);
-        
+
         return back()->with(['message' => rtFormat($registerData)]);
     }
 
@@ -226,10 +233,10 @@ class StudentController extends Controller
             // ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
             //     return $query->where('id', $request->user()->userRoleStudent->id);
             // })
-            ->whereHas('studentActivities', function ($query) use($request) {
+            ->whereHas('studentActivities', function ($query) use ($request) {
                 return $query
-                ->where('student_id', $request->user()->userRoleStudent->id)
-                ->where('activity_type', 1);
+                    ->where('student_id', $request->user()->userRoleStudent->id)
+                    ->where('activity_type', 1);
             })
             ->with('activityPhotos:id,activity_id,activity_img_path')
             ->paginate(5)
@@ -348,12 +355,20 @@ class StudentController extends Controller
             'activity_id' => 'required',
         ]);
         $register = [];
-        $test = RegisterActivity::where('student_id',$request->user()->userRoleStudent->id)->find($request->activity_id);
+
+        $activityDetail = ActivityDetail::find($request->activity_id);
+
+
+        $test = RegisterActivity::where('student_id', $request->user()->userRoleStudent->id)->find($request->activity_id);
         if (!$test) {
             StudentActivity::create([
                 'student_id' => $request->user()->userRoleStudent->id,
                 'activity_id' => $request->activity_id,
                 'activity_type' => $request->registered,
+            ]);
+            UserBehavior::create([
+                'type_id' => 2,
+                'behavior' => $request->user()->userRoleStudent->user_name . '報名了' . $activityDetail->activity_name,
             ]);
             $register = RegisterActivity::updateOrCreate([
                 'activity_id' => $request->activity_id,
@@ -389,7 +404,7 @@ class StudentController extends Controller
         $request->validate([
             'activity_id' => 'required',
         ]);
-        $cancelFavorite = StudentActivity::where('activity_type', 1)->where('student_id',$request->user()->userRoleStudent->id)->first();
+        $cancelFavorite = StudentActivity::where('activity_type', 1)->where('student_id', $request->user()->userRoleStudent->id)->first();
         // dd($cancelFavorite);
         $cancelFavorite->delete();
 
@@ -404,9 +419,20 @@ class StudentController extends Controller
 
         $register = RegisterActivity::find($request->id);
 
-        $register->delete();
+        $student = StudentActivity::where('activity_type', 2)->find($request->id);
 
-        
+        $activityDetail = ActivityDetail::where('id', $student->activity_id)->first();
+
+        UserBehavior::create([
+            'type_id' => 2,
+            'behavior' => $request->user()->userRoleStudent->user_name . '取消報名' . $activityDetail->activity_name,
+        ]);
+
+
+        $register->delete();
+        $student->delete();
+
+
         return redirect(route('studentPersonalPage'));
     }
 

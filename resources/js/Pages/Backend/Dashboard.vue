@@ -14,6 +14,7 @@ export default {
   },
   data() {
     return {
+      rtData: this.response?.rt_data ?? {},
       title: '本周摘要',
     };
   },
@@ -23,6 +24,7 @@ export default {
 </script>
 
 <template>
+  {{ rtData.behaviorRecord }}
   <section id="backend-dashboard" class="p-10 flex flex-col items-center">
     <h1 class="w-[80%] pb-1 border-b-4 title flex">{{ title }}</h1>
     <div class="w-[80%] mb-5 mt-5 flex flex-col justify-between items-center gap-10">
