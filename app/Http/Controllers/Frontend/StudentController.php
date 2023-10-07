@@ -98,6 +98,7 @@ class StudentController extends Controller
 
         UserBehavior::create([
             'type_id' => 2,
+            'user_type' => '學員',
             'behavior' => $request->user()->userRoleStudent->user_name . '修改了' . $activityDetail->activity_name . '的報名資訊',
         ]);
 
@@ -368,6 +369,7 @@ class StudentController extends Controller
             ]);
             UserBehavior::create([
                 'type_id' => 2,
+                'user_type' => '學員',
                 'behavior' => $request->user()->userRoleStudent->user_name . '報名了' . $activityDetail->activity_name,
             ]);
             $register = RegisterActivity::updateOrCreate([
@@ -395,6 +397,13 @@ class StudentController extends Controller
             'activity_id' => $request->activity_id,
             'activity_type' => $request->favorited,
         ]);
+        $activityDetail = ActivityDetail::find($request->activity_id);
+        UserBehavior::create([
+            'type_id' => 2,
+            'user_type' => '學員',
+            'behavior' => $request->user()->userRoleStudent->user_name . '收藏了' . $activityDetail->activity_name . '活動',
+        ]);
+
         return back()->with(['message' => rtFormat($favorite)]);
     }
 
@@ -405,6 +414,14 @@ class StudentController extends Controller
             'activity_id' => 'required',
         ]);
         $cancelFavorite = StudentActivity::where('activity_type', 1)->where('student_id', $request->user()->userRoleStudent->id)->first();
+        $activityDetail = ActivityDetail::find($request->activity_id);
+
+        UserBehavior::create([
+            'type_id' => 2,
+            'user_type' => '學員',
+            'behavior' => $request->user()->userRoleStudent->user_name . '取消收藏' . $activityDetail->activity_name . '活動',
+        ]);
+
         // dd($cancelFavorite);
         $cancelFavorite->delete();
 
@@ -425,6 +442,7 @@ class StudentController extends Controller
 
         UserBehavior::create([
             'type_id' => 2,
+            'user_type' => '學員',
             'behavior' => $request->user()->userRoleStudent->user_name . '取消報名' . $activityDetail->activity_name,
         ]);
 

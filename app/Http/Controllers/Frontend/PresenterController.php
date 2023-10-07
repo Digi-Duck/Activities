@@ -143,6 +143,7 @@ class PresenterController extends Controller
 
         UserBehavior::create([
             'type_id' => 1,
+            'user_type' => '講師',
             'behavior' => $request->user()->userRolePresenter->user_name . '建立了' . $request->activityName,
         ]);
 
@@ -218,6 +219,7 @@ class PresenterController extends Controller
 
         UserBehavior::create([
             'type_id' => 1,
+            'user_type' => '講師',
             'behavior' => $request->user()->userRolePresenter->user_name . '修改了' . $request->formData['activityName'],
         ]);
 
@@ -266,6 +268,7 @@ class PresenterController extends Controller
 
         UserBehavior::create([
             'type_id' => 1,
+            'user_type' => '講師',
             'behavior' => $request->user()->userRolePresenter->user_name . '刪除了' . $request->activityName,
         ]);
 

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int $type_id
+ * @property string $user_type
  * @property string $behavior
  *
  * @package App\Models
@@ -31,6 +32,7 @@ class UserBehavior extends Model
 
     protected $fillable = [
         'type_id',
+        'user_type',
         'behavior'
     ];
 }
