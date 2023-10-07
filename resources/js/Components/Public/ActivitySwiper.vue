@@ -1,13 +1,12 @@
 <!-- 各別活動輪播Swiper -->
 <script>
+import { router } from '@inertiajs/vue3';
 import heart from '/images/icon/icon-heart.svg';
 import filledHeart from '/images/icon/icon-filled-heart.svg';
 import arrowLeft from '/images/icon/icon-arrow-left.svg';
 import arrowRight from '/images/icon/icon-arrow-right.svg';
-import { Link, router } from '@inertiajs/vue3';
 
 export default {
-  components: { Link },
   props: {
     slideData: {
       type: Array,
@@ -36,7 +35,6 @@ export default {
     // 通过类名或其他方式获取按钮元素并赋值给 prevButton 和 nextButton
     this.prevButton = this.$refs.btnPrev;
     this.nextButton = this.$refs.btnNext;
-    console.log(this.slideData);
   },
   methods: {
     linkHref(id) {

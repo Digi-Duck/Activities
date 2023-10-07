@@ -46,7 +46,7 @@ export default {
         </div>
         <div v-else class="flex gap-3">
           <Link :href="route('logout')" class="btn">會員中心</Link>
-          <Link class="btn" @click.prevent="logout">登出</Link>
+          <button type="button" class="btn" @click.prevent="logout">登出</button>
         </div>
       </nav>
       <nav v-if="userRole === 1" class="pt-6 pe-5 flex justify-end gap-3">
@@ -59,7 +59,7 @@ export default {
         <Link :href="route('index')" class="function-btn">首頁</Link>
         <Link :href="route('createActivity')" class="function-btn">活動建立</Link>
         <Link :href="route('presenterPersonalPage')" class="function-btn">我的活動</Link>
-        <Link href="" class="function-btn">報到掃描</Link>
+        <Link :href="route('activityScanner')" class="function-btn">報到掃描</Link>
       </nav>
       <nav v-else-if="userRole === 3" class="pt-6 pe-5 flex justify-end gap-3">
         <Link :href="route('index')" class="function-btn">首頁</Link>

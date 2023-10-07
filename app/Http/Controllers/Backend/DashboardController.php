@@ -68,9 +68,9 @@ class DashboardController extends Controller
             'activity' => $activity,
             'behaviorRecord' => $behaviorRecord,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
-        ];
+            ];
 
-        return Inertia::render('Backend/Dashboard', ['response' => rtFormat($data)]);
+            return Inertia::render('Backend/Dashboard', ['response' => rtFormat($data)]);
     }
     public function activityMange()
     {

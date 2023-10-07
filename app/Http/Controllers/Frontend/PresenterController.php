@@ -79,7 +79,8 @@ class PresenterController extends Controller
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 
-        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', ['response' => rtFormat($data)]);;
+        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', ['response' => rtFormat($data)]);
+        ;
     }
 
     /**
@@ -135,10 +136,10 @@ class PresenterController extends Controller
             'activity_instruction' => $request->activityInstruction,
             'activity_information' => $request->activityInformation,
         ]);
-        
+
         UserBehavior::create([
             'type_id' => 1,
-            'behavior' => $request->user()->userRolePresenter->user_name.'建立了'.$request->activityName,
+            'behavior' => $request->user()->userRolePresenter->user_name . '建立了' . $request->activityName,
         ]);
 
 
@@ -175,7 +176,6 @@ class PresenterController extends Controller
 
     public function activityScanner()
     {
-
         return Inertia::render('Frontend/Presenter/ScannerPage');
     }
 
@@ -215,10 +215,10 @@ class PresenterController extends Controller
 
         $activity = ActivityDetail::find($request->id);
 
-        
+
         UserBehavior::create([
             'type_id' => 1,
-            'behavior' => $request->user()->userRolePresenter->user_name.'修改了'.$request->formData['activityName'],
+            'behavior' => $request->user()->userRolePresenter->user_name . '修改了' . $request->formData['activityName'],
         ]);
 
 
@@ -263,15 +263,15 @@ class PresenterController extends Controller
         // $activityPhoto = ActivityPhoto::where('activity_id',$request->id);
         // dd($activityPhoto);
         // $this->filesService->deleteUpload($activityPhoto->activity_img_path);
-        
+
         UserBehavior::create([
             'type_id' => 1,
-            'behavior' => $request->user()->userRolePresenter->user_name.'刪除了'.$request->activityName,
+            'behavior' => $request->user()->userRolePresenter->user_name . '刪除了' . $request->activityName,
         ]);
 
-        
+
         $activity->delete();
-        
+
         return redirect(route('presenterPersonalPage'));
     }
 }

@@ -11,17 +11,14 @@ export default {
   },
   data() {
     return {
-      title: 'Hello World !',
     };
-  },
-  created() {
   },
 };
 </script>
 
 <template>
-  <section id="presenter-scanner" class="flex flex-col items-center gap-5">
-    <CountDown class="absolute mt-[5%] left-[75%]"></CountDown>
+  <section id="presenter-scanner">
+    <CountDown class="absolute mt-[5%] left-[75%]" />
     <ActivityDetailSwiper></ActivityDetailSwiper>
     <!-- 掃描區域 -->
     <div class="w-full h-[997px] p-5 bg-[#194e694e] flex flex-col items-center gap-5">
@@ -39,20 +36,12 @@ export default {
       <button type="button" class="w-[299px] h-[54px] bg-[#1C8AAD] rounded-[5px] text-white flex justify-center items-center">掃描報到</button>
     </div>
     <!-- 活動的參加名單 -->
-    <ActivityDetailTable></ActivityDetailTable>
+    <ActivityDetailTable />
   </section>
 </template>
 
 <style lang="scss" scoped>
 #presenter-scanner {
-  @apply w-full h-full overflow-y-auto;
-
-  .title {
-    @apply text-[6.25rem] text-center;
-  }
-
-  .btn-base {
-    @apply p-1.5 border-2 rounded-md border-green-500 cursor-pointer;
-  }
+  @apply w-full h-full overflow-y-auto flex flex-col items-center gap-5;
 }
 </style>

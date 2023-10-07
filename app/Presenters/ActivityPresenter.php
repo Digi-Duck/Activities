@@ -55,7 +55,8 @@ class ActivityPresenter
      * 回傳活動類別選項陣列
      * @return array 回傳活動類別選項陣列
      */
-    public function getTypeOption() {
+    public function getTypeOption()
+    {
         return $this->typeOption;
     }
 

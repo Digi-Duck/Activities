@@ -24,7 +24,6 @@ export default {
   },
   data() {
     return {
-      title: 'Hello World !',
       prevButton: null, // 在这里定义 prevButton 和 nextButton
       nextButton: null,
       images: {
@@ -181,14 +180,6 @@ export default {
       border-bottom-color: transparent;
       border-left-color: white;
     }
-  }
-
-  .title {
-    @apply text-[6.25rem] text-center;
-  }
-
-  .btn-base {
-    @apply p-1.5 border-2 rounded-md border-green-500 cursor-pointer;
   }
 }
 </style>
