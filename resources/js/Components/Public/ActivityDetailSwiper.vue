@@ -20,7 +20,10 @@ export default {
       required: false,
       default: () => ({}),
     },
-    slideData: Array,
+    slideData: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -149,10 +152,8 @@ export default {
           </div>
         </div>
       </div>
-      <!-- {{ slideData[0].activityPhotos }} -->
-      <Swiper v-slot="{ slide }" :slide-data="slideData[0].activityPhotos ?? []" class="w-[full] max-w-[1600px] h-full max-h-[900px]" :btn-prev="prevButton" :btn-next="nextButton">
+      <Swiper v-slot="{ slide }" :slide-data="slideData[0]?.activityPhotos ?? []" class="w-[full] max-w-[1600px] h-full max-h-[900px]" :btn-prev="prevButton" :btn-next="nextButton">
         <div class="opacity-60 w-full h-full flex justify-center items-center">
-          <!-- {{ slide }} -->
           <img :src="slide.activity_img_path" class="w-full h-full" alt="產業類別圖片">
         </div>
       </Swiper>
