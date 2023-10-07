@@ -33,8 +33,6 @@ class StudentController extends Controller
             })
             ->count();
 
-        // dd($request->user()->userRoleStudent->id);
-
         $favoriteCheck = ActivityDetail::orderBy('id', 'desc')
             ->whereHas('studentActivities', function ($query) use ($id, $request) {
                 return $query
@@ -68,7 +66,6 @@ class StudentController extends Controller
 
         $registerData = RegisterActivity::where('activity_id', $id)
             ->first();
-        // dd($registerData);
 
         $data = (object) [
             'activity' => $activity,
@@ -89,16 +86,14 @@ class StudentController extends Controller
             'activity_id' => 'required',
         ]);
 
-        // dd($request->all());
-        // dd($request->all());
         $registerData = RegisterActivity::find($request->user()->userRoleStudent->id);
-        // dd($request->studentName);
-        // dd($registerData);
+
         $activityDetail = ActivityDetail::find($request->activity_id);
 
         UserBehavior::create([
             'type_id' => 2,
             'user_type' => '學員',
+            'user_name' => $request->user()->userRoleStudent->user_name,
             'behavior' => $request->user()->userRoleStudent->user_name . '修改了' . $activityDetail->activity_name . '的報名資訊',
         ]);
 
@@ -110,74 +105,12 @@ class StudentController extends Controller
             'student_email' => $request->studentEmail,
             'student_additional_remark' => $request->studentAdditionalRemark,
         ]);
-        // dd($registerData);
 
         return back()->with(['message' => rtFormat($registerData)]);
     }
 
     public function personalPage(Request $request)
     {
-        // $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRoleStudent->id)->get()->map(function ($item) {
-        //     $item->timeFormat = $item->created_at->format('Y/m/d');
-        //     return $item;
-        // });
-        // $registerActivity = StudentActivity::where('student_id', $request->user()->UserRoleStudent->id)->where('activity_type', 2)->with('activityDetail.activityPhotos')->get();
-        // dd($request->user());
-
-        // $registerActivity = ActivityDetail::orderBy('id', 'desc')
-        //     // ->where('id', $request->user()->userRoleStudent->id)
-        //     /**
-        //      * 關連到外部的model，藉由model中的function連接，
-        //      * 使用$query遍歷該資料
-        //      * 使用$request將此function之外的變數拉進來
-        //      */
-        // ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
-        //     return $query->where('id', $request->user()->userRoleStudent->id);
-        // })
-        // ->whereHas('studentActivities', function ($query) {
-        //     return $query->where('activity_type', 2);
-        // })
-        //     ->with('activityPhotos:id,activity_id,activity_img_path')
-        //     ->get();
-
-        // $favoriteActivity = ActivityDetail::orderBy('id', 'desc')
-        //     // ->where('id', $request->user()->userRoleStudent->id)
-        //     /**
-        //      * 關連到外部的model，藉由model中的function連接，
-        //      * 使用$query遍歷該資料
-        //      * 使用$request將此function之外的變數拉進來
-        //      */
-        //     ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
-        //         return $query->where('id', $request->user()->userRoleStudent->id);
-        //     })
-        //     ->whereHas('studentActivities', function ($query) {
-        //         return $query->where('activity_type', 1);
-        //     })
-        //     ->with('activityPhotos:id,activity_id,activity_img_path')
-        //     ->get();
-
-        // $allActivityDetails = ActivityDetail::orderBy('id', 'desc')
-        //     // ->where('id', $request->user()->userRoleStudent->id)
-        //     /**
-        //      * 關連到外部的model，藉由model中的function連接，
-        //      * 使用$query遍歷該資料
-        //      * 使用$request將此function之外的變數拉進來
-        //      */
-        //     ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
-        //         return $query->where('id', $request->user()->userRoleStudent->id);
-        //     })
-        //     ->with('activityPhotos:id,activity_id,activity_img_path')
-        //     ->get();
-
-        // $data = (object)[
-        //     'registerActivity' => $registerActivity,
-        //     // 'regiterActivityDetails' => $regiterActivityDetails,
-        //     'favoriteActivity' => $favoriteActivity,
-        //     // 'favoriteActivityDetails' => $favoriteActivityDetails,
-        //     'allActivityDetails' => $allActivityDetails,
-        // ];
-
-
         // 活動列表資料
         $registerActivity = ActivityDetail::orderBy('id', 'desc')
             ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
@@ -347,8 +280,6 @@ class StudentController extends Controller
      */
     public function create(Request $request)
     {
-        //
-        // dd($request->all());
         $request->validate([
             'studentName' => 'required',
             'studentPhoneNumber' => 'required',
@@ -370,6 +301,7 @@ class StudentController extends Controller
             UserBehavior::create([
                 'type_id' => 2,
                 'user_type' => '學員',
+                'user_name' => $request->user()->userRoleStudent->user_name,
                 'behavior' => $request->user()->userRoleStudent->user_name . '報名了' . $activityDetail->activity_name,
             ]);
             $register = RegisterActivity::updateOrCreate([
@@ -387,8 +319,6 @@ class StudentController extends Controller
 
     public function createFavorite(Request $request)
     {
-        // $userInfo = $request->user()->userRoleStudent;
-        // dd($request->user()->userRoleStudent->id);
         $request->validate([
             'activity_id' => 'required',
         ]);
@@ -401,6 +331,7 @@ class StudentController extends Controller
         UserBehavior::create([
             'type_id' => 2,
             'user_type' => '學員',
+            'user_name' => $request->user()->userRoleStudent->user_name,
             'behavior' => $request->user()->userRoleStudent->user_name . '收藏了' . $activityDetail->activity_name . '活動',
         ]);
 
@@ -409,7 +340,6 @@ class StudentController extends Controller
 
     public function cancelFavorite(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'activity_id' => 'required',
         ]);
@@ -419,10 +349,10 @@ class StudentController extends Controller
         UserBehavior::create([
             'type_id' => 2,
             'user_type' => '學員',
+            'user_name' => $request->user()->userRoleStudent->user_name,
             'behavior' => $request->user()->userRoleStudent->user_name . '取消收藏' . $activityDetail->activity_name . '活動',
         ]);
 
-        // dd($cancelFavorite);
         $cancelFavorite->delete();
 
         return back()->with(['message' => rtFormat($cancelFavorite)]);
@@ -443,6 +373,7 @@ class StudentController extends Controller
         UserBehavior::create([
             'type_id' => 2,
             'user_type' => '學員',
+            'user_name' => $request->user()->userRoleStudent->user_name,
             'behavior' => $request->user()->userRoleStudent->user_name . '取消報名' . $activityDetail->activity_name,
         ]);
 

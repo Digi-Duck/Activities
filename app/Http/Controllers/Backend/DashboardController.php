@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityDetail;
 use App\Models\StudentActivity;
+use App\Models\UserBehavior;
 use App\Presenters\ActivityPresenter;
 
 class DashboardController extends Controller
@@ -62,10 +63,14 @@ class DashboardController extends Controller
                 ];
             });
 
-        $behaviorRecord = StudentActivity::get();
+        $newBehaviors = UserBehavior::orderBy('id', 'desc')
+        ->take(6)
+        ->get();
+        $behaviorRecord = UserBehavior::get();
 
             $data = (object) [
             'activity' => $activity,
+            'newBehaviors' => $newBehaviors,
             'behaviorRecord' => $behaviorRecord,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
             ];

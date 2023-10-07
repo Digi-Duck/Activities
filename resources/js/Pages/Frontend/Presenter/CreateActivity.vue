@@ -169,11 +169,11 @@ export default {
             </div>
             <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.registerTime" alt="報名開始時間" class="w-[10%] pe-1">
-              <input v-model="formData.activityStartRegistrationTime" type="datetime" name="activity_start_registration_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請輸入報名開始時間">
+              <input v-model="formData.activityStartRegistrationTime" type="datetime" name="activity_start_registration_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="開始報名 ex:2000-01-01 10:00">
             </div>
             <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.registerTime" alt="報名截止時間" class="w-[10%] pe-1">
-              <input v-model="formData.activityEndRegistrationTime" type="datetime" name="activity_end_registration_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請輸入報名截止時間">
+              <input v-model="formData.activityEndRegistrationTime" type="datetime" name="activity_end_registration_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="截止報名 ex:2000-01-01 10:00">
             </div>
             <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.activityPresenter" alt="主講者" class="w-[10%] pe-1">
@@ -181,11 +181,11 @@ export default {
             </div>
             <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.activityStartTime" alt="活動開始時間" class="w-[10%] pe-1">
-              <input v-model="formData.activityStartTime" type="datetime" name="activity_start_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請點選活動開始時間">
+              <input v-model="formData.activityStartTime" type="datetime" name="activity_start_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="活動開始 ex:2000-01-01 10:00">
             </div>
             <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.activityEndTime" alt="活動結束時間" class="w-[10%] pe-1">
-              <input v-model="formData.activityEndTime" type="datetime" name="activity_end_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請點選活動結束時間">
+              <input v-model="formData.activityEndTime" type="datetime" name="activity_end_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="活動結束 ex:2000-01-01 10:00">
             </div>
             <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.activityAddress" alt="活動地點" class="w-[10%] pe-1">

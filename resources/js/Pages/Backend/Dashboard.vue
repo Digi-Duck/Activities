@@ -18,13 +18,22 @@ export default {
       title: '本周摘要',
     };
   },
+  computed: {
+    newBehaviors() {
+      return this.rtData.newBehaviors ?? {};
+    },
+    behaviorRecord() {
+      return this.rtData.behaviorRecord ?? {};
+    },
+  },
   created() {
   },
 };
 </script>
 
 <template>
-  {{ rtData.behaviorRecord }}
+  <hr>
+  {{ behaviorRecord }}
   <section id="backend-dashboard" class="p-10 flex flex-col items-center">
     <h1 class="w-[80%] pb-1 border-b-4 title flex">{{ title }}</h1>
     <div class="w-[80%] mb-5 mt-5 flex flex-col justify-between items-center gap-10">
@@ -93,7 +102,8 @@ export default {
           <!-- 最新消息表頭 -->
           <div class="w-full h-[106px] ps-5 rounded-t-[10px] bg-[#397AC4] text-[48px] flex items-center">最新消息</div>
           <!-- 最新消息內容 -->
-          <div class="w-full h-[112px] p-5 bg-[#4D7F95] text-[16px] flex flex-row justify-between items-center">
+          {{ newBehaviors }}
+          <div v-for="(item, index) in newBehaviors" :key="index" class="w-full h-[112px] p-5 bg-[#4D7F95] text-[16px] flex flex-row justify-between items-center">
             <!-- 會員頭像 -->
             <img src="" class="w-[66px] h-[66px] rounded-full bg-white" alt="數據圖標">
             <!-- 會員資訊 -->

@@ -144,6 +144,7 @@ class PresenterController extends Controller
         UserBehavior::create([
             'type_id' => 1,
             'user_type' => '講師',
+            'user_name' => $request->user()->userRolePresenter->user_name,
             'behavior' => $request->user()->userRolePresenter->user_name . '建立了' . $request->activityName,
         ]);
 
@@ -220,6 +221,7 @@ class PresenterController extends Controller
         UserBehavior::create([
             'type_id' => 1,
             'user_type' => '講師',
+            'user_name' => $request->user()->userRolePresenter->user_name,
             'behavior' => $request->user()->userRolePresenter->user_name . '修改了' . $request->formData['activityName'],
         ]);
 
@@ -261,14 +263,11 @@ class PresenterController extends Controller
             'id' => 'required|exists:activity_details,id'
         ]);
         $activity = ActivityDetail::find($request->id);
-
-        // $activityPhoto = ActivityPhoto::where('activity_id',$request->id);
-        // dd($activityPhoto);
-        // $this->filesService->deleteUpload($activityPhoto->activity_img_path);
-
+        
         UserBehavior::create([
             'type_id' => 1,
             'user_type' => '講師',
+            'user_name' => $request->user()->userRolePresenter->user_name,
             'behavior' => $request->user()->userRolePresenter->user_name . '刪除了' . $request->activityName,
         ]);
 
