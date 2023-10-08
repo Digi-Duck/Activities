@@ -29,8 +29,7 @@ class StudentController extends Controller
         ->with('activityPhotos:id,activity_id,activity_img_path')
         ->where('id', $id)
         ->first();
-        // dd($activity->activity_start_registration_time->format('Y-m-d H:i'));
-
+        
         $registerPeople = ActivityDetail::orderBy('id', 'desc')
             ->whereHas('registerActivities', function ($query) use ($id) {
                 return $query->where('activity_id', $id);
@@ -284,6 +283,7 @@ class StudentController extends Controller
      */
     public function create(Request $request)
     {
+        dd($request->all());
         $request->validate([
             'studentName' => 'required',
             'studentPhoneNumber' => 'required',

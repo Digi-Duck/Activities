@@ -16,8 +16,9 @@ class DashboardController extends Controller
         protected ActivityPresenter $activityPresenter,
     ) {
     }
-    public function index()
+    public function index(Request $request)
     {
+        dd($request->all());
         // 活動列表資料
         $activity = ActivityDetail::orderBy('id', 'desc')
             ->where('activity_status', 1)
@@ -64,18 +65,23 @@ class DashboardController extends Controller
             });
 
         $newBehaviors = UserBehavior::orderBy('id', 'desc')
-        ->take(5)
-        ->get();
+            ->take(5)
+            ->get();
         $behaviorRecord = UserBehavior::get();
-
-            $data = (object) [
+        $data = (object) [
             'activity' => $activity,
             'newBehaviors' => $newBehaviors,
             'behaviorRecord' => $behaviorRecord,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
-            ];
+        ];
+        $search = $request->search ?? '';
+        if ($request->filled('search')) {
+            $behaviorRecord->where('user_name', 'like', "%$search%")->orwhere('user_type', 'like', "%$search%")->orwhere('behavior', 'like', "%$search%");
+            return back()->with(['message' => rtFormat($data)]);
+        }
 
-            return Inertia::render('Backend/Dashboard', ['response' => rtFormat($data)]);
+
+        return Inertia::render('Backend/Dashboard', ['response' => rtFormat($data)]);
     }
     public function activityMange()
     {

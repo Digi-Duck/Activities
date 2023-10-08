@@ -16,6 +16,7 @@ export default {
     return {
       rtData: this.response?.rt_data ?? {},
       title: '本周摘要',
+      searchData: '哭哭',
     };
   },
   computed: {
@@ -119,16 +120,16 @@ export default {
       <!-- 事件紀錄表 -->
       <div class="w-full h-[671px] p-3 bg-[#234E66] rounded-[10px] flex flex-col items-center gap-3">
         <!-- 搜尋欄 -->
-        <div class="w-full h-[59px] ps-10 bg-white flex items-center gap-5 text-[48px] font-semibold">
+        <form :href="route('dashboard')" role="search" class="w-full h-[59px] ps-10 bg-white flex items-center gap-5 text-[48px] font-semibold">
           事件紀錄
           <!-- 起始日期 -->
           <input type="date">
           ~
           <!-- 結束日期 -->
           <input type="date">
-          <input type="search" name="" id="">
-          <button type="button" class="w-[86px] h-[38px] bg-[gray] rounded-[4px] text-[22px]">搜尋</button>
-        </div>
+          <input v-model="searchData" type="search" placeholder="請輸入搜尋使用者名稱、行為" name="keyword" id="">
+          <button type="submit" class="w-[86px] h-[38px] bg-[gray] rounded-[4px] text-[22px]">搜尋</button>
+        </form>
         <!-- 搜尋內容 -->
         <div class="w-full flex flex-col text-[48px] text-white">
           <!-- 表頭 -->
@@ -139,11 +140,11 @@ export default {
             <div class="w-[40%] flex-initial border flex justify-center items-center">行為</div>
           </div>
           <!-- 詳細資料 -->
-          <div class="bg-[#A9BCC6] flex">
-            <div class="w-[20%] flex-initial border flex justify-center items-center">潘國偉</div>
-            <div class="w-[10%] flex-initial border flex justify-center items-center">學員</div>
-            <div class="w-[30%] flex-initial border flex justify-center items-center">2023/09/07 12:00</div>
-            <div class="w-[40%] flex-initial border flex justify-center items-center">取消了BootCamp</div>
+          <div v-for="(item, index) in behaviorRecord" :key="index" class="bg-[#A9BCC6] flex">
+            <div class="w-[20%] flex-initial border flex justify-center items-center">{{ item.user_name }}</div>
+            <div class="w-[10%] flex-initial border flex justify-center items-center">{{ item.user_type }}</div>
+            <div class="w-[30%] flex-initial border flex justify-center items-center">{{ item.created_at }}</div>
+            <div class="w-[40%] flex-initial border flex justify-center items-center">{{ item.behavior }}</div>
           </div>
         </div>
         <div class="w-[313px] h-[56px] bg-white rounded-[30px] flex justify-center">

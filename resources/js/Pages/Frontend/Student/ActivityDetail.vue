@@ -2,6 +2,8 @@
 <script>
 import { router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
+import { QRCode } from 'qrcode';
+
 export default {
   props: {
     response: {
@@ -23,6 +25,7 @@ export default {
         favorited: 1,
         registered: 2,
       },
+      qrcodeData: '',
     };
   },
   computed: {
@@ -39,27 +42,35 @@ export default {
       return this.rtData.favoriteCheck ?? [];
     },
   },
+  mounted() {
+    console.log(generateQRCode);
+  },
   methods: {
-    submitData() {
-      router.visit(route('registerStore'), {
-        method: 'post',
-        data: { ...this.formData, activity_id: this.response.rt_data.activity.id, ...this.activityType },
-        preserveState: true,
-        onSuccess: ({ props }) => {
-          if (props.flash.message.rt_code === 1) {
-            Swal.fire({
-              title: '報名成功',
-              showDenyButton: true,
-              confirmButtonText: '回列表',
-              denyButtonText: '取消',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                router.get(route('index'));
-              }
-            });
-          }
-        },
-      });
+    generateQRCode() {
+      // const qrData = this.qrcodeData;
+      const qrData = this.formData;
+      QRCode.toDataURL(qrData).then(url => {
+        console.log(url);
+        const qrCodeImage = document.getElementById('qrcode-image');
+        qrCodeImage.src = url;
+        this.submitData();
+      })
+        .catch(err => {
+          console.error(err);
+        });
+      // QRCode.toDataURL(qrData, (err, url) => {
+      //   if (err) {
+      //     console.error(err);
+      //   }
+      //   else {
+      //     // const { $refs } = this;
+      //     // this.qrCodeImage = $refs.qrcodeImage;
+      //     // const qrCodeImage  =
+      //     const qrCodeImage = document.getElementById('qrcode-image');
+      //     qrCodeImage.src = url;
+      //     this.submitData();
+      //   }
+      // }
     },
     favorite() {
       router.visit(route('createFavorite'), {
@@ -99,6 +110,28 @@ export default {
         },
       });
     },
+    submitData() {
+      this.qrcodeData = this.formData;
+      this.generateQRCode();
+      router.visit(route('registerStore'), {
+        method: 'post',
+        data: { ...this.formData, activity_id: this.response.rt_data.activity.id, ...this.activityType },
+        preserveState: true,
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            Swal.fire({
+              title: '報名成功',
+              showDenyButton: false,
+              confirmButtonText: '回列表',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                router.get(route('index'));
+              }
+            });
+          }
+        },
+      });
+    },
   },
 };
 </script>
@@ -106,6 +139,7 @@ export default {
 <template>
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
     <CountDown class="absolute mt-[5%] left-[75%] z-50">
+      <img ref="qrcodeImage" id="qrcode-image" alt="QR Code" />
       <template #count-down>
         <span>
           20
