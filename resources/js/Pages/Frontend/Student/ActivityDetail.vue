@@ -25,6 +25,7 @@ export default {
         favorited: 1,
         registered: 2,
       },
+      qrcodeNumber: '',
       qrcodeImage: '',
     };
   },
@@ -91,13 +92,25 @@ export default {
         },
       });
     },
+    generateRandomString() {
+      const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let qrcodeNumber = '';
+      for (let i = 0; i < 20; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        qrcodeNumber += charset.charAt(randomIndex);
+      }
+      // let row_password = Array(10).fill('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz').map(function (x) { return x[Math.floor(Math.random() * x.length)]; }).join('');
+      this.qrcodeNumber = qrcodeNumber;
+    },
     submitData() {
-      const { generateQRCode, formData, activityType, response } = this;
+      const { generateRandomString, generateQRCode, formData, activityType, response } = this;
+      generateRandomString();
       generateQRCode();
       const data = {
         ...formData,
         ...activityType,
         activity_id: response.rt_data.activity.id,
+        qrcodeNumber: this.qrcodeNumber,
         qrcodeImage: this.qrcodeImage,
       };
       router.visit(route('registerStore'), {

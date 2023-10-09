@@ -2,6 +2,7 @@
 
 <script>
 import Pagination from '@/Components/Public/Pagination.vue';
+import { router } from '@inertiajs/vue3';
 
 export default {
   components: { Pagination },
@@ -15,9 +16,16 @@ export default {
   data() {
     return {
       title: '學員管理',
+      keyword: this.response?.rt_data?.keyword ?? '',
     };
   },
-  created() {
+  methods: {
+    searchData() {
+      router.get(route('studentMange'), { keyword: this.keyword }, {
+        preserveState: true,
+        preserveScroll: true,
+      });
+    },
   },
 };
 </script>
@@ -28,12 +36,12 @@ export default {
     <div class="w-[80%] mb-5 mt-5 flex flex-col justify-between items-center gap-10">
       <!-- 搜尋欄 -->
       <div class="w-full h-[57px] px-10 py-1 bg-[#ffc0cb4a] border flex justify-start items-center gap-5">
-        <input type="search" name="" class="w-[482px] h-[39px] rounded-[5px] text-[24px]" id="" placeholder="請輸入學員名稱、電子信箱、加入時間">
+        <input v-model="keyword" type="search" class="w-[482px] h-[39px] rounded-[5px] text-[24px]" placeholder="請輸入學員名稱、電子信箱、加入時間" @search="searchData">
         <select class="h-[39px] rounded-[5px] text-[24px] flex justify-center" placeholder="學員狀態">
           <option value="1">正常</option>
           <option value="0">凍結</option>
         </select>
-        <button type="button" class="w-[90px] h-[38px] bg-[#a0bcc650] rounded-[5px] text-[24px]">搜尋</button>
+        <button type="button" @click="searchData" class="w-[90px] h-[38px] bg-[#a0bcc650] rounded-[5px] text-[24px]">搜尋</button>
       </div>
       <!-- 表格內容 -->
       <div class="w-[100%] h-[385px] flex flex-col">

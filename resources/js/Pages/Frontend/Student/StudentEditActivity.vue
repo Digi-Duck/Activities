@@ -125,8 +125,7 @@ export default {
 </script>
 
 <template>
-  {{ rtData.qrcode[0].qrcode_path }}
-  <img :src="rtData.qrcode[0].qrcode_path" alt="">
+  <img :src="rtData.qrcode.qrcode_path" class="absolute left-[60%] top-[18.5%] z-50 h-[250px] w-[250px]" alt="">
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
     <CountDown class="absolute mt-[5%] left-[75%] z-50">
       <template #count-down>

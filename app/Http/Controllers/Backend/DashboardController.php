@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityDetail;
 use App\Models\StudentActivity;
+use App\Models\User;
 use App\Models\UserBehavior;
+use App\Models\UserRoleStudent;
 use App\Presenters\ActivityPresenter;
 
 class DashboardController extends Controller
@@ -96,13 +98,25 @@ class DashboardController extends Controller
 
         return Inertia::render('Backend/Dashboard', ['response' => rtFormat($data)]);
     }
+    public function studentMange()
+    {
+        // $studentOrignalData = UserRoleStudent::get();
+        // $studentData = UserRoleStudent::whereHas('user', function ($query) {
+        //     return $query->where('id',);
+        // })->where('');
+        $user = User::get();
+        dd($user);
+
+        $data = (object) [
+            'activityTypeData' => $this->activityPresenter->getTypeOption(),
+            // 'keyword' => $keyword,
+        ];
+
+        return Inertia::render('Backend/StudentManage', ['response' => rtFormat($data)]);
+    }
     public function activityMange()
     {
         return Inertia::render('Backend/ActivityManage');
-    }
-    public function studentMange()
-    {
-        return Inertia::render('Backend/StudentManage');
     }
     public function presenterMange()
     {

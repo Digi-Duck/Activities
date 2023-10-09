@@ -77,82 +77,16 @@ class StudentController extends Controller
         return Inertia::render('Frontend/Student/ActivityDetail', ['response' => rtFormat($data)]);
     }
 
-    // public function index($id, Request $request)
-    // {
-    //     //
-    //     $activity = ActivityDetail::find($id)
-    //         ->with('activityPhotos:id,activity_id,activity_img_path')
-    //         ->where('id', $id)
-    //         ->get()
-    //         ->map(function ($item) use($id) {
-    //             // 找出第一張圖片
-    //             $activityPhotos = ActivityPhoto::where('activity_id',$id)->get();
-    //             dd($activityPhotos[0]);
 
-    //             return [
-    //                 'id' => $item->id,
-    //                 // 活動名稱
-    //                 'activity_name' => $item->activity_name,
-    //                 // 活動Slogan
-    //                 'activity_info' => $item->activity_info,
-    //                 // 活動講者
-    //                 'activity_presenter' => $item->activity_presenter,
-    //                 // 活動類型代號
-    //                 'activity_type' => $item->activity_type,
-    //                 // 活動類型名稱
-    //                 'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
-    //                 // 活動人數下限
-    //                 'activity_lowest_number_of_people' => $item->activity_lowest_number_of_people,
-    //                 // 活動人數上限
-    //                 'activity_highest_number_of_people' => $item->activity_highest_number_of_people,
-    //                 // 活動報名開始時間
-    //                 'activity_start_registration_time' => date('Y-m-d H:i', strtotime($item->activity_start_registration_time)),
-    //                 // 活動報名截止時間
-    //                 'activity_end_registration_time' => date('Y-m-d H:i', strtotime($item->activity_end_registration_time)),
-    //                 // 活動開始時間
-    //                 'activity_start_time' => date('Y-m-d H:i', strtotime($item->activity_start_time)),
-    //                 // 活動結束時間
-    //                 'activity_end_time' => date('Y-m-d H:i', strtotime($item->activity_end_time)),
-    //                 // 活動地點
-    //                 'activity_address' => $item->activity_address,
-    //                 // 活動封面圖片
-    //                 'activityPhotos' => $activityPhotos->activity_img_path ?? '',
-    //             ];
-    //         })
-    //         ->first();
-    //     // ->first();
-    //     // dd($activity);
-
-    //     $registerPeople = ActivityDetail::orderBy('id', 'desc')
-    //         ->whereHas('registerActivities', function ($query) use ($id) {
-    //             return $query->where('activity_id', $id);
-    //         })
-    //         ->count();
-
-    //     $favoriteCheck = ActivityDetail::orderBy('id', 'desc')
-    //         ->whereHas('studentActivities', function ($query) use ($id, $request) {
-    //             return $query
-    //                 ->where('activity_type', 1)
-    //                 ->where('activity_id', $id)
-    //                 ->where('student_id', $request->user()->userRoleStudent->id);
-    //         })
-    //         ->first();
-
-
-    //     $data = (object) [
-    //         'activity' => $activity,
-    //         'registerPeople' => $registerPeople,
-    //         'favoriteCheck' => $favoriteCheck,
-    //         'activityTypeData' => $this->activityPresenter->getTypeOption(),
-    //     ];
-
-
-    //     return Inertia::render('Frontend/Student/ActivityDetail', ['response' => rtFormat($data)]);
-    // }
-
-    public function activityEdit($id)
+    public function activityEdit($id,Request $request)
     {
+        // dd($request->user()->UserRoleStudent->id);
         // $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->first();
+
+        $favoriteCheck = StudentActivity::where('activity_type',1)
+        ->where('activity_id', $id)
+        ->where('student_id', $request->user()->UserRoleStudent->id)
+        ->first();
 
         $activity = ActivityDetail::with(['activityPhotos:id,activity_id,activity_img_path'])
             ->where('id', $id)
@@ -182,7 +116,7 @@ class StudentController extends Controller
             'activityPhotos' => $activityPhotos->pluck('activity_img_path')->toArray(),
         ];
 
-        $qrcode = QrcodeDetail::get();
+        $qrcode = QrcodeDetail::where('activity_id', $id)->first();
 
         $registerPeople = ActivityDetail::orderBy('id', 'desc')
             ->whereHas('registerActivities', function ($query) use ($id) {
@@ -196,6 +130,7 @@ class StudentController extends Controller
         $data = (object) [
             'activity' => $result,
             'qrcode' => $qrcode,
+            'favoriteCheck' => $favoriteCheck,
             'registerPeople' => $registerPeople,
             'registerData' => $registerData,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
@@ -407,11 +342,13 @@ class StudentController extends Controller
      */
     public function create(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'studentName' => 'required',
             'studentPhoneNumber' => 'required',
             'studentEmail' => 'required',
             'activity_id' => 'required',
+            'qrcodeNumber' => 'required',
             'qrcodeImage' => 'required',
         ]);
         $register = [];
@@ -433,7 +370,7 @@ class StudentController extends Controller
                 'activity_id' => $request->activity_id,
                 'student_id' => $request->user()->userRoleStudent->id,
                 'qrcode_path' => $request->qrcodeImage,
-                'qrcode_status' => 0,
+                'qrcode_number' => $request->qrcodeNumber,
             ]);
             UserBehavior::create([
                 'type_id' => 2,
@@ -534,14 +471,6 @@ class StudentController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
     {
         //
     }
