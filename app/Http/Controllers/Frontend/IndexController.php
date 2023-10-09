@@ -30,7 +30,6 @@ class IndexController extends Controller
             ->through(function ($item) {
                 // 找出第一張圖片
                 $coverPhoto = $item->activityPhotos->first();
-
                 // 找出已收藏的人數
                 $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
                 // 找出已報名的人數

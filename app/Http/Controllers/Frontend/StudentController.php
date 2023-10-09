@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ActivityDetail;
+use App\Models\ActivityPhoto;
+use App\Models\QrcodeDetail;
 use App\Models\RegisterActivity;
 use App\Models\StudentActivity;
 use App\Models\UserBehavior;
@@ -24,42 +26,163 @@ class StudentController extends Controller
      */
     public function index($id, Request $request)
     {
-        //
-        $activity = ActivityDetail::find($id)
-        ->with('activityPhotos:id,activity_id,activity_img_path')
-        ->where('id', $id)
-        ->first();
-        
-        $registerPeople = ActivityDetail::orderBy('id', 'desc')
-            ->whereHas('registerActivities', function ($query) use ($id) {
-                return $query->where('activity_id', $id);
-            })
-            ->count();
-
-        $favoriteCheck = ActivityDetail::orderBy('id', 'desc')
-            ->whereHas('studentActivities', function ($query) use ($id, $request) {
-                return $query
-                    ->where('activity_type', 1)
-                    ->where('activity_id', $id)
-                    ->where('student_id', $request->user()->userRoleStudent->id);
-            })
+        $activity = ActivityDetail::with(['activityPhotos:id,activity_id,activity_img_path'])
+            ->where('id', $id)
             ->first();
 
+        if (!$activity) {
+            // 处理活动不存在的情况
+            return abort(404);
+        }
+
+        $activityPhotos = $activity->activityPhotos;
+
+        $result = [
+            'id' => $activity->id,
+            'activity_name' => $activity->activity_name,
+            'activity_info' => $activity->activity_info,
+            'activity_presenter' => $activity->activity_presenter,
+            'activity_type' => $activity->activity_type,
+            'activity_type_name' => $this->activityPresenter->getActivityTypeName($activity->activity_type),
+            'activity_lowest_number_of_people' => $activity->activity_lowest_number_of_people,
+            'activity_highest_number_of_people' => $activity->activity_highest_number_of_people,
+            'activity_start_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_start_registration_time)),
+            'activity_end_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_end_registration_time)),
+            'activity_start_time' => date('Y-m-d H:i', strtotime($activity->activity_start_time)),
+            'activity_end_time' => date('Y-m-d H:i', strtotime($activity->activity_end_time)),
+            'activity_address' => $activity->activity_address,
+            'activity_instruction' => $activity->activity_instruction,
+            'activity_information' => $activity->activity_information,
+            'activityPhotos' => $activityPhotos->pluck('activity_img_path')->toArray(),
+        ];
+
+        $registerPeople = ActivityDetail::whereHas('registerActivities', function ($query) use ($id) {
+            return $query->where('activity_id', $id);
+        })->count();
+
+        $favoriteCheck = ActivityDetail::whereHas('studentActivities', function ($query) use ($id, $request) {
+            return $query
+                ->where('activity_type', 1)
+                ->where('activity_id', $id)
+                ->where('student_id', $request->user()->userRoleStudent->id);
+        })->first();
 
         $data = (object) [
-            'activity' => $activity,
+            'activity' => $result,
             'registerPeople' => $registerPeople,
             'favoriteCheck' => $favoriteCheck,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 
-
         return Inertia::render('Frontend/Student/ActivityDetail', ['response' => rtFormat($data)]);
     }
 
+    // public function index($id, Request $request)
+    // {
+    //     //
+    //     $activity = ActivityDetail::find($id)
+    //         ->with('activityPhotos:id,activity_id,activity_img_path')
+    //         ->where('id', $id)
+    //         ->get()
+    //         ->map(function ($item) use($id) {
+    //             // 找出第一張圖片
+    //             $activityPhotos = ActivityPhoto::where('activity_id',$id)->get();
+    //             dd($activityPhotos[0]);
+
+    //             return [
+    //                 'id' => $item->id,
+    //                 // 活動名稱
+    //                 'activity_name' => $item->activity_name,
+    //                 // 活動Slogan
+    //                 'activity_info' => $item->activity_info,
+    //                 // 活動講者
+    //                 'activity_presenter' => $item->activity_presenter,
+    //                 // 活動類型代號
+    //                 'activity_type' => $item->activity_type,
+    //                 // 活動類型名稱
+    //                 'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
+    //                 // 活動人數下限
+    //                 'activity_lowest_number_of_people' => $item->activity_lowest_number_of_people,
+    //                 // 活動人數上限
+    //                 'activity_highest_number_of_people' => $item->activity_highest_number_of_people,
+    //                 // 活動報名開始時間
+    //                 'activity_start_registration_time' => date('Y-m-d H:i', strtotime($item->activity_start_registration_time)),
+    //                 // 活動報名截止時間
+    //                 'activity_end_registration_time' => date('Y-m-d H:i', strtotime($item->activity_end_registration_time)),
+    //                 // 活動開始時間
+    //                 'activity_start_time' => date('Y-m-d H:i', strtotime($item->activity_start_time)),
+    //                 // 活動結束時間
+    //                 'activity_end_time' => date('Y-m-d H:i', strtotime($item->activity_end_time)),
+    //                 // 活動地點
+    //                 'activity_address' => $item->activity_address,
+    //                 // 活動封面圖片
+    //                 'activityPhotos' => $activityPhotos->activity_img_path ?? '',
+    //             ];
+    //         })
+    //         ->first();
+    //     // ->first();
+    //     // dd($activity);
+
+    //     $registerPeople = ActivityDetail::orderBy('id', 'desc')
+    //         ->whereHas('registerActivities', function ($query) use ($id) {
+    //             return $query->where('activity_id', $id);
+    //         })
+    //         ->count();
+
+    //     $favoriteCheck = ActivityDetail::orderBy('id', 'desc')
+    //         ->whereHas('studentActivities', function ($query) use ($id, $request) {
+    //             return $query
+    //                 ->where('activity_type', 1)
+    //                 ->where('activity_id', $id)
+    //                 ->where('student_id', $request->user()->userRoleStudent->id);
+    //         })
+    //         ->first();
+
+
+    //     $data = (object) [
+    //         'activity' => $activity,
+    //         'registerPeople' => $registerPeople,
+    //         'favoriteCheck' => $favoriteCheck,
+    //         'activityTypeData' => $this->activityPresenter->getTypeOption(),
+    //     ];
+
+
+    //     return Inertia::render('Frontend/Student/ActivityDetail', ['response' => rtFormat($data)]);
+    // }
+
     public function activityEdit($id)
     {
-        $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->first();
+        // $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->first();
+
+        $activity = ActivityDetail::with(['activityPhotos:id,activity_id,activity_img_path'])
+            ->where('id', $id)
+            ->first();
+        if (!$activity) {
+            // 处理活动不存在的情况
+            return abort(404);
+        }
+
+        $activityPhotos = $activity->activityPhotos;
+        $result = [
+            'id' => $activity->id,
+            'activity_name' => $activity->activity_name,
+            'activity_info' => $activity->activity_info,
+            'activity_presenter' => $activity->activity_presenter,
+            'activity_type' => $activity->activity_type,
+            'activity_type_name' => $this->activityPresenter->getActivityTypeName($activity->activity_type),
+            'activity_lowest_number_of_people' => $activity->activity_lowest_number_of_people,
+            'activity_highest_number_of_people' => $activity->activity_highest_number_of_people,
+            'activity_start_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_start_registration_time)),
+            'activity_end_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_end_registration_time)),
+            'activity_start_time' => date('Y-m-d H:i', strtotime($activity->activity_start_time)),
+            'activity_end_time' => date('Y-m-d H:i', strtotime($activity->activity_end_time)),
+            'activity_address' => $activity->activity_address,
+            'activity_instruction' => $activity->activity_instruction,
+            'activity_information' => $activity->activity_information,
+            'activityPhotos' => $activityPhotos->pluck('activity_img_path')->toArray(),
+        ];
+
+        $qrcode = QrcodeDetail::get();
 
         $registerPeople = ActivityDetail::orderBy('id', 'desc')
             ->whereHas('registerActivities', function ($query) use ($id) {
@@ -71,7 +194,8 @@ class StudentController extends Controller
             ->first();
 
         $data = (object) [
-            'activity' => $activity,
+            'activity' => $result,
+            'qrcode' => $qrcode,
             'registerPeople' => $registerPeople,
             'registerData' => $registerData,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
@@ -279,28 +403,37 @@ class StudentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 報名活動頁面
      */
     public function create(Request $request)
     {
-        dd($request->all());
         $request->validate([
             'studentName' => 'required',
             'studentPhoneNumber' => 'required',
             'studentEmail' => 'required',
             'activity_id' => 'required',
+            'qrcodeImage' => 'required',
         ]);
         $register = [];
 
+
         $activityDetail = ActivityDetail::find($request->activity_id);
 
+        $test = RegisterActivity::where('student_id', $request->user()->userRoleStudent->id)
+            ->where('activity_id', $request->activity_id)
+            ->first();
 
-        $test = RegisterActivity::where('student_id', $request->user()->userRoleStudent->id)->find($request->activity_id);
         if (!$test) {
             StudentActivity::create([
                 'student_id' => $request->user()->userRoleStudent->id,
                 'activity_id' => $request->activity_id,
                 'activity_type' => $request->registered,
+            ]);
+            QrcodeDetail::create([
+                'activity_id' => $request->activity_id,
+                'student_id' => $request->user()->userRoleStudent->id,
+                'qrcode_path' => $request->qrcodeImage,
+                'qrcode_status' => 0,
             ]);
             UserBehavior::create([
                 'type_id' => 2,

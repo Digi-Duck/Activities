@@ -2,7 +2,7 @@
 <script>
 import { router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
-import { QRCode } from 'qrcode';
+import QRCode from 'qrcode';
 
 export default {
   props: {
@@ -25,7 +25,7 @@ export default {
         favorited: 1,
         registered: 2,
       },
-      qrcodeData: '',
+      qrcodeImage: '',
     };
   },
   computed: {
@@ -42,35 +42,16 @@ export default {
       return this.rtData.favoriteCheck ?? [];
     },
   },
-  mounted() {
-    console.log(generateQRCode);
-  },
   methods: {
     generateQRCode() {
-      // const qrData = this.qrcodeData;
-      const qrData = this.formData;
-      QRCode.toDataURL(qrData).then(url => {
-        console.log(url);
-        const qrCodeImage = document.getElementById('qrcode-image');
-        qrCodeImage.src = url;
-        this.submitData();
-      })
-        .catch(err => {
+      const qrCodeContent = this.formData.toString();
+      QRCode.toDataURL(qrCodeContent, (err, url) => {
+        if (err) {
           console.error(err);
-        });
-      // QRCode.toDataURL(qrData, (err, url) => {
-      //   if (err) {
-      //     console.error(err);
-      //   }
-      //   else {
-      //     // const { $refs } = this;
-      //     // this.qrCodeImage = $refs.qrcodeImage;
-      //     // const qrCodeImage  =
-      //     const qrCodeImage = document.getElementById('qrcode-image');
-      //     qrCodeImage.src = url;
-      //     this.submitData();
-      //   }
-      // }
+        } else {
+          this.qrcodeImage = url;
+        }
+      });
     },
     favorite() {
       router.visit(route('createFavorite'), {
@@ -111,11 +92,17 @@ export default {
       });
     },
     submitData() {
-      this.qrcodeData = this.formData;
-      this.generateQRCode();
+      const { generateQRCode, formData, activityType, response } = this;
+      generateQRCode();
+      const data = {
+        ...formData,
+        ...activityType,
+        activity_id: response.rt_data.activity.id,
+        qrcodeImage: this.qrcodeImage,
+      };
       router.visit(route('registerStore'), {
         method: 'post',
-        data: { ...this.formData, activity_id: this.response.rt_data.activity.id, ...this.activityType },
+        data,
         preserveState: true,
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
@@ -137,9 +124,11 @@ export default {
 </script>
 
 <template>
+  <!-- {{ activityData }} -->
+  <!-- <button type="button" class="w-[100px] h-[100px] bg-[pink]" @click="generateQRCode"></button>
+  <img :src="qrcodeImage" id="qrcode-image" alt="QR Code" /> -->
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
     <CountDown class="absolute mt-[5%] left-[75%] z-50">
-      <img ref="qrcodeImage" id="qrcode-image" alt="QR Code" />
       <template #count-down>
         <span>
           20

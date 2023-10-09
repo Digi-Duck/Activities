@@ -2,6 +2,7 @@
 
 <script>
 import Pagination from '@/Components/Public/Pagination.vue';
+import { router } from '@inertiajs/vue3';
 
 export default {
   components: { Pagination },
@@ -14,12 +15,14 @@ export default {
   },
   data() {
     return {
-      rtData: this.response?.rt_data ?? {},
       title: '本周摘要',
-      searchData: '哭哭',
+      keyword: this.response?.rt_data?.keyword ?? '',
     };
   },
   computed: {
+    rtData() {
+      return this.response?.rt_data ?? {};
+    },
     newBehaviors() {
       return this.rtData.newBehaviors ?? {};
     },
@@ -29,12 +32,18 @@ export default {
   },
   created() {
   },
+  methods: {
+    searchData() {
+      router.get(route('dashboard'), { keyword: this.keyword }, {
+        preserveState: true,
+        preserveScroll: true,
+      });
+    },
+  },
 };
 </script>
 
 <template>
-  <hr>
-  {{ behaviorRecord }}
   <section id="backend-dashboard" class="p-10 flex flex-col items-center">
     <h1 class="w-[80%] pb-1 border-b-4 title flex">{{ title }}</h1>
     <div class="w-[80%] mb-5 mt-5 flex flex-col justify-between items-center gap-10">
@@ -120,35 +129,35 @@ export default {
       <!-- 事件紀錄表 -->
       <div class="w-full h-[671px] p-3 bg-[#234E66] rounded-[10px] flex flex-col items-center gap-3">
         <!-- 搜尋欄 -->
-        <form :href="route('dashboard')" role="search" class="w-full h-[59px] ps-10 bg-white flex items-center gap-5 text-[48px] font-semibold">
+        <div class="w-full h-[59px] ps-10 bg-white flex items-center gap-5 text-[48px] font-semibold">
           事件紀錄
           <!-- 起始日期 -->
           <input type="date">
           ~
           <!-- 結束日期 -->
           <input type="date">
-          <input v-model="searchData" type="search" placeholder="請輸入搜尋使用者名稱、行為" name="keyword" id="">
-          <button type="submit" class="w-[86px] h-[38px] bg-[gray] rounded-[4px] text-[22px]">搜尋</button>
-        </form>
+          <input v-model="keyword" type="search" placeholder="請輸入搜尋使用者名稱、行為" @search="searchData">
+          <button type="button" @click="searchData" class="w-[86px] h-[38px] bg-[gray] rounded-[4px] text-[22px]">搜尋</button>
+        </div>
         <!-- 搜尋內容 -->
         <div class="w-full flex flex-col text-[48px] text-white">
           <!-- 表頭 -->
           <div class="flex bg-[#285F87]">
+            <div class="w-[30%] flex-initial border flex justify-center items-center">日期</div>
             <div class="w-[20%] flex-initial border flex justify-center items-center">使用者名稱</div>
             <div class="w-[10%] flex-initial border flex justify-center items-center">類別</div>
-            <div class="w-[30%] flex-initial border flex justify-center items-center">日期</div>
             <div class="w-[40%] flex-initial border flex justify-center items-center">行為</div>
           </div>
           <!-- 詳細資料 -->
-          <div v-for="(item, index) in behaviorRecord" :key="index" class="bg-[#A9BCC6] flex">
+          <div v-for="(item, index) in behaviorRecord?.data ?? []" :key="index" class="bg-[#A9BCC6] flex">
+            <div class="w-[30%] flex-initial border flex justify-center items-center">{{ item.created_at }}</div>
             <div class="w-[20%] flex-initial border flex justify-center items-center">{{ item.user_name }}</div>
             <div class="w-[10%] flex-initial border flex justify-center items-center">{{ item.user_type }}</div>
-            <div class="w-[30%] flex-initial border flex justify-center items-center">{{ item.created_at }}</div>
             <div class="w-[40%] flex-initial border flex justify-center items-center">{{ item.behavior }}</div>
           </div>
         </div>
         <div class="w-[313px] h-[56px] bg-white rounded-[30px] flex justify-center">
-          <Pagination></Pagination>
+          <Pagination :pagination-data="behaviorRecord"></Pagination>
         </div>
       </div>
     </div>

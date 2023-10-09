@@ -18,7 +18,7 @@ class DashboardController extends Controller
     }
     public function index(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         // 活動列表資料
         $activity = ActivityDetail::orderBy('id', 'desc')
             ->where('activity_status', 1)
@@ -67,18 +67,31 @@ class DashboardController extends Controller
         $newBehaviors = UserBehavior::orderBy('id', 'desc')
             ->take(5)
             ->get();
-        $behaviorRecord = UserBehavior::get();
+
+        $keyword = $request->keyword ?? '';
+
+        $behaviorRecord = UserBehavior::where('user_name', 'like', "%$keyword%")
+        ->orwhere('user_type', 'like', "%$keyword%")
+        ->orwhere('behavior', 'like', "%$keyword%")
+        ->orderBy('created_at', 'desc')
+        ->paginate(5)
+        ->through(function ($item) {
+            return [
+                'id' => $item->id,
+                'user_type' => $item->user_type,
+                'user_name' => $item->user_name,
+                'behavior' => $item->behavior,
+                'created_at' => $item->created_at->format('Y/m/d H:i'),
+            ];
+        });
+
         $data = (object) [
             'activity' => $activity,
             'newBehaviors' => $newBehaviors,
             'behaviorRecord' => $behaviorRecord,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
+            'keyword' => $keyword,
         ];
-        $search = $request->search ?? '';
-        if ($request->filled('search')) {
-            $behaviorRecord->where('user_name', 'like', "%$search%")->orwhere('user_type', 'like', "%$search%")->orwhere('behavior', 'like', "%$search%");
-            return back()->with(['message' => rtFormat($data)]);
-        }
 
 
         return Inertia::render('Backend/Dashboard', ['response' => rtFormat($data)]);

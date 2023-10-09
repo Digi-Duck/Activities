@@ -154,7 +154,7 @@ export default {
       </div>
       <Swiper v-slot="{ slide }" :slide-data="slideData[0]?.activityPhotos ?? []" class="w-[full] max-w-[1600px] h-full max-h-[900px]" :btn-prev="prevButton" :btn-next="nextButton">
         <div class="opacity-60 w-full h-full flex justify-center items-center">
-          <img :src="slide.activity_img_path" class="w-full h-full" alt="產業類別圖片">
+          <img :src="slide" class="w-full h-full" alt="產業類別圖片">
         </div>
       </Swiper>
     </div>
