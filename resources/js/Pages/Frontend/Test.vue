@@ -24,10 +24,7 @@ export default {
 
       // 創建QR Code
       QRCode.toDataURL(this.qrcodeImage, (err, url) => {
-        if (err) {
-          console.error(err);
-          console.log(url);
-        } else {
+        if (!err) {
           this.qrcodeImage = url;
         }
       });

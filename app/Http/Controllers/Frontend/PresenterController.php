@@ -79,7 +79,8 @@ class PresenterController extends Controller
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 
-        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', ['response' => rtFormat($data)]);;
+        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', ['response' => rtFormat($data)]);
+        ;
     }
 
     /**
@@ -112,7 +113,7 @@ class PresenterController extends Controller
             'activityAddress' => 'required',
             'activityInstruction' => 'required',
             'activityInformation' => 'required',
-        ],[
+        ], [
             'activityStartRegistrationTime.date_format' => '時間格式為:2000-01-01 10:00',
             'activityEndRegistrationTime.date_format' => '時間格式為:2000-01-01 10:00',
             'activityEndRegistrationTime.after' => '需晚於開始註冊時間',
@@ -120,7 +121,7 @@ class PresenterController extends Controller
             'activityEndTime.date_format' => '時間格式為:2000-01-01 10:00',
             'activityEndTime.after' => '需晚於開始註冊時間',
         ]);
-        
+
 
         $activity = ActivityDetail::create([
             'activity_name' => $request->activityName,
@@ -261,7 +262,7 @@ class PresenterController extends Controller
             'id' => 'required|exists:activity_details,id'
         ]);
         $activity = ActivityDetail::find($request->id);
-        
+
         UserBehavior::create([
             'type_id' => 1,
             'user_type' => '講師',

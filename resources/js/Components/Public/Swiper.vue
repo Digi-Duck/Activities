@@ -56,7 +56,7 @@ const props = defineProps({
     default: '',
   },
 });
-// console.log(props);
+
 const modules = [Navigation, Pagination, A11y, Autoplay];
 const onSwiper = (swiper) => {
   nextTick(() => {

@@ -13,7 +13,6 @@ export default {
   },
   data() {
     return {
-      rtData: this.response?.rt_data ?? {},
       prevButton: null, // 在這裡定義 prevButton 和 nextButton
       nextButton: null,
       images: {
@@ -23,6 +22,11 @@ export default {
     };
   },
   computed: {
+    // 後端回傳資料
+    rtData() {
+      return this.response?.rt_data ?? {};
+    },
+
     // 獲取活動資料陣列
     activityData() {
       return this.rtData.activity ?? {};
@@ -50,6 +54,14 @@ export default {
       this.prevButton = $refs.btnPrev;
       this.nextButton = $refs.btnNext;
     },
+
+    /**
+     * swiper切換時觸發
+     * @param {Object} swiper swiper實例
+     */
+    setThumbsSwiper(swiper) {
+      this.thumbsSwiper = swiper;
+    },
   },
 };
 </script>
@@ -70,7 +82,7 @@ export default {
 
       <!-- 活動資訊 -->
       <Swiper v-slot="{ slide }" :slide-data="activityData.data ?? []" class="absolute w-full h-[602px]" :btn-prev="prevButton" :btn-next="nextButton">
-        <img :src="slide.cover_photo" class="absolute w-full h-full" alt="">
+        <img :src="slide.cover_photo" class="absolute w-full h-full" alt="活動背景圖">
         <h2 class="absolute top-[100px] w-full bg-[#ffffff57] text-[64px] text-end text-white">
           {{ slide.activity_name }}
         </h2>
@@ -83,7 +95,7 @@ export default {
 
       <!-- 這裡長了一個斜的Swiper -->
       <!-- 活動封面照片組合Swiper -->
-      <Swiper v-slot="{ slide }" :slide-data="activityData.data ?? []" :slides-per-view=3 :space-between=0 class="absolute -top-[15%] rotate-[10deg]" :btn-prev="prevButton" :btn-next="nextButton">
+      <Swiper v-slot="{ slide }" :slide-data="activityData.data ?? []" :slides-per-view="3" :space-between="0" class="absolute -top-[15%] rotate-[10deg]" :btn-prev="prevButton" :btn-next="nextButton">
         <Link :href="route('studentActivityDetails', { id: slide.id })" class="inline-block border border-[black] w-[512px] h-[384px] bg-[white]">
           <img :src="slide.cover_photo" class="w-full h-full object-cover" alt="產業類別圖片">
         </Link>

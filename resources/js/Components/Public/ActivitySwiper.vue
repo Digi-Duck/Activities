@@ -64,7 +64,7 @@ export default {
     </div>
 
     <Swiper v-slot="{ slide }" :slide-data="slideData ?? []" :slides-per-view=5 :btn-prev="prevButton" :btn-next="nextButton">
-      <Link type="button" class="relative m-auto w-[296px] h-[387px] p-3 bg-white border flex flex-col items-center" @click="linkHref(slide.id)">
+      <button type="button" class="relative m-auto w-[296px] h-[387px] p-3 bg-white border flex flex-col items-center" @click="linkHref(slide.id)">
         <figure>
           <img :src="slide.cover_photo" class="w-[275px] h-[275px] object-cover" alt="產業類別圖片">
           <div class="w-full ps-3 flex flex-col gap-1">
@@ -86,7 +86,7 @@ export default {
             {{ slide.collection_count }}
           </div>
         </figure>
-      </Link>
+      </button>
     </Swiper>
   </div>
 </template>
