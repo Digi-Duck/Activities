@@ -54,14 +54,6 @@ export default {
       this.prevButton = $refs.btnPrev;
       this.nextButton = $refs.btnNext;
     },
-
-    /**
-     * swiper切換時觸發
-     * @param {Object} swiper swiper實例
-     */
-    setThumbsSwiper(swiper) {
-      this.thumbsSwiper = swiper;
-    },
   },
 };
 </script>
