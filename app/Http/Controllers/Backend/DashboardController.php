@@ -9,6 +9,7 @@ use App\Models\ActivityDetail;
 use App\Models\StudentActivity;
 use App\Models\User;
 use App\Models\UserBehavior;
+use App\Models\UserRolePresenter;
 use App\Models\UserRoleStudent;
 use App\Presenters\ActivityPresenter;
 
@@ -22,49 +23,17 @@ class DashboardController extends Controller
     {
         // dd($request->all());
         // 活動列表資料
-        $activity = ActivityDetail::orderBy('id', 'desc')
-            ->where('activity_status', 1)
-            ->with(['activityPhotos:id,activity_id,activity_img_path', 'studentActivities'])
-            ->paginate(5)
-            ->through(function ($item) {
-                // 找出第一張圖片
-                $coverPhoto = $item->activityPhotos->first();
+        $activity = ActivityDetail::get();
+        $twoWeeksAgo = date('Y-m-d', strtotime('-2 weeks'));
+        
+        $activityCount = ActivityDetail::where('created_at', '>=', $twoWeeksAgo)->count();
+        $studentCount = UserRoleStudent::where('created_at', '>=', $twoWeeksAgo)->count();
+        $presenterCount = UserRolePresenter::where('created_at', '>=', $twoWeeksAgo)->count();
 
-                // 找出已收藏的人數
-                $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
-                // 找出已報名的人數
-                $registrationCount = $item->studentActivities->where('activity_type', 2)->count();
-
-                return [
-                    'id' => $item->id,
-                    // 活動名稱
-                    'activity_name' => $item->activity_name,
-                    // 活動Slogan
-                    'activity_info' => $item->activity_info,
-                    // 活動講者
-                    'activity_presenter' => $item->activity_presenter,
-                    // 活動類型代號
-                    'activity_type' => $item->activity_type,
-                    // 活動類型名稱
-                    'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
-                    // 活動人數下限
-                    'activity_lowest_number_of_people' => $item->activity_lowest_number_of_people,
-                    // 活動人數上限
-                    'activity_highest_number_of_people' => $item->activity_highest_number_of_people,
-                    // 活動報名截止時間
-                    'activity_end_registration_time' => date('Y-m-d H:i', strtotime($item->activity_end_registration_time)),
-                    // 活動開始時間
-                    'activity_start_time' => date('Y-m-d H:i', strtotime($item->activity_start_time)),
-                    // 活動地點
-                    'activity_address' => $item->activity_address,
-                    // 活動封面圖片
-                    'cover_photo' => $coverPhoto->activity_img_path ?? '',
-                    // 活動收藏人數
-                    'collection_count' => $collectionCount,
-                    // 活動報名人數
-                    'registration_count' => $registrationCount,
-                ];
-            });
+        // 輸出
+        echo "在{$twoWeeksAgo}之後新增的活動數量為：{$activityCount}";
+        echo "在{$twoWeeksAgo}之後新增的學員數量為：{$studentCount}";
+        echo "在{$twoWeeksAgo}之後新增的講師數量為：{$presenterCount}";
 
         $newBehaviors = UserBehavior::orderBy('id', 'desc')
             ->take(5)
@@ -225,7 +194,7 @@ class DashboardController extends Controller
         $keyword = $request->input('keyword', '');
         $status = $request->input('status', '');
 
-        $activity = ActivityDetail::where(function ($query) use($keyword) {
+        $activity = ActivityDetail::where(function ($query) use ($keyword) {
             $query->where('activity_presenter', 'like', "%$keyword%")
                 ->orwhere('activity_name', 'like', "%$keyword%")
                 ->orwhere('activity_start_time', 'like', "%$keyword%")
