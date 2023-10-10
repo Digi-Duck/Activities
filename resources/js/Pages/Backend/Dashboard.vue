@@ -19,7 +19,7 @@ export default {
   },
   data() {
     return {
-      title: '本周摘要',
+      title: '數據摘要',
       keyword: this.response?.rt_data?.keyword ?? '',
       images: {
         student,
@@ -35,6 +35,18 @@ export default {
     },
     newBehaviors() {
       return this.rtData.newBehaviors ?? {};
+    },
+    activityCount() {
+      return this.rtData.activityCount ?? 0;
+    },
+    twoWeeksAgo() {
+      return this.rtData.twoWeeksAgo ?? 0;
+    },
+    studentCount() {
+      return this.rtData.studentCount ?? 0;
+    },
+    presenterCount() {
+      return this.rtData.presenterCount ?? 0;
     },
     behaviorRecord() {
       return this.rtData.behaviorRecord ?? {};
@@ -54,8 +66,12 @@ export default {
 </script>
 
 <template>
+  {{ presenterCount }}
   <section id="backend-dashboard" class="p-10 flex flex-col items-center">
-    <h1 class="w-[80%] pb-1 border-b-4 title flex">{{ title }}</h1>
+    <h1 class="w-[80%] pb-1 border-b-4 title flex items-center gap-3">
+      {{ title }}
+      <span class="text-[24px]">form {{ twoWeeksAgo }} to now</span>
+    </h1>
     <div class="w-[80%] mb-5 mt-5 flex flex-col justify-between items-center gap-10">
       <!-- 資訊小卡區 -->
       <div class="w-full flex flex-row justify-between gap-5 mb-5">
@@ -76,7 +92,9 @@ export default {
         <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
           <div class="relative h-full p-5 rounded-t-[10px] bg-white flex justify-between">
             <div>
-              <div class="border-b-2 text-[36px]">123,456</div>
+              <div class="border-b-2 text-[36px]">
+                {{ activityCount }}
+              </div>
               <div class="text-[24px]">新增活動數</div>
             </div>
             <!-- 資料icon -->
@@ -89,7 +107,9 @@ export default {
         <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
           <div class="relative h-full p-5 rounded-t-[10px] bg-white flex justify-between">
             <div>
-              <div class="border-b-2 text-[36px]">123,456</div>
+              <div class="border-b-2 text-[36px]">
+                {{ studentCount }}
+              </div>
               <div class="text-[24px]">新增學員數</div>
             </div>
             <!-- 資料icon -->
@@ -102,7 +122,9 @@ export default {
         <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
           <div class="relative h-full p-5 rounded-t-[10px] bg-white flex justify-between">
             <div>
-              <div class="border-b-2 text-[36px]">123,456</div>
+              <div class="border-b-2 text-[36px]">
+                {{ presenterCount }}
+              </div>
               <div class="text-[24px]">新增講師數</div>
             </div>
             <!-- 資料icon -->

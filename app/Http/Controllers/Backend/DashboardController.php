@@ -31,9 +31,9 @@ class DashboardController extends Controller
         $presenterCount = UserRolePresenter::where('created_at', '>=', $twoWeeksAgo)->count();
 
         // 輸出
-        echo "在{$twoWeeksAgo}之後新增的活動數量為：{$activityCount}";
-        echo "在{$twoWeeksAgo}之後新增的學員數量為：{$studentCount}";
-        echo "在{$twoWeeksAgo}之後新增的講師數量為：{$presenterCount}";
+        // echo "在{$twoWeeksAgo}之後新增的活動數量為：{$activityCount}";
+        // echo "在{$twoWeeksAgo}之後新增的學員數量為：{$studentCount}";
+        // echo "在{$twoWeeksAgo}之後新增的講師數量為：{$presenterCount}";
 
         $newBehaviors = UserBehavior::orderBy('id', 'desc')
             ->take(5)
@@ -67,6 +67,10 @@ class DashboardController extends Controller
         $data = (object) [
             'activity' => $activity,
             'newBehaviors' => $newBehaviors,
+            'activityCount' => $activityCount,
+            'twoWeeksAgo' => $twoWeeksAgo,
+            'studentCount' => $studentCount,
+            'presenterCount' => $presenterCount,
             'behaviorRecord' => $behaviorRecord,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
             'keyword' => $keyword,
