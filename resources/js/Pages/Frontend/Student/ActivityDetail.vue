@@ -40,7 +40,7 @@ export default {
     },
     // 確認是否已收藏
     favoriteCheck() {
-      return this.rtData.favoriteCheck ?? [];
+      return this.rtData.favoriteCheck ?? 0;
     },
   },
   methods: {
@@ -152,7 +152,7 @@ export default {
       <div v-else>
       </div>
     </div>
-    <button v-if="!rtData.favoriteCheck" @click="favorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+    <button v-if="favoriteCheck === 0" @click="favorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
       點我收藏
     </button>
     <button v-else @click="cancelFavorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">

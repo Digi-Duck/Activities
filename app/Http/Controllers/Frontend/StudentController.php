@@ -62,9 +62,14 @@ class StudentController extends Controller
             return $query->where('activity_id', $id);
         })->count();
 
+        $favoriteCheck = StudentActivity::where('activity_id', $id)
+        ->where('student_id', $request->user()->userRoleStudent->id)
+        ->first();
+
         $data = (object) [
             'activity' => $result,
             'registerPeople' => $registerPeople,
+            'favoriteCheck' => $favoriteCheck,
             'timeDifferenceInDays' => $timeDifferenceInDays,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
@@ -421,10 +426,12 @@ class StudentController extends Controller
 
     public function cancelFavorite(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'activity_id' => 'required',
         ]);
-        $cancelFavorite = StudentActivity::where('activity_type', 1)->where('student_id', $request->user()->userRoleStudent->id)->first();
+        $cancelFavorite = StudentActivity::where('activity_id', $request->activity_id)->where('activity_type', 1)->where('student_id', $request->user()->userRoleStudent->id)->first();
+        // dd($cancelFavorite);
         $activityDetail = ActivityDetail::find($request->activity_id);
 
         UserBehavior::create([
