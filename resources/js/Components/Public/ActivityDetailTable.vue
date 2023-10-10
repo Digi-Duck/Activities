@@ -48,37 +48,44 @@ export default {
       <!-- 搜尋的表頭 -->
       <div class="w-full h-[64px] flex">
         <div class="flex-none w-[50%] border bg-[#5D8BA3] flex justify-center items-center text-[24px]">
-          活動名稱
+          <slot name="activity_title_name">活動名稱</slot>
         </div>
         <div class="flex-initial w-[10%] border bg-[#82ACC2] flex justify-center items-center text-[24px]">
           <slot name="activity_title_type">活動類型</slot>
         </div>
         <div class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
-          報名截止時間
+          <slot name="activity_title_time">報名截止時間</slot>
         </div>
         <div class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
-          人數狀況
+          <slot name="activity_title_number">人數狀況</slot>
         </div>
       </div>
       <!-- 詳細搜尋內容 -->
       <div v-for="(item, index) in tableData?.data ?? []" :key="index" class="w-full h-[53px] flex">
         <Link :href="route('studentActivityDetails', { id: item.id })" class="flex-none w-[50%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
-          {{ item.activity_name }}
+          {{ item.activity_name || item.student_email }}
         </Link>
         <div class="flex-initial w-[10%] border bg-[#82acc27d] flex justify-center items-center text-[16px] font-semibold">
           <slot name="activity_info_type">
-            {{ item.activity_presenter || item.activity_type_name }}
+            {{ item.activity_presenter || item.activity_type_name || item.student_name }}
           </slot>
         </div>
         <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
-          {{ item.activity_end_registration_time }}
+          {{ item.activity_end_registration_time || item.student_phone_number }}
         </div>
         <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-between items-center text-[16px]">
-          門檻:{{ item.activity_lowest_number_of_people }}
-          上限:{{ item.activity_highest_number_of_people }}
-          <div class="pe-3 flex items-center justify-center">
-            目前人數：{{ item.registration_count }}
-          </div>
+          <slot name="student_additional_remark">
+            <span v-if="item.student_additional_remark">
+              {{ item.student_additional_remark }}
+            </span>
+            <span v-else>
+              門檻:{{ item.activity_lowest_number_of_people }}
+              上限:{{ item.activity_highest_number_of_people }}
+              <div class="pe-3 flex items-center justify-center">
+                目前人數：{{ item.registration_count }}
+              </div>
+            </span>
+          </slot>
         </div>
       </div>
       <Pagination :pagination-data="tableData" class="pt-3" />

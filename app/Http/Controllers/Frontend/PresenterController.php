@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityDetail;
 use App\Models\ActivityPhoto;
+use App\Models\RegisterActivity;
 use App\Models\UserBehavior;
 use App\Services\FilesService;
 use Illuminate\Http\Request;
@@ -79,8 +80,7 @@ class PresenterController extends Controller
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 
-        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', ['response' => rtFormat($data)]);
-        ;
+        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', ['response' => rtFormat($data)]);;
     }
 
     public function createActivity()
@@ -182,9 +182,21 @@ class PresenterController extends Controller
         $registerPeople = ActivityDetail::whereHas('registerActivities', function ($query) use ($id) {
             return $query->where('activity_id', $id);
         })->count();
+        $studentData = RegisterActivity::where('activity_id', $id)
+            ->paginate(5)
+            ->through(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'student_name' => $item->student_name,
+                    'student_phone_number' => $item->student_phone_number,
+                    'student_email' => $item->student_email,
+                    'student_additional_remark' => $item->student_additional_remark,
+                ];
+            });
         $data = (object) [
             'activity' => $result,
             'registerPeople' => $registerPeople,
+            'studentData' => $studentData,
             'timeDifferenceInDays' => $timeDifferenceInDays,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
@@ -201,9 +213,9 @@ class PresenterController extends Controller
         //     ->with('activityPhotos:id,activity_id,activity_img_path')
         //     ->where('id', $id)
         //     ->first();
-        
+
         $activity = ActivityDetail::find($id);
-        
+
         $currentTimestamp = time();
         $activityStartTime = strtotime($activity->activity_start_time);
         $timeDifferenceInSeconds = $activityStartTime - $currentTimestamp;
@@ -228,7 +240,7 @@ class PresenterController extends Controller
             'activity_information' => $activity->activity_information,
             'activityPhotos' => $activityPhotos->pluck('activity_img_path')->toArray(),
         ];
-        
+
         $data = (object) [
             'activity' => $result,
             'timeDifferenceInDays' => $timeDifferenceInDays,

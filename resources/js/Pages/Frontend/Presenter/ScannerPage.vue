@@ -15,14 +15,25 @@ export default {
   },
   data() {
     return {
-      rtData: this.response?.rt_data ?? {},
       handling: false,
       hasDevices: true,
     };
   },
   computed: {
+    // 後端回傳資料
+    rtData() {
+      return this.response?.rt_data ?? {};
+    },
     activityData() {
       return this.rtData.activity ?? {};
+    },
+    // 獲取活動類別資料陣列
+    activityTypeData() {
+      return this.rtData.activityTypeData ?? {};
+    },
+    // 獲取活動類別資料陣列
+    studentData() {
+      return this.rtData.studentData ?? {};
     },
   },
   mounted() {
@@ -258,7 +269,29 @@ export default {
       <button type="button" class="w-[299px] h-[54px] bg-[#1C8AAD] rounded-[5px] text-white flex justify-center items-center">掃描報到</button>
     </div>
     <!-- 活動的參加名單 -->
-    <ActivityDetailTable />
+    {{ studentData }}
+    <ActivityDetailTable :table-data="studentData" :type-data="activityTypeData">
+      <template #activity_title_name>
+        <span>
+          電子信箱
+        </span>
+      </template>
+      <template #activity_title_number>
+        <span>
+          額外備註
+        </span>
+      </template>
+      <template #activity_title_type>
+        <span>
+          姓名
+        </span>
+      </template>
+      <template #activity_title_time>
+        <span>
+          連絡電話
+        </span>
+      </template>
+    </ActivityDetailTable>
   </section>
 </template>
 
