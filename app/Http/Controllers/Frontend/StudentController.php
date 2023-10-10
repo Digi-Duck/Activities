@@ -72,7 +72,6 @@ class StudentController extends Controller
         return Inertia::render('Frontend/Student/ActivityDetail', ['response' => rtFormat($data)]);
     }
 
-
     public function activityEdit($id, Request $request)
     {
         $favoriteCheck = StudentActivity::where('activity_type', 1)
@@ -87,7 +86,7 @@ class StudentController extends Controller
             // 处理活动不存在的情况
             return abort(404);
         }
-        
+
         $currentTimestamp = time();
         $activityStartTime = strtotime($activity->activity_start_time);
         $timeDifferenceInSeconds = $activityStartTime - $currentTimestamp;
@@ -276,11 +275,20 @@ class StudentController extends Controller
                 ];
             });
 
+
+
+        $keyword = $request->keyword ?? '';
+        $type = $request->type ?? '';
         $allActivity = ActivityDetail::orderBy('id', 'desc')
             ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
                 return $query->where('id', $request->user()->userRoleStudent->id);
             })
             ->with('activityPhotos:id,activity_id,activity_img_path')
+            ->where('activity_name', 'like', "%$keyword%")
+            ->orwhere('activity_presenter', 'like', "%$keyword%")
+            ->orwhere('activity_end_registration_time', 'like', "%$keyword%")
+            ->orwhere('activity_lowest_number_of_people', 'like', "%$keyword%")
+            ->orwhere('activity_highest_number_of_people', 'like', "%$keyword%")
             ->paginate(5)
             ->through(function ($item) {
                 // 找出第一張圖片
@@ -297,6 +305,8 @@ class StudentController extends Controller
                     'activity_name' => $item->activity_name,
                     // 活動Slogan
                     'activity_info' => $item->activity_info,
+                    // 活動Slogan
+                    'activity_presenter' => $item->activity_presenter,
                     // 活動類型代號
                     'activity_type' => $item->activity_type,
                     // 活動類型名稱
