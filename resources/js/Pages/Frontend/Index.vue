@@ -127,9 +127,9 @@ export default {
         </time>
       </div>
       <figure class="relative w-full h-[450px] flex">
-        <img :src="hottestActivityData.cover_photo" class="absolute w-[770px] h-full rounded-[64px] opacity-[20%] bg-green-600" alt="">
-        <img :src="hottestActivityData.cover_photo" class="absolute ms-[20%] w-[900px] h-full z-10 rounded-[64px]" alt="">
-        <img :src="hottestActivityData.cover_photo" class="absolute end-0 w-[770px] h-full rounded-[64px] opacity-[20%] bg-blue-600" alt="">
+        <img :src="hottestActivityData.cover_photo" class="absolute w-[770px] h-full rounded-[64px] opacity-[20%] bg-green-600" alt="半透明活動主照片">
+        <img :src="hottestActivityData.cover_photo" class="absolute ms-[20%] w-[900px] h-full z-10 rounded-[64px]" alt="活動主照片">
+        <img :src="hottestActivityData.cover_photo" class="absolute end-0 w-[770px] h-full rounded-[64px] opacity-[20%] bg-blue-600" alt="半透明活動主照片">
       </figure>
     </Link>
     <div v-else></div>

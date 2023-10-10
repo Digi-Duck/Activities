@@ -27,7 +27,7 @@ export default {
     <CountDown class="absolute mt-[7.5%] left-[75%]"></CountDown>
     <!-- 這是QRcode的位置 -->
     <div class="absolute mt-[5%] left-[60%]">
-      <img src="" class="w-[261px] h-[261px] bg-black" alt="">
+      <img src="" class="w-[261px] h-[261px] bg-black" alt="QRcode圖片">
     </div>
     <ActivityDetailSwiper></ActivityDetailSwiper>
     <!-- 這裡是活動詳情 -->

@@ -125,7 +125,7 @@ export default {
 </script>
 
 <template>
-  <img :src="rtData.qrcode.qrcode_path" class="absolute left-[60%] top-[18.5%] z-50 h-[250px] w-[250px]" alt="">
+  <img :src="rtData.qrcode.qrcode_path" class="absolute left-[60%] top-[18.5%] z-50 h-[250px] w-[250px]" alt="QRcode圖片">
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
     <div class="absolute mt-[5%] left-[75%] z-50">
       <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">倒數

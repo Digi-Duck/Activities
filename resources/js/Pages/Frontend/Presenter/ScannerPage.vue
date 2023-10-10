@@ -4,6 +4,7 @@
 import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 import { Html5Qrcode } from 'html5-qrcode';
+import check from '/images/icon/user-check-solid.svg';
 
 export default {
   props: {
@@ -17,6 +18,9 @@ export default {
     return {
       handling: false,
       hasDevices: true,
+      images: {
+        check,
+      },
     };
   },
   computed: {
@@ -254,11 +258,8 @@ export default {
       <!-- 顯示報到狀況人數 -->
       <div class="flex gap-[100px] text-[35px]">
         <div class="flex items-center gap-3">
-          <img src="" class="w-[50px] h-[50px] bg-[yellow]" alt="">
-          總報名人數:{{ rtData.registerPeople }}</div>
-        <div class="flex items-center gap-3">
-          <img src="" class="w-[50px] h-[50px] bg-[yellow]" alt="">
-          已報到人數</div>
+          <img :src="images.check" class="w-[50px] h-[50px]" alt="已報到人數icon">
+          已報到人數:</div>
       </div>
 
       <!-- 這是掃描區域 -->

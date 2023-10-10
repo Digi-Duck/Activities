@@ -181,7 +181,7 @@ export default {
             </label>
             <div class="flex flex-nowrap gap-[30px]">
               <div v-for="item in formData.activityPhoto" :key="item.id" class="relative">
-                <img :src="item" alt="" class="border border-dashed w-[150px] aspect-[4/3] flex justify-center items-center text-[48px] cursor-pointer">
+                <img :src="item" alt="活動照片" class="border border-dashed w-[150px] aspect-[4/3] flex justify-center items-center text-[48px] cursor-pointer">
                 <button type="button" class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 rounded-full w-[20px] h-[20px] flex justify-center items-center bg-[red] text-white" @click="removeImage(item.id)">X</button>
               </div>
             </div>
