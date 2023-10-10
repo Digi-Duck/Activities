@@ -57,7 +57,6 @@ export default {
 </script>
 
 <template>
-  {{ allActivityData }}
   <section id="presenter-personal-page" class="flex flex-col items-center">
     <ActivitySwiper :slide-data="registerActivityData?.data ?? []" href="studentActivityEdit">
       <template #activity_title_name>

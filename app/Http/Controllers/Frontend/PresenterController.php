@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityDetail;
 use App\Models\ActivityPhoto;
+use App\Models\QrcodeDetail;
 use App\Models\RegisterActivity;
 use App\Models\UserBehavior;
 use App\Services\FilesService;
@@ -213,6 +214,12 @@ class PresenterController extends Controller
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
         return Inertia::render('Frontend/Presenter/ScannerPage', ['response' => rtFormat($data)]);
+    }
+
+    public function activityScannerConfirm(Request $request)
+    {
+        dd($request->all());
+        QrcodeDetail::where('activity_id', $request->activity_id);
     }
 
     /**

@@ -70,14 +70,15 @@ class IndexController extends Controller
 
         $keyword = $request->keyword ?? '';
         $type = $request->type ?? '';
-        $activityTable = ActivityDetail::where('activity_type', $type)
-            ->orwhere('activity_name', 'like', "%$keyword%")
-            ->orwhere('activity_presenter', 'like', "%$keyword%")
-            ->orwhere('activity_end_registration_time', 'like', "%$keyword%")
-            ->orwhere('activity_lowest_number_of_people', 'like', "%$keyword%")
-            ->orwhere('activity_highest_number_of_people', 'like', "%$keyword%")
+        $activityTable = ActivityDetail::where('activity_status', 1)
+            ->where(function ($query) use($keyword){
+                $query->where('activity_name', 'like', "%$keyword%")
+                ->orwhere('activity_presenter', 'like', "%$keyword%")
+                ->orwhere('activity_end_registration_time', 'like', "%$keyword%")
+                ->orwhere('activity_lowest_number_of_people', 'like', "%$keyword%")
+                ->orwhere('activity_highest_number_of_people', 'like', "%$keyword%");
+            })
             ->orderBy('id', 'desc')
-            ->where('activity_status', 1)
             ->with(['activityPhotos:id,activity_id,activity_img_path', 'studentActivities'])
             ->paginate(5)
             ->through(function ($item) {
