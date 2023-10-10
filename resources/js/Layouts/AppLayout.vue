@@ -58,8 +58,8 @@ export default {
       <nav v-else-if="userRole === 2" class="pt-6 pe-5 flex justify-end gap-3">
         <Link :href="route('index')" class="function-btn">首頁</Link>
         <Link :href="route('createActivity')" class="function-btn">活動建立</Link>
+        <Link :href="route('activityClassification')" class="function-btn">活動分類</Link>
         <Link :href="route('presenterPersonalPage')" class="function-btn">我的活動</Link>
-        <Link :href="route('activityScanner')" class="function-btn">報到掃描</Link>
       </nav>
       <nav v-else-if="userRole === 3" class="pt-6 pe-5 flex justify-end gap-3">
         <Link :href="route('index')" class="function-btn">首頁</Link>

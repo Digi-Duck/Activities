@@ -34,6 +34,10 @@ class StudentController extends Controller
             // 处理活动不存在的情况
             return abort(404);
         }
+        $currentTimestamp = time();
+        $activityStartTime = strtotime($activity->activity_start_time);
+        $timeDifferenceInSeconds = $activityStartTime - $currentTimestamp;
+        $timeDifferenceInDays = intval($timeDifferenceInSeconds / (3600 * 24));
 
         $activityPhotos = $activity->activityPhotos;
 
@@ -70,6 +74,7 @@ class StudentController extends Controller
         $data = (object) [
             'activity' => $result,
             'registerPeople' => $registerPeople,
+            'timeDifferenceInDays' => $timeDifferenceInDays,
             'favoriteCheck' => $favoriteCheck,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
@@ -78,15 +83,12 @@ class StudentController extends Controller
     }
 
 
-    public function activityEdit($id,Request $request)
+    public function activityEdit($id, Request $request)
     {
-        // dd($request->user()->UserRoleStudent->id);
-        // $activity = ActivityDetail::find($id)->with('activityPhotos:id,activity_id,activity_img_path')->where('id', $id)->first();
-
-        $favoriteCheck = StudentActivity::where('activity_type',1)
-        ->where('activity_id', $id)
-        ->where('student_id', $request->user()->UserRoleStudent->id)
-        ->first();
+        $favoriteCheck = StudentActivity::where('activity_type', 1)
+            ->where('activity_id', $id)
+            ->where('student_id', $request->user()->UserRoleStudent->id)
+            ->first();
 
         $activity = ActivityDetail::with(['activityPhotos:id,activity_id,activity_img_path'])
             ->where('id', $id)
@@ -95,6 +97,11 @@ class StudentController extends Controller
             // 处理活动不存在的情况
             return abort(404);
         }
+        
+        $currentTimestamp = time();
+        $activityStartTime = strtotime($activity->activity_start_time);
+        $timeDifferenceInSeconds = $activityStartTime - $currentTimestamp;
+        $timeDifferenceInDays = intval($timeDifferenceInSeconds / (3600 * 24));
 
         $activityPhotos = $activity->activityPhotos;
         $result = [
@@ -131,6 +138,7 @@ class StudentController extends Controller
             'activity' => $result,
             'qrcode' => $qrcode,
             'favoriteCheck' => $favoriteCheck,
+            'timeDifferenceInDays' => $timeDifferenceInDays,
             'registerPeople' => $registerPeople,
             'registerData' => $registerData,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),

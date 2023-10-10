@@ -160,22 +160,6 @@ class PresenterController extends Controller
         return back()->with(['message' => rtFormat($activity)]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
     public function activityScanner()
     {
 
@@ -192,8 +176,20 @@ class PresenterController extends Controller
             ->with('activityPhotos:id,activity_id,activity_img_path')
             ->where('id', $id)
             ->first();
+        
+        $currentTimestamp = time();
+        $activityStartTime = strtotime($activity->activity_start_time);
+        $timeDifferenceInSeconds = $activityStartTime - $currentTimestamp;
+        $timeDifferenceInDays = intval($timeDifferenceInSeconds / (3600 * 24));
 
-        return Inertia::render('Frontend/Presenter/EditActivity', ['response' => rtFormat($activity)]);
+        
+        $data = (object) [
+            'activity' => $activity,
+            'timeDifferenceInDays' => $timeDifferenceInDays,
+            'activityTypeData' => $this->activityPresenter->getTypeOption(),
+        ];
+
+        return Inertia::render('Frontend/Presenter/EditActivity', ['response' => rtFormat($data)]);
     }
 
     public function activityUpdate(Request $request)

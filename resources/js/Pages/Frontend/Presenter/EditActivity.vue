@@ -28,20 +28,20 @@ export default {
       prevButton: null, // 在这里定义 prevButton 和 nextButton
       nextButton: null,
       formData: {
-        activityName: this.response?.rt_data.activity_name ?? '',
-        activityInfo: this.response?.rt_data.activity_info ?? '',
-        activityType: this.response?.rt_data.activity_type ?? '',
-        activityPhoto: this.response?.rt_data.activityPhotos ?? [],
-        activityPresenter: this.response?.rt_data.activity_presenter ?? '',
-        activityLowestNumberOfPeople: this.response?.rt_data.activity_lowest_number_of_people ?? '',
-        activityHighestNumberOfPeople: this.response?.rt_data.activity_highest_number_of_people ?? '',
-        activityStartRegistrationTime: this.response?.rt_data.activity_start_registration_time ?? '',
-        activityEndRegistrationTime: this.response?.rt_data.activity_end_registration_time ?? '',
-        activityStartTime: this.response?.rt_data.activity_start_time ?? '',
-        activityEndTime: this.response?.rt_data.activity_end_time ?? '',
-        activityAddress: this.response?.rt_data.activity_address ?? '',
-        activityInstruction: this.response?.rt_data.activity_instruction ?? '',
-        activityInformation: this.response?.rt_data.activity_information ?? '',
+        activityName: this.response?.rt_data.activity.activity_name ?? '',
+        activityInfo: this.response?.rt_data.activity.activity_info ?? '',
+        activityType: this.response?.rt_data.activity.activity_type ?? '',
+        activityPhoto: this.response?.rt_data.activity.activityPhotos ?? [],
+        activityPresenter: this.response?.rt_data.activity.activity_presenter ?? '',
+        activityLowestNumberOfPeople: this.response?.rt_data.activity.activity_lowest_number_of_people ?? '',
+        activityHighestNumberOfPeople: this.response?.rt_data.activity.activity_highest_number_of_people ?? '',
+        activityStartRegistrationTime: this.response?.rt_data.activity.activity_start_registration_time ?? '',
+        activityEndRegistrationTime: this.response?.rt_data.activity.activity_end_registration_time ?? '',
+        activityStartTime: this.response?.rt_data.activity.activity_start_time ?? '',
+        activityEndTime: this.response?.rt_data.activity.activity_end_time ?? '',
+        activityAddress: this.response?.rt_data.activity.activity_address ?? '',
+        activityInstruction: this.response?.rt_data.activity.activity_instruction ?? '',
+        activityInformation: this.response?.rt_data.activity.activity_information ?? '',
       },
       images: {
         activityAddress,
@@ -128,15 +128,25 @@ export default {
 </script>
 
 <template>
-  {{ rtData.id }}
   <section id="create-activity" class="flex flex-col">
     <!-- 建立活動資訊填寫 -->
-    <button v-if="!rtData.favoriteCheck" @click="favorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
-      點我收藏
-    </button>
-    <button v-else @click="cancelFavorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
-      取消收藏
-    </button>
+    <Link :href="route('activityScanner', { id: rtData.activity.id })" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+      掃描報到
+    </Link>
+    <div class="absolute mt-[5%] left-[75%] z-50">
+      <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">倒數
+        <div class="ps-5 flex flex-row">
+          <span>{{ rtData.timeDifferenceInDays }}天！</span>
+        </div>
+      </div>
+      <div v-else-if="rtData.timeDifferenceInDays === 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">就是
+        <div class="ps-5 flex flex-row">
+          <span>今天！</span>
+        </div>
+      </div>
+      <div v-else>
+      </div>
+    </div>
     <form @submit.prevent="submitData()" action="">
       <div class="relative mt-5 h-[901px] bg-[#dac3c3] flex flex-col">
         <div class="relative w-full z-10">
