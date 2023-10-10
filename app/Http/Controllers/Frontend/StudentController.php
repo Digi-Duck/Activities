@@ -63,8 +63,8 @@ class StudentController extends Controller
         })->count();
 
         $favoriteCheck = StudentActivity::where('activity_id', $id)
-        ->where('student_id', $request->user()->userRoleStudent->id)
-        ->first();
+            ->where('student_id', $request->user()->userRoleStudent->id)
+            ->first();
 
         $data = (object) [
             'activity' => $result,
@@ -191,8 +191,6 @@ class StudentController extends Controller
 
                 // 找出已收藏的人數
                 $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
-                // 找出已報名的人數
-                $registrationCount = $item->studentActivities->where('activity_type', 2)->count();
 
                 return [
                     'id' => $item->id,
@@ -222,15 +220,10 @@ class StudentController extends Controller
                     'cover_photo' => $coverPhoto->activity_img_path ?? '',
                     // 活動收藏人數
                     'collection_count' => $collectionCount,
-                    // 活動報名人數
-                    'registration_count' => $registrationCount,
                 ];
             });
 
         $favoriteActivity = ActivityDetail::orderBy('id', 'desc')
-            // ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
-            //     return $query->where('id', $request->user()->userRoleStudent->id);
-            // })
             ->whereHas('studentActivities', function ($query) use ($request) {
                 return $query
                     ->where('student_id', $request->user()->userRoleStudent->id)
@@ -285,32 +278,27 @@ class StudentController extends Controller
         $keyword = $request->keyword ?? '';
         $type = $request->type ?? '';
         $allActivity = ActivityDetail::orderBy('id', 'desc')
-            ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
-                return $query->where('id', $request->user()->userRoleStudent->id);
+            ->where(function ($query) use ($request, $keyword) {
+                $query->whereHas('studentActivities', function ($subquery) use ($request) {
+                    $subquery->where('student_id', $request->user()->userRoleStudent->id);
+                })
+                    ->where(function ($subquery) use ($keyword) {
+                        $subquery->where('activity_name', 'like', "%$keyword%")
+                            ->orWhere('activity_presenter', 'like', "%$keyword%")
+                            ->orWhere('activity_end_registration_time', 'like', "%$keyword%")
+                            ->orWhere('activity_lowest_number_of_people', 'like', "%$keyword%")
+                            ->orWhere('activity_highest_number_of_people', 'like', "%$keyword%");
+                    });
             })
-            ->with('activityPhotos:id,activity_id,activity_img_path')
-            ->where('activity_name', 'like', "%$keyword%")
-            ->orwhere('activity_presenter', 'like', "%$keyword%")
-            ->orwhere('activity_end_registration_time', 'like', "%$keyword%")
-            ->orwhere('activity_lowest_number_of_people', 'like', "%$keyword%")
-            ->orwhere('activity_highest_number_of_people', 'like', "%$keyword%")
             ->paginate(5)
             ->through(function ($item) {
-                // 找出第一張圖片
-                $coverPhoto = $item->activityPhotos->first();
-
-                // 找出已收藏的人數
-                // $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
                 // 找出已報名的人數
                 $registrationCount = $item->studentActivities->where('activity_type', 2)->count();
-
                 return [
                     'id' => $item->id,
                     // 活動名稱
                     'activity_name' => $item->activity_name,
-                    // 活動Slogan
-                    'activity_info' => $item->activity_info,
-                    // 活動Slogan
+                    // 活動講者
                     'activity_presenter' => $item->activity_presenter,
                     // 活動類型代號
                     'activity_type' => $item->activity_type,
@@ -320,20 +308,8 @@ class StudentController extends Controller
                     'activity_lowest_number_of_people' => $item->activity_lowest_number_of_people,
                     // 活動人數上限
                     'activity_highest_number_of_people' => $item->activity_highest_number_of_people,
-                    // 活動報名開始時間
-                    'activity_start_registration_time' => date('Y-m-d H:i', strtotime($item->activity_start_registration_time)),
                     // 活動報名截止時間
                     'activity_end_registration_time' => date('Y-m-d H:i', strtotime($item->activity_end_registration_time)),
-                    // 活動開始時間
-                    'activity_start_time' => date('Y-m-d H:i', strtotime($item->activity_start_time)),
-                    // 活動結束時間
-                    'activity_end_time' => date('Y-m-d H:i', strtotime($item->activity_end_time)),
-                    // 活動地點
-                    'activity_address' => $item->activity_address,
-                    // 活動封面圖片
-                    'cover_photo' => $coverPhoto->activity_img_path ?? '',
-                    // 活動收藏人數
-                    // 'collection_count' => $collectionCount,
                     // 活動報名人數
                     'registration_count' => $registrationCount,
                 ];
@@ -355,6 +331,7 @@ class StudentController extends Controller
      */
     public function create(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'studentName' => 'required',
             'studentPhoneNumber' => 'required',
@@ -364,7 +341,6 @@ class StudentController extends Controller
             'qrcodeImage' => 'required',
         ]);
         $register = [];
-
 
         $activityDetail = ActivityDetail::find($request->activity_id);
 
@@ -432,7 +408,7 @@ class StudentController extends Controller
         ]);
         $cancelFavorite = StudentActivity::where('activity_id', $request->activity_id)->where('activity_type', 1)->where('student_id', $request->user()->userRoleStudent->id)->first();
         // dd($cancelFavorite);
-        $activityDetail = ActivityDetail::find($request->activity_id);
+        $activityDetail = ActivityDetail::where('id', $request->activity_id)->first();
 
         UserBehavior::create([
             'type_id' => 2,

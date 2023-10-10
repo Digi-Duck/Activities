@@ -26,15 +26,17 @@ class PresenterController extends Controller
     {
         // $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRolePresenter->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
 
-
         $keyword = $request->keyword ?? '';
+        // dd($request->user()->UserRolePresenter->id);
         // 活動列表資料
         $activity = ActivityDetail::orderBy('id', 'desc')
             ->where('presenter_id', $request->user()->UserRolePresenter->id)
-            ->where('activity_name', 'like', "%$keyword%")
-            ->orwhere('activity_end_registration_time', 'like', "%$keyword%")
-            ->orwhere('activity_lowest_number_of_people', 'like', "%$keyword%")
-            ->orwhere('activity_highest_number_of_people', 'like', "%$keyword%")
+            ->where(function ($query) use ($keyword) {
+                $query->where('activity_name', 'like', "%$keyword%")
+                    ->orWhere('activity_end_registration_time', 'like', "%$keyword%")
+                    ->orWhere('activity_lowest_number_of_people', 'like', "%$keyword%")
+                    ->orWhere('activity_highest_number_of_people', 'like', "%$keyword%");
+            })
             ->with('activityPhotos:id,activity_id,activity_img_path')
             ->paginate(5)
             ->through(function ($item) {
