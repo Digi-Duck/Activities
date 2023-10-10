@@ -26,9 +26,15 @@ class PresenterController extends Controller
     {
         // $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRolePresenter->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
 
+
+        $keyword = $request->keyword ?? '';
         // 活動列表資料
         $activity = ActivityDetail::orderBy('id', 'desc')
             ->where('presenter_id', $request->user()->UserRolePresenter->id)
+            ->where('activity_name', 'like', "%$keyword%")
+            ->orwhere('activity_end_registration_time', 'like', "%$keyword%")
+            ->orwhere('activity_lowest_number_of_people', 'like', "%$keyword%")
+            ->orwhere('activity_highest_number_of_people', 'like', "%$keyword%")
             ->with('activityPhotos:id,activity_id,activity_img_path')
             ->paginate(5)
             ->through(function ($item) {
@@ -152,7 +158,7 @@ class PresenterController extends Controller
         return back()->with(['message' => rtFormat($activity)]);
     }
 
-    public function activityScanner($id)
+    public function activityScanner($id, Request $request)
     {
         $activity = ActivityDetail::find($id);
         $currentTimestamp = time();
@@ -182,7 +188,11 @@ class PresenterController extends Controller
         $registerPeople = ActivityDetail::whereHas('registerActivities', function ($query) use ($id) {
             return $query->where('activity_id', $id);
         })->count();
+        $keyword = $request->keyword ?? '';
         $studentData = RegisterActivity::where('activity_id', $id)
+            ->where('student_name', 'like', "%$keyword%")
+            ->orwhere('student_phone_number', 'like', "%$keyword%")
+            ->orwhere('student_email', 'like', "%$keyword%")
             ->paginate(5)
             ->through(function ($item) {
                 return [

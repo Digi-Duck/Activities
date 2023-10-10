@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { router } from '@inertiajs/vue3';
 import { Html5Qrcode } from 'html5-qrcode';
 import check from '/images/icon/user-check-solid.svg';
+import magnifer from '/images/icon/magnifer.svg';
 
 export default {
   props: {
@@ -16,10 +17,13 @@ export default {
   },
   data() {
     return {
+      keyword: this.response?.rt_data?.keyword ?? '',
+      selectedType: this.response?.rt_data?.type ?? '',
       handling: false,
       hasDevices: true,
       images: {
         check,
+        magnifer,
       },
     };
   },
@@ -140,6 +144,12 @@ export default {
             }
           });
         },
+      });
+    },
+    searchData() {
+      router.get(route('activityScanner', { id: this.activityData.id }), { keyword: this.keyword, type: this.selectedType }, {
+        preserveState: true,
+        preserveScroll: true,
       });
     },
   },
@@ -270,7 +280,7 @@ export default {
       <button type="button" class="w-[299px] h-[54px] bg-[#1C8AAD] rounded-[5px] text-white flex justify-center items-center">掃描報到</button>
     </div>
     <!-- 活動的參加名單 -->
-    <ActivityDetailTable :table-data="studentData" :type-data="activityTypeData">
+    <!-- <ActivityDetailTable :table-data="studentData" :type-data="activityTypeData">
       <template #activity_title_name>
         <span>
           電子信箱
@@ -291,7 +301,62 @@ export default {
           連絡電話
         </span>
       </template>
-    </ActivityDetailTable>
+    </ActivityDetailTable> -->
+
+    <div class="m-auto w-full max-w-[1400px] h-[505px] p-10 flex flex-col items-center">
+      <!-- 搜尋欄位 -->
+      <div class="mb-[5px] w-full h-[48px] pt-[10px] border-t-[#000] border-t-[1px] flex justify-end">
+        <!-- 活動種類篩選器 -->
+        <!-- <select v-model="selectedType" @change="searchData" class="h-full bg-[#80808012] text-[10px] flex justify-center" placeholder="活動分類">
+          <option value="">所有活動</option>
+          <option v-for="item in activityTypeData" :key="item.id" :value="item.id">
+            {{ item.name }}
+          </option>
+        </select> -->
+        <!-- 文字搜尋框 -->
+        <div class="w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-1">
+          <input v-model="keyword" type="search" class="w-[80%] h-[80%]" @search="searchData" placeholder="請輸入搜尋資訊">
+          <button type="button" @click="searchData">
+            <img :src="images.magnifer" class="w-[16px]" alt="搜尋">
+          </button>
+        </div>
+      </div>
+      <!-- 搜尋的表頭 -->
+      <div class="w-full h-[64px] flex">
+        <div class="flex-none w-[50%] border bg-[#5D8BA3] flex justify-center items-center text-[24px]">
+          <slot name="activity_title_name">電子信箱</slot>
+        </div>
+        <div class="flex-initial w-[10%] border bg-[#82ACC2] flex justify-center items-center text-[24px]">
+          <slot name="activity_title_type">學員姓名</slot>
+        </div>
+        <div class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
+          <slot name="activity_title_time">連絡電話</slot>
+        </div>
+        <div class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
+          <slot name="activity_title_number">額外備註</slot>
+        </div>
+      </div>
+      <!-- 詳細搜尋內容 -->
+      <div v-for="(item, index) in studentData?.data ?? []" :key="index" class="w-full h-[53px] flex">
+        <Link :href="route('studentActivityDetails', { id: item.id })" class="flex-none w-[50%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
+          {{ item.student_email }}
+        </Link>
+        <div class="flex-initial w-[10%] border bg-[#82acc27d] flex justify-center items-center text-[16px] font-semibold">
+          <slot name="activity_info_type">
+            {{ item.student_name }}
+          </slot>
+        </div>
+        <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
+          {{ item.student_phone_number }}
+        </div>
+        <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-between items-center text-[16px]">
+          <slot name="student_additional_remark">
+            {{ item.student_additional_remark }}
+          </slot>
+        </div>
+      </div>
+      <Pagination :pagination-data="activityTableData" class="pt-3" />
+    </div>
   </section>
 </template>
 
