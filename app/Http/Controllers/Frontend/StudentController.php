@@ -26,9 +26,7 @@ class StudentController extends Controller
      */
     public function index($id, Request $request)
     {
-        $activity = ActivityDetail::with(['activityPhotos:id,activity_id,activity_img_path'])
-            ->where('id', $id)
-            ->first();
+        $activity = ActivityDetail::find($id);
 
         if (!$activity) {
             // 处理活动不存在的情况
@@ -64,18 +62,10 @@ class StudentController extends Controller
             return $query->where('activity_id', $id);
         })->count();
 
-        $favoriteCheck = ActivityDetail::whereHas('studentActivities', function ($query) use ($id, $request) {
-            return $query
-                ->where('activity_type', 1)
-                ->where('activity_id', $id)
-                ->where('student_id', $request->user()->userRoleStudent->id);
-        })->first();
-
         $data = (object) [
             'activity' => $result,
             'registerPeople' => $registerPeople,
             'timeDifferenceInDays' => $timeDifferenceInDays,
-            'favoriteCheck' => $favoriteCheck,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 

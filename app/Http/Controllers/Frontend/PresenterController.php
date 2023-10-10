@@ -83,14 +83,6 @@ class PresenterController extends Controller
         ;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     public function createActivity()
     {
         return Inertia::render('Frontend/Presenter/CreateActivity');
@@ -160,10 +152,43 @@ class PresenterController extends Controller
         return back()->with(['message' => rtFormat($activity)]);
     }
 
-    public function activityScanner()
+    public function activityScanner($id)
     {
+        $activity = ActivityDetail::find($id);
+        $currentTimestamp = time();
+        $activityStartTime = strtotime($activity->activity_start_time);
+        $timeDifferenceInSeconds = $activityStartTime - $currentTimestamp;
+        $timeDifferenceInDays = intval($timeDifferenceInSeconds / (3600 * 24));
 
-        return Inertia::render('Frontend/Presenter/ScannerPage');
+        $activityPhotos = $activity->activityPhotos;
+        $result = [
+            'id' => $activity->id,
+            'activity_name' => $activity->activity_name,
+            'activity_info' => $activity->activity_info,
+            'activity_presenter' => $activity->activity_presenter,
+            'activity_type' => $activity->activity_type,
+            'activity_type_name' => $this->activityPresenter->getActivityTypeName($activity->activity_type),
+            'activity_lowest_number_of_people' => $activity->activity_lowest_number_of_people,
+            'activity_highest_number_of_people' => $activity->activity_highest_number_of_people,
+            'activity_start_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_start_registration_time)),
+            'activity_end_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_end_registration_time)),
+            'activity_start_time' => date('Y-m-d H:i', strtotime($activity->activity_start_time)),
+            'activity_end_time' => date('Y-m-d H:i', strtotime($activity->activity_end_time)),
+            'activity_address' => $activity->activity_address,
+            'activity_instruction' => $activity->activity_instruction,
+            'activity_information' => $activity->activity_information,
+            'activityPhotos' => $activityPhotos->pluck('activity_img_path')->toArray(),
+        ];
+        $registerPeople = ActivityDetail::whereHas('registerActivities', function ($query) use ($id) {
+            return $query->where('activity_id', $id);
+        })->count();
+        $data = (object) [
+            'activity' => $result,
+            'registerPeople' => $registerPeople,
+            'timeDifferenceInDays' => $timeDifferenceInDays,
+            'activityTypeData' => $this->activityPresenter->getTypeOption(),
+        ];
+        return Inertia::render('Frontend/Presenter/ScannerPage', ['response' => rtFormat($data)]);
     }
 
     /**
@@ -172,19 +197,40 @@ class PresenterController extends Controller
     public function activityEdit($id)
     {
         //
-        $activity = ActivityDetail::find($id)
-            ->with('activityPhotos:id,activity_id,activity_img_path')
-            ->where('id', $id)
-            ->first();
+        // $activity = ActivityDetail::find($id)
+        //     ->with('activityPhotos:id,activity_id,activity_img_path')
+        //     ->where('id', $id)
+        //     ->first();
+        
+        $activity = ActivityDetail::find($id);
         
         $currentTimestamp = time();
         $activityStartTime = strtotime($activity->activity_start_time);
         $timeDifferenceInSeconds = $activityStartTime - $currentTimestamp;
         $timeDifferenceInDays = intval($timeDifferenceInSeconds / (3600 * 24));
 
+        $activityPhotos = $activity->activityPhotos;
+        $result = [
+            'id' => $activity->id,
+            'activity_name' => $activity->activity_name,
+            'activity_info' => $activity->activity_info,
+            'activity_presenter' => $activity->activity_presenter,
+            'activity_type' => $activity->activity_type,
+            'activity_type_name' => $this->activityPresenter->getActivityTypeName($activity->activity_type),
+            'activity_lowest_number_of_people' => $activity->activity_lowest_number_of_people,
+            'activity_highest_number_of_people' => $activity->activity_highest_number_of_people,
+            'activity_start_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_start_registration_time)),
+            'activity_end_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_end_registration_time)),
+            'activity_start_time' => date('Y-m-d H:i', strtotime($activity->activity_start_time)),
+            'activity_end_time' => date('Y-m-d H:i', strtotime($activity->activity_end_time)),
+            'activity_address' => $activity->activity_address,
+            'activity_instruction' => $activity->activity_instruction,
+            'activity_information' => $activity->activity_information,
+            'activityPhotos' => $activityPhotos->pluck('activity_img_path')->toArray(),
+        ];
         
         $data = (object) [
-            'activity' => $activity,
+            'activity' => $result,
             'timeDifferenceInDays' => $timeDifferenceInDays,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
