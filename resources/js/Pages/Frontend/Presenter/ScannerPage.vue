@@ -270,7 +270,6 @@ export default {
       <button type="button" class="w-[299px] h-[54px] bg-[#1C8AAD] rounded-[5px] text-white flex justify-center items-center">掃描報到</button>
     </div>
     <!-- 活動的參加名單 -->
-    {{ studentData }}
     <ActivityDetailTable :table-data="studentData" :type-data="activityTypeData">
       <template #activity_title_name>
         <span>

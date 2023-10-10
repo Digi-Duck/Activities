@@ -140,8 +140,8 @@ export default {
               </div>
             </div>
             <figure class="w-[45%] h-[90%] text-[30px] font-semibold flex justify-center items-center">
-              <img :src="images.registeredPeople" class="w-[15%] p-1" alt="已經報到人數icon">
-              已報到人數:
+              <img :src="images.registeredPeople" class="w-[15%] p-1" alt="已報名人數icon">
+              報名人數:
               <slot name="registerPeople">0</slot>
             </figure>
             <!-- <div class="w-[25%] h-[90%] flex justify-center items-center">

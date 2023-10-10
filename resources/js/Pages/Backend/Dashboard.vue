@@ -3,6 +3,10 @@
 <script>
 import Pagination from '@/Components/Public/Pagination.vue';
 import { router } from '@inertiajs/vue3';
+import student from '/images/icon/user-group-solid.svg';
+import surfNumber from '/images/icon/arrow-pointer-solid.svg';
+import book from '/images/icon/book-solid.svg';
+import presenter from '/images/icon/person-chalkboard-solid.svg';
 
 export default {
   components: { Pagination },
@@ -17,6 +21,12 @@ export default {
     return {
       title: '本周摘要',
       keyword: this.response?.rt_data?.keyword ?? '',
+      images: {
+        student,
+        surfNumber,
+        book,
+        presenter,
+      },
     };
   },
   computed: {
@@ -57,7 +67,7 @@ export default {
               <div class="text-[24px]">網站流量</div>
             </div>
             <!-- 資料icon -->
-            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="數據圖標">
+            <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
           <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
             <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">
@@ -67,10 +77,10 @@ export default {
           <div class="relative h-full p-5 rounded-t-[10px] bg-white flex justify-between">
             <div>
               <div class="border-b-2 text-[36px]">123,456</div>
-              <div class="text-[24px]">網站流量</div>
+              <div class="text-[24px]">新增活動數</div>
             </div>
             <!-- 資料icon -->
-            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="數據圖標">
+            <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
           <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
             <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">
@@ -80,10 +90,10 @@ export default {
           <div class="relative h-full p-5 rounded-t-[10px] bg-white flex justify-between">
             <div>
               <div class="border-b-2 text-[36px]">123,456</div>
-              <div class="text-[24px]">網站流量</div>
+              <div class="text-[24px]">新增學員數</div>
             </div>
             <!-- 資料icon -->
-            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="數據圖標">
+            <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
           <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
             <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">
@@ -93,10 +103,10 @@ export default {
           <div class="relative h-full p-5 rounded-t-[10px] bg-white flex justify-between">
             <div>
               <div class="border-b-2 text-[36px]">123,456</div>
-              <div class="text-[24px]">網站流量</div>
+              <div class="text-[24px]">新增講師數</div>
             </div>
             <!-- 資料icon -->
-            <img src="" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px] bg-red-600" alt="數據圖標">
+            <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
           <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
             <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">

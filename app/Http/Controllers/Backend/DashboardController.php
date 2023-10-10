@@ -68,7 +68,15 @@ class DashboardController extends Controller
 
         $newBehaviors = UserBehavior::orderBy('id', 'desc')
             ->take(5)
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'user_name' => $item->user_name,
+                    'created_at' => $item->created_at->format('Y/m/d H:i'),
+                    'behavior' => $item->behavior,
+                ];
+            });
 
         $keyword = $request->keyword ?? '';
 
