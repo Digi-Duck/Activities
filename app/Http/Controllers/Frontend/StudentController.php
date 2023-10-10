@@ -424,8 +424,9 @@ class StudentController extends Controller
 
     public function registerDelete(Request $request)
     {
+        // dd($request->all());
         $request->validate([
-            'id' => 'required|exists:register_activities,id'
+            'id' => 'required|exists:register_activities,activity_id'
         ]);
 
         $register = RegisterActivity::where('activity_id', $request->id)->where('student_id', $request->user()->UserRoleStudent->id)->first();
