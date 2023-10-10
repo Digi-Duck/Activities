@@ -44,16 +44,6 @@ export default {
     },
   },
   methods: {
-    generateQRCode() {
-      const qrCodeContent = this.formData.toString();
-      QRCode.toDataURL(qrCodeContent, (err, url) => {
-        if (err) {
-          console.error(err);
-        } else {
-          this.qrcodeImage = url;
-        }
-      });
-    },
     favorite() {
       router.visit(route('createFavorite'), {
         method: 'post',
@@ -102,9 +92,19 @@ export default {
       // let row_password = Array(10).fill('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz').map(function (x) { return x[Math.floor(Math.random() * x.length)]; }).join('');
       this.qrcodeNumber = qrcodeNumber;
     },
+    generateQRCode() {
+      this.generateRandomString();
+      const qrCodeContent = this.qrcodeNumber.toString();
+      QRCode.toDataURL(qrCodeContent, (err, url) => {
+        if (err) {
+          console.error(err);
+        } else {
+          this.qrcodeImage = url;
+        }
+      });
+    },
     submitData() {
-      const { generateRandomString, generateQRCode, formData, activityType, response } = this;
-      generateRandomString();
+      const { generateQRCode, formData, activityType, response } = this;
       generateQRCode();
       const data = {
         ...formData,

@@ -14,6 +14,7 @@ export default {
   data() {
     return {
       keyword: this.response?.rt_data?.keyword ?? '',
+      selectedType: this.response?.rt_data?.type ?? '',
       images: {
         magnifer,
       },
@@ -29,7 +30,7 @@ export default {
   },
   methods: {
     searchData() {
-      router.get(route('activityClassification'), { keyword: this.keyword }, {
+      router.get(route('activityClassification'), { keyword: this.keyword, type: this.selectedType }, {
         preserveState: true,
         preserveScroll: true,
       });
@@ -42,12 +43,10 @@ export default {
   <section class="flex flex-col px-[250px] pt-[75px]">
     <!-- 功能按鈕 -->
     <div class="w-full pb-3 flex flex-col">
-      <div class="pb-[10px] bg-white border-b-4 text-5xl text-black font-bold">當前類型</div>
+      <div class="pb-[10px] bg-white border-b-4 text-5xl text-black font-bold">活動列表</div>
       <div class="w-full pt-3 px-3 flex justify-between">
-        <div class="flex gap-3">
-          <button type="button" class="w-[112px] h-[44px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold btn">熱門</button>
-          <button type="button" class="w-[112px] h-[44px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold btn">美術</button>
-          <button type="button" class="w-[112px] h-[44px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold btn">科技</button>
+        <div v-for="(item, index) in rtData.firstHotActivity" :key="index" class="flex gap-3">
+          <button type="button" class="p-[5px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold">{{ item.activity_type }}</button>
         </div>
         <div class="flex items-center">
           <input v-model="keyword" type="search" @search="searchData" placeholder="Search">

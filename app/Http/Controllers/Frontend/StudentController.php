@@ -340,7 +340,6 @@ class StudentController extends Controller
      */
     public function create(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'studentName' => 'required',
             'studentPhoneNumber' => 'required',

@@ -84,7 +84,6 @@ export default {
       });
     },
     information(data) {
-      console.log(data);
       this.formData.activityInformation = data;
     },
     uploadOtherImage(event) {
