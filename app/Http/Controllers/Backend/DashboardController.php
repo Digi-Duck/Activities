@@ -136,6 +136,17 @@ class DashboardController extends Controller
 
         return Inertia::render('Backend/StudentManage', ['response' => rtFormat($data)]);
     }
+    public function studentUpdate(Request $request)
+    {
+        $student = User::find($request->id);
+        // dd($student->status);
+        if ($student) {
+            $newStatus = $student->status == 1 ? 0 : 1;
+            $student->status = $newStatus;
+            $student->save();
+            return back();
+        }
+    }
 
     public function presenterManage(Request $request)
     {
@@ -176,6 +187,31 @@ class DashboardController extends Controller
         return Inertia::render('Backend/PresenterManage', ['response' => rtFormat($data)]);
     }
 
+    public function presenterUpdate(Request $request)
+    {
+        $presenter = User::find($request->id);
+        // dd($presenter->status);
+        if ($presenter) {
+            $newStatus = $presenter->status == 1 ? 0 : 1;
+            $presenter->status = $newStatus;
+            $presenter->save();
+            return back();
+        }
+    }
+
+    public function activityUpdate(Request $request)
+    {
+        $activity = ActivityDetail::find($request->id);
+        // dd($activity->activity_status);
+
+        if ($activity) {
+            $newStatus = ($activity->activity_status == 1) ? 2 : 1;
+            $activity->activity_status = $newStatus;
+            $activity->save();
+            return back();
+        }
+    }
+
     public function activityManage(Request $request)
     {
         $keyword = $request->input('keyword', '');
@@ -202,6 +238,10 @@ class DashboardController extends Controller
                 return [
                     'id' => $item->id,
                     'activity_presenter' => $item->activity_presenter,
+                    // 活動類型代號
+                    'activity_type' => $item->activity_type,
+                    // 活動類型名稱
+                    'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
                     'activity_name' => $item->activity_name,
                     'activity_type' => $item->activity_type,
                     'activity_address' => $item->activity_address,

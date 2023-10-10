@@ -20,6 +20,8 @@ export default {
       images: {
         magnifer,
       },
+      keyword: '',
+      selectedStatus: '',
     };
   },
 };
@@ -31,7 +33,8 @@ export default {
       <!-- 搜尋欄位 -->
       <div class="mb-[5px] w-full h-[48px] pt-[10px] border-t-[#000] border-t-[1px] flex justify-between">
         <!-- 活動種類篩選器 -->
-        <select class="h-full bg-[#80808012] text-[10px] flex justify-center" placeholder="活動分類">
+        <select v-model="selectedActivityType" @change="searchData" class="h-full bg-[#80808012] text-[10px] flex justify-center" placeholder="活動分類">
+          <option value="">所有活動</option>
           <option v-for="activityType in typeData" :key="activityType.id" :value="activityType.id">
             {{ activityType.name }}
           </option>
@@ -39,7 +42,7 @@ export default {
         <!-- 文字搜尋框 -->
         <div class="w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-1">
           <img :src="images.magnifer" class="w-[16px]" alt="搜尋">
-          <input type="search" class="w-[80%] h-[80%]">
+          <input v-model="keyword" type="search" class="w-[80%] h-[80%]" @input="searchData">
         </div>
       </div>
       <!-- 搜尋的表頭 -->

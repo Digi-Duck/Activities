@@ -3,6 +3,7 @@
 <script>
 import Pagination from '@/Components/Public/Pagination.vue';
 import { router } from '@inertiajs/vue3';
+import Swal from 'sweetalert2';
 
 export default {
   components: { Pagination },
@@ -35,6 +36,21 @@ export default {
         preserveScroll: true,
       });
     },
+    changeStatus(id) {
+      Swal.fire({
+        title: '確認更改活動狀態?',
+        showDenyButton: true,
+        confirmButtonText: '確定',
+        denyButtonText: '取消',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.visit(route('activityUpdate'), {
+            method: 'put',
+            data: { id: id },
+          });
+        }
+      });
+    },
   },
 };
 </script>
@@ -49,7 +65,7 @@ export default {
         <select v-model="selectedStatus" class="h-[39px] rounded-[5px] text-[24px] flex justify-center" placeholder="活動狀態">
           <option value="">所有活動</option>
           <option value="1">正常</option>
-          <option value="0">停權</option>
+          <option value="2">停權</option>
         </select>
         <button type="button" @click="searchData" class="w-[90px] h-[38px] bg-[#a0bcc650] rounded-[5px] text-[24px]">搜尋</button>
       </div>
@@ -70,11 +86,11 @@ export default {
           <div class="w-[10.685%] ps-5 flex-none border font-semibold flex items-center">{{ item.activity_presenter }}</div>
           <div class="w-[23.461%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_name }}</div>
           <div class="w-[18.641%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_start_time }}~{{ item.activity_end_time }}</div>
-          <div class="w-[10.743%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_type }}</div>
+          <div class="w-[10.743%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_type_name }}</div>
           <div class="w-[18.234%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_address }}</div>
           <div class="w-[9.175%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_status }}</div>
-          <div class="ps-5 flex-1 border font-semibold flex justify-between items-center">操作
-            <button type="button" class="me-3 mt-1 rounded-full border">^</button>
+          <div class="ps-5 flex-1 border font-semibold flex justify-between items-center">更改狀態
+            <button type="button" class="me-3 mt-1 rounded-full border" @click="changeStatus(item.id)">^</button>
           </div>
         </div>
       </div>

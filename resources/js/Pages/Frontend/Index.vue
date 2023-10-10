@@ -15,6 +15,7 @@ export default {
     return {
       prevButton: null, // 在這裡定義 prevButton 和 nextButton
       nextButton: null,
+      keyword: this.response?.rt_data?.keyword ?? '',
       images: {
         arrowLeft,
         arrowRight,
@@ -30,6 +31,10 @@ export default {
     // 獲取活動資料陣列
     activityData() {
       return this.rtData.activity ?? {};
+    },
+    // 獲取活動搜尋欄資料陣列
+    activityTableData() {
+      return this.rtData.activityTable ?? {};
     },
 
     // 獲取最夯活動單筆資料
@@ -133,7 +138,7 @@ export default {
     <ActivitySwiper :slide-data="activityData?.data ?? []" href="studentActivityDetails" />
 
     <!-- 近期活動查詢表 -->
-    <ActivityDetailTable :table-data="activityData" :type-data="activityTypeData">
+    <ActivityDetailTable :table-data="activityTableData" :type-data="activityTypeData">
       <template #activity_title_type>
         <span>
           主講者

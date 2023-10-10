@@ -3,6 +3,7 @@
 <script>
 import Pagination from '@/Components/Public/Pagination.vue';
 import { router } from '@inertiajs/vue3';
+import Swal from 'sweetalert2';
 
 export default {
   components: { Pagination },
@@ -33,6 +34,21 @@ export default {
       router.get(route('presenterManage'), { keyword: this.keyword, status: this.selectedStatus }, {
         preserveState: true,
         preserveScroll: true,
+      });
+    },
+    changeStatus(id) {
+      Swal.fire({
+        title: '確認更改講師狀態?',
+        showDenyButton: true,
+        confirmButtonText: '確定',
+        denyButtonText: '取消',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.visit(route('presenterUpdate'), {
+            method: 'put',
+            data: { id: id },
+          });
+        }
       });
     },
   },
@@ -69,8 +85,8 @@ export default {
           <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">{{ item.email }}</div>
           <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">{{ item.created_at }}</div>
           <div class="w-[9.175%] ps-5 flex-initial border font-semibold flex items-center">{{ item.status }}</div>
-          <div class="ps-5 flex-1 border font-semibold flex justify-between items-center">操作
-            <button type="button" class="me-3 mt-1 rounded-full border">^</button>
+          <div class="ps-5 flex-1 border font-semibold flex justify-between items-center">更改狀態
+            <button type="button" class="me-3 mt-1 rounded-full border" @click="changeStatus(item.id)">^</button>
           </div>
         </div>
       </div>
