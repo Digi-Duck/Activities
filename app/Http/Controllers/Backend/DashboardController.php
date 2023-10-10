@@ -73,19 +73,19 @@ class DashboardController extends Controller
         $keyword = $request->keyword ?? '';
 
         $behaviorRecord = UserBehavior::where('user_name', 'like', "%$keyword%")
-        ->orwhere('user_type', 'like', "%$keyword%")
-        ->orwhere('behavior', 'like', "%$keyword%")
-        ->orderBy('created_at', 'desc')
-        ->paginate(5)
-        ->through(function ($item) {
-            return [
-                'id' => $item->id,
-                'user_type' => $item->user_type,
-                'user_name' => $item->user_name,
-                'behavior' => $item->behavior,
-                'created_at' => $item->created_at->format('Y/m/d H:i'),
-            ];
-        });
+            ->orwhere('user_type', 'like', "%$keyword%")
+            ->orwhere('behavior', 'like', "%$keyword%")
+            ->orderBy('created_at', 'desc')
+            ->paginate(5)
+            ->through(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'user_type' => $item->user_type,
+                    'user_name' => $item->user_name,
+                    'behavior' => $item->behavior,
+                    'created_at' => $item->created_at->format('Y/m/d H:i'),
+                ];
+            });
 
         $data = (object) [
             'activity' => $activity,
@@ -98,28 +98,124 @@ class DashboardController extends Controller
 
         return Inertia::render('Backend/Dashboard', ['response' => rtFormat($data)]);
     }
-    public function studentMange()
+    public function studentManage(Request $request)
     {
-        // $studentOrignalData = UserRoleStudent::get();
-        // $studentData = UserRoleStudent::whereHas('user', function ($query) {
-        //     return $query->where('id',);
-        // })->where('');
-        $user = User::get();
-        dd($user);
+        $keyword = $request->input('keyword', '');
+        $status = $request->input('status', ''); // 获取状态筛选条件
+
+        $student = User::where('user_role', 3)
+            ->where(function ($query) use ($keyword) {
+                $query->where('name', 'like', "%$keyword%")
+                    ->orWhere('email', 'like', "%$keyword%")
+                    ->orWhere('created_at', 'like', "%$keyword%");
+            });
+
+        // 如果提供了状态筛选条件，则添加状态筛选
+        if ($status !== '') {
+            $student->where('status', $status);
+        }
+
+        $student = $student->orderBy('created_at', 'desc')
+            ->paginate(5)
+            ->through(function ($item) {
+                $statusText = $item->status == 1 ? '正常' : '停權';
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'user_role' => $item->user_role,
+                    'email' => $item->email,
+                    'status' => $statusText,
+                    'created_at' => $item->created_at->format('Y/m/d H:i'),
+                ];
+            });
 
         $data = (object) [
-            'activityTypeData' => $this->activityPresenter->getTypeOption(),
-            // 'keyword' => $keyword,
+            'keyword' => $keyword,
+            'student' => $student,
         ];
 
         return Inertia::render('Backend/StudentManage', ['response' => rtFormat($data)]);
     }
-    public function activityMange()
+
+    public function presenterManage(Request $request)
     {
-        return Inertia::render('Backend/ActivityManage');
+        $keyword = $request->input('keyword', '');
+        $status = $request->input('status', ''); // 获取状态筛选条件
+
+        $presenter = User::where('user_role', 2)
+            ->where(function ($query) use ($keyword) {
+                $query->where('name', 'like', "%$keyword%")
+                    ->orWhere('email', 'like', "%$keyword%")
+                    ->orWhere('created_at', 'like', "%$keyword%");
+            });
+
+        // 如果提供了状态筛选条件，则添加状态筛选
+        if ($status !== '') {
+            $presenter->where('status', $status);
+        }
+
+        $presenter = $presenter->orderBy('created_at', 'desc')
+            ->paginate(5)
+            ->through(function ($item) {
+                $statusText = $item->status == 1 ? '正常' : '停權';
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'user_role' => $item->user_role,
+                    'email' => $item->email,
+                    'status' => $statusText,
+                    'created_at' => $item->created_at->format('Y/m/d H:i'),
+                ];
+            });
+
+        $data = (object) [
+            'keyword' => $keyword,
+            'presenter' => $presenter,
+        ];
+
+        return Inertia::render('Backend/PresenterManage', ['response' => rtFormat($data)]);
     }
-    public function presenterMange()
+
+    public function activityManage(Request $request)
     {
-        return Inertia::render('Backend/PresenterManage');
+        $keyword = $request->input('keyword', '');
+        $status = $request->input('status', '');
+
+        $activity = ActivityDetail::where(function ($query) use($keyword) {
+            $query->where('activity_presenter', 'like', "%$keyword%")
+                ->orwhere('activity_name', 'like', "%$keyword%")
+                ->orwhere('activity_start_time', 'like', "%$keyword%")
+                ->orwhere('activity_end_time', 'like', "%$keyword%")
+                ->orwhere('activity_type', 'like', "%$keyword%")
+                ->orwhere('activity_address', 'like', "%$keyword%");
+        });
+
+        // 如果提供了状态筛选条件，则添加状态筛选
+        if ($status !== '') {
+            $activity->where('activity_status', $status);
+        }
+
+        $activity = $activity->orderBy('created_at', 'desc')
+            ->paginate(5)
+            ->through(function ($item) {
+                $statusText = $item->activity_status == 1 ? '正常' : '停權';
+                return [
+                    'id' => $item->id,
+                    'activity_presenter' => $item->activity_presenter,
+                    'activity_name' => $item->activity_name,
+                    'activity_type' => $item->activity_type,
+                    'activity_address' => $item->activity_address,
+                    'activity_start_time' => $item->activity_start_time->format('Y/m/d H:i'),
+                    'activity_end_time' => $item->activity_end_time->format('Y/m/d H:i'),
+                    'activity_status' => $statusText,
+                ];
+            });
+
+        $data = (object) [
+            'keyword' => $keyword,
+            'activity' => $activity,
+        ];
+
+        return Inertia::render('Backend/ActivityManage', ['response' => rtFormat($data)]);
     }
 }

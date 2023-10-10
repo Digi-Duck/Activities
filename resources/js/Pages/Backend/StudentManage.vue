@@ -17,11 +17,20 @@ export default {
     return {
       title: '學員管理',
       keyword: this.response?.rt_data?.keyword ?? '',
+      selectedStatus: this.response?.rt_data?.status ?? '',
     };
+  },
+  computed: {
+    rtData() {
+      return this.response?.rt_data ?? {};
+    },
+    studentData() {
+      return this.rtData.student ?? {};
+    },
   },
   methods: {
     searchData() {
-      router.get(route('studentMange'), { keyword: this.keyword }, {
+      router.get(route('studentManage'), { keyword: this.keyword, status: this.selectedStatus }, {
         preserveState: true,
         preserveScroll: true,
       });
@@ -37,9 +46,10 @@ export default {
       <!-- 搜尋欄 -->
       <div class="w-full h-[57px] px-10 py-1 bg-[#ffc0cb4a] border flex justify-start items-center gap-5">
         <input v-model="keyword" type="search" class="w-[482px] h-[39px] rounded-[5px] text-[24px]" placeholder="請輸入學員名稱、電子信箱、加入時間" @search="searchData">
-        <select class="h-[39px] rounded-[5px] text-[24px] flex justify-center" placeholder="學員狀態">
+        <select v-model="selectedStatus" class="h-[39px] rounded-[5px] text-[24px] flex justify-center" placeholder="學員狀態">
+          <option value="">所有學員</option>
           <option value="1">正常</option>
-          <option value="0">凍結</option>
+          <option value="0">停權</option>
         </select>
         <button type="button" @click="searchData" class="w-[90px] h-[38px] bg-[#a0bcc650] rounded-[5px] text-[24px]">搜尋</button>
       </div>
@@ -54,18 +64,18 @@ export default {
           <div class="ps-5 flex-1 border font-semibold flex items-center">操作</div>
         </div>
         <!-- 內容 -->
-        <div class="w-[100%] h-[55px] bg-[#ABC2CE] flex text-[20px]">
-          <div class="w-[17.828%] ps-5 flex-none border font-semibold flex items-center">潘國偉</div>
-          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">k5020420@gmail.com</div>
-          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">2000-01-01</div>
-          <div class="w-[9.175%] ps-5 flex-initial border font-semibold flex items-center">正常</div>
+        <div v-for="(item, index) in studentData?.data ?? []" :key="index" class="w-[100%] h-[55px] bg-[#ABC2CE] flex text-[20px]">
+          <div class="w-[17.828%] ps-5 flex-none border font-semibold flex items-center">{{ item.name }}</div>
+          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">{{ item.email }}</div>
+          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">{{ item.created_at }}</div>
+          <div class="w-[9.175%] ps-5 flex-initial border font-semibold flex items-center">{{ item.status }}</div>
           <div class="ps-5 flex-1 border font-semibold flex justify-between items-center">操作
             <button type="button" class="me-3 mt-1 rounded-full border">^</button>
           </div>
         </div>
       </div>
       <div class="w-[313px] h-[56px] bg-white rounded-[30px] flex justify-center">
-        <Pagination></Pagination>
+        <Pagination :pagination-data="studentData"></Pagination>
       </div>
     </div>
     <!-- <Link :href="route('register')" class="btn-base">註冊</Link>

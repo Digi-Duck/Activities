@@ -51,9 +51,9 @@ export default {
       </nav>
       <nav v-if="userRole === 1" class="pt-6 pe-5 flex justify-end gap-3">
         <Link :href="route('dashboard')" class="function-btn">資訊總覽</Link>
-        <Link :href="route('studentMange')" class="function-btn">學員管理</Link>
-        <Link :href="route('presenterMange')" class="function-btn">講師管理</Link>
-        <Link :href="route('activityMange')" class="function-btn">活動管理</Link>
+        <Link :href="route('studentManage')" class="function-btn">學員管理</Link>
+        <Link :href="route('presenterManage')" class="function-btn">講師管理</Link>
+        <Link :href="route('activityManage')" class="function-btn">活動管理</Link>
       </nav>
       <nav v-else-if="userRole === 2" class="pt-6 pe-5 flex justify-end gap-3">
         <Link :href="route('index')" class="function-btn">首頁</Link>

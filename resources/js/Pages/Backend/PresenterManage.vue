@@ -2,6 +2,7 @@
 
 <script>
 import Pagination from '@/Components/Public/Pagination.vue';
+import { router } from '@inertiajs/vue3';
 
 export default {
   components: { Pagination },
@@ -15,9 +16,25 @@ export default {
   data() {
     return {
       title: '講師管理',
+      keyword: this.response?.rt_data?.keyword ?? '',
+      selectedStatus: this.response?.rt_data?.status ?? '',
     };
   },
-  created() {
+  computed: {
+    rtData() {
+      return this.response?.rt_data ?? {};
+    },
+    presenterData() {
+      return this.rtData.presenter ?? {};
+    },
+  },
+  methods: {
+    searchData() {
+      router.get(route('presenterManage'), { keyword: this.keyword, status: this.selectedStatus }, {
+        preserveState: true,
+        preserveScroll: true,
+      });
+    },
   },
 };
 </script>
@@ -28,12 +45,13 @@ export default {
     <div class="w-[80%] mb-5 mt-5 flex flex-col justify-between items-center gap-10">
       <!-- 搜尋欄 -->
       <div class="w-full h-[57px] px-10 py-1 bg-[#ffc0cb4a] border flex justify-start items-center gap-5">
-        <input type="search" name="" class="w-[482px] h-[39px] rounded-[5px] text-[24px]" id="" placeholder="請輸入講師名稱、電子信箱、加入時間">
-        <select class="h-[39px] rounded-[5px] text-[24px] flex justify-center" placeholder="講師狀態">
+        <input v-model="keyword" type="search" class="w-[482px] h-[39px] rounded-[5px] text-[24px]" placeholder="請輸入講師名稱、電子信箱、加入時間" @search="searchData">
+        <select v-model="selectedStatus" class="h-[39px] rounded-[5px] text-[24px] flex justify-center" placeholder="講師狀態">
+          <option value="">所有講師</option>
           <option value="1">正常</option>
-          <option value="0">凍結</option>
+          <option value="0">停權</option>
         </select>
-        <button type="button" class="w-[90px] h-[38px] bg-[#a0bcc650] rounded-[5px] text-[24px]">搜尋</button>
+        <button type="button" @click="searchData" class="w-[90px] h-[38px] bg-[#a0bcc650] rounded-[5px] text-[24px]">搜尋</button>
       </div>
       <!-- 表格內容 -->
       <div class="w-[100%] h-[385px] flex flex-col">
@@ -46,18 +64,18 @@ export default {
           <div class="ps-5 flex-1 border font-semibold flex items-center">操作</div>
         </div>
         <!-- 內容 -->
-        <div class="w-[100%] h-[55px] bg-[#ABC2CE] flex text-[20px]">
-          <div class="w-[17.828%] ps-5 flex-none border font-semibold flex items-center">潘國偉</div>
-          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">k5020420@gmail.com</div>
-          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">2000-01-01</div>
-          <div class="w-[9.175%] ps-5 flex-initial border font-semibold flex items-center">正常</div>
+        <div v-for="(item, index) in presenterData?.data ?? []" :key="index" class="w-[100%] h-[55px] bg-[#ABC2CE] flex text-[20px]">
+          <div class="w-[17.828%] ps-5 flex-none border font-semibold flex items-center">{{ item.name }}</div>
+          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">{{ item.email }}</div>
+          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">{{ item.created_at }}</div>
+          <div class="w-[9.175%] ps-5 flex-initial border font-semibold flex items-center">{{ item.status }}</div>
           <div class="ps-5 flex-1 border font-semibold flex justify-between items-center">操作
             <button type="button" class="me-3 mt-1 rounded-full border">^</button>
           </div>
         </div>
       </div>
       <div class="w-[313px] h-[56px] bg-white rounded-[30px] flex justify-center">
-        <Pagination></Pagination>
+        <Pagination :pagination-data="presenterData"></Pagination>
       </div>
     </div>
     <!-- <Link :href="route('register')" class="btn-base">註冊</Link>
