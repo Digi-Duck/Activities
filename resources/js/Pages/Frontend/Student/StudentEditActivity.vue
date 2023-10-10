@@ -284,7 +284,7 @@ export default {
           <Link :href="route('studentPersonalPage')" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px] flex justify-center items-center">回個人頁</Link>
           <button type="submit" class="w-[228px] h-[40px] bg-[#edc431] rounded-[5px]">更新資訊</button>
         </div>
-        <button type="button" class="px-[30px] py-[15px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white" @click="deleteRegister(rtData.registerData.id)">取消報名</button>
+        <button type="button" class="px-[30px] py-[15px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white" @click="deleteRegister(rtData.registerData.activity_id)">取消報名</button>
       </div>
     </form>
   </section>

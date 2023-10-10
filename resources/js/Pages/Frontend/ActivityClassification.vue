@@ -56,7 +56,6 @@ export default {
       </div>
     </div>
     <!-- 主要卡片區 -->
-    <!-- 正轉卡片 -->
     <Link v-for="(item, index) in activityClassification" :key="index" :href="route('studentActivityDetails', { id: item.id })" class="pt-3 pb-3 border-b-8 flex flex-col items-center">
       <!-- {{ item.activityPhotos }} -->
       <div class="w-full h-[345px] bg-pink-500 flex flex-row">
@@ -69,18 +68,6 @@ export default {
         </div>
       </div>
     </Link>
-    <!-- 逆轉卡片 -->
-    <div class="pt-3 pb-3 border-b-8 flex flex-col items-center">
-      <div class="w-full h-[345px] bg-pink-500 flex flex-row">
-        <div class="w-full h-[345px] bg-yellow-500 p-16 flex flex-col justify-between">
-          <div class="w-full text-white text-[24px]">活動名稱</div>
-          <div class="w-full text-black text-[14px]">活動截止時間</div>
-          <div class="w-full text-white text-[14px]">活動info</div>
-          <button type="button" class="text-black bg-[#a9bcc64f]">活動詳情</button>
-        </div>
-        <img src="" alt="活動封面圖" class="w-[200%] bg-slate-500">
-      </div>
-    </div>
   </section>
 </template>
 

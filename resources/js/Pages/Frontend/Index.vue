@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      prevButton: null, // 在這裡定義 prevButton 和 nextButton
+      prevButton: null,
       nextButton: null,
       keyword: this.response?.rt_data?.keyword ?? '',
       images: {
@@ -76,21 +76,18 @@ export default {
           <img :src="images.arrowRight" alt="活動照片海報向右移動按鈕">
         </button>
       </div>
-
       <!-- 活動資訊 -->
       <Swiper v-slot="{ slide }" :slide-data="activityData.data ?? []" class="absolute w-full h-[602px]" :btn-prev="prevButton" :btn-next="nextButton">
         <img :src="slide.cover_photo" class="absolute w-full h-full" alt="活動背景圖">
-        <h2 class="absolute top-[100px] w-full bg-[#ffffff57] text-[64px] text-end text-white">
+        <h2 class="absolute top-[100px] w-full pe-[150px] bg-[#ffffff95] text-[64px] text-end text-white">
           {{ slide.activity_name }}
         </h2>
-        <div class="absolute top-[200px] w-full h-[59px] bg-[#ffffff3a] text-[48px] text-end text-white">
+        <div class="absolute top-[200px] w-full h-[59px] pe-[150px] bg-[#ffffff3a] text-[48px] text-end text-white">
           <h3 class="z-10">
             {{ slide.activity_info }}
           </h3>
         </div>
       </Swiper>
-
-      <!-- 這裡長了一個斜的Swiper -->
       <!-- 活動封面照片組合Swiper -->
       <Swiper v-slot="{ slide }" :slide-data="activityData.data ?? []" :slides-per-view="3" :space-between="0" class="absolute -top-[15%] rotate-[10deg]" :btn-prev="prevButton" :btn-next="nextButton">
         <Link :href="route('studentActivityDetails', { id: slide.id })" class="inline-block border border-[black] w-[512px] h-[384px] bg-[white]">
@@ -98,8 +95,10 @@ export default {
         </Link>
       </Swiper>
     </div>
+
     <!-- 活動行事曆 -->
-    <div class="w-full h-[340px] bg-white"></div>
+    <!-- <div class="w-full h-[340px] bg-white"></div> -->
+
     <!-- 最夯活動Banner -->
     <Link :href="route('studentActivityDetails', { id: hottestActivityData.id })" v-if="hottestActivityData.activity_type_name" class="w-[1440px] h-[765px] pt-[38px] bg-[#F3F3F1] rounded-[64px] flex flex-col justify-between items-center">
       <!-- 活動快速資訊 -->

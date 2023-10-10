@@ -436,11 +436,11 @@ class StudentController extends Controller
             'id' => 'required|exists:register_activities,id'
         ]);
 
-        $register = RegisterActivity::find($request->id);
+        $register = RegisterActivity::where('activity_id', $request->id)->where('student_id', $request->user()->UserRoleStudent->id)->first();
 
-        $student = StudentActivity::where('activity_type', 2)->find($request->id);
+        $student = StudentActivity::where('activity_type', 2)->where('student_id', $request->user()->UserRoleStudent->id);
 
-        $activityDetail = ActivityDetail::where('id', $student->activity_id)->first();
+        $activityDetail = ActivityDetail::where('id', $request->id)->first();
 
         UserBehavior::create([
             'type_id' => 2,
