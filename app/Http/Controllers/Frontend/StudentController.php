@@ -77,6 +77,63 @@ class StudentController extends Controller
         return Inertia::render('Frontend/Student/ActivityDetail', ['response' => rtFormat($data)]);
     }
 
+    public function finishedActivity($id, Request $request)
+    {
+        $activity = ActivityDetail::with(['activityPhotos:id,activity_id,activity_img_path'])
+            ->where('id', $id)
+            ->first();
+        if (!$activity) {
+            // 处理活动不存在的情况
+            return abort(404);
+        }
+
+        $currentTimestamp = time();
+        $activityStartTime = strtotime($activity->activity_start_time);
+        $timeDifferenceInSeconds = $activityStartTime - $currentTimestamp;
+        $timeDifferenceInDays = intval($timeDifferenceInSeconds / (3600 * 24));
+
+        $activityPhotos = $activity->activityPhotos;
+        $result = [
+            'id' => $activity->id,
+            'activity_name' => $activity->activity_name,
+            'activity_info' => $activity->activity_info,
+            'activity_presenter' => $activity->activity_presenter,
+            'activity_type' => $activity->activity_type,
+            'activity_type_name' => $this->activityPresenter->getActivityTypeName($activity->activity_type),
+            'activity_lowest_number_of_people' => $activity->activity_lowest_number_of_people,
+            'activity_highest_number_of_people' => $activity->activity_highest_number_of_people,
+            'activity_start_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_start_registration_time)),
+            'activity_end_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_end_registration_time)),
+            'activity_start_time' => date('Y-m-d H:i', strtotime($activity->activity_start_time)),
+            'activity_end_time' => date('Y-m-d H:i', strtotime($activity->activity_end_time)),
+            'activity_address' => $activity->activity_address,
+            'activity_instruction' => $activity->activity_instruction,
+            'activity_information' => $activity->activity_information,
+            'activityPhotos' => $activityPhotos->pluck('activity_img_path')->toArray(),
+        ];
+
+        $qrcode = QrcodeDetail::where('activity_id', $id)->where('student_id', $request->user()->UserRoleStudent->id)->first();
+
+        $registerPeople = ActivityDetail::orderBy('id', 'desc')
+            ->whereHas('registerActivities', function ($query) use ($id) {
+                return $query->where('activity_id', $id);
+            })
+            ->count();
+
+        $registerData = RegisterActivity::where('activity_id', $id)
+            ->first();
+
+        $data = (object) [
+            'activity' => $result,
+            'qrcode' => $qrcode,
+            'registerPeople' => $registerPeople,
+            'registerData' => $registerData,
+            'activityTypeData' => $this->activityPresenter->getTypeOption(),
+        ];
+
+        return Inertia::render('Frontend/Student/FinishedActivity', ['response' => rtFormat($data)]);
+    }
+
     public function activityEdit($id, Request $request)
     {
         $favoriteCheck = StudentActivity::where('activity_type', 1)
@@ -117,7 +174,7 @@ class StudentController extends Controller
             'activityPhotos' => $activityPhotos->pluck('activity_img_path')->toArray(),
         ];
 
-        $qrcode = QrcodeDetail::where('activity_id', $id)->first();
+        $qrcode = QrcodeDetail::where('activity_id', $id)->where('student_id', $request->user()->UserRoleStudent->id)->first();
 
         $registerPeople = ActivityDetail::orderBy('id', 'desc')
             ->whereHas('registerActivities', function ($query) use ($id) {

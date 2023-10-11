@@ -131,7 +131,7 @@ export default {
       </div>
       <Pagination :pagination-data="allActivityData?.data" class="pt-3" />
     </div>
-    <ActivitySwiper :slide-data="finishedActivityData?.data ?? []" href="">
+    <ActivitySwiper :slide-data="finishedActivityData?.data ?? []" href="finishedActivity">
       <template #activity_title_name>
         <span>
           已上過的活動

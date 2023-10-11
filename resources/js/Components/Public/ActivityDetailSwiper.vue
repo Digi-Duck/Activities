@@ -82,53 +82,57 @@ export default {
           </button>
         </div>
         <!-- 活動資訊框 -->
-        <div class="absolute left-[100px] top-[495px] w-[90%] h-[289px] pt-[10px] px-[60px] bg-[#f2f2f2b2] flex flex-wrap gap-5">
-          <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.lowestNumberOfPeople" alt="開課門檻" class="w-[10%] pe-1">
-            <div type="text" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
-              <slot name="activity_lowest_number_of_people">開課門檻</slot>
+        <div class="absolute left-[5%] top-[495px] w-[90%] h-[289px] pt-[10px] px-[60px] bg-[#f2f2f2b2] rounded-[15px] flex flex-col flex-wrap gap-5">
+          <div class="flex">
+            <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
+              <img :src="images.lowestNumberOfPeople" alt="開課門檻" class="w-[10%] pe-1">
+              <div type="text" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+                <slot name="activity_lowest_number_of_people">開課門檻</slot>
+              </div>
+            </div>
+            <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
+              <img :src="images.highestNumberOfPeople" alt="人數上限" class="w-[10%] pe-1">
+              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+                <slot name="activity_highest_number_of_people">人數上限</slot>
+              </div>
+            </div>
+            <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
+              <img :src="images.registerTime" alt="報名開始時間" class="w-[10%] pe-1">
+              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+                <slot name="activity_start_registration_time">報名開始時間</slot>
+              </div>
+            </div>
+            <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
+              <img :src="images.registerTime" alt="報名截止時間" class="w-[10%] pe-1">
+              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+                <slot name="activity_end_registration_time">報名截止時間</slot>
+              </div>
             </div>
           </div>
-          <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.highestNumberOfPeople" alt="人數上限" class="w-[10%] pe-1">
-            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
-              <slot name="activity_highest_number_of_people">人數上限</slot>
+          <div class="flex">
+            <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
+              <img :src="images.activityPresenter" alt="主講者" class="w-[10%] pe-1">
+              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+                <slot name="activity_presenter">講者</slot>
+              </div>
             </div>
-          </div>
-          <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.registerTime" alt="報名開始時間" class="w-[10%] pe-1">
-            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
-              <slot name="activity_start_registration_time">報名開始時間</slot>
+            <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
+              <img :src="images.activityStartTime" alt="開始時間" class="w-[10%] pe-1">
+              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+                <slot name="activity_start_time">開始時間</slot>
+              </div>
             </div>
-          </div>
-          <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.registerTime" alt="報名截止時間" class="w-[10%] pe-1">
-            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
-              <slot name="activity_end_registration_time">報名截止時間</slot>
+            <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
+              <img :src="images.activityEndTime" alt="結束時間" class="w-[10%] pe-1">
+              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+                <slot name="activity_end_time">結束時間</slot>
+              </div>
             </div>
-          </div>
-          <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activityPresenter" alt="主講者" class="w-[10%] pe-1">
-            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
-              <slot name="activity_presenter">講者</slot>
-            </div>
-          </div>
-          <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activityStartTime" alt="開始時間" class="w-[10%] pe-1">
-            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
-              <slot name="activity_start_time">開始時間</slot>
-            </div>
-          </div>
-          <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activityEndTime" alt="結束時間" class="w-[10%] pe-1">
-            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
-              <slot name="activity_end_time">結束時間</slot>
-            </div>
-          </div>
-          <div class="w-[24%] h-[68px] flex border-e-4 border-e-gray-500">
-            <img :src="images.activityAddress" alt="地點" class="w-[10%] pe-1">
-            <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
-              <slot name="activity_address">地點</slot>
+            <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
+              <img :src="images.activityAddress" alt="地點" class="w-[10%] pe-1">
+              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+                <slot name="activity_address">地點</slot>
+              </div>
             </div>
           </div>
           <div class="w-full h-[56px] flex items-center rounded-[14px] px-2">

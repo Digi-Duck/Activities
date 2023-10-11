@@ -7,8 +7,6 @@ use App\Http\Controllers\Frontend\StudentController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
-// Route::get('/globalActivityDetails/{id}', [IndexController::class, 'globalActivityDetails'])->name('globalActivityDetails');
-
 Route::middleware(['auth', 'role.weight:2', 'verified'])->prefix('/presenter')->group(function () {
     Route::get('/personalPage', [PresenterController::class, 'index'])->name('presenterPersonalPage');
     Route::get('/createActivity', [PresenterController::class, 'createActivity'])->name('createActivity');
@@ -26,6 +24,7 @@ Route::middleware(['auth', 'role.weight:3', 'verified'])->prefix('/student')->gr
     Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
     Route::get('/personalPage', [StudentController::class, 'personalPage'])->name('studentPersonalPage');
     Route::get('/activityEdit{id}', [StudentController::class, 'activityEdit'])->name('studentActivityEdit');
+    Route::get('/finishedActivity{id}', [StudentController::class, 'finishedActivity'])->name('finishedActivity');
     Route::put('/registerUpdate', [StudentController::class, 'registerUpdate'])->name('registerUpdate');
     Route::delete('/registerDelete', [StudentController::class, 'registerDelete'])->name('registerDelete');
     Route::post('/registerStore', [StudentController::class, 'create'])->name('registerStore');
