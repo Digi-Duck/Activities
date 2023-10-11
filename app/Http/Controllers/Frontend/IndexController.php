@@ -159,12 +159,15 @@ class IndexController extends Controller
                     'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type)
                 ];
             });
-
+            // dd($firstHotActivity);
         $acitvityPhoto = ActivityPhoto::orderBy('id', 'desc')
             ->first();
+        $title = $this->activityPresenter->getActivityTypeName($request->type);
 
         $data = (object)[
             'activity' => $activity,
+            'title' => $title,
+            'type' => $type,
             'acitvityPhoto' => $acitvityPhoto,
             'firstHotActivity' => $firstHotActivity,
             'keyword' => $keyword,

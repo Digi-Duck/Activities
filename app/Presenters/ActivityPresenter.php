@@ -13,6 +13,10 @@ class ActivityPresenter
     {
         $this->typeOption = [
             (object) [
+                'id' => 0,
+                'name' => '活動列表',
+            ],
+            (object) [
                 'id' => 1,
                 'name' => '文化與藝術',
             ],
@@ -69,7 +73,7 @@ class ActivityPresenter
     {
         $typeData = (object) ['id' => 9, 'name' => '其他'];
         foreach ($this->typeOption as $value) {
-            if ($value->id === $type) {
+            if ((int)($value->id) === (int)($type)) {
                 $typeData = $value;
                 break;
             }

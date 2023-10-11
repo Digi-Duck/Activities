@@ -15,6 +15,7 @@ export default {
     return {
       keyword: this.response?.rt_data?.keyword ?? '',
       selectedType: this.response?.rt_data?.type ?? '',
+      // title: this.response?.rt_data?.title ?? '活動列表',
       images: {
         magnifer,
       },
@@ -23,6 +24,9 @@ export default {
   computed: {
     rtData() {
       return this.response?.rt_data ?? {};
+    },
+    title() {
+      return this.rtData.title ?? '活動列表';
     },
     activityClassification() {
       return this.rtData.activity;
@@ -43,7 +47,7 @@ export default {
   <section class="flex flex-col px-[250px] pt-[75px]">
     <!-- 功能按鈕 -->
     <div class="w-full pb-3 flex flex-col">
-      <div class="pb-[10px] bg-white border-b-4 text-5xl text-black font-bold">活動列表</div>
+      <div class="pb-[10px] bg-white border-b-4 text-5xl text-black font-bold">{{ title }}</div>
       <div class="w-full pt-3 px-3 flex justify-between">
         <button type="button" class="p-[5px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold" @click="searchData('')">全部</button>
         <div v-for="(item, index) in rtData.firstHotActivity" :key="index" class="flex gap-3">
