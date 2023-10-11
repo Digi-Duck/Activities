@@ -78,38 +78,6 @@ export default {
       </template>
     </ActivitySwiper>
 
-    <!-- <ActivityDetailTable :table-data="allActivityData" :type-data="activityTypeData">
-      <template #activity_title_type>
-        <span>
-          活動類型
-        </span>
-      </template>
-      <template #activity_name>
-        <span>
-          我自己寫活動名稱
-        </span>
-      </template>
-      <template #activity_type>
-        <span>
-        </span>
-      </template>
-      <template #activity_end_registration_time>
-        <span>
-          我自己寫活動時間
-        </span>
-      </template>
-      <template #activity_lowest_number_of_people>
-        <span>
-          50
-        </span>
-      </template>
-      <template #activity_highest_number_of_people>
-        <span>
-          150
-        </span>
-      </template>
-    </ActivityDetailTable> -->
-
     <div class="m-auto w-full max-w-[1400px] h-[505px] p-10 flex flex-col items-center">
       <!-- 搜尋欄位 -->
       <div class="mb-[5px] w-full h-[48px] pt-[10px] border-t-[#000] border-t-[1px] flex justify-end">
@@ -163,7 +131,7 @@ export default {
       </div>
       <Pagination :pagination-data="allActivityData?.data" class="pt-3" />
     </div>
-    <ActivitySwiper :slide-data="finishedActivityData?.data ?? []">
+    <ActivitySwiper :slide-data="finishedActivityData?.data ?? []" href="">
       <template #activity_title_name>
         <span>
           已上過的活動

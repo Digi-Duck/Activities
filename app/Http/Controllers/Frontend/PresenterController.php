@@ -249,7 +249,7 @@ class PresenterController extends Controller
     public function activityScannerConfirm(Request $request)
     {
         $request->validate([
-            'code' => 'required|min:21|max:21'
+            'code' => 'required|exists:qrcode_details,qrcode_number'
         ]);
         $registerCheck = QrcodeDetail::where('qrcode_number', $request->code)->first();
         $registerCheck->update([
