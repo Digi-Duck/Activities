@@ -83,7 +83,7 @@ export default {
       });
     },
     generateRandomString() {
-      const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789';
       let qrcodeNumber = '';
       for (let i = 0; i < 20; i++) {
         const randomIndex = Math.floor(Math.random() * charset.length);

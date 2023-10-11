@@ -47,14 +47,14 @@ export default {
 <template>
   <!-- :href="route('studentActivityDetails', { id: slide.id }) -->
   <div id="activity-swiper" class="relative p-5 flex flex-col items-center">
-    <div class="pb-5 text-[48px] self-start ps-[400px]">
+    <div class="pb-5 text-[48px] self-start ps-[20%]">
       <h2>
         <slot name="activity_title_name">
           近期活動
         </slot>
       </h2>
     </div>
-    <div class="absolute top-[50%] z-10 w-[97.5%] flex justify-between">
+    <div class="absolute top-[50%] z-10 w-[97.5%] max-w-[1400px] flex justify-between">
       <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] rounded-[50px] bg-white" type="button">
         <img :src="images.arrowLeft" alt="活動照片海報向左移動按鈕">
       </button>
@@ -63,7 +63,7 @@ export default {
       </button>
     </div>
 
-    <Swiper v-slot="{ slide }" :slide-data="slideData ?? []" :slides-per-view=5 :btn-prev="prevButton" :btn-next="nextButton">
+    <Swiper v-slot="{ slide }" :slide-data="slideData ?? []" class="flex gap-3" :slides-per-view=5 :space-between=0 :btn-prev="prevButton" :btn-next="nextButton">
       <button type="button" class="relative m-auto w-[296px] h-[387px] p-3 bg-white border flex flex-col items-center" @click="linkHref(slide.id)">
         <figure>
           <img :src="slide.cover_photo" class="w-[275px] h-[275px] object-cover" alt="產業類別圖片">
@@ -81,7 +81,7 @@ export default {
               <slot name="activity_address" />
             </div>
           </div>
-          <div class="absolute bottom-[2px] right-[6px] w-[40px] h-[18px] px-1 rounded-[15px] bg-[#D19191] flex justify-between items-center">
+          <div class="absolute bottom-[2px] right-[6px] w-[40px] h-[18px] px-1 rounded-[15px] bg-[#D19191] flex justify-center items-center">
             <img :src="images.heart" class="w-[20px] h-[20px]" alt="收藏人數">
             {{ slide.collection_count }}
           </div>

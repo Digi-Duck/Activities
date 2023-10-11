@@ -11,8 +11,8 @@ const props = defineProps({
     required: false,
     default: () => {
       return {
-        image: true,
-        media: true,
+        image: false,
+        media: false,
         resize: false,
         code: false,
       };

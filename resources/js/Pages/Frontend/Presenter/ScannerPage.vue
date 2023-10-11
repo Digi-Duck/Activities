@@ -127,7 +127,7 @@ export default {
      * @param {string} code 代碼
      */
     sendScanningRes(code) {
-      router.post(route('activityScannerConfirm'), { code, activity_id: this.activityData.id }, {
+      router.post(route('activityScannerConfirm'), { code }, {
         preserveState: true,
         preserveScroll: true,
         onSuccess: ({ props: { flash: { message = {} } = {} } = {} } = {}) => {

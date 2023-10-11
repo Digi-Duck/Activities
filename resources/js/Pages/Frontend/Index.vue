@@ -73,11 +73,11 @@ export default {
 </script>
 
 <template>
-  <section id="frontend-index">
+  <section id="frontend-index" class="flex flex-col items-center">
     <!-- 熱門活動Swiper -->
-    <div class="relative w-full h-[602px] bg-[#031926] overflow-hidden">
+    <div class="relative w-full h-[600px] bg-[#031926] overflow-hidden">
       <!-- 這組是按鈕 -->
-      <div class="absolute top-[50%] left-[2.5%] w-[95%] flex justify-between">
+      <div class="absolute top-[50%] left-[2.5%] w-[92.5%] flex justify-between items-center">
         <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] z-50 rounded-[50px] bg-white" type="button">
           <img :src="images.arrowLeft" alt="活動照片海報向左移動按鈕">
         </button>
@@ -105,11 +105,8 @@ export default {
       </Swiper>
     </div>
 
-    <!-- 活動行事曆 -->
-    <!-- <div class="w-full h-[340px] bg-white"></div> -->
-
     <!-- 最夯活動Banner -->
-    <Link :href="route('studentActivityDetails', { id: hottestActivityData.id })" v-if="hottestActivityData.activity_type_name" class="w-[1440px] h-[765px] pt-[38px] bg-[#F3F3F1] rounded-[64px] flex flex-col justify-between items-center">
+    <Link :href="route('studentActivityDetails', { id: hottestActivityData.id })" v-if="hottestActivityData.activity_type_name" class="w-full max-w-[1400px] h-[765px] pt-[38px] bg-[#F3F3F1] rounded-[64px] flex flex-col justify-between items-center">
       <!-- 活動快速資訊 -->
       <div class="text-[17px] flex items-center gap-1">
         <!-- 活動類型 -->
@@ -135,9 +132,9 @@ export default {
           {{ hottestActivityData.activity_start_time }}
         </time>
       </div>
-      <figure class="relative w-full h-[450px] flex">
-        <img :src="hottestActivityData.cover_photo" class="absolute w-[770px] h-full rounded-[64px] opacity-[20%] bg-green-600" alt="半透明活動主照片">
-        <img :src="hottestActivityData.cover_photo" class="absolute ms-[20%] w-[900px] h-full z-10 rounded-[64px]" alt="活動主照片">
+      <figure class="relative w-full max-w-[1400px] h-[450px] flex">
+        <img :src="hottestActivityData.cover_photo" class="absolute xl-hidden w-[770px] h-full rounded-[64px] opacity-[20%] bg-green-600" alt="半透明活動主照片">
+        <img :src="hottestActivityData.cover_photo" class="absolute md:ms-[10%] xl:ms-[17.5%] w-[900px] h-full z-10 rounded-[64px]" alt="活動主照片">
         <img :src="hottestActivityData.cover_photo" class="absolute end-0 w-[770px] h-full rounded-[64px] opacity-[20%] bg-blue-600" alt="半透明活動主照片">
       </figure>
     </Link>
@@ -145,20 +142,11 @@ export default {
 
     <ActivitySwiper :slide-data="activityData ?? []" href="studentActivityDetails" />
 
-    <!-- 近期活動查詢表 -->
-    <!-- <ActivityDetailTable :table-data="activityTableData" :type-data="activityTypeData" url="">
-      <template #activity_title_type>
-        <span>
-          主講者
-        </span>
-      </template>
-    </ActivityDetailTable> -->
-
     <div class="m-auto w-full max-w-[1400px] h-[505px] p-10 flex flex-col items-center">
       <!-- 搜尋欄位 -->
       <div class="mb-[5px] w-full h-[48px] pt-[10px] border-t-[#000] border-t-[1px] flex justify-between">
         <!-- 文字搜尋框 -->
-        <div class="w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-1">
+        <div class="w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-3">
           <input v-model="keyword" type="search" class="w-[80%] h-[80%]" @search="searchData" placeholder="請輸入搜尋資訊">
           <button type="button" @click="searchData">
             <img :src="images.magnifer" class="w-[16px]" alt="搜尋">
@@ -166,7 +154,7 @@ export default {
         </div>
       </div>
       <!-- 搜尋的表頭 -->
-      <div class="w-full h-[64px] flex">
+      <div class="w-full h-[60px] flex">
         <div class="flex-none w-[50%] border bg-[#5D8BA3] flex justify-center items-center text-[24px]">
           <slot name="activity_title_name">活動名稱</slot>
         </div>

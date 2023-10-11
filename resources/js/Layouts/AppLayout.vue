@@ -75,7 +75,7 @@ export default {
       <slot />
     </main>
     <footer class="h-[248px] bg-[#194F69]">
-      <div class="w-[89.04%] h-[173px] mx-auto border-b border-b-black flex justify-between">
+      <div class="lg:w-[89.04%] h-[173px] mx-auto border-b border-b-black flex justify-between">
         <div class="ms-28 bg-transparent flex gap-3">
           <a href="https://instagram.com" class="contact-btn" target="_blank">
             <img id="instagram-btn" :src="images.instagram" alt="跳轉instagram按鈕" />
@@ -91,7 +91,7 @@ export default {
           <div class="ms-[275px] mt-[25px] pt-[15px] text-white">
             Copyright © 2023 Office of Student Affairs, NCHU
           </div>
-          <div class="ms-[275px] mt-[25px] text-white flex gap-3">
+          <div class="ms-[275px] mt-[25px] p-3 text-white flex gap-3">
             <button type="button">聯絡信箱</button>
             <img class="h-[25px] w-[25px] rounded bg-white border border-x-2" :src="images.envelope" alt="聯絡信箱按鈕" />
             <button type="button">service@gmail.com</button>
@@ -99,7 +99,7 @@ export default {
         </div>
       </div>
       <div class="pe-64 pt-4 flex justify-end gap-3">
-        <Link href="" class="btn">系統後台</Link>
+        <Link :href="route('dashboard')" class="btn">系統後台</Link>
         <Link href="" class="btn">相關聲明</Link>
       </div>
     </footer>

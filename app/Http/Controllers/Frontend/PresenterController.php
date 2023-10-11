@@ -155,7 +155,6 @@ class PresenterController extends Controller
             ActivityPhoto::create([
                 'activity_id' => $activity->id,
                 'activity_img_path' => $this->filesService->base64Upload($value['activity_img_path'], 'otherProduct'),
-                // 'sort' => 1,
             ]);
         }
 
@@ -219,7 +218,10 @@ class PresenterController extends Controller
 
     public function activityScannerConfirm(Request $request)
     {
-        $registerCheck = QrcodeDetail::where('activity_id', $request->activity_id)->where('qrcode_number', $request->code);
+        $request->validate([
+            'code' => 'required|min:21|max:21'
+        ]);
+        $registerCheck = QrcodeDetail::where('qrcode_number', $request->code)->first();
         $registerCheck->update([
             'qrcode_status' => 1,
         ]);
@@ -232,12 +234,6 @@ class PresenterController extends Controller
      */
     public function activityEdit($id)
     {
-        //
-        // $activity = ActivityDetail::find($id)
-        //     ->with('activityPhotos:id,activity_id,activity_img_path')
-        //     ->where('id', $id)
-        //     ->first();
-
         $activity = ActivityDetail::find($id);
 
         $currentTimestamp = time();
@@ -276,22 +272,28 @@ class PresenterController extends Controller
 
     public function activityUpdate(Request $request)
     {
-
         $request->validate([
-            'formData.activityName' => 'required',
-            'formData.activityInfo' => 'required',
-            'formData.activityType' => 'required',
-            'formData.activityPhoto' => 'required',
-            'formData.activityPresenter' => 'required',
-            'formData.activityLowestNumberOfPeople' => 'required|numeric',
-            'formData.activityHighestNumberOfPeople' => 'required|numeric',
-            'formData.activityStartRegistrationTime' => 'required',
-            'formData.activityEndRegistrationTime' => 'required',
-            'formData.activityStartTime' => 'required',
-            'formData.activityEndTime' => 'required',
-            'formData.activityAddress' => 'required',
-            'formData.activityInstruction' => 'required',
-            'formData.activityInformation' => 'required',
+            'activityName' => 'required',
+            'activityInfo' => 'required',
+            'activityType' => 'required',
+            'activityPhoto' => 'required',
+            'activityPresenter' => 'required',
+            'activityLowestNumberOfPeople' => 'required|numeric',
+            'activityHighestNumberOfPeople' => 'required|numeric',
+            'activityStartRegistrationTime' => 'required|date_format:Y-m-d H:i', // 日期时间格式
+            'activityEndRegistrationTime' => 'required|date_format:Y-m-d H:i|after:activityStartRegistrationTime', // 需要晚于开始时间
+            'activityStartTime' => 'required|date_format:Y-m-d H:i',
+            'activityEndTime' => 'required|date_format:Y-m-d H:i|after:activityStartTime', // 需要晚于开始时间
+            'activityAddress' => 'required',
+            'activityInstruction' => 'required',
+            'activityInformation' => 'required',
+        ], [
+            'activityStartRegistrationTime.date_format' => '時間格式為:2000-01-01 10:00',
+            'activityEndRegistrationTime.date_format' => '時間格式為:2000-01-01 10:00',
+            'activityEndRegistrationTime.after' => '需晚於開始註冊時間',
+            'activityStartTime.date_format' => '時間格式為:2000-01-01 10:00',
+            'activityEndTime.date_format' => '時間格式為:2000-01-01 10:00',
+            'activityEndTime.after' => '需晚於開始註冊時間',
         ]);
 
         $activity = ActivityDetail::find($request->id);
@@ -318,6 +320,13 @@ class PresenterController extends Controller
             'activity_instruction' => $request->formData['activityInstruction'],
             'activity_information' => $request->formData['activityInformation'],
         ]);
+
+        foreach ($request->activityPhoto ?? [] as $value) {
+            ActivityPhoto::updateOrCreate([
+                'activity_id' => $activity->id,
+                'activity_img_path' => $this->filesService->base64Upload($value['activity_img_path'], 'otherProduct'),
+            ]);
+        }
 
         return back()->with(['message' => rtFormat($activity)]);
     }
