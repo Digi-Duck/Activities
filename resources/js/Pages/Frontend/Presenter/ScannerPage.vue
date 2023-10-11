@@ -127,7 +127,7 @@ export default {
      * @param {string} code 代碼
      */
     sendScanningRes(code) {
-      router.post('activityScannerConfirm', { code }, {
+      router.post(route('activityScannerConfirm'), { code, activity_id: this.activityData.id }, {
         preserveState: true,
         preserveScroll: true,
         onSuccess: ({ props: { flash: { message = {} } = {} } = {} } = {}) => {
@@ -156,7 +156,6 @@ export default {
 </script>
 
 <template>
-  <button type="button" @click="sendScanningRes">123</button>
   <section id="presenter-scanner">
     <div class="absolute mt-[5%] left-[75%] z-50">
       <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">倒數

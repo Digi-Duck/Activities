@@ -115,7 +115,7 @@ export default {
 }
 
 #main {
-    @apply bg-[#FAFAFA];
+    @apply w-full h-full bg-[#FAFAFA];
 }
 
 .function-btn {

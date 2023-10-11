@@ -219,8 +219,12 @@ class PresenterController extends Controller
 
     public function activityScannerConfirm(Request $request)
     {
-        dd($request->all());
-        QrcodeDetail::where('activity_id', $request->activity_id);
+        $registerCheck = QrcodeDetail::where('activity_id', $request->activity_id)->where('qrcode_number', $request->code);
+        $registerCheck->update([
+            'qrcode_status' => 1,
+        ]);
+
+        return back()->with(['message' => rtFormat($registerCheck)]);
     }
 
     /**
