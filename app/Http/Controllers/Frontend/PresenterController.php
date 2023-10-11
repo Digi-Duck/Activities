@@ -246,6 +246,40 @@ class PresenterController extends Controller
         return Inertia::render('Frontend/Presenter/ScannerPage', ['response' => rtFormat($data)]);
     }
 
+    public function presenterFinishedActivity($id, Request $request)
+    {
+        $activity = ActivityDetail::find($id);
+        // dd($activity);
+        $activityPhotos = $activity->activityPhotos;
+        $result = [
+            'id' => $activity->id,
+            'activity_name' => $activity->activity_name,
+            'activity_info' => $activity->activity_info,
+            'activity_presenter' => $activity->activity_presenter,
+            'activity_type' => $activity->activity_type,
+            'activity_type_name' => $this->activityPresenter->getActivityTypeName($activity->activity_type),
+            'activity_lowest_number_of_people' => $activity->activity_lowest_number_of_people,
+            'activity_highest_number_of_people' => $activity->activity_highest_number_of_people,
+            'activity_start_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_start_registration_time)),
+            'activity_end_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_end_registration_time)),
+            'activity_start_time' => date('Y-m-d H:i', strtotime($activity->activity_start_time)),
+            'activity_end_time' => date('Y-m-d H:i', strtotime($activity->activity_end_time)),
+            'activity_address' => $activity->activity_address,
+            'activity_instruction' => $activity->activity_instruction,
+            'activity_information' => $activity->activity_information,
+            'activityPhotos' => $activityPhotos->pluck('activity_img_path')->toArray(),
+        ];
+        $registerPeople = ActivityDetail::whereHas('registerActivities', function ($query) use ($id) {
+            return $query->where('activity_id', $id);
+        })->count();
+        $data = (object) [
+            'activity' => $result,
+            'registerPeople' => $registerPeople,
+            'activityTypeData' => $this->activityPresenter->getTypeOption(),
+        ];
+        return Inertia::render('Frontend/Presenter/FinishedActivity', ['response' => rtFormat($data)]);
+    }
+
     public function activityScannerConfirm(Request $request)
     {
         $request->validate([

@@ -115,7 +115,7 @@ export default {
     </div>
 
     <!-- 已上完的活動資料尚未傳送 -->
-    <ActivitySwiper :slide-data="finishedActivityData?.data ?? []">
+    <ActivitySwiper :slide-data="finishedActivityData?.data ?? []" href="presenterFinishedActivity">
       <template #activity_title_name>
         <span>
           已上完的活動

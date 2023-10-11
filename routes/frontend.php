@@ -12,6 +12,7 @@ Route::middleware(['auth', 'role.weight:2', 'verified'])->prefix('/presenter')->
     Route::get('/createActivity', [PresenterController::class, 'createActivity'])->name('createActivity');
     Route::post('/activityStore', [PresenterController::class, 'activityStore'])->name('activityStore');
     Route::get('/activityEdit{id}', [PresenterController::class, 'activityEdit'])->name('activityEdit');
+    Route::get('/presenterFinishedActivity{id}', [PresenterController::class, 'presenterFinishedActivity'])->name('presenterFinishedActivity');
     Route::get('/activityScanner{id}', [PresenterController::class, 'activityScanner'])->name('activityScanner');
     Route::post('/activityScannerConfirm', [PresenterController::class, 'activityScannerConfirm'])->name('activityScannerConfirm');
     Route::put('/activityUpdate', [PresenterController::class, 'activityUpdate'])->name('activityUpdate');

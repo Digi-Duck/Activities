@@ -55,7 +55,7 @@ export default {
 <template>
   <section id="activity-detail-swiper" class="relative flex flex-col">
     <!-- 建立活動資訊填寫 -->
-    <div class="relative mt-5 h-[901px] flex flex-col">
+    <div class="relative mt-5 h-[901px] bg-[#eadada4d] flex flex-col">
       <div class="relative w-full z-10">
         <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">
           <slot name="activity_type">活動類型</slot>
@@ -71,7 +71,6 @@ export default {
           <div class="w-full bg-[#ffffff9b] text-[24px]">
             <slot name="activity_info">活動Slogan</slot>
           </div>
-          <!-- <button type="button" class="w-[136px] h-[56px] bg-[#FFFFFF] text-[18px] font-semibold">更改圖片</button> -->
         </div>
         <div class="absolute left-[50px] top-[415px] w-[95%] flex justify-between">
           <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] z-50 rounded-[50px] bg-white" type="button">
