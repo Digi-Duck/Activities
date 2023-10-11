@@ -53,10 +53,7 @@ export default {
      */
     openCamera() {
       Html5Qrcode.getCameras().then((devices) => {
-        if (!devices || !devices?.length) {
-          this.hasDevices = false;
-          return;
-        }
+        if (!devices || !devices?.length) return;
 
         const html5QrCode = new Html5Qrcode('reader');
         const qrCodeSuccessCallback = (decodedText) => {
@@ -72,6 +69,8 @@ export default {
         };
 
         html5QrCode.start({ facingMode: 'environment' }, config, qrCodeSuccessCallback);
+      }).catch(() => {
+        this.hasDevices = false;
       });
     },
 

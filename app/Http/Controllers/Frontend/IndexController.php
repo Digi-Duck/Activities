@@ -71,7 +71,7 @@ class IndexController extends Controller
         $keyword = $request->keyword ?? '';
         $type = $request->type ?? '';
         $activityTable = ActivityDetail::where('activity_status', 1)
-            ->where(function ($query) use($keyword){
+            ->where(function ($query) use ($keyword) {
                 $query->where('activity_name', 'like', "%$keyword%")
                 ->orwhere('activity_presenter', 'like', "%$keyword%")
                 ->orwhere('activity_end_registration_time', 'like', "%$keyword%")

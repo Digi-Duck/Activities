@@ -89,7 +89,8 @@ class PresenterController extends Controller
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 
-        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', ['response' => rtFormat($data)]);;
+        return Inertia::render('Frontend/Presenter/PresenterPersonalPage', ['response' => rtFormat($data)]);
+        ;
     }
 
     public function createActivity()

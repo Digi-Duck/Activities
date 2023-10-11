@@ -25,7 +25,7 @@ class DashboardController extends Controller
         // 活動列表資料
         $activity = ActivityDetail::get();
         $twoWeeksAgo = date('Y-m-d', strtotime('-2 weeks'));
-        
+
         $activityCount = ActivityDetail::where('created_at', '>=', $twoWeeksAgo)->count();
         $studentCount = UserRoleStudent::where('created_at', '>=', $twoWeeksAgo)->count();
         $presenterCount = UserRolePresenter::where('created_at', '>=', $twoWeeksAgo)->count();
