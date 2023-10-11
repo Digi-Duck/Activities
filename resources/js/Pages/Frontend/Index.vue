@@ -86,8 +86,8 @@ export default {
         </button>
       </div>
       <!-- 活動資訊 -->
-      <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" class="absolute w-full h-[602px]" :btn-prev="prevButton" :btn-next="nextButton">
-        <img :src="slide.cover_photo" class="absolute w-full h-full" alt="活動背景圖">
+      <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" class="absolute w-full h-[602px] text-center" :btn-prev="prevButton" :btn-next="nextButton">
+        <img :src="slide.cover_photo" class="inline-block w-[90%] h-full object-contain" alt="活動背景圖">
         <h2 class="absolute top-[100px] w-full pe-[150px] bg-[#ffffff95] text-[64px] text-end text-white">
           {{ slide.activity_name }}
         </h2>
@@ -98,7 +98,7 @@ export default {
         </div>
       </Swiper>
       <!-- 活動封面照片組合Swiper -->
-      <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" :slides-per-view="3" :space-between="0" class="absolute -top-[15%] rotate-[10deg]" :btn-prev="prevButton" :btn-next="nextButton">
+      <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" :slides-per-view="3" :space-between="15" class="absolute -top-[15%] rotate-[10deg]" :btn-prev="prevButton" :btn-next="nextButton">
         <Link :href="route('studentActivityDetails', { id: slide.id })" class="inline-block border border-[black] w-[512px] h-[384px] bg-[white]">
           <img :src="slide.cover_photo" class="w-full h-full object-cover" alt="產業類別圖片">
         </Link>

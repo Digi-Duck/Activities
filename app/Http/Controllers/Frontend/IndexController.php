@@ -73,10 +73,10 @@ class IndexController extends Controller
         $activityTable = ActivityDetail::where('activity_status', 1)
             ->where(function ($query) use ($keyword) {
                 $query->where('activity_name', 'like', "%$keyword%")
-                ->orwhere('activity_presenter', 'like', "%$keyword%")
-                ->orwhere('activity_end_registration_time', 'like', "%$keyword%")
-                ->orwhere('activity_lowest_number_of_people', 'like', "%$keyword%")
-                ->orwhere('activity_highest_number_of_people', 'like', "%$keyword%");
+                    ->orwhere('activity_presenter', 'like', "%$keyword%")
+                    ->orwhere('activity_end_registration_time', 'like', "%$keyword%")
+                    ->orwhere('activity_lowest_number_of_people', 'like', "%$keyword%")
+                    ->orwhere('activity_highest_number_of_people', 'like', "%$keyword%");
             })
             ->orderBy('id', 'desc')
             ->with(['activityPhotos:id,activity_id,activity_img_path', 'studentActivities'])
@@ -129,9 +129,16 @@ class IndexController extends Controller
     {
         $keyword = $request->keyword ?? '';
         $type = $request->type ?? '';
-        $activity = ActivityDetail::where('activity_name', 'like', "%$keyword%")
-            ->orwhere('activity_end_registration_time', 'like', "%$keyword%")
-            ->orwhere('activity_info', 'like', "%$keyword%")
+        $activity = ActivityDetail::where(function ($query) use ($keyword) {
+            $query->where('activity_name', 'like', "%$keyword%")
+                ->orwhere('activity_end_registration_time', 'like', "%$keyword%")
+                ->orwhere('activity_info', 'like', "%$keyword%");
+        })
+            ->where(function ($query) use ($type) {
+                if (!empty($type)) {
+                    $query->where('activity_type', 'like', "%$type%");
+                }
+            })
             ->where('activity_status', 1)
             ->orderBy('id', 'desc')
             ->with('activityPhotos:id,activity_id,activity_img_path')
@@ -148,13 +155,10 @@ class IndexController extends Controller
             ->get()
             ->map(function ($item) {
                 return [
-                    'activity_type' => $this->activityPresenter->getActivityTypeName($item->activity_type)
+                    'activity_type' => $item->activity_type,
+                    'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type)
                 ];
             });
-        // foreach ($firstHotActivity as $type) {
-        //     echo "活動類型: {$type->activity_type}, 出現次數: {$type->type_count}<br>";
-        // }
-        // dd($firstHotActivity);
 
         $acitvityPhoto = ActivityPhoto::orderBy('id', 'desc')
             ->first();
