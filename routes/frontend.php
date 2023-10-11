@@ -21,6 +21,7 @@ Route::middleware(['auth', 'role.weight:2', 'verified'])->prefix('/presenter')->
 });
 
 Route::get('/activityClassification', [IndexController::class, 'activityClassification'])->name('activityClassification');
+Route::get('/declaration', [IndexController::class, 'declaration'])->name('declaration');
 Route::middleware(['auth', 'role.weight:3', 'verified'])->prefix('/student')->group(function () {
     Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
     Route::get('/personalPage', [StudentController::class, 'personalPage'])->name('studentPersonalPage');

@@ -25,8 +25,6 @@ class PresenterController extends Controller
      */
     public function index(Request $request)
     {
-        // $activity = ActivityDetail::orderBy('id', 'desc')->where('presenter_id', $request->user()->UserRolePresenter->id)->with('activityPhotos:id,activity_id,activity_img_path')->get();
-
         $keyword = $request->keyword ?? '';
         // dd($request->user()->UserRolePresenter->id);
         // 活動列表資料
@@ -38,6 +36,7 @@ class PresenterController extends Controller
                     ->orWhere('activity_lowest_number_of_people', 'like', "%$keyword%")
                     ->orWhere('activity_highest_number_of_people', 'like', "%$keyword%");
             })
+            ->whereDate('activity_end_time', '>=', now()->toDateString())
             ->with('activityPhotos:id,activity_id,activity_img_path')
             ->paginate(5)
             ->through(function ($item) {
@@ -53,8 +52,6 @@ class PresenterController extends Controller
                     'id' => $item->id,
                     // 活動名稱
                     'activity_name' => $item->activity_name,
-                    // 活動Slogan
-                    'activity_info' => $item->activity_info,
                     // 活動講者
                     'activity_presenter' => $item->activity_presenter,
                     // 活動類型代號
@@ -65,14 +62,10 @@ class PresenterController extends Controller
                     'activity_lowest_number_of_people' => $item->activity_lowest_number_of_people,
                     // 活動人數上限
                     'activity_highest_number_of_people' => $item->activity_highest_number_of_people,
-                    // 活動報名開始時間
-                    'activity_start_registration_time' => date('Y-m-d H:i', strtotime($item->activity_start_registration_time)),
                     // 活動報名截止時間
                     'activity_end_registration_time' => date('Y-m-d H:i', strtotime($item->activity_end_registration_time)),
                     // 活動開始時間
                     'activity_start_time' => date('Y-m-d H:i', strtotime($item->activity_start_time)),
-                    // 活動結束時間
-                    'activity_end_time' => date('Y-m-d H:i', strtotime($item->activity_end_time)),
                     // 活動地點
                     'activity_address' => $item->activity_address,
                     // 活動封面圖片
@@ -84,8 +77,45 @@ class PresenterController extends Controller
                 ];
             });
 
+        $finishedActivity = ActivityDetail::orderBy('id', 'desc')
+            ->where('presenter_id', $request->user()->UserRolePresenter->id)
+            ->where(function ($query) use ($keyword) {
+                $query->where('activity_name', 'like', "%$keyword%")
+                    ->orWhere('activity_end_registration_time', 'like', "%$keyword%")
+                    ->orWhere('activity_lowest_number_of_people', 'like', "%$keyword%")
+                    ->orWhere('activity_highest_number_of_people', 'like', "%$keyword%");
+            })
+            ->whereDate('activity_end_time', '<=', now()->toDateString())
+            ->with('activityPhotos:id,activity_id,activity_img_path')
+            ->paginate(5)
+            ->through(function ($item) {
+                // 找出第一張圖片
+                $coverPhoto = $item->activityPhotos->first();
+                // 找出已收藏的人數
+                $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
+
+                return [
+                    'id' => $item->id,
+                    // 活動名稱
+                    'activity_name' => $item->activity_name,
+                    // 活動類型代號
+                    'activity_type' => $item->activity_type,
+                    // 活動類型名稱
+                    'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
+                    // 活動開始時間
+                    'activity_start_time' => date('Y-m-d H:i', strtotime($item->activity_start_time)),
+                    // 活動地點
+                    'activity_address' => $item->activity_address,
+                    // 活動封面圖片
+                    'cover_photo' => $coverPhoto->activity_img_path ?? '',
+                    // 活動收藏人數
+                    'collection_count' => $collectionCount,
+                ];
+            });
+
         $data = (object) [
             'activity' => $activity,
+            'finishedActivity' => $finishedActivity,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
 

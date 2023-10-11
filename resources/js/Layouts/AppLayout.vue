@@ -100,7 +100,7 @@ export default {
       </div>
       <div class="pe-64 pt-4 flex justify-end gap-3">
         <Link :href="route('dashboard')" class="btn">系統後台</Link>
-        <Link href="" class="btn">相關聲明</Link>
+        <Link :href="route('declaration')" class="btn">相關聲明</Link>
       </div>
     </footer>
   </section>

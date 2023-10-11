@@ -120,6 +120,11 @@ class IndexController extends Controller
         return Inertia::render('Frontend/Index', ['response' => rtFormat($data)]);
     }
 
+    public function declaration()
+    {
+        return Inertia::render('Frontend/Declaration');
+    }
+
     public function activityClassification(Request $request)
     {
         $keyword = $request->keyword ?? '';

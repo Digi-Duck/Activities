@@ -29,6 +29,10 @@ export default {
     activityData() {
       return this.rtData.activity ?? {};
     },
+    // 獲取已完成活動資料陣列
+    finishedActivityData() {
+      return this.rtData.finishedActivity ?? {};
+    },
 
     // 獲取活動類別資料陣列
     activityTypeData() {
@@ -56,24 +60,9 @@ export default {
       </template>
     </ActivitySwiper>
 
-    <!-- <ActivityDetailTable :table-data="activityData" :type-data="activityTypeData">
-      <template #activity_title_type>
-        <span>
-          講者名稱
-        </span>
-      </template>
-    </ActivityDetailTable> -->
-
     <div class="m-auto w-full max-w-[1400px] h-[505px] p-10 flex flex-col items-center">
       <!-- 搜尋欄位 -->
       <div class="mb-[5px] w-full h-[48px] pt-[10px] border-t-[#000] border-t-[1px] flex justify-end">
-        <!-- 活動種類篩選器 -->
-        <!-- <select v-model="selectedType" @change="searchData" class="h-full bg-[#80808012] text-[10px] flex justify-center" placeholder="活動分類">
-          <option value="">所有活動</option>
-          <option v-for="item in activityTypeData" :key="item.id" :value="item.id">
-            {{ item.name }}
-          </option>
-        </select> -->
         <!-- 文字搜尋框 -->
         <div class="w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-1">
           <input v-model="keyword" type="search" class="w-[80%] h-[80%]" @search="searchData" placeholder="請輸入搜尋資訊">
@@ -126,7 +115,7 @@ export default {
     </div>
 
     <!-- 已上完的活動資料尚未傳送 -->
-    <ActivitySwiper :slide-data="activityData?.data ?? []">
+    <ActivitySwiper :slide-data="finishedActivityData?.data ?? []">
       <template #activity_title_name>
         <span>
           已上完的活動
