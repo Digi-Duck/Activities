@@ -39,6 +39,10 @@ export default {
     allActivityData() {
       return this.rtData.allActivity ?? {};
     },
+    // 獲取已完成活動資料陣列
+    finishedActivityData() {
+      return this.rtData.finishedActivity ?? {};
+    },
 
     // 獲取活動類別資料陣列
     activityTypeData() {
@@ -159,7 +163,7 @@ export default {
       </div>
       <Pagination :pagination-data="allActivityData?.data" class="pt-3" />
     </div>
-    <ActivitySwiper>
+    <ActivitySwiper :slide-data="finishedActivityData?.data ?? []">
       <template #activity_title_name>
         <span>
           已上過的活動
