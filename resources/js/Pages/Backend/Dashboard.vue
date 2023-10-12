@@ -5,6 +5,8 @@ import Pagination from '@/Components/Public/Pagination.vue';
 import { router } from '@inertiajs/vue3';
 import student from '/images/icon/user-group-solid.svg';
 import surfNumber from '/images/icon/arrow-pointer-solid.svg';
+import dataUp from '/images/icon/caret-up-solid.svg';
+import dataDown from '/images/icon/caret-down-solid.svg';
 import defaultImage from '/images/icon/default-image.png';
 import book from '/images/icon/book-solid.svg';
 import presenter from '/images/icon/person-chalkboard-solid.svg';
@@ -38,6 +40,8 @@ export default {
         book,
         presenter,
         defaultImage,
+        dataUp,
+        dataDown,
       },
     };
   },
@@ -64,11 +68,14 @@ export default {
     newBehaviors() {
       return this.rtData.newBehaviors ?? {};
     },
-    activityCount() {
-      return this.rtData.activityCount ?? 0;
+    behaviorRecord() {
+      return this.rtData.behaviorRecord ?? {};
     },
     twoWeeksAgo() {
       return this.rtData.twoWeeksAgo ?? 0;
+    },
+    activityCount() {
+      return this.rtData.activityCount ?? 0;
     },
     studentCount() {
       return this.rtData.studentCount ?? 0;
@@ -76,8 +83,14 @@ export default {
     presenterCount() {
       return this.rtData.presenterCount ?? 0;
     },
-    behaviorRecord() {
-      return this.rtData.behaviorRecord ?? {};
+    activityCount14DaysAgo() {
+      return this.rtData.activityCount14DaysAgo ?? 0;
+    },
+    studentCount14DaysAgo() {
+      return this.rtData.studentCount14DaysAgo ?? 0;
+    },
+    presenterCount14DaysAgo() {
+      return this.rtData.presenterCount14DaysAgo ?? 0;
     },
   },
   created() {
@@ -100,7 +113,6 @@ export default {
 </script>
 
 <template>
-  {{ selectedType }}
   <section id="backend-dashboard" class="flex flex-col items-center">
     <h1 class="w-[80%] pb-1 border-b-4 title flex items-center gap-3">
       {{ title }}
@@ -134,8 +146,15 @@ export default {
             <!-- 資料icon -->
             <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
-          <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
-            <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">
+          <div v-if="activityCount > activityCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
+            <span>
+              上升{{ ((activityCount - activityCount14DaysAgo) / activityCount14DaysAgo) * 100 }}%%
+            </span>
+            <img :src="images.dataUp" class="w-[33px] h-[33px]" alt="數據狀態圖標">
+          </div>
+          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[green] text-[16px] flex justify-between">
+            下降{{ ((activityCount - activityCount14DaysAgo) / activityCount14DaysAgo) * 100 }}%
+            <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
         <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
@@ -149,8 +168,15 @@ export default {
             <!-- 資料icon -->
             <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
-          <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
-            <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">
+          <div v-if="studentCount > studentCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
+            <span>
+              上升{{ ((studentCount - studentCount14DaysAgo) / studentCount14DaysAgo) * 100 }}%%
+            </span>
+            <img :src="images.dataUp" class="w-[33px] h-[33px]" alt="數據狀態圖標">
+          </div>
+          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[green] text-[16px] flex justify-between">
+            下降{{ ((studentCount - studentCount14DaysAgo) / studentCount14DaysAgo) * 100 }}%
+            <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
         <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
@@ -164,8 +190,15 @@ export default {
             <!-- 資料icon -->
             <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
-          <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
-            <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">
+          <div v-if="presenterCount > presenterCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
+            <span>
+              上升{{ ((presenterCount - presenterCount14DaysAgo) / presenterCount14DaysAgo) * 100 }}%%
+            </span>
+            <img :src="images.dataUp" class="w-[33px] h-[33px]" alt="數據狀態圖標">
+          </div>
+          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[green] text-[16px] flex justify-between">
+            下降{{ ((presenterCount - presenterCount14DaysAgo) / presenterCount14DaysAgo) * 100 }}%
+            <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
       </div>

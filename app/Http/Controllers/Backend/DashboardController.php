@@ -29,9 +29,21 @@ class DashboardController extends Controller
         $endDate = $request->endDate ?? now()->format('Y-m-d');
         $startRecordDate = $request->startRecordDate ?? $twoWeeksAgo;
         $endRecordDate = $request->endRecordDate ?? now()->format('Y-m-d');
-        $activityCount = ActivityDetail::where('created_at', '>=', $twoWeeksAgo)->count();
-        $studentCount = UserRoleStudent::where('created_at', '>=', $twoWeeksAgo)->count();
-        $presenterCount = UserRolePresenter::where('created_at', '>=', $twoWeeksAgo)->count();
+        // Calculate the end date for the current data
+        $currentDate = now()->format('Y-m-d');
+        $passDate = $currentDate ?? $twoWeeksAgo;
+        $longPassDate = $passDate ?? $twoWeeksAgo;
+
+        // Calculate the counts for the last 14 days
+        $activityCount14DaysAgo = ActivityDetail::whereBetween('created_at', [$longPassDate, $passDate])->count();
+        $studentCount14DaysAgo = UserRoleStudent::whereBetween('created_at', [$longPassDate, $passDate])->count();
+        $presenterCount14DaysAgo = UserRolePresenter::whereBetween('created_at', [$longPassDate, $passDate])->count();
+
+        // Calculate the counts for the full date range
+        $activityCount = ActivityDetail::whereBetween('created_at', [$twoWeeksAgo, $currentDate])->count();
+        $studentCount = UserRoleStudent::whereBetween('created_at', [$twoWeeksAgo, $currentDate])->count();
+        $presenterCount = UserRolePresenter::whereBetween('created_at', [$twoWeeksAgo, $currentDate])->count();
+
         $chartData = [
             'xAxis' => [
                 'type' => 'category',
@@ -53,7 +65,7 @@ class DashboardController extends Controller
 
         for ($date = Carbon::parse($startDate); $date <= Carbon::parse($endDate); $date->addDay()) {
             $day = $date->format('Y-m-d');
-        
+
             if ($selectedType == 1) {
                 $count = ActivityDetail::whereDate('created_at', $day)->count();
             } elseif ($selectedType == 2) {
@@ -61,7 +73,7 @@ class DashboardController extends Controller
             } else {
                 $count = UserRoleStudent::whereDate('created_at', $day)->count();
             }
-        
+
             $dates[] = $date->format('D');
             $data[] = $count;
         }
@@ -112,13 +124,17 @@ class DashboardController extends Controller
         $data = (object) [
             'newBehaviors' => $newBehaviors,
             'activityCount' => $activityCount,
+            'studentCount' => $studentCount,
+            'presenterCount' => $presenterCount,
+            'activityCount14DaysAgo' => $activityCount14DaysAgo,
+            'studentCount14DaysAgo' => $studentCount14DaysAgo,
+            'presenterCount14DaysAgo' => $presenterCount14DaysAgo,
             'chartData' => $chartData,
             'selectedType' => $selectedType,
             'startDate' => $startDate,
             'endDate' => $endDate,
+            'currentDate' => $currentDate,
             'twoWeeksAgo' => $twoWeeksAgo,
-            'studentCount' => $studentCount,
-            'presenterCount' => $presenterCount,
             'behaviorRecord' => $behaviorRecord,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
             'keyword' => $keyword,
