@@ -96,9 +96,7 @@ export default {
       this.generateRandomString();
       const qrCodeContent = this.qrcodeNumber.toString();
       QRCode.toDataURL(qrCodeContent, (err, url) => {
-        if (err) {
-          console.error(err);
-        } else {
+        if (!err) {
           this.qrcodeImage = url;
         }
       });

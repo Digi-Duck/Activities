@@ -1,6 +1,8 @@
 <script>
-import QRCode from 'qrcode';
+import Echart from '@/Components/Public/Echart.vue';
+
 export default {
+  components: { Echart },
   props: {
     response: {
       type: Object,
@@ -11,32 +13,34 @@ export default {
   data() {
     return {
       title: 'Hello World !',
-      qrcodeImage: '123',
+      // 創建假的 response 數據
+      fakeResponse: {
+        xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            data: [120, 200, 150, 80, 70, 110, 1300],
+            type: 'bar',
+            showBackground: true,
+            backgroundStyle: {
+              color: 'rgba(180, 180, 180, 0.2)',
+            },
+          },
+        ],
+      },
     };
-  },
-  created() {
-  },
-  methods: {
-    // 在需要時生成QR Code
-    generateQRCode() {
-      // 這是要生成QR Code的數據，您可以使用您的數據
-      // const qrData = '123';
-
-      // 創建QR Code
-      QRCode.toDataURL(this.qrcodeImage, (err, url) => {
-        if (!err) {
-          this.qrcodeImage = url;
-        }
-      });
-    },
   },
 };
 </script>
 
 <template>
   <section id="test">
-    <button type="button" class="h-[100px] w-[100px] bg-[pink] rounded-full" @click="generateQRCode">按按鈕</button>
-    <img :src="qrcodeImage" id="qrcode-image" alt="QR Code" />
+    <Echart class="w-[500px] h-[500px]" :response="fakeResponse"></Echart>
   </section>
 </template>
 

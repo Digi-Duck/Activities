@@ -1,0 +1,45 @@
+<script>
+import { use } from 'echarts/core';
+import { CanvasRenderer } from 'echarts/renderers';
+import { BarChart } from 'echarts/charts';
+import { GridComponent } from 'echarts/components';
+import {
+  TooltipComponent,
+  LegendComponent,
+} from 'echarts/components';
+import VChart, { THEME_KEY } from 'vue-echarts';
+import { defineComponent } from 'vue';
+
+use([
+  CanvasRenderer,
+  BarChart,
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+]);
+
+export default defineComponent({
+  name: 'Echart',
+  components: {
+    VChart,
+  },
+  provide: {
+    [THEME_KEY]: 'dark',
+  },
+  props: {
+    response: {
+      type: Object,
+      required: false,
+      default: () => ({}),
+    },
+  },
+});
+</script>
+
+<template>
+  <VChart :option="response" />
+  <!-- {{ response }} -->
+</template>
+
+<style scoped>
+</style>

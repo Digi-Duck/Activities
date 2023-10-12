@@ -62,18 +62,17 @@ export default {
       </div>
     </div>
     <!-- 主要卡片區 -->
-    <Link v-for="(item, index) in activityClassification" :key="index" :href="route('studentActivityDetails', { id: item.id })" class="pt-3 pb-3 border-b-8 flex flex-col items-center">
-      <!-- {{ item.activityPhotos }} -->
-      <div class="w-full h-[345px] bg-pink-500 flex flex-row">
-        <img :src="item.activityPhotos[0]?.activity_img_path ?? ''" alt="活動封面圖" class="w-[300%] max-w-[937.438px] object-fill bg-slate-500">
-        <div class="w-full h-[345px] bg-[#974a4a] p-16 flex flex-col justify-center gap-2">
+    <div v-for="(item, index) in activityClassification" :key="index" class="pt-3 pb-3 border-b-8 flex flex-col items-center">
+      <div class="w-full max-w-[1400px] h-[345px] flex flex-row">
+        <img :src="item.activityPhotos[0]?.activity_img_path ?? ''" alt="活動封面圖" class="w-[300%] max-w-[800px] bg-slate-500">
+        <div class="w-[360px] h-[345px] bg-[#974a4a] p-16 flex flex-col justify-center gap-2">
           <div class="w-full text-white text-[36px]">{{ item.activity_name }}</div>
           <div class="w-full text-black text-[18px]">{{ item.activity_end_registration_time }}</div>
           <div class="w-full text-white text-[18px]">{{ item.activity_info }}</div>
-          <button type="button" class="text-black bg-[#a9bcc64f]">活動詳情</button>
+          <Link :href="route('studentActivityDetails', { id: item.id })" class="text-black bg-[#a9bcc64f] flex justify-center items-center">查看詳情</Link>
         </div>
       </div>
-    </Link>
+    </div>
   </section>
 </template>
 
