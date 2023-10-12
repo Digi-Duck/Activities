@@ -5,9 +5,18 @@ const form = useForm({
   name: '',
   email: '',
   user_role: '',
+  image: '',
   password: '',
   password_confirmation: '',
 });
+
+const uploadImage = (event) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(event.target.files[0]);
+  reader.onload = () => {
+    form.image = reader.result;
+  };
+};
 
 const submit = () => {
   form.post(route('register'), {
@@ -17,12 +26,18 @@ const submit = () => {
 </script>
 
 <template>
+  {{ form }}
   <div class="w-[full] p-[100px] bg-[#ebd8d8] flex flex-col justify-center items-center">
     <form @submit.prevent="submit" class="w-[35%] p-10 border-[3px] flex flex-col gap-3">
 
-      <div class="ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[yellow] rounded-full">
-        照片
-      </div>
+      <label class="cursor-pointer">
+        <div class="ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[yellow] rounded-full">
+
+          <img :src="form.image" class="w-full h-full rounded-full object-fill" alt="">
+          <input type="file" class="hidden" name="image" required accept="image/*" @change="(event) => uploadImage(event)">
+        </div>
+      </label>
+
       <div class="mt-4">
         <InputLabel for="email" value="帳號/Email" />
 

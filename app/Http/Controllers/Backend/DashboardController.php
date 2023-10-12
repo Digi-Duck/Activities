@@ -75,7 +75,7 @@ class DashboardController extends Controller
     public function studentManage(Request $request)
     {
         $keyword = $request->input('keyword', '');
-        $status = $request->input('status', ''); // 获取状态筛选条件
+        $status = $request->input('status', '');
 
         $student = User::where('user_role', 3)
             ->where(function ($query) use ($keyword) {
@@ -84,7 +84,6 @@ class DashboardController extends Controller
                     ->orWhere('created_at', 'like', "%$keyword%");
             });
 
-        // 如果提供了状态筛选条件，则添加状态筛选
         if ($status !== '') {
             $student->where('status', $status);
         }

@@ -8,6 +8,7 @@ use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
+use App\Services\FilesService;
 use App\Models\UserRoleAdmin;
 use App\Models\UserRolePresenter;
 use App\Models\UserRoleStudent;
@@ -19,6 +20,10 @@ use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
+    public function __construct(protected FilesService $fileService)
+    {
+        
+    }
     /**
      * Display the registration view.
      */
@@ -39,6 +44,7 @@ class RegisteredUserController extends Controller
             'email' => 'required|string|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        // dd($request->all());
 
         $user = User::create([
             'name' => $request->name,
@@ -51,12 +57,14 @@ class RegisteredUserController extends Controller
                 'user_id' => $user->id,
                 'user_name' => $user->name,
                 'phone_number' => '',
+                'img_path' => $this->fileService->base64Upload($request->image, 'userImage'),
             ]);
         } elseif ($user->user_role === '2') {
             UserRolePresenter::create([
                 'user_id' => $user->id,
                 'user_name' => $user->name,
                 'phone_number' => '',
+                'img_path' => $this->fileService->base64Upload($request->image, 'userImage'),
             ]);
         } else {
             UserRoleAdmin::create([

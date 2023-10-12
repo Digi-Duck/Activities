@@ -17,14 +17,12 @@ class RoleWeight
     {
         $userRole = $request->user()?->user_role ?? 0;
 
-
-        //假設自行設置的$weight裡，不包含使用者身分數字
         if (!str_contains($weight, strval($userRole))) {
-            // 若身分是管理員
+
             if ($userRole == '1') {
                 return redirect(route('dashboard'));
             }
-            // 身分不是管理員
+
             return redirect(route('index'));
         }
         return $next($request);
