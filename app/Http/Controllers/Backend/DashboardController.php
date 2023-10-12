@@ -12,6 +12,7 @@ use App\Models\UserBehavior;
 use App\Models\UserRolePresenter;
 use App\Models\UserRoleStudent;
 use App\Presenters\ActivityPresenter;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -21,12 +22,52 @@ class DashboardController extends Controller
     }
     public function index(Request $request)
     {
-        $activity = ActivityDetail::get();
+        $keyword = $request->keyword ?? '';
+        $selectedType = $request->selectedType;
         $twoWeeksAgo = date('Y-m-d', strtotime('-2 weeks'));
-
+        $startDate = $request->startDate ?? $twoWeeksAgo;
+        $endDate = $request->endDate ?? now()->format('Y-m-d');
+        $startRecordDate = $request->startRecordDate ?? $twoWeeksAgo;
+        $endRecordDate = $request->endRecordDate ?? now()->format('Y-m-d');
         $activityCount = ActivityDetail::where('created_at', '>=', $twoWeeksAgo)->count();
         $studentCount = UserRoleStudent::where('created_at', '>=', $twoWeeksAgo)->count();
         $presenterCount = UserRolePresenter::where('created_at', '>=', $twoWeeksAgo)->count();
+        $chartData = [
+            'xAxis' => [
+                'type' => 'category',
+                'data' => [], // Initialize as an empty array
+            ],
+            'yAxis' => [
+                'type' => 'value',
+            ],
+            'series' => [
+                [
+                    'data' => [], // Initialize as an empty array
+                    'type' => 'bar',
+                ],
+            ],
+        ];
+
+        $dates = [];
+        $data = [];
+
+        for ($date = Carbon::parse($startDate); $date <= Carbon::parse($endDate); $date->addDay()) {
+            $day = $date->format('Y-m-d');
+        
+            if ($selectedType == 1) {
+                $count = ActivityDetail::whereDate('created_at', $day)->count();
+            } elseif ($selectedType == 2) {
+                $count = UserRolePresenter::whereDate('created_at', $day)->count();
+            } else {
+                $count = UserRoleStudent::whereDate('created_at', $day)->count();
+            }
+        
+            $dates[] = $date->format('D');
+            $data[] = $count;
+        }
+
+        $chartData['xAxis']['data'] = $dates;
+        $chartData['series'][0]['data'] = $data;
 
         $newBehaviors = UserBehavior::select([
             'user_behaviors.id',
@@ -52,14 +93,10 @@ class DashboardController extends Controller
                 ];
             });
 
-
-        // dd($newBehaviors);
-
-        $keyword = $request->keyword ?? '';
-
         $behaviorRecord = UserBehavior::where('user_name', 'like', "%$keyword%")
             ->orwhere('user_type', 'like', "%$keyword%")
             ->orwhere('behavior', 'like', "%$keyword%")
+            ->orWhereBetween('created_at', [$startRecordDate, $endRecordDate])
             ->orderBy('created_at', 'desc')
             ->paginate(5)
             ->through(function ($item) {
@@ -73,9 +110,12 @@ class DashboardController extends Controller
             });
 
         $data = (object) [
-            'activity' => $activity,
             'newBehaviors' => $newBehaviors,
             'activityCount' => $activityCount,
+            'chartData' => $chartData,
+            'selectedType' => $selectedType,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
             'twoWeeksAgo' => $twoWeeksAgo,
             'studentCount' => $studentCount,
             'presenterCount' => $presenterCount,

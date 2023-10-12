@@ -15,7 +15,6 @@ export default {
     return {
       keyword: this.response?.rt_data?.keyword ?? '',
       selectedType: this.response?.rt_data?.type ?? '',
-      // title: this.response?.rt_data?.title ?? '活動列表',
       images: {
         magnifer,
       },

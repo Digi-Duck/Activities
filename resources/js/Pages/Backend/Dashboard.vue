@@ -20,8 +20,17 @@ export default {
     },
   },
   data() {
+    const today = new Date();
+    const fourteenDaysAgo = new Date(today);
+    fourteenDaysAgo.setDate(today.getDate() - 14);
+
     return {
       title: '數據摘要',
+      selectedType: 1,
+      startDate: fourteenDaysAgo.toISOString().substr(0, 10), // Set to 14 days ago
+      endDate: today.toISOString().substr(0, 10), // Set to today
+      startRecordDate: fourteenDaysAgo.toISOString().substr(0, 10), // Set to 14 days ago
+      endRecordDate: today.toISOString().substr(0, 10), // Set to today
       keyword: this.response?.rt_data?.keyword ?? '',
       images: {
         student,
@@ -30,26 +39,27 @@ export default {
         presenter,
         defaultImage,
       },
-      chartData: {
-        xAxis: {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        },
-        yAxis: {
-          type: 'value',
-        },
-        series: [
-          {
-            data: [120, 200, 150, 80, 70, 110, 1300],
-            type: 'bar',
-          },
-        ],
-      },
     };
   },
+
   computed: {
     rtData() {
       return this.response?.rt_data ?? {};
+    },
+    chartData() {
+      return this.rtData.chartData ?? { xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: [120, 200, 150, 80, 70, 110, 1300],
+          type: 'bar',
+        },
+      ] };
     },
     newBehaviors() {
       return this.rtData.newBehaviors ?? {};
@@ -73,10 +83,16 @@ export default {
   created() {
   },
   methods: {
-    searchData() {
-      router.get(route('dashboard'), { keyword: this.keyword }, {
+    searchRecord() {
+      router.get(route('dashboard'), { keyword: this.keyword, startRecordDate: this.startRecordDate, endRecordDate: this.endRecordDate }, {
         preserveState: true,
         preserveScroll: true,
+      });
+    },
+    searchChart() {
+      router.get(route('dashboard'), { selectedType: this.selectedType, startDate: this.startDate, endDate: this.endDate }, {
+        preserveScroll: true,
+        preserveState: true,
       });
     },
   },
@@ -84,6 +100,7 @@ export default {
 </script>
 
 <template>
+  {{ selectedType }}
   <section id="backend-dashboard" class="flex flex-col items-center">
     <h1 class="w-[80%] pb-1 border-b-4 title flex items-center gap-3">
       {{ title }}
@@ -156,8 +173,20 @@ export default {
       <div class="w-full h-[728.5px] flex flex-row justify-between gap-5 mb-5">
         <!-- 詳細圖表 -->
         <div class="w-[1008px] rounded-[10px] border-2 border-[#000000] flex flex-col overflow-hidden">
-          <div class="w-full h-[106px] bg-[#397CA4]"></div>
-          <Echart class="h[623px]" :response="chartData"></Echart>
+          <div class="w-full h-[106px] bg-[#397CA4] flex justify-start items-center gap-[20px]">
+            <select v-model="selectedType" class="h-[70%]" id="" @change="searchChart">
+              <option value=1>新增活動數量</option>
+              <option value=2>新增講師數量</option>
+              <option value=3>新增學員數量</option>
+            </select>
+            <div class="h-[70%] bg-[white] flex gap-1">
+              <input v-model="startDate" type="date" id="" @change="searchChart">
+              <span class="flex items-center">～</span>
+              <input v-model="endDate" type="date" id="" @change="searchChart">
+            </div>
+            <button type="button" @click="searchChart" class="w-[90px] h-[38px] bg-[#a0bcc650] rounded-[5px] text-[24px]">搜尋</button>
+          </div>
+          <Echart class="h-[623px]" :response="chartData"></Echart>
         </div>
         <!-- 最新消息 -->
         <div class="w-[559px] rounded-[10px] border-2 border-[#000000] text-white overflow-hidden flex flex-col gap-3">
@@ -184,13 +213,13 @@ export default {
         <!-- 搜尋欄 -->
         <div class="w-full h-[59px] ps-10 bg-white flex items-center gap-5 text-[48px] font-semibold">
           事件紀錄
-          <!-- 起始日期 -->
-          <input type="date">
-          ~
-          <!-- 結束日期 -->
-          <input type="date">
-          <input v-model="keyword" type="search" placeholder="請輸入搜尋使用者名稱、行為" @search="searchData">
-          <button type="button" @click="searchData" class="w-[86px] h-[38px] bg-[gray] rounded-[4px] text-[22px]">搜尋</button>
+          <div class="h-[70%] bg-[white] flex gap-1">
+            <input v-model="startRecordDate" type="date" id="">
+            <span class="flex items-center">～</span>
+            <input v-model="endRecordDate" type="date" id="">
+          </div>
+          <input v-model="keyword" type="search" placeholder="請輸入搜尋使用者名稱、行為" @search="searchRecord">
+          <button type="button" @click="searchRecord" class="w-[86px] h-[38px] bg-[gray] rounded-[4px] text-[22px]">搜尋</button>
         </div>
         <!-- 搜尋內容 -->
         <div class="w-full flex flex-col text-[36px] text-white">
