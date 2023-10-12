@@ -5,6 +5,7 @@ import Pagination from '@/Components/Public/Pagination.vue';
 import { router } from '@inertiajs/vue3';
 import student from '/images/icon/user-group-solid.svg';
 import surfNumber from '/images/icon/arrow-pointer-solid.svg';
+import defaultImage from '/images/icon/default-image.png';
 import book from '/images/icon/book-solid.svg';
 import presenter from '/images/icon/person-chalkboard-solid.svg';
 import Echart from '@/Components/Public/Echart.vue';
@@ -27,6 +28,7 @@ export default {
         surfNumber,
         book,
         presenter,
+        defaultImage,
       },
       chartData: {
         xAxis: {
@@ -162,10 +164,11 @@ export default {
           <!-- 最新消息表頭 -->
           <div class="w-full h-[106px] ps-5 rounded-t-[10px] bg-[#397AC4] text-[48px] flex items-center">最新消息</div>
           <!-- 最新消息內容 -->
-          <!-- {{ newBehaviors }} -->
           <div v-for="(item, index) in newBehaviors" :key="index" class="w-full h-[112px] p-5 bg-[#4D7F95] text-[16px] flex flex-row justify-between items-center">
             <!-- 會員頭像 -->
-            <img src="" class="w-[66px] h-[66px] rounded-full bg-white" alt="數據圖標">
+            <img v-if="item.student_image" :src="item.student_image" class="w-[66px] h-[66px] rounded-full bg-white" alt="學員照片">
+            <img v-else-if="item.presenter_image" :src="item.presenter_image" class="w-[66px] h-[66px] rounded-full bg-white" alt="講師照片">
+            <img v-else :src="images.defaultImage" class="w-[66px] h-[66px] rounded-full bg-white" alt="預設照片">
             <!-- 會員資訊 -->
             <div class="w-[45%] ps-10 flex-initial flex flex-col">
               <div>{{ item.user_name }}</div>

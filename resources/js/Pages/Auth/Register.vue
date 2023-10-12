@@ -1,11 +1,13 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
+import defaultImage from '/images/icon/default-image.png';
+import editImage from '/images/icon/edit.svg';
 
 const form = useForm({
   name: '',
   email: '',
   user_role: '',
-  image: '',
+  image: defaultImage,
   password: '',
   password_confirmation: '',
 });
@@ -26,15 +28,15 @@ const submit = () => {
 </script>
 
 <template>
-  {{ form }}
   <div class="w-[full] p-[100px] bg-[#ebd8d8] flex flex-col justify-center items-center">
     <form @submit.prevent="submit" class="w-[35%] p-10 border-[3px] flex flex-col gap-3">
 
       <label class="cursor-pointer">
-        <div class="ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[yellow] rounded-full">
+        <div class="relative ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[#FFFFFF] rounded-full">
 
           <img :src="form.image" class="w-full h-full rounded-full object-fill" alt="">
           <input type="file" class="hidden" name="image" required accept="image/*" @change="(event) => uploadImage(event)">
+          <img :src="editImage" class="absolute bottom-0 right-0 h-[20px] w-[20px]" alt="編輯圖片">
         </div>
       </label>
 

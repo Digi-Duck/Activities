@@ -28,7 +28,17 @@ class DashboardController extends Controller
         $studentCount = UserRoleStudent::where('created_at', '>=', $twoWeeksAgo)->count();
         $presenterCount = UserRolePresenter::where('created_at', '>=', $twoWeeksAgo)->count();
 
-        $newBehaviors = UserBehavior::orderBy('id', 'desc')
+        $newBehaviors = UserBehavior::select([
+            'user_behaviors.id',
+            'user_behaviors.user_name',
+            'user_behaviors.created_at',
+            'user_behaviors.behavior',
+            'user_role_students.img_path AS student_image',
+            'user_role_presenters.img_path AS presenter_image',
+        ])
+            ->leftJoin('user_role_students', 'user_behaviors.user_name', '=', 'user_role_students.user_name')
+            ->leftJoin('user_role_presenters', 'user_behaviors.user_name', '=', 'user_role_presenters.user_name')
+            ->orderBy('user_behaviors.id', 'desc')
             ->take(5)
             ->get()
             ->map(function ($item) {
@@ -37,8 +47,13 @@ class DashboardController extends Controller
                     'user_name' => $item->user_name,
                     'created_at' => $item->created_at->format('Y/m/d H:i'),
                     'behavior' => $item->behavior,
+                    'student_image' => $item->student_image,
+                    'presenter_image' => $item->presenter_image,
                 ];
             });
+
+
+        // dd($newBehaviors);
 
         $keyword = $request->keyword ?? '';
 
@@ -133,7 +148,6 @@ class DashboardController extends Controller
                     ->orWhere('created_at', 'like', "%$keyword%");
             });
 
-        // 如果提供了状态筛选条件，则添加状态筛选
         if ($status !== '') {
             $presenter->where('status', $status);
         }

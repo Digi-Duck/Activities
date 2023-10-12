@@ -33,6 +33,7 @@ export default {
 </script>
 
 <template>
+
   <section id="app-layout">
     <!-- {{ userRole }} -->
     <header class="relative h-[160.8px] bg-[#F9565C] flex flex-col">
@@ -41,10 +42,12 @@ export default {
       </Link>
       <nav class="h-[37.313%] pe-5 bg-[#FFFFFF] flex justify-end items-center gap-3">
         <div v-if="!$page.props.auth.user" class="flex gap-3">
+          <div class="h-[38px] rounded-[4px] flex justify-center items-center font-semibold">第一次來嗎？</div>
           <Link :href="route('register')" class="btn">註冊</Link>
           <Link :href="route('login')" class="btn">登入</Link>
         </div>
         <div v-else class="flex gap-3">
+          <div class="h-[38px] rounded-[4px] flex justify-center items-center font-semibold">哈囉！{{ $page.props.auth.user.name }}</div>
           <Link :href="route('test')" class="btn">會員中心</Link>
           <button type="button" class="btn" @click.prevent="logout">登出</button>
         </div>
