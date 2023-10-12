@@ -45,7 +45,7 @@ export default {
           <Link :href="route('login')" class="btn">登入</Link>
         </div>
         <div v-else class="flex gap-3">
-          <Link :href="route('logout')" class="btn">會員中心</Link>
+          <Link :href="route('test')" class="btn">會員中心</Link>
           <button type="button" class="btn" @click.prevent="logout">登出</button>
         </div>
       </nav>

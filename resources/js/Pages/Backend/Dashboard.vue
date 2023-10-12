@@ -7,9 +7,10 @@ import student from '/images/icon/user-group-solid.svg';
 import surfNumber from '/images/icon/arrow-pointer-solid.svg';
 import book from '/images/icon/book-solid.svg';
 import presenter from '/images/icon/person-chalkboard-solid.svg';
+import Echart from '@/Components/Public/Echart.vue';
 
 export default {
-  components: { Pagination },
+  components: { Pagination, Echart },
   props: {
     response: {
       type: Object,
@@ -26,6 +27,21 @@ export default {
         surfNumber,
         book,
         presenter,
+      },
+      chartData: {
+        xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            data: [120, 200, 150, 80, 70, 110, 1300],
+            type: 'bar',
+          },
+        ],
       },
     };
   },
@@ -66,7 +82,6 @@ export default {
 </script>
 
 <template>
-  {{ presenterCount }}
   <section id="backend-dashboard" class="flex flex-col items-center">
     <h1 class="w-[80%] pb-1 border-b-4 title flex items-center gap-3">
       {{ title }}
@@ -138,7 +153,10 @@ export default {
       <!-- 詳細圖表及最新消息區 -->
       <div class="w-full h-[728.5px] flex flex-row justify-between gap-5 mb-5">
         <!-- 詳細圖表 -->
-        <div class="w-[988px] rounded-[10px] bg-slate-400"></div>
+        <div class="w-[1008px] rounded-[10px] border-2 border-[#000000] flex flex-col overflow-hidden">
+          <div class="w-full h-[106px] bg-[#397CA4]"></div>
+          <Echart class="h[623px]" :response="chartData"></Echart>
+        </div>
         <!-- 最新消息 -->
         <div class="w-[559px] rounded-[10px] border-2 border-[#000000] text-white overflow-hidden flex flex-col gap-3">
           <!-- 最新消息表頭 -->

@@ -21,19 +21,12 @@ class DashboardController extends Controller
     }
     public function index(Request $request)
     {
-        // dd($request->all());
-        // 活動列表資料
         $activity = ActivityDetail::get();
         $twoWeeksAgo = date('Y-m-d', strtotime('-2 weeks'));
 
         $activityCount = ActivityDetail::where('created_at', '>=', $twoWeeksAgo)->count();
         $studentCount = UserRoleStudent::where('created_at', '>=', $twoWeeksAgo)->count();
         $presenterCount = UserRolePresenter::where('created_at', '>=', $twoWeeksAgo)->count();
-
-        // 輸出
-        // echo "在{$twoWeeksAgo}之後新增的活動數量為：{$activityCount}";
-        // echo "在{$twoWeeksAgo}之後新增的學員數量為：{$studentCount}";
-        // echo "在{$twoWeeksAgo}之後新增的講師數量為：{$presenterCount}";
 
         $newBehaviors = UserBehavior::orderBy('id', 'desc')
             ->take(5)

@@ -7,7 +7,7 @@ import {
   TooltipComponent,
   LegendComponent,
 } from 'echarts/components';
-import VChart, { THEME_KEY } from 'vue-echarts';
+import VChart from 'vue-echarts';
 import { defineComponent } from 'vue';
 
 use([
@@ -23,9 +23,6 @@ export default defineComponent({
   components: {
     VChart,
   },
-  provide: {
-    [THEME_KEY]: 'dark',
-  },
   props: {
     response: {
       type: Object,
@@ -37,8 +34,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <VChart :option="response" />
-  <!-- {{ response }} -->
+  <VChart :option="response" class="w-full" />
 </template>
 
 <style scoped>
