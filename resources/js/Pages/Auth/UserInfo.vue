@@ -39,6 +39,7 @@ export default {
 </script>
 
 <template>
+  {{ rtData.phoneNumber }}
   <section id="userInfo" class="w-[full] p-[100px] bg-[#ebd8d8] flex flex-col justify-center items-center">
     <div class="w-[35%] p-10 border-[3px] flex flex-col gap-3">
 
@@ -58,6 +59,12 @@ export default {
         <div class="mt-1 ps-[15px] w-full h-[40px] border rounded-[5px] shadow-sm shadow-slate-50 bg-[#838E94] text-white flex items-center">{{ userData.name }}</div>
 
       </div>
+      <div>
+        <InputLabel for="name" value="連絡電話" />
+
+        <div class="mt-1 ps-[15px] w-full h-[40px] border rounded-[5px] shadow-sm shadow-slate-50 bg-[#838E94] text-white flex items-center">{{ rtData.phoneNumber }}</div>
+
+      </div>
       <div class="mt-4">
         <InputLabel for="user_role" value="身分狀態" />
 
@@ -71,7 +78,7 @@ export default {
           完成
         </Link>
         <Link :href="route('changeUserInfo', { id: userData.id })" class="w-full justify-center inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-          重設密碼
+          修改資料
         </Link>
       </div></div>
   </section>

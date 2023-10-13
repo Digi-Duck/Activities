@@ -14,10 +14,12 @@ use App\Models\UserRoleStudent;
 use App\Presenters\ActivityPresenter;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Hash;
+use App\Services\FilesService;
 
 class IndexController extends Controller
 {
     public function __construct(
+        protected FilesService $filesService,
         protected ActivityPresenter $activityPresenter,
     ) {
     }
@@ -127,17 +129,20 @@ class IndexController extends Controller
             $presenterImage = UserRolePresenter::where('user_id', $userData->id)->first();
             if ($presenterImage) {
                 $imgPath = $presenterImage->img_path;
+                $phoneNumber = $presenterImage->phone_number;
             }
         } elseif ($userRole == 3) {
             $studentImage = UserRoleStudent::where('user_id', $userData->id)->first();
             if ($studentImage) {
                 $imgPath = $studentImage->img_path;
+                $phoneNumber = $studentImage->phone_number;
             }
         }
 
         $data = (object)[
             'userData' => $userData,
-            'imgPath' => $imgPath, // 添加图像路径到数据对象
+            'imgPath' => $imgPath,
+            'phoneNumber' => $phoneNumber,
         ];
 
         return Inertia::render('Auth/UserInfo', ['response' => rtFormat($data)]);
@@ -153,17 +158,20 @@ class IndexController extends Controller
             $presenterImage = UserRolePresenter::where('user_id', $userData->id)->first();
             if ($presenterImage) {
                 $imgPath = $presenterImage->img_path;
+                $phoneNumber = $presenterImage->phone_number;
             }
         } elseif ($userRole == 3) {
             $studentImage = UserRoleStudent::where('user_id', $userData->id)->first();
             if ($studentImage) {
                 $imgPath = $studentImage->img_path;
+                $phoneNumber = $studentImage->phone_number;
             }
         }
-        
+
         $data = (object)[
             'userData' => $userData,
             'imgPath' => $imgPath,
+            'phoneNumber' => $phoneNumber,
         ];
         return Inertia::render('Auth/ChangeUserInfo', ['response' => rtFormat($data)]);
     }
@@ -171,18 +179,35 @@ class IndexController extends Controller
     {
         $validated = $request->validate([
             'password' => 'required',
-            'id' => 'required|exists:users,id'
+            'phoneNumber' => 'required',
+            'id' => 'required|exists:users,id',
+            'image' => 'required',
         ]);
+
         $userData = User::find($request->id);
+
+        if ($request->user_role === 2) {
+            UserRolePresenter::where('user_id', $request->id)->update([
+                'phone_number' => $validated['phoneNumber'],
+                'img_path' => $this->filesService->base64Upload($validated['image'], 'otherProduct'),
+            ]);
+        } elseif ($request->user_role === 3) {
+            UserRoleStudent::where('user_id', $request->id)->update([
+                'phone_number' => $validated['phoneNumber'],
+                'img_path' => $this->filesService->base64Upload($validated['image'], 'otherProduct'),
+            ]);
+        }
         $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);
+
         $data = (object) [
             'userData' => $userData,
         ];
-        
+
         return back()->with(['message' => rtFormat($data)]);
     }
+
 
     /**
      * 活動分類

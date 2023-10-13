@@ -7,6 +7,7 @@ const form = useForm({
   name: '',
   email: '',
   user_role: '',
+  phonenumber: '',
   image: defaultImage,
   password: '',
   password_confirmation: '',
@@ -40,7 +41,7 @@ const submit = () => {
       </label>
 
       <div class="mt-4">
-        <InputLabel for="email" value="帳號/Email" />
+        <InputLabel value="帳號/Email" />
 
         <TextInput
           id="email"
@@ -55,7 +56,7 @@ const submit = () => {
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
       <div>
-        <InputLabel for="name" value="暱稱" />
+        <InputLabel value="暱稱" />
 
         <TextInput
           id="name"
@@ -70,9 +71,20 @@ const submit = () => {
 
         <InputError class="mt-2" :message="form.errors.name" />
       </div>
+      <div>
+        <InputLabel value="連絡電話" />
+
+        <input type="tel"
+          class="mt-1 block w-full"
+          v-model="form.phonenumber"
+          placeholder="連絡電話"
+          required
+          autofocus>
+
+      </div>
 
       <div class="mt-4">
-        <InputLabel for="password" value="密碼" />
+        <InputLabel value="密碼" />
 
         <TextInput
           id="password"
@@ -88,7 +100,7 @@ const submit = () => {
       </div>
 
       <div class="mt-4">
-        <InputLabel for="password_confirmation" value="確認密碼" />
+        <InputLabel value="確認密碼" />
 
         <TextInput
           id="password_confirmation"
@@ -103,7 +115,7 @@ const submit = () => {
         <InputError class="mt-2" :message="form.errors.password_confirmation" />
       </div>
       <div class="mt-4">
-        <InputLabel for="user_role" value="角色選擇" />
+        <InputLabel value="角色選擇" />
 
         <select id="user_role"
           class="mt-1 block w-full"

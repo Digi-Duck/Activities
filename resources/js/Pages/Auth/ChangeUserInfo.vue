@@ -2,6 +2,7 @@
 import defaultImage from '/images/icon/default-image.png';
 import { router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
+import editImage from '/images/icon/edit.svg';
 
 export default {
   props: {
@@ -15,7 +16,10 @@ export default {
     return {
       images: {
         defaultImage,
+        editImage,
       },
+      image: '',
+      phoneNumber: this.response?.rt_data?.phoneNumber,
       password: '',
       confirmPassword: '',
       isPasswordMatched: false,
@@ -41,6 +45,13 @@ export default {
     },
   },
   methods: {
+    uploadImage(event) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = () => {
+        this.image = reader.result;
+      };
+    },
     checkPasswordMatch() {
       this.isPasswordMatched = this.password === this.confirmPassword;
       if (!this.isPasswordMatched) {
@@ -66,7 +77,7 @@ export default {
         if (result.isConfirmed) {
           router.visit(route('userInfoUpdate'), {
             method: 'put',
-            data: { password: this.password, id: this.userData.id },
+            data: { password: this.password, id: this.userData.id, phoneNumber: this.phoneNumber, user_role: this.userData.user_role, image: this.image },
             preserveState: true,
             onSuccess: ({ props }) => {
               if (props.flash.message.rt_code === 1) {
@@ -94,10 +105,15 @@ export default {
       <div class="w-[full] p-[100px] bg-[#ebd8d8] flex flex-col justify-center items-center">
         <div class="w-[35%] p-10 border-[3px] bg-[#FEFFFE] flex flex-col gap-3">
 
-          <div class="ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[yellow] rounded-full overflow-hidden">
-            <img v-if="rtData.imgPath" :src="rtData.imgPath" class="w-full h-full" alt="">
-            <img v-else :src="images.defaultImage" alt="">
-          </div>
+          <label class="cursor-pointer">
+            <div class="relative ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[yellow] rounded-full">
+              <img v-if="image" :src="image" class="w-full h-full rounded-full" alt="">
+              <img v-else-if="rtData.imgPath" :src="rtData.imgPath" class="w-full h-full rounded-full" alt="">
+              <img v-else :src="images.defaultImage" alt="">
+              <input type="file" class="hidden" name="image" accept="image/*" @change="(event) => uploadImage(event)">
+              <img :src="images.editImage" class="absolute bottom-0 right-0 h-[20px] w-[20px]" alt="編輯圖片">
+            </div>
+          </label>
 
           <div class="mt-4">
             <InputLabel value="帳號/Email" />
@@ -113,6 +129,11 @@ export default {
             <InputLabel value="角色狀態" />
 
             <div class="mt-1 ps-[15px] w-full h-[40px] border rounded-[5px] shadow-sm shadow-slate-50 bg-[#838E94] text-white flex items-center">{{ userRoleText }}</div>
+          </div>
+          <div class="mt-4">
+            <InputLabel value="連絡電話" />
+
+            <input v-model="phoneNumber" type="text" class="mt-1 ps-[15px] w-full h-[40px] border rounded-[5px] shadow-sm shadow-slate-50 bg-[#FFFFFF] flex items-center">
           </div>
           <div class="mt-4">
             <InputLabel for="user_role" value="密碼" />

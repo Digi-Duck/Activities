@@ -41,6 +41,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'phonenumber' => 'required|max:255',
             'email' => 'required|string|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -55,14 +56,14 @@ class RegisteredUserController extends Controller
             UserRoleStudent::create([
                 'user_id' => $user->id,
                 'user_name' => $user->name,
-                'phone_number' => '',
+                'phone_number' => $request->phonenumber,
                 'img_path' => $this->fileService->base64Upload($request->image, 'userImage'),
             ]);
         } elseif ($user->user_role === '2') {
             UserRolePresenter::create([
                 'user_id' => $user->id,
                 'user_name' => $user->name,
-                'phone_number' => '',
+                'phone_number' => $request->phonenumber,
                 'img_path' => $this->fileService->base64Upload($request->image, 'userImage'),
             ]);
         } else {
