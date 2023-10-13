@@ -63,7 +63,7 @@ export default {
           if (this.handling) return;
 
           this.handling = true;
-          showScanningTip(decodedText);
+          this.showScanningTip(decodedText);
         };
 
         const config = {
