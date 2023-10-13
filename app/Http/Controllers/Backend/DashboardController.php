@@ -31,7 +31,6 @@ class DashboardController extends Controller
         $endDate = $request->endDate ?? now()->format('Y-m-d');
         $startRecordDate = $request->startRecordDate ?? $twoWeeksAgo;
         $endRecordDate = $request->endRecordDate ?? now()->format('Y-m-d');
-        // Calculate the end date for the current data
         $currentDate = now()->format('Y-m-d');
         $passDate = $currentDate ?? $twoWeeksAgo;
         $longPassDate = $passDate ?? $twoWeeksAgo;
@@ -47,14 +46,14 @@ class DashboardController extends Controller
         $chartData = [
             'xAxis' => [
                 'type' => 'category',
-                'data' => [], // Initialize as an empty array
+                'data' => [],
             ],
             'yAxis' => [
                 'type' => 'value',
             ],
             'series' => [
                 [
-                    'data' => [], // Initialize as an empty array
+                    'data' => [],
                     'type' => 'bar',
                 ],
             ],
@@ -183,7 +182,7 @@ class DashboardController extends Controller
     public function studentUpdate(Request $request)
     {
         $student = User::find($request->id);
-        // dd($student->status);
+
         if ($student) {
             $newStatus = $student->status == 1 ? 0 : 1;
             $student->status = $newStatus;
@@ -195,7 +194,7 @@ class DashboardController extends Controller
     public function presenterManage(Request $request)
     {
         $keyword = $request->input('keyword', '');
-        $status = $request->input('status', ''); // 获取状态筛选条件
+        $status = $request->input('status', '');
 
         $presenter = User::where('user_role', 2)
             ->where(function ($query) use ($keyword) {
@@ -233,7 +232,7 @@ class DashboardController extends Controller
     public function presenterUpdate(Request $request)
     {
         $presenter = User::find($request->id);
-        // dd($presenter->status);
+
         if ($presenter) {
             $newStatus = $presenter->status == 1 ? 0 : 1;
             $presenter->status = $newStatus;
@@ -245,7 +244,6 @@ class DashboardController extends Controller
     public function activityUpdate(Request $request)
     {
         $activity = ActivityDetail::find($request->id);
-        // dd($activity->activity_status);
 
         if ($activity) {
             $newStatus = ($activity->activity_status == 1) ? 2 : 1;
@@ -269,7 +267,6 @@ class DashboardController extends Controller
                 ->orwhere('activity_address', 'like', "%$keyword%");
         });
 
-        // 如果提供了状态筛选条件，则添加状态筛选
         if ($status !== '') {
             $activity->where('activity_status', $status);
         }
@@ -281,9 +278,7 @@ class DashboardController extends Controller
                 return [
                     'id' => $item->id,
                     'activity_presenter' => $item->activity_presenter,
-                    // 活動類型代號
                     'activity_type' => $item->activity_type,
-                    // 活動類型名稱
                     'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
                     'activity_name' => $item->activity_name,
                     'activity_type' => $item->activity_type,

@@ -14,7 +14,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'role.weight:2', 'verified'])->prefix('/presenter')->group(function () {
-    Route::get('/personalPage', [PresenterController::class, 'index'])->name('presenterPersonalPage');
+    Route::get('/presenterPersonalPage', [PresenterController::class, 'presenterPersonalPage'])->name('presenterPersonalPage');
     Route::get('/createActivity', [PresenterController::class, 'createActivity'])->name('createActivity');
     Route::post('/activityStore', [PresenterController::class, 'activityStore'])->name('activityStore');
     Route::get('/activityEdit{id}', [PresenterController::class, 'activityEdit'])->name('activityEdit');
@@ -25,8 +25,8 @@ Route::middleware(['auth', 'role.weight:2', 'verified'])->prefix('/presenter')->
     Route::delete('/activityDelete', [PresenterController::class, 'activityDelete'])->name('activityDelete');
 });
 
+Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
 Route::middleware(['auth', 'role.weight:3', 'verified'])->prefix('/student')->group(function () {
-    Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
     Route::get('/personalPage', [StudentController::class, 'personalPage'])->name('studentPersonalPage');
     Route::get('/activityEdit{id}', [StudentController::class, 'activityEdit'])->name('studentActivityEdit');
     Route::get('/finishedActivity{id}', [StudentController::class, 'finishedActivity'])->name('finishedActivity');

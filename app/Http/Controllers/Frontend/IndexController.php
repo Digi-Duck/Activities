@@ -16,14 +16,13 @@ use Illuminate\Foundation\Auth\User;
 
 class IndexController extends Controller
 {
-    // 注入 ActivityPresenter
     public function __construct(
         protected ActivityPresenter $activityPresenter,
     ) {
     }
 
     /**
-     * 前往前台首頁
+     * 前台首頁
      */
     public function index(Request $request)
     {
@@ -113,6 +112,9 @@ class IndexController extends Controller
         return Inertia::render('Frontend/Index', ['response' => rtFormat($data)]);
     }
 
+    /**
+     * 會員中心
+     */
     public function userInfo(Request $request)
     {
         $userData = User::find($request->user()->id);
@@ -140,12 +142,9 @@ class IndexController extends Controller
         return Inertia::render('Auth/UserInfo', ['response' => rtFormat($data)]);
     }
 
-
-    public function declaration()
-    {
-        return Inertia::render('Frontend/Declaration');
-    }
-
+    /**
+     * 活動分類
+     */
     public function activityClassification(Request $request)
     {
         $keyword = $request->keyword ?? '';
@@ -193,6 +192,14 @@ class IndexController extends Controller
             'keyword' => $keyword,
         ];
         return Inertia::render('Frontend/ActivityClassification', ['response' => rtFormat($data)]);
+    }
+
+    /**
+     * 相關聲明
+     */
+    public function declaration()
+    {
+        return Inertia::render('Frontend/Declaration');
     }
 
     public function test()

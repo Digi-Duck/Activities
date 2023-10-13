@@ -23,11 +23,9 @@ class PresenterController extends Controller
     /**
      * 講師的個人介面
      */
-    public function index(Request $request)
+    public function presenterPersonalPage(Request $request)
     {
         $keyword = $request->keyword ?? '';
-        // dd($request->user()->UserRolePresenter->id);
-        // 活動列表資料
         $activity = ActivityDetail::orderBy('id', 'desc')
             ->where('presenter_id', $request->user()->UserRolePresenter->id)
             ->where(function ($query) use ($keyword) {
@@ -104,8 +102,18 @@ class PresenterController extends Controller
         return Inertia::render('Frontend/Presenter/CreateActivity');
     }
 
+    /**
+     * 儲存新增的活動資料
+     */
     public function activityStore(Request $request)
     {
+        $request->merge([
+            'activityStartRegistrationTime' => str_replace('T', ' ', $request->activityStartRegistrationTime),
+            'activityEndRegistrationTime' => str_replace('T', ' ', $request->activityEndRegistrationTime),
+            'activityStartTime' => str_replace('T', ' ', $request->activityStartTime),
+            'activityEndTime' => str_replace('T', ' ', $request->activityEndTime),
+        ]);
+
         $request->validate([
             'activityName' => 'required',
             'activityInfo' => 'required',
@@ -114,22 +122,17 @@ class PresenterController extends Controller
             'activityPresenter' => 'required',
             'activityLowestNumberOfPeople' => 'required|numeric',
             'activityHighestNumberOfPeople' => 'required|numeric',
-            'activityStartRegistrationTime' => 'required|date_format:Y-m-d H:i', // 日期时间格式
-            'activityEndRegistrationTime' => 'required|date_format:Y-m-d H:i|after:activityStartRegistrationTime', // 需要晚于开始时间
+            'activityStartRegistrationTime' => 'required|date_format:Y-m-d H:i',
+            'activityEndRegistrationTime' => 'required|date_format:Y-m-d H:i|after:activityStartRegistrationTime',
             'activityStartTime' => 'required|date_format:Y-m-d H:i',
-            'activityEndTime' => 'required|date_format:Y-m-d H:i|after:activityStartTime', // 需要晚于开始时间
+            'activityEndTime' => 'required|date_format:Y-m-d H:i|after:activityStartTime',
             'activityAddress' => 'required',
             'activityInstruction' => 'required',
             'activityInformation' => 'required',
         ], [
-            'activityStartRegistrationTime.date_format' => '時間格式為:2000-01-01 10:00',
-            'activityEndRegistrationTime.date_format' => '時間格式為:2000-01-01 10:00',
             'activityEndRegistrationTime.after' => '需晚於開始註冊時間',
-            'activityStartTime.date_format' => '時間格式為:2000-01-01 10:00',
-            'activityEndTime.date_format' => '時間格式為:2000-01-01 10:00',
             'activityEndTime.after' => '需晚於開始註冊時間',
         ]);
-
 
         $activity = ActivityDetail::create([
             'activity_name' => $request->activityName,
@@ -167,6 +170,135 @@ class PresenterController extends Controller
         return back()->with(['message' => rtFormat($activity)]);
     }
 
+    /**
+     * 編輯活動
+     */
+    public function activityEdit($id)
+    {
+        $activity = ActivityDetail::find($id);
+
+        $currentTimestamp = time();
+        $activityStartTime = strtotime($activity->activity_start_time);
+        $timeDifferenceInSeconds = $activityStartTime - $currentTimestamp;
+        $timeDifferenceInDays = intval($timeDifferenceInSeconds / (3600 * 24));
+
+        $activityPhotos = $activity->activityPhotos->map(function ($photo) {
+            return [
+                'id' => $photo->id,
+                'activity_img_path' => $photo->activity_img_path,
+            ];
+        })->toArray();
+
+        $result = [
+            'id' => $activity->id,
+            'activity_name' => $activity->activity_name,
+            'activity_info' => $activity->activity_info,
+            'activity_presenter' => $activity->activity_presenter,
+            'activity_type' => $activity->activity_type,
+            'activity_type_name' => $this->activityPresenter->getActivityTypeName($activity->activity_type),
+            'activity_lowest_number_of_people' => $activity->activity_lowest_number_of_people,
+            'activity_highest_number_of_people' => $activity->activity_highest_number_of_people,
+            'activity_start_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_start_registration_time)),
+            'activity_end_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_end_registration_time)),
+            'activity_start_time' => date('Y-m-d H:i', strtotime($activity->activity_start_time)),
+            'activity_end_time' => date('Y-m-d H:i', strtotime($activity->activity_end_time)),
+            'activity_address' => $activity->activity_address,
+            'activity_instruction' => $activity->activity_instruction,
+            'activity_information' => $activity->activity_information,
+            'activityPhotos' => $activityPhotos,
+        ];
+
+
+        $data = (object) [
+            'activity' => $result,
+            'timeDifferenceInDays' => $timeDifferenceInDays,
+            'activityTypeData' => $this->activityPresenter->getTypeOption(),
+        ];
+
+        return Inertia::render('Frontend/Presenter/EditActivity', ['response' => rtFormat($data)]);
+    }
+
+    /**
+     * 更新活動資訊
+     */
+    public function activityPresenterUpdate(Request $request)
+    {
+        $activity = ActivityDetail::find($request->id);
+        UserBehavior::create([
+            'type_id' => 1,
+            'user_type' => '講師',
+            'user_name' => $request->user()->userRolePresenter->user_name,
+            'behavior' => $request->user()->userRolePresenter->user_name . '修改了' . $activity->activity_name,
+        ]);
+
+        $activity->update([
+            'activity_name' => $request->formData['activityName'],
+            'activity_info' => $request->formData['activityInfo'],
+            'activity_type' => $request->formData['activityType'],
+            'activity_presenter' => $request->formData['activityPresenter'],
+            'activity_lowest_number_of_people' => $request->formData['activityLowestNumberOfPeople'],
+            'activity_highest_number_of_people' => $request->formData['activityHighestNumberOfPeople'],
+            'activity_start_registration_time' => $request->formData['activityStartRegistrationTime'],
+            'activity_end_registration_time' => $request->formData['activityEndRegistrationTime'],
+            'activity_start_time' => $request->formData['activityStartTime'],
+            'activity_end_time' => $request->formData['activityEndTime'],
+            'activity_address' => $request->formData['activityAddress'],
+            'activity_instruction' => $request->formData['activityInstruction'],
+            'activity_information' => $request->formData['activityInformation'],
+        ]);
+
+        $activityPhotos = ActivityPhoto::where('activity_id', $activity->id)->get();
+
+        foreach ($activityPhotos as $photo) {
+            $photo->delete();
+        }
+
+        foreach ($request->formData['activityPhoto'] as $value) {
+            $activity_img_path = $value['activity_img_path'];
+            if (strpos($activity_img_path, '/') === 0) {
+                $activity_img_path_result = $activity_img_path;
+            } else {
+                $activity_img_path_result = $this->filesService->base64Upload($activity_img_path, 'otherProduct');
+            }
+
+            ActivityPhoto::create([
+                'activity_id' => $activity->id,
+                'activity_img_path' => $activity_img_path_result,
+            ]);
+        }
+
+        return back()->with(['message' => rtFormat($activity)]);
+    }
+
+    /**
+     * 刪除活動
+     */
+    public function activityDelete(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:activity_details,id'
+        ]);
+        $activity = ActivityDetail::find($request->id);
+        $activityPhotos = ActivityPhoto::where('activity_id', $activity->id)->get();
+
+        foreach ($activityPhotos as $photo) {
+            $photo->delete();
+        }
+
+        UserBehavior::create([
+            'type_id' => 1,
+            'user_type' => '講師',
+            'user_name' => $request->user()->userRolePresenter->user_name,
+            'behavior' => $request->user()->userRolePresenter->user_name . '刪除了' . $request->activityName,
+        ]);
+        $activity->delete();
+
+        return redirect(route('presenterPersonalPage'));
+    }
+
+    /**
+     * 各活動掃描
+     */
     public function activityScanner($id, Request $request)
     {
         $activity = ActivityDetail::find($id);
@@ -224,7 +356,26 @@ class PresenterController extends Controller
         return Inertia::render('Frontend/Presenter/ScannerPage', ['response' => rtFormat($data)]);
     }
 
-    public function presenterFinishedActivity($id, Request $request)
+    /**
+     * 簽到確認
+     */
+    public function activityScannerConfirm(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|exists:qrcode_details,qrcode_number'
+        ]);
+        $registerCheck = QrcodeDetail::where('qrcode_number', $request->code)->first();
+        $registerCheck->update([
+            'qrcode_status' => 1,
+        ]);
+
+        return back()->with(['message' => rtFormat($registerCheck)]);
+    }
+
+    /**
+     * 完成活動
+     */
+    public function presenterFinishedActivity($id)
     {
         $activity = ActivityDetail::find($id);
         $activityPhotos = $activity->activityPhotos;
@@ -256,136 +407,5 @@ class PresenterController extends Controller
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
         ];
         return Inertia::render('Frontend/Presenter/FinishedActivity', ['response' => rtFormat($data)]);
-    }
-
-    public function activityScannerConfirm(Request $request)
-    {
-        $request->validate([
-            'code' => 'required|exists:qrcode_details,qrcode_number'
-        ]);
-        $registerCheck = QrcodeDetail::where('qrcode_number', $request->code)->first();
-        $registerCheck->update([
-            'qrcode_status' => 1,
-        ]);
-
-        return back()->with(['message' => rtFormat($registerCheck)]);
-    }
-
-    public function activityEdit($id)
-    {
-        $activity = ActivityDetail::find($id);
-
-        $currentTimestamp = time();
-        $activityStartTime = strtotime($activity->activity_start_time);
-        $timeDifferenceInSeconds = $activityStartTime - $currentTimestamp;
-        $timeDifferenceInDays = intval($timeDifferenceInSeconds / (3600 * 24));
-
-        $activityPhotos = $activity->activityPhotos->map(function ($photo) {
-            return [
-                'id' => $photo->id,
-                'activity_img_path' => $photo->activity_img_path,
-            ];
-        })->toArray();
-
-        $result = [
-            'id' => $activity->id,
-            'activity_name' => $activity->activity_name,
-            'activity_info' => $activity->activity_info,
-            'activity_presenter' => $activity->activity_presenter,
-            'activity_type' => $activity->activity_type,
-            'activity_type_name' => $this->activityPresenter->getActivityTypeName($activity->activity_type),
-            'activity_lowest_number_of_people' => $activity->activity_lowest_number_of_people,
-            'activity_highest_number_of_people' => $activity->activity_highest_number_of_people,
-            'activity_start_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_start_registration_time)),
-            'activity_end_registration_time' => date('Y-m-d H:i', strtotime($activity->activity_end_registration_time)),
-            'activity_start_time' => date('Y-m-d H:i', strtotime($activity->activity_start_time)),
-            'activity_end_time' => date('Y-m-d H:i', strtotime($activity->activity_end_time)),
-            'activity_address' => $activity->activity_address,
-            'activity_instruction' => $activity->activity_instruction,
-            'activity_information' => $activity->activity_information,
-            'activityPhotos' => $activityPhotos,
-        ];
-
-
-        $data = (object) [
-            'activity' => $result,
-            'timeDifferenceInDays' => $timeDifferenceInDays,
-            'activityTypeData' => $this->activityPresenter->getTypeOption(),
-        ];
-
-        return Inertia::render('Frontend/Presenter/EditActivity', ['response' => rtFormat($data)]);
-    }
-
-    public function activityPresenterUpdate(Request $request)
-    {
-        $activity = ActivityDetail::find($request->id);
-        UserBehavior::create([
-            'type_id' => 1,
-            'user_type' => '講師',
-            'user_name' => $request->user()->userRolePresenter->user_name,
-            'behavior' => $request->user()->userRolePresenter->user_name . '修改了' . $activity->activity_name,
-        ]);
-
-        $activity->update([
-            'activity_name' => $request->formData['activityName'],
-            'activity_info' => $request->formData['activityInfo'],
-            'activity_type' => $request->formData['activityType'],
-            'activity_presenter' => $request->formData['activityPresenter'],
-            'activity_lowest_number_of_people' => $request->formData['activityLowestNumberOfPeople'],
-            'activity_highest_number_of_people' => $request->formData['activityHighestNumberOfPeople'],
-            'activity_start_registration_time' => $request->formData['activityStartRegistrationTime'],
-            'activity_end_registration_time' => $request->formData['activityEndRegistrationTime'],
-            'activity_start_time' => $request->formData['activityStartTime'],
-            'activity_end_time' => $request->formData['activityEndTime'],
-            'activity_address' => $request->formData['activityAddress'],
-            'activity_instruction' => $request->formData['activityInstruction'],
-            'activity_information' => $request->formData['activityInformation'],
-        ]);
-
-        $activityPhotos = ActivityPhoto::where('activity_id', $activity->id)->get();
-
-        foreach ($activityPhotos as $photo) {
-            $photo->delete();
-        }
-
-        foreach ($request->formData['activityPhoto'] as $value) {
-
-            $activity_img_path = $value['activity_img_path'];
-
-            if (strpos($activity_img_path, '/') === 0) {
-                $activity_img_path_result = $activity_img_path;
-            } else {
-                $activity_img_path_result = $this->filesService->base64Upload($activity_img_path, 'otherProduct');
-            }
-
-            ActivityPhoto::create([
-                'activity_id' => $activity->id,
-                'activity_img_path' => $activity_img_path_result,
-            ]);
-        }
-
-        // dd(123);
-
-
-        return back()->with(['message' => rtFormat($activity)]);
-    }
-
-    public function activityDelete(Request $request)
-    {
-        $request->validate([
-            'id' => 'required|exists:activity_details,id'
-        ]);
-        $activity = ActivityDetail::find($request->id);
-
-        UserBehavior::create([
-            'type_id' => 1,
-            'user_type' => '講師',
-            'user_name' => $request->user()->userRolePresenter->user_name,
-            'behavior' => $request->user()->userRolePresenter->user_name . '刪除了' . $request->activityName,
-        ]);
-
-        $activity->delete();
-
-        return redirect(route('presenterPersonalPage'));
     }
 }

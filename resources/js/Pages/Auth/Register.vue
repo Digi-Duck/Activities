@@ -12,6 +12,18 @@ const form = useForm({
   password_confirmation: '',
 });
 
+// const { setTouched } = form;
+// setTouched({
+//   name: true,
+//   email: true,
+//   user_role: true,
+//   image: false,
+//   password: true,
+//   password_confirmation: true,
+// });
+
+// const image = ref(defaultImage);
+
 const uploadImage = (event) => {
   const reader = new FileReader();
   reader.readAsDataURL(event.target.files[0]);
@@ -30,7 +42,6 @@ const submit = () => {
 <template>
   <div class="w-[full] p-[100px] bg-[#ebd8d8] flex flex-col justify-center items-center">
     <form @submit.prevent="submit" class="w-[35%] p-10 border-[3px] flex flex-col gap-3">
-
       <label class="cursor-pointer">
         <div class="relative ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[#FFFFFF] rounded-full">
 
