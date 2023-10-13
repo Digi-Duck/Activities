@@ -12,18 +12,6 @@ const form = useForm({
   password_confirmation: '',
 });
 
-// const { setTouched } = form;
-// setTouched({
-//   name: true,
-//   email: true,
-//   user_role: true,
-//   image: false,
-//   password: true,
-//   password_confirmation: true,
-// });
-
-// const image = ref(defaultImage);
-
 const uploadImage = (event) => {
   const reader = new FileReader();
   reader.readAsDataURL(event.target.files[0]);
@@ -46,7 +34,7 @@ const submit = () => {
         <div class="relative ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[#FFFFFF] rounded-full">
 
           <img :src="form.image" class="w-full h-full rounded-full object-fill" alt="">
-          <input type="file" class="hidden" name="image" required accept="image/*" @change="(event) => uploadImage(event)">
+          <input type="file" class="hidden" name="image" accept="image/*" @change="(event) => uploadImage(event)">
           <img :src="editImage" class="absolute bottom-0 right-0 h-[20px] w-[20px]" alt="編輯圖片">
         </div>
       </label>

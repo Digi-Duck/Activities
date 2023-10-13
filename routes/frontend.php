@@ -11,6 +11,8 @@ Route::get('/declaration', [IndexController::class, 'declaration'])->name('decla
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/userInfo', [IndexController::class, 'userInfo'])->name('userInfo');
+    Route::get('/changeUserInfo{id}', [IndexController::class, 'changeUserInfo'])->name('changeUserInfo');
+    Route::put('/userInfoUpdate', [IndexController::class, 'userInfoUpdate'])->name('userInfoUpdate');
 });
 
 Route::middleware(['auth', 'role.weight:2', 'verified'])->prefix('/presenter')->group(function () {
@@ -18,11 +20,11 @@ Route::middleware(['auth', 'role.weight:2', 'verified'])->prefix('/presenter')->
     Route::get('/createActivity', [PresenterController::class, 'createActivity'])->name('createActivity');
     Route::post('/activityStore', [PresenterController::class, 'activityStore'])->name('activityStore');
     Route::get('/activityEdit{id}', [PresenterController::class, 'activityEdit'])->name('activityEdit');
-    Route::get('/presenterFinishedActivity{id}', [PresenterController::class, 'presenterFinishedActivity'])->name('presenterFinishedActivity');
-    Route::get('/activityScanner{id}', [PresenterController::class, 'activityScanner'])->name('activityScanner');
-    Route::post('/activityScannerConfirm', [PresenterController::class, 'activityScannerConfirm'])->name('activityScannerConfirm');
     Route::put('/activityPresenterUpdate', [PresenterController::class, 'activityPresenterUpdate'])->name('activityPresenterUpdate');
     Route::delete('/activityDelete', [PresenterController::class, 'activityDelete'])->name('activityDelete');
+    Route::get('/activityScanner{id}', [PresenterController::class, 'activityScanner'])->name('activityScanner');
+    Route::post('/activityScannerConfirm', [PresenterController::class, 'activityScannerConfirm'])->name('activityScannerConfirm');
+    Route::get('/presenterFinishedActivity{id}', [PresenterController::class, 'presenterFinishedActivity'])->name('presenterFinishedActivity');
 });
 
 Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');

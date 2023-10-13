@@ -13,6 +13,7 @@ use App\Models\UserRolePresenter;
 use App\Models\UserRoleStudent;
 use App\Presenters\ActivityPresenter;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Hash;
 
 class IndexController extends Controller
 {
@@ -140,6 +141,47 @@ class IndexController extends Controller
         ];
 
         return Inertia::render('Auth/UserInfo', ['response' => rtFormat($data)]);
+    }
+    public function changeUserInfo(Request $request)
+    {
+        $userData = User::find($request->user()->id);
+        $userRole = $userData->user_role;
+
+        $imgPath = null;
+
+        if ($userRole == 2) {
+            $presenterImage = UserRolePresenter::where('user_id', $userData->id)->first();
+            if ($presenterImage) {
+                $imgPath = $presenterImage->img_path;
+            }
+        } elseif ($userRole == 3) {
+            $studentImage = UserRoleStudent::where('user_id', $userData->id)->first();
+            if ($studentImage) {
+                $imgPath = $studentImage->img_path;
+            }
+        }
+        
+        $data = (object)[
+            'userData' => $userData,
+            'imgPath' => $imgPath,
+        ];
+        return Inertia::render('Auth/ChangeUserInfo', ['response' => rtFormat($data)]);
+    }
+    public function userInfoUpdate(Request $request)
+    {
+        $validated = $request->validate([
+            'password' => 'required',
+            'id' => 'required|exists:users,id'
+        ]);
+        $userData = User::find($request->id);
+        $request->user()->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+        $data = (object) [
+            'userData' => $userData,
+        ];
+        
+        return back()->with(['message' => rtFormat($data)]);
     }
 
     /**

@@ -11,7 +11,6 @@ export default {
   },
   data() {
     return {
-      title: 'Hello World !',
       images: {
         defaultImage,
       },
@@ -40,7 +39,6 @@ export default {
 </script>
 
 <template>
-  {{ rtData.imgPath }}
   <section id="userInfo" class="w-[full] p-[100px] bg-[#ebd8d8] flex flex-col justify-center items-center">
     <div class="w-[35%] p-10 border-[3px] flex flex-col gap-3">
 
@@ -71,6 +69,9 @@ export default {
 
         <Link :href="route('index')" class="w-full justify-center inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
           完成
+        </Link>
+        <Link :href="route('changeUserInfo', { id: userData.id })" class="w-full justify-center inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+          重設密碼
         </Link>
       </div></div>
   </section>
