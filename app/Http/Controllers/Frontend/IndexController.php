@@ -9,6 +9,8 @@ use App\Models\ActivityDetail;
 use App\Http\Controllers\Controller;
 use App\Models\RegisterActivity;
 use App\Models\StudentActivity;
+use App\Models\UserRolePresenter;
+use App\Models\UserRoleStudent;
 use App\Presenters\ActivityPresenter;
 use Illuminate\Foundation\Auth\User;
 
@@ -114,11 +116,30 @@ class IndexController extends Controller
     public function userInfo(Request $request)
     {
         $userData = User::find($request->user()->id);
+        $userRole = $userData->user_role;
+
+        $imgPath = null;
+
+        if ($userRole == 2) {
+            $presenterImage = UserRolePresenter::where('user_id', $userData->id)->first();
+            if ($presenterImage) {
+                $imgPath = $presenterImage->img_path;
+            }
+        } elseif ($userRole == 3) {
+            $studentImage = UserRoleStudent::where('user_id', $userData->id)->first();
+            if ($studentImage) {
+                $imgPath = $studentImage->img_path;
+            }
+        }
+
         $data = (object)[
             'userData' => $userData,
+            'imgPath' => $imgPath, // 添加图像路径到数据对象
         ];
+
         return Inertia::render('Auth/UserInfo', ['response' => rtFormat($data)]);
     }
+
 
     public function declaration()
     {

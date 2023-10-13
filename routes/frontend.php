@@ -8,7 +8,10 @@ use App\Http\Controllers\Frontend\StudentController;
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/activityClassification', [IndexController::class, 'activityClassification'])->name('activityClassification');
 Route::get('/declaration', [IndexController::class, 'declaration'])->name('declaration');
-Route::get('/userInfo', [IndexController::class, 'userInfo'])->name('userInfo');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/userInfo', [IndexController::class, 'userInfo'])->name('userInfo');
+});
 
 Route::middleware(['auth', 'role.weight:2', 'verified'])->prefix('/presenter')->group(function () {
     Route::get('/personalPage', [PresenterController::class, 'index'])->name('presenterPersonalPage');

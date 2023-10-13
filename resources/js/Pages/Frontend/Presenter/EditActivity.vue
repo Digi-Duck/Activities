@@ -132,7 +132,6 @@ export default {
 </script>
 
 <template>
-  {{ formData }}
   <section id="create-activity" class="flex flex-col">
     <!-- 建立活動資訊填寫 -->
     <Link :href="route('activityScanner', { id: rtData.activity.id })" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
