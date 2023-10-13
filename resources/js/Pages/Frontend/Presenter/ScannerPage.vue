@@ -39,9 +39,12 @@ export default {
     activityTypeData() {
       return this.rtData.activityTypeData ?? {};
     },
-    // 獲取活動類別資料陣列
+    // 獲取參加學員資料陣列
     studentData() {
       return this.rtData.studentData ?? {};
+    },
+    checkPeople() {
+      return this.rtData.checkPeople ?? {};
     },
   },
   mounted() {
@@ -268,7 +271,8 @@ export default {
       <div class="flex gap-[100px] text-[35px]">
         <div class="flex items-center gap-3">
           <img :src="images.check" class="w-[50px] h-[50px]" alt="已報到人數icon">
-          已報到人數:</div>
+          已報到人數:<span>{{ checkPeople }}</span>
+        </div>
       </div>
 
       <!-- 這是掃描區域 -->

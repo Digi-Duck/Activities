@@ -6,6 +6,9 @@ use App\Http\Controllers\Frontend\PresenterController;
 use App\Http\Controllers\Frontend\StudentController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/activityClassification', [IndexController::class, 'activityClassification'])->name('activityClassification');
+Route::get('/declaration', [IndexController::class, 'declaration'])->name('declaration');
+Route::get('/userInfo', [IndexController::class, 'userInfo'])->name('userInfo');
 
 Route::middleware(['auth', 'role.weight:2', 'verified'])->prefix('/presenter')->group(function () {
     Route::get('/personalPage', [PresenterController::class, 'index'])->name('presenterPersonalPage');
@@ -15,12 +18,10 @@ Route::middleware(['auth', 'role.weight:2', 'verified'])->prefix('/presenter')->
     Route::get('/presenterFinishedActivity{id}', [PresenterController::class, 'presenterFinishedActivity'])->name('presenterFinishedActivity');
     Route::get('/activityScanner{id}', [PresenterController::class, 'activityScanner'])->name('activityScanner');
     Route::post('/activityScannerConfirm', [PresenterController::class, 'activityScannerConfirm'])->name('activityScannerConfirm');
-    Route::put('/activityUpdate', [PresenterController::class, 'activityUpdate'])->name('activityUpdate');
+    Route::put('/activityPresenterUpdate', [PresenterController::class, 'activityPresenterUpdate'])->name('activityPresenterUpdate');
     Route::delete('/activityDelete', [PresenterController::class, 'activityDelete'])->name('activityDelete');
 });
 
-Route::get('/activityClassification', [IndexController::class, 'activityClassification'])->name('activityClassification');
-Route::get('/declaration', [IndexController::class, 'declaration'])->name('declaration');
 Route::middleware(['auth', 'role.weight:3', 'verified'])->prefix('/student')->group(function () {
     Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
     Route::get('/personalPage', [StudentController::class, 'personalPage'])->name('studentPersonalPage');

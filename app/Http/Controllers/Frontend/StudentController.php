@@ -29,7 +29,6 @@ class StudentController extends Controller
         $activity = ActivityDetail::find($id);
 
         if (!$activity) {
-            // 处理活动不存在的情况
             return abort(404);
         }
         $currentTimestamp = time();
@@ -83,7 +82,6 @@ class StudentController extends Controller
             ->where('id', $id)
             ->first();
         if (!$activity) {
-            // 处理活动不存在的情况
             return abort(404);
         }
 
@@ -145,7 +143,6 @@ class StudentController extends Controller
             ->where('id', $id)
             ->first();
         if (!$activity) {
-            // 处理活动不存在的情况
             return abort(404);
         }
 
@@ -232,7 +229,6 @@ class StudentController extends Controller
 
     public function personalPage(Request $request)
     {
-        // 活動列表資料
         $registerActivity = ActivityDetail::orderBy('id', 'desc')
             ->whereHas('registerActivities.userRoleStudent', function ($query) use ($request) {
                 return $query->where('id', $request->user()->userRoleStudent->id);

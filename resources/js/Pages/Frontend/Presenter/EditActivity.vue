@@ -71,15 +71,15 @@ export default {
     submitData() {
       const { formData, response } = this;
       Swal.fire({
-        title: `確認更新活動: ${response?.rt_data?.activity_name ?? ''}?`,
+        title: `確認更新活動: ${formData.activityName ?? ''}?`,
         showDenyButton: true,
         confirmButtonText: '更新',
         denyButtonText: '取消',
       }).then((result) => {
         if (result.isConfirmed) {
-          router.visit(route('activityUpdate'), {
+          router.visit(route('activityPresenterUpdate'), {
             method: 'put',
-            data: { formData, id: response.rt_data.id },
+            data: { formData, id: response.rt_data.activity.id },
             preserveState: true,
             onSuccess: ({ props }) => {
               if (props.flash.message.rt_code === 1) {
@@ -132,6 +132,7 @@ export default {
 </script>
 
 <template>
+  {{ formData }}
   <section id="create-activity" class="flex flex-col">
     <!-- 建立活動資訊填寫 -->
     <Link :href="route('activityScanner', { id: rtData.activity.id })" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
@@ -185,7 +186,7 @@ export default {
             </label>
             <div class="flex flex-nowrap gap-[30px]">
               <div v-for="item in formData.activityPhoto" :key="item.id" class="relative">
-                <img :src="item" alt="活動照片" class="border border-dashed w-[150px] aspect-[4/3] flex justify-center items-center text-[48px] cursor-pointer">
+                <img :src="item.activity_img_path" alt="活動照片" class="border border-dashed w-[150px] aspect-[4/3] flex justify-center items-center text-[48px] cursor-pointer">
                 <button type="button" class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 rounded-full w-[20px] h-[20px] flex justify-center items-center bg-[red] text-white" @click="removeImage(item.id)">X</button>
               </div>
             </div>
@@ -246,7 +247,7 @@ export default {
         <!-- Swiper引用 -->
         <Swiper v-slot="{ slide }" :slide-data="formData.activityPhoto" class="w-[full] max-w-[1600px] h-[1000px]" :btn-prev="prevButton" :btn-next="nextButton">
           <div class="opacity-60 w-full h-full flex justify-center items-center">
-            <img :src="slide" class="w-full h-full" alt="測試圖片">
+            <img :src="slide.activity_img_path" class="w-full h-full" alt="測試圖片">
           </div>
         </Swiper>
       </div>
@@ -258,7 +259,7 @@ export default {
           <Link :href="route('presenterPersonalPage')" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消修改</Link>
           <button type="submit" class="px-[30px] py-[15px] bg-[#095269] rounded-[5px] flex justify-center items-center text-white">確認修改</button>
         </div>
-        <button type="button" class="px-[30px] py-[15px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white" @click="deleteActivity(rtData.id)">刪除活動</button>
+        <button type="button" class="px-[30px] py-[15px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white" @click="deleteActivity(rtData.activity.id)">刪除活動</button>
       </div>
     </form>
   </section>

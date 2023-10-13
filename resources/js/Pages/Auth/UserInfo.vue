@@ -9,57 +9,81 @@ const form = useForm({
   password_confirmation: '',
 });
 
-// const submit = () => {
-//   form.post(route('register'), {
-//     onFinish: () => form.reset('password', 'password_confirmation'),
-//   });
-// };
+const submit = () => {
+  form.post(route('register'), {
+    onFinish: () => form.reset('password', 'password_confirmation'),
+  });
+};
 </script>
 
 <template>
   <div class="w-[full] p-[100px] bg-[#ebd8d8] flex flex-col justify-center items-center">
-    <div class="w-[35%] p-10 border-[3px] bg-[#FEFFFE] flex flex-col gap-3">
+    <form @submit.prevent="submit" class="w-[35%] p-10 border-[3px] flex flex-col gap-3">
 
       <div class="ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[yellow] rounded-full">
         照片
       </div>
-
       <div class="mt-4">
         <InputLabel for="user_role" value="帳號/Email" />
 
-        <div class="mt-1 ps-[15px] w-full h-[40px] border rounded-[5px] shadow-sm shadow-slate-50 bg-[#FFFFFF] flex items-center">123</div>
+        <div class="mt-1 ps-[15px] w-full h-[40px] border rounded-[5px] shadow-sm shadow-slate-50 bg-[#838E94] text-white flex items-center">123</div>
 
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
-      <div class="mt-4">
-        <InputLabel for="user_role" value="暱稱" />
+      <div>
+        <InputLabel for="name" value="暱稱" />
 
-        <div class="mt-1 ps-[15px] w-full h-[40px] border rounded-[5px] shadow-sm shadow-slate-50 bg-[#FFFFFF] flex items-center">123</div>
+        <div class="mt-1 ps-[15px] w-full h-[40px] border rounded-[5px] shadow-sm shadow-slate-50 bg-[#838E94] text-white flex items-center">123</div>
+
+        <InputError class="mt-2" :message="form.errors.name" />
+      </div>
+      <div class="mt-4">
+        <InputLabel for="user_role" value="身分狀態" />
+
+        <div class="mt-1 ps-[15px] w-full h-[40px] border rounded-[5px] shadow-sm shadow-slate-50 bg-[#838E94] text-white flex items-center">123</div>
 
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
+
       <div class="mt-4">
-        <InputLabel for="user_role" value="密碼" />
+        <InputLabel for="password" value="密碼" />
 
-        <div class="mt-1 ps-[15px] w-full h-[40px] border rounded-[5px] shadow-sm shadow-slate-50 bg-[#FFFFFF] flex items-center">123</div>
+        <TextInput
+          id="password"
+          type="password"
+          class="mt-1 block w-full"
+          v-model="form.password"
+          required
+          autocomplete="new-password"
+          placeholder="密碼"
+        />
 
-        <InputError class="mt-2" :message="form.errors.email" />
+        <InputError class="mt-2" :message="form.errors.password" />
       </div>
+
       <div class="mt-4">
-        <InputLabel for="user_role" value="角色選擇" />
+        <InputLabel for="password_confirmation" value="確認密碼" />
 
-        <div class="mt-1 ps-[15px] w-full h-[40px] border rounded-[5px] shadow-sm shadow-slate-50 bg-[#FFFFFF] flex items-center">123</div>
+        <TextInput
+          id="password_confirmation"
+          type="password"
+          class="mt-1 block w-full"
+          v-model="form.password_confirmation"
+          required
+          autocomplete="new-password"
+          placeholder="確認密碼"
+        />
 
-        <InputError class="mt-2" :message="form.errors.email" />
+        <InputError class="mt-2" :message="form.errors.password_confirmation" />
       </div>
 
       <div class="flex flex-col items-center justify-end mt-4 gap-[25px]">
 
         <PrimaryButton class="w-full h-[50px] bg-[#194F69] text-[37px] flex justify-center items-center" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-          完成
+          修改
         </PrimaryButton>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 

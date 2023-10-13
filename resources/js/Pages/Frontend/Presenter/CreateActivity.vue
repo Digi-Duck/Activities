@@ -91,7 +91,6 @@ export default {
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = () => {
         this.formData.activityPhoto.push({
-          // id: this.formData.activityPhoto.length + 1,
           id: Math.max(0, ...this.formData.activityPhoto.map(item => item.id)) + 1,
           activity_img_path: reader.result,
         });

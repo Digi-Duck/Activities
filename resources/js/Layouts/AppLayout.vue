@@ -48,7 +48,7 @@ export default {
         </div>
         <div v-else class="flex gap-3">
           <div class="h-[38px] rounded-[4px] flex justify-center items-center font-semibold">哈囉！{{ $page.props.auth.user.name }}</div>
-          <Link :href="route('test')" class="btn">會員中心</Link>
+          <Link :href="route('userInfo')" class="btn">會員中心</Link>
           <button type="button" class="btn" @click.prevent="logout">登出</button>
         </div>
       </nav>
