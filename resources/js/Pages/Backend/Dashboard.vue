@@ -116,7 +116,7 @@ export default {
   <section id="backend-dashboard" class="flex flex-col items-center">
     <h1 class="w-[80%] pb-1 border-b-4 title flex items-center gap-3">
       {{ title }}
-      <span class="text-[24px]">form {{ twoWeeksAgo }} to now</span>
+      <span class="text-[24px]">form {{ twoWeeksAgo }} to {{ rtData.currentDate }}</span>
     </h1>
     <div class="w-[80%] mb-5 mt-5 flex flex-col justify-between items-center gap-10">
       <!-- 資訊小卡區 -->
@@ -148,12 +148,12 @@ export default {
           </div>
           <div v-if="activityCount > activityCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
             <span>
-              上升{{ ((activityCount - activityCount14DaysAgo) / activityCount14DaysAgo) * 100 }}%%
+              上升{{ ((activityCount - activityCount14DaysAgo) / activityCount14DaysAgo * 100).toFixed(2) }}%
             </span>
             <img :src="images.dataUp" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
           <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[green] text-[16px] flex justify-between">
-            下降{{ ((activityCount - activityCount14DaysAgo) / activityCount14DaysAgo) * 100 }}%
+            下降{{ ((activityCount - activityCount14DaysAgo) / activityCount14DaysAgo * 100).toFixed(2) }}%
             <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
@@ -170,12 +170,12 @@ export default {
           </div>
           <div v-if="studentCount > studentCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
             <span>
-              上升{{ ((studentCount - studentCount14DaysAgo) / studentCount14DaysAgo) * 100 }}%%
+              上升{{ ((studentCount - studentCount14DaysAgo) / studentCount14DaysAgo * 100).toFixed(2) }}%
             </span>
             <img :src="images.dataUp" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
           <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[green] text-[16px] flex justify-between">
-            下降{{ ((studentCount - studentCount14DaysAgo) / studentCount14DaysAgo) * 100 }}%
+            下降{{ ((studentCount - studentCount14DaysAgo) / studentCount14DaysAgo * 100).toFixed(2) }}%
             <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
@@ -192,12 +192,12 @@ export default {
           </div>
           <div v-if="presenterCount > presenterCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
             <span>
-              上升{{ ((presenterCount - presenterCount14DaysAgo) / presenterCount14DaysAgo) * 100 }}%%
+              上升{{ ((presenterCount - presenterCount14DaysAgo) / presenterCount14DaysAgo * 100).toFixed(2) }}%
             </span>
             <img :src="images.dataUp" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
           <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[green] text-[16px] flex justify-between">
-            下降{{ ((presenterCount - presenterCount14DaysAgo) / presenterCount14DaysAgo) * 100 }}%
+            下降{{ ((presenterCount - presenterCount14DaysAgo) / presenterCount14DaysAgo * 100).toFixed(2) }}%
             <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>

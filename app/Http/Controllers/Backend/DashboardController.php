@@ -25,6 +25,8 @@ class DashboardController extends Controller
         $keyword = $request->keyword ?? '';
         $selectedType = $request->selectedType;
         $twoWeeksAgo = date('Y-m-d', strtotime('-2 weeks'));
+        $twentyeightDaysAgo = now()->subWeeks(4)->format('Y-m-d');
+        $fourteenDaysAgo = now()->subWeeks(2)->format('Y-m-d');
         $startDate = $request->startDate ?? $twoWeeksAgo;
         $endDate = $request->endDate ?? now()->format('Y-m-d');
         $startRecordDate = $request->startRecordDate ?? $twoWeeksAgo;
@@ -34,12 +36,10 @@ class DashboardController extends Controller
         $passDate = $currentDate ?? $twoWeeksAgo;
         $longPassDate = $passDate ?? $twoWeeksAgo;
 
-        // Calculate the counts for the last 14 days
-        $activityCount14DaysAgo = ActivityDetail::whereBetween('created_at', [$longPassDate, $passDate])->count();
-        $studentCount14DaysAgo = UserRoleStudent::whereBetween('created_at', [$longPassDate, $passDate])->count();
-        $presenterCount14DaysAgo = UserRolePresenter::whereBetween('created_at', [$longPassDate, $passDate])->count();
+        $activityCount14DaysAgo = ActivityDetail::whereBetween('created_at', [$twentyeightDaysAgo, $fourteenDaysAgo])->count();
+        $studentCount14DaysAgo = UserRoleStudent::whereBetween('created_at', [$twentyeightDaysAgo, $fourteenDaysAgo])->count();
+        $presenterCount14DaysAgo = UserRolePresenter::whereBetween('created_at', [$twentyeightDaysAgo, $fourteenDaysAgo])->count();
 
-        // Calculate the counts for the full date range
         $activityCount = ActivityDetail::whereBetween('created_at', [$twoWeeksAgo, $currentDate])->count();
         $studentCount = UserRoleStudent::whereBetween('created_at', [$twoWeeksAgo, $currentDate])->count();
         $presenterCount = UserRolePresenter::whereBetween('created_at', [$twoWeeksAgo, $currentDate])->count();
