@@ -29,10 +29,10 @@ export default {
     return {
       title: '數據摘要',
       selectedType: 1,
-      startDate: fourteenDaysAgo.toISOString().substr(0, 10), // Set to 14 days ago
-      endDate: today.toISOString().substr(0, 10), // Set to today
-      startRecordDate: fourteenDaysAgo.toISOString().substr(0, 10), // Set to 14 days ago
-      endRecordDate: today.toISOString().substr(0, 10), // Set to today
+      startDate: fourteenDaysAgo.toISOString().substr(0, 10),
+      endDate: today.toISOString().substr(0, 10),
+      startRecordDate: fourteenDaysAgo.toISOString().substr(0, 10),
+      endRecordDate: today.toISOString().substr(0, 10),
       keyword: this.response?.rt_data?.keyword ?? '',
       images: {
         student,
@@ -74,6 +74,9 @@ export default {
     twoWeeksAgo() {
       return this.rtData.twoWeeksAgo ?? 0;
     },
+    websiteViewCount() {
+      return this.rtData.websiteViewCount ?? 0;
+    },
     activityCount() {
       return this.rtData.activityCount ?? 0;
     },
@@ -82,6 +85,9 @@ export default {
     },
     presenterCount() {
       return this.rtData.presenterCount ?? 0;
+    },
+    websiteViewCount14DaysAgo() {
+      return this.rtData.websiteViewCount14DaysAgo ?? 0;
     },
     activityCount14DaysAgo() {
       return this.rtData.activityCount14DaysAgo ?? 0;
@@ -125,14 +131,23 @@ export default {
         <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
           <div class="relative h-full p-5 rounded-t-[10px] bg-white flex justify-between">
             <div>
-              <div class="border-b-2 text-[36px]">123,456</div>
-              <div class="text-[24px]">網站流量</div>
+              <div class="border-b-2 text-[36px]">
+                {{ websiteViewCount.toLocaleString() }}
+              </div>
+              <div class="text-[24px]">網站瀏覽量</div>
             </div>
             <!-- 資料icon -->
             <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
-          <div class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">上升10%
-            <img src="" class="w-[33px] h-[33px]" alt="數據狀態圖標">
+          <div v-if="websiteViewCount > websiteViewCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
+            <span>
+              上升{{ ((websiteViewCount - websiteViewCount14DaysAgo) / websiteViewCount14DaysAgo * 100).toFixed(2) }}%
+            </span>
+            <img :src="images.dataUp" class="w-[33px] h-[33px]" alt="數據狀態圖標">
+          </div>
+          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[green] text-[16px] flex justify-between">
+            下降{{ ((websiteViewCount - websiteViewCount14DaysAgo) / websiteViewCount14DaysAgo * 100).toFixed(2) }}%
+            <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
         <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
@@ -208,6 +223,7 @@ export default {
         <div class="w-[1008px] rounded-[10px] border-2 border-[#000000] flex flex-col overflow-hidden">
           <div class="w-full h-[106px] bg-[#397CA4] flex justify-start items-center gap-[20px]">
             <select v-model="selectedType" class="h-[70%]" id="" @change="searchChart">
+              <option value=4>新增網站瀏覽量</option>
               <option value=1>新增活動數量</option>
               <option value=2>新增講師數量</option>
               <option value=3>新增學員數量</option>
@@ -228,9 +244,9 @@ export default {
           <!-- 最新消息內容 -->
           <div v-for="(item, index) in newBehaviors" :key="index" class="w-full h-[112px] p-5 bg-[#4D7F95] text-[16px] flex flex-row justify-between items-center">
             <!-- 會員頭像 -->
-            <img v-if="item.student_image" :src="item.student_image" class="w-[66px] h-[66px] rounded-full bg-white" alt="學員照片">
-            <img v-else-if="item.presenter_image" :src="item.presenter_image" class="w-[66px] h-[66px] rounded-full bg-white" alt="講師照片">
-            <img v-else :src="images.defaultImage" class="w-[66px] h-[66px] rounded-full bg-white" alt="預設照片">
+            <img v-if="item.student_image" :src="item.student_image" class="inline-block h-[66px] w-[66px] rounded-full ring-2 ring-white" alt="學員照片">
+            <img v-else-if="item.presenter_image" :src="item.presenter_image" class="inline-block h-[66px] w-[66px] rounded-full ring-2 ring-white" alt="講師照片">
+            <img v-else :src="images.defaultImage" class="inline-block h-[66px] w-[66px] rounded-full ring-2 ring-white" alt="預設照片">
             <!-- 會員資訊 -->
             <div class="w-[45%] ps-10 flex-initial flex flex-col">
               <div>{{ item.user_name }}</div>
@@ -276,8 +292,6 @@ export default {
         </div>
       </div>
     </div>
-    <!-- <Link :href="route('register')" class="btn-base">註冊</Link>
-    <Link :href="route('dashboard')" class="btn-base">登入</Link> -->
   </section>
 </template>
 

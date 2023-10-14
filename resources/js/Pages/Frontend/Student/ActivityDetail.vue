@@ -49,7 +49,6 @@ export default {
         preserveScroll: true,
         onSuccess: ({ props }) => {
           if (props.flash.message.rt_code === 1) {
-            console.log(props.flash.message);
             this.formData.studentPhoneNumber = props.flash.message.rt_data.userPhoneNumber.phone_number;
             this.formData.studentEmail = props.flash.message.rt_data.userData.email;
             Swal.fire({

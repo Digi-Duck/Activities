@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityDetail;
+use App\Models\Statistic;
 use App\Models\StudentActivity;
 use App\Models\User;
 use App\Models\UserBehavior;
@@ -33,15 +34,16 @@ class DashboardController extends Controller
         $endRecordDate = $request->endRecordDate ?? now()->format('Y-m-d');
         $currentDate = now()->format('Y-m-d');
         $passDate = $currentDate ?? $twoWeeksAgo;
-        $longPassDate = $passDate ?? $twoWeeksAgo;
 
         $activityCount14DaysAgo = ActivityDetail::whereBetween('created_at', [$twentyeightDaysAgo, $fourteenDaysAgo])->count();
         $studentCount14DaysAgo = UserRoleStudent::whereBetween('created_at', [$twentyeightDaysAgo, $fourteenDaysAgo])->count();
         $presenterCount14DaysAgo = UserRolePresenter::whereBetween('created_at', [$twentyeightDaysAgo, $fourteenDaysAgo])->count();
+        $websiteViewCount14DaysAgo = Statistic::whereBetween('created_at', [$twentyeightDaysAgo, $fourteenDaysAgo])->count();
 
         $activityCount = ActivityDetail::whereBetween('created_at', [$twoWeeksAgo, $currentDate])->count();
         $studentCount = UserRoleStudent::whereBetween('created_at', [$twoWeeksAgo, $currentDate])->count();
         $presenterCount = UserRolePresenter::whereBetween('created_at', [$twoWeeksAgo, $currentDate])->count();
+        $websiteViewCount = Statistic::whereBetween('created_at', [$twoWeeksAgo, $currentDate])->count();
 
         $chartData = [
             'xAxis' => [
@@ -69,8 +71,10 @@ class DashboardController extends Controller
                 $count = ActivityDetail::whereDate('created_at', $day)->count();
             } elseif ($selectedType == 2) {
                 $count = UserRolePresenter::whereDate('created_at', $day)->count();
-            } else {
+            } elseif ($selectedType == 3) {
                 $count = UserRoleStudent::whereDate('created_at', $day)->count();
+            } else {
+                $count = Statistic::whereDate('created_at', $day)->count();
             }
 
             $dates[] = $date->format('D');
@@ -122,9 +126,11 @@ class DashboardController extends Controller
 
         $data = (object) [
             'newBehaviors' => $newBehaviors,
+            'websiteViewCount' => $websiteViewCount,
             'activityCount' => $activityCount,
             'studentCount' => $studentCount,
             'presenterCount' => $presenterCount,
+            'websiteViewCount14DaysAgo' => $websiteViewCount14DaysAgo,
             'activityCount14DaysAgo' => $activityCount14DaysAgo,
             'studentCount14DaysAgo' => $studentCount14DaysAgo,
             'presenterCount14DaysAgo' => $presenterCount14DaysAgo,

@@ -1,83 +1,42 @@
-<script setup>
-import { useForm } from '@inertiajs/vue3';
-
-const props = defineProps({
-  email: {
-    type: String,
-    required: true,
+<script>
+export default {
+  props: {
+    response: {
+      type: Object,
+      required: false,
+      default: () => ({}),
+    },
   },
-  token: {
-    type: String,
-    required: true,
+  data() {
+    return {
+      title: 'Hello World !',
+    };
   },
-});
-
-const form = useForm({
-  token: props.token,
-  email: props.email,
-  password: '',
-  password_confirmation: '',
-});
-
-const submit = () => {
-  form.post(route('password.store'), {
-    onFinish: () => form.reset('password', 'password_confirmation'),
-  });
+  created() {
+  },
 };
 </script>
 
 <template>
-  <form @submit.prevent="submit" class="p-10">
-    <div>
-      <InputLabel for="email" value="Email" />
-
-      <TextInput
-        id="email"
-        type="email"
-        class="mt-1 block w-full"
-        v-model="form.email"
-        required
-        autofocus
-        autocomplete="username"
-      />
-
-      <InputError class="mt-2" :message="form.errors.email" />
+  <section id="test">
+    <h1 class="title">{{ title }}</h1>
+    <div class="flex justify-center gap-5 mb-5">
+      <Link :href="route('register')" class="btn-base">註冊</Link>
+      <Link :href="route('dashboard')" class="btn-base">登入</Link>
     </div>
-
-    <div class="mt-4">
-      <InputLabel for="password" value="Password" />
-
-      <TextInput
-        id="password"
-        type="password"
-        class="mt-1 block w-full"
-        v-model="form.password"
-        required
-        autocomplete="new-password"
-      />
-
-      <InputError class="mt-2" :message="form.errors.password" />
-    </div>
-
-    <div class="mt-4">
-      <InputLabel for="password_confirmation" value="Confirm Password" />
-
-      <TextInput
-        id="password_confirmation"
-        type="password"
-        class="mt-1 block w-full"
-        v-model="form.password_confirmation"
-        required
-        autocomplete="new-password"
-      />
-
-      <InputError class="mt-2" :message="form.errors.password_confirmation" />
-    </div>
-
-    <div class="flex items-center justify-end mt-4">
-      <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-        Reset Password
-      </PrimaryButton>
-    </div>
-  </form>
+  </section>
 </template>
+
+<style lang="scss" scoped>
+#test {
+  @apply w-full h-full overflow-y-auto;
+
+  .title {
+    @apply text-[6.25rem] text-center;
+  }
+
+  .btn-base {
+    @apply p-1.5 border-2 rounded-md border-green-500 cursor-pointer;
+  }
+}
+</style>

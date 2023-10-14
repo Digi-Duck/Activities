@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Statistic;
 use App\Models\User;
 use App\Models\UserRoleAdmin;
 use App\Models\UserRolePresenter;
@@ -106,6 +107,14 @@ class UsersTableSeeder extends Seeder
                 'user_id' => $i+2,
                 'user_name' => 'User ' . $i,
                 'phone_number' => '0987654321',
+                'created_at' => $randomDate,
+            ]);
+        }
+        for ($i=1; $i <= 100000; $i++) { 
+            $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+            Statistic::create([
+                'id' => $i,
+                'website_view' => 1,
                 'created_at' => $randomDate,
             ]);
         }

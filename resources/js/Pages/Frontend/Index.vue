@@ -54,9 +54,6 @@ export default {
     this.initSwiperBtn();
   },
   methods: {
-    /**
-     * 獲取按钮元素並賦值给 prevButton 和 nextButton
-     */
     initSwiperBtn() {
       const { $refs } = this;
       this.prevButton = $refs.btnPrev;
@@ -74,9 +71,9 @@ export default {
 
 <template>
   <section id="frontend-index" class="flex flex-col items-center">
-    <!-- 熱門活動Swiper -->
+
     <div class="relative w-full h-[600px] bg-[#031926] overflow-hidden">
-      <!-- 這組是按鈕 -->
+
       <div class="absolute top-[50%] left-[2.5%] w-[92.5%] flex justify-between items-center">
         <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] z-50 rounded-[50px] bg-white" type="button">
           <img :src="images.arrowLeft" alt="活動照片海報向左移動按鈕">
@@ -85,8 +82,8 @@ export default {
           <img :src="images.arrowRight" alt="活動照片海報向右移動按鈕">
         </button>
       </div>
-      <!-- 活動資訊 -->
-      <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" class="absolute w-full h-[602px] text-center" :btn-prev="prevButton" :btn-next="nextButton">
+
+      <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" class="absolute w-full h-[602px] text-start" :btn-prev="prevButton" :btn-next="nextButton">
         <img :src="slide.cover_photo" class="inline-block w-[90%] h-full object-contain" alt="活動背景圖">
         <h2 class="absolute top-[100px] w-full pe-[150px] bg-[#ffffff95] text-[64px] text-end text-white">
           {{ slide.activity_name }}
@@ -97,35 +94,44 @@ export default {
           </h3>
         </div>
       </Swiper>
-      <!-- 活動封面照片組合Swiper -->
-      <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" :slides-per-view="3" :space-between="15" class="absolute -top-[15%] rotate-[10deg]" :btn-prev="prevButton" :btn-next="nextButton">
-        <Link :href="route('studentActivityDetails', { id: slide.id })" class="inline-block border border-[black] w-[512px] h-[384px] bg-[white]">
-          <img :src="slide.cover_photo" class="w-full h-full object-cover" alt="產業類別圖片">
+
+      <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" :slides-per-view="4" :space-between="300" class="absolute -top-[25%] border-t-[10px] border-t-[#ffffff9d] rotate-[10deg]" :btn-prev="prevButton" :btn-next="nextButton">
+        <Link :href="route('studentActivityDetails', { id: slide.id })" class="inline-block w-[512px] h-[384px] border-[2px] border-[black] border-t-[0px] rounded-[5px] bg-[white]">
+          <img :src="slide.cover_photo" class="w-full h-full opacity-80 object-cover hover:opacity-100 hover:transform-[150%]" alt="產業類別圖片">
         </Link>
       </Swiper>
     </div>
 
     <!-- 最夯活動Banner -->
-    <Link :href="route('studentActivityDetails', { id: hottestActivityData.id })" v-if="hottestActivityData.activity_type_name" class="w-full max-w-[1400px] h-[765px] pt-[38px] bg-[#F3F3F1] rounded-[64px] flex flex-col justify-between items-center">
+    <div v-if="hottestActivityData.activity_type_name" class="w-full max-w-[1400px] h-[765px] pt-[38px] bg-[#F3F3F1] rounded-[64px] flex flex-col justify-center items-center gap-1">
       <!-- 活動快速資訊 -->
       <div class="text-[17px] flex items-center gap-1">
         <!-- 活動類型 -->
-        <div class="text-[17px]">
+        <b class="text-[17px]">
           活動類型:
           {{ hottestActivityData.activity_type_name }}
-        </div>
-        <div class="ps-[5px] border-s-8 border-[#000] text-[17px]">課程收藏人數:
+        </b>
+        <b class="ps-[5px] border-s-8 border-[#000] text-[17px]">課程收藏人數:
           {{ hottestActivityData.collection_count }}
-        </div>
+        </b>
       </div>
+      <b class="flex gap-3 items-center">
+        報名狀態
+        <div class="w-64 h-4 bg-gray-300 rounded-full">
+          <div class="h-full text-center text-white bg-[#00B67A] rounded-full transition-all transform flex items-center justify-center" :style="'width:' + hottestActivityData.registration_count + '%'">
+            {{ hottestActivityData.registration_count }}%
+          </div>
+        </div>
+      </b>
+
       <div class="flex flex-col items-center gap-3">
         <b class="text-[55px]">
           {{ hottestActivityData.activity_name }}
         </b>
-        <h2>
+        <b class="text-[45px] text-[#2665D6]">
           {{ hottestActivityData.activity_presenter }}
-        </h2>
-        <time class="text-[30px]">
+        </b>
+        <time class="text-[30px] font-semibold">
           <span class="text-[24px]">
             活動開始時間：
           </span>
@@ -133,11 +139,13 @@ export default {
         </time>
       </div>
       <figure class="relative w-full max-w-[1400px] h-[450px] flex">
-        <img :src="hottestActivityData.cover_photo" class="absolute xl-hidden w-[770px] h-full rounded-[64px] opacity-[20%] bg-green-600" alt="半透明活動主照片">
-        <img :src="hottestActivityData.cover_photo" class="absolute md:ms-[10%] xl:ms-[17.5%] w-[900px] h-full z-10 rounded-[64px]" alt="活動主照片">
-        <img :src="hottestActivityData.cover_photo" class="absolute end-0 w-[770px] h-full rounded-[64px] opacity-[20%] bg-blue-600" alt="半透明活動主照片">
+        <img :src="hottestActivityData.cover_photo" class="absolute xl-hidden w-[770px] h-full rounded-[64px] aspect-square opacity-[20%] bg-green-600" alt="半透明活動主照片">
+        <Link :href="route('studentActivityDetails', { id: hottestActivityData.id })">
+          <img :src="hottestActivityData.cover_photo" class="absolute md:ms-[10%] xl:ms-[17.5%] w-[900px] h-full z-10 rounded-[64px] aspect-square" alt="活動主照片">
+        </Link>
+        <img :src="hottestActivityData.cover_photo" class="absolute end-0 w-[770px] h-full rounded-[64px] aspect-square opacity-[20%] bg-blue-600" alt="半透明活動主照片">
       </figure>
-    </Link>
+    </div>
     <div v-else></div>
 
     <ActivitySwiper :slide-data="activityData ?? []" href="studentActivityDetails" />
