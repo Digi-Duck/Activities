@@ -30,20 +30,37 @@ export default {
     };
   },
   computed: {
-    // 獲取活動資料陣列
     activityData() {
       return this.rtData.activity ?? {};
     },
-    // 獲取活動類別資料陣列
     activityTypeData() {
       return this.rtData.activityTypeData ?? [];
     },
-    // 確認是否已收藏
     favoriteCheck() {
       return this.rtData.favoriteCheck ?? 0;
     },
   },
   methods: {
+    fillUserData() {
+      router.visit(route('fillUserData'), {
+        method: 'get',
+        data: { ...this.rtData },
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: ({ props }) => {
+          if (props.flash.message.rt_code === 1) {
+            console.log(props.flash.message);
+            this.formData.studentPhoneNumber = props.flash.message.rt_data.userPhoneNumber.phone_number;
+            this.formData.studentEmail = props.flash.message.rt_data.userData.email;
+            Swal.fire({
+              title: '已代入',
+              showDenyButton: false,
+              confirmButtonText: '確定',
+            });
+          }
+        },
+      });
+    },
     favorite() {
       router.visit(route('createFavorite'), {
         method: 'post',
@@ -256,7 +273,7 @@ export default {
       <!-- 填入會員預設資料 -->
       <div class="w-full h-[30px] flex justify-end items-center gap-3">
         <div class="w-[274px] h-full bg-white flex justify-center items-center">代入會員資料</div>
-        <input type="checkbox" class="w-[25px] h-[25px] rounded-full" name="" id="">
+        <input type="checkbox" class="w-[25px] h-[25px] rounded-full" @click="fillUserData()">
       </div>
       <!-- 填入活動報名資訊 -->
       <div class="w-full h-[30px] flex gap-[150px]">

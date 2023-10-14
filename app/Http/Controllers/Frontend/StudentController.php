@@ -10,9 +10,11 @@ use App\Models\QrcodeDetail;
 use App\Models\RegisterActivity;
 use App\Models\StudentActivity;
 use App\Models\UserBehavior;
+use App\Models\UserRoleStudent;
 use Inertia\Inertia;
 use App\Presenters\ActivityPresenter;
 use Carbon\Carbon;
+use Illuminate\Foundation\Auth\User;
 
 class StudentController extends Controller
 {
@@ -76,6 +78,7 @@ class StudentController extends Controller
         $data = (object) [
             'activity' => $result,
             'registerPeople' => $registerPeople,
+            'user' => $user,
             'favoriteCheck' => $favoriteCheck ?? null,
             'timeDifferenceInDays' => $timeDifferenceInDays,
             'activityTypeData' => $this->activityPresenter->getTypeOption(),
@@ -344,6 +347,19 @@ class StudentController extends Controller
         }
 
         return back()->with(['message' => rtFormat($register)]);
+    }
+
+    public function fillUserData(Request $request)
+    {
+        $userData = User::find($request->user()->id);
+        $userPhoneNumber = UserRoleStudent::where('user_id', $request->user()->id)->first();
+
+        $data = (object) [
+            'userData' => $userData,
+            'userPhoneNumber' => $userPhoneNumber,
+        ];
+        
+        return back()->with(['message' => rtFormat($data)]);
     }
 
     /**

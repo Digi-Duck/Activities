@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\StudentController;
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/activityClassification', [IndexController::class, 'activityClassification'])->name('activityClassification');
 Route::get('/declaration', [IndexController::class, 'declaration'])->name('declaration');
+Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/userInfo', [IndexController::class, 'userInfo'])->name('userInfo');
@@ -27,7 +28,6 @@ Route::middleware(['auth', 'role.weight:2', 'verified'])->prefix('/presenter')->
     Route::get('/presenterFinishedActivity{id}', [PresenterController::class, 'presenterFinishedActivity'])->name('presenterFinishedActivity');
 });
 
-Route::get('/studentActivityDetails/{id}', [StudentController::class, 'index'])->name('studentActivityDetails');
 Route::middleware(['auth', 'role.weight:3', 'verified'])->prefix('/student')->group(function () {
     Route::get('/personalPage', [StudentController::class, 'personalPage'])->name('studentPersonalPage');
     Route::get('/activityEdit{id}', [StudentController::class, 'activityEdit'])->name('studentActivityEdit');
@@ -36,5 +36,6 @@ Route::middleware(['auth', 'role.weight:3', 'verified'])->prefix('/student')->gr
     Route::delete('/registerDelete', [StudentController::class, 'registerDelete'])->name('registerDelete');
     Route::post('/registerStore', [StudentController::class, 'create'])->name('registerStore');
     Route::post('/createFavorite', [StudentController::class, 'createFavorite'])->name('createFavorite');
+    Route::get('/fillUserData', [StudentController::class, 'fillUserData'])->name('fillUserData');
     Route::delete('/cancelFavorite', [StudentController::class, 'cancelFavorite'])->name('cancelFavorite');
 });
