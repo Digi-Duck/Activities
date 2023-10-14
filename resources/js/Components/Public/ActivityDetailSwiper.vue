@@ -64,11 +64,11 @@ export default {
             <div id="triangle-bottom"></div>
           </div>
         </div>
-        <div class="absolute left-[265px] top-[80px] w-[full] h-[219px] flex flex-col justify-center items-start">
+        <div class="absolute left-[265px] top-[90px] w-[full] h-[219px] flex flex-col justify-center items-start">
           <div class="text-[72px] font-bold">
             <slot name="activity_name">活動名稱</slot>
           </div>
-          <div class="w-full bg-[#ffffff9b] text-[24px]">
+          <div class="w-full text-[36px]">
             <slot name="activity_info">活動Slogan</slot>
           </div>
         </div>
@@ -85,25 +85,25 @@ export default {
           <div class="flex">
             <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.lowestNumberOfPeople" alt="開課門檻" class="w-[10%] pe-1">
-              <div type="text" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <div type="text" class="rounded-[5px] w-full bg-transparent text-2xl font-bold flex justify-start items-center">
                 <slot name="activity_lowest_number_of_people">開課門檻</slot>
               </div>
             </div>
             <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.highestNumberOfPeople" alt="人數上限" class="w-[10%] pe-1">
-              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <div type="text" name="" class="rounded-[5px] w-full bg-transparent text-2xl font-bold flex justify-start items-center">
                 <slot name="activity_highest_number_of_people">人數上限</slot>
               </div>
             </div>
             <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.registerTime" alt="報名開始時間" class="w-[10%] pe-1">
-              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <div type="text" name="" class="rounded-[5px] w-full bg-transparent text-2xl font-bold flex justify-start items-center">
                 <slot name="activity_start_registration_time">報名開始時間</slot>
               </div>
             </div>
             <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.registerTime" alt="報名截止時間" class="w-[10%] pe-1">
-              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <div type="text" name="" class="rounded-[5px] w-full bg-transparent text-2xl font-bold flex justify-start items-center">
                 <slot name="activity_end_registration_time">報名截止時間</slot>
               </div>
             </div>
@@ -111,25 +111,25 @@ export default {
           <div class="flex">
             <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.activityPresenter" alt="主講者" class="w-[10%] pe-1">
-              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <div type="text" name="" class="rounded-[5px] w-full bg-transparent text-2xl font-bold flex justify-start items-center">
                 <slot name="activity_presenter">講者</slot>
               </div>
             </div>
             <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.activityStartTime" alt="開始時間" class="w-[10%] pe-1">
-              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <div type="text" name="" class="rounded-[5px] w-full bg-transparent text-2xl font-bold flex justify-start items-center">
                 <slot name="activity_start_time">開始時間</slot>
               </div>
             </div>
             <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.activityEndTime" alt="結束時間" class="w-[10%] pe-1">
-              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <div type="text" name="" class="rounded-[5px] w-full bg-transparent text-2xl font-bold flex justify-start items-center">
                 <slot name="activity_end_time">結束時間</slot>
               </div>
             </div>
             <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
               <img :src="images.activityAddress" alt="地點" class="w-[10%] pe-1">
-              <div type="text" name="" id="" class="rounded-[5px] w-full text-2xl font-bold flex justify-start items-center">
+              <div type="text" name="" class="rounded-[5px] w-full bg-transparent text-2xl font-bold flex justify-start items-center">
                 <slot name="activity_address">地點</slot>
               </div>
             </div>
@@ -138,7 +138,7 @@ export default {
             <!-- 活動須知 -->
             <div class="flex w-[50%]">
               <img :src="images.exclamationTriangle" alt="參加須知" class="w-[40px] h-[40px]">
-              <div type="text" name="" id="" placeholder="請輸入參加須知" class="w-full">
+              <div type="text" name="" placeholder="請輸入參加須知" class="w-full bg-transparent">
                 <slot name="activity_instruction">參加須知</slot>
               </div>
             </div>
@@ -147,15 +147,10 @@ export default {
               報名人數:
               <slot name="registerPeople">0</slot>
             </figure>
-            <!-- <div class="w-[25%] h-[90%] flex justify-center items-center">
-              <div class="w-[208px] h-[56px] bg-[#072F54] rounded-[8px] text-[20px] text-white font-semibold flex justify-center items-center">
-                立即加入
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
-      <Swiper v-slot="{ slide }" :slide-data="slideData[0]?.activityPhotos ?? []" class="w-[full] max-w-[1600px] h-full max-h-[900px]" :btn-prev="prevButton" :btn-next="nextButton">
+      <Swiper v-slot="{ slide }" :slide-data="slideData[0]?.activityPhotos ?? []" class="w-[full] max-w-[1920px] h-full max-h-[901px]" :btn-prev="prevButton" :btn-next="nextButton">
         <div class="opacity-60 w-full h-full flex justify-center items-center">
           <img :src="slide" class="w-full h-full" alt="產業類別圖片">
         </div>

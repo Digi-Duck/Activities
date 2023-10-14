@@ -84,11 +84,13 @@ class DashboardController extends Controller
         $chartData['xAxis']['data'] = $dates;
         $chartData['series'][0]['data'] = $data;
 
+        $totalData = array_sum($data);
         $newBehaviors = UserBehavior::select([
             'user_behaviors.id',
             'user_behaviors.user_name',
             'user_behaviors.created_at',
             'user_behaviors.behavior',
+            'user_behaviors.user_type',
             'user_role_students.img_path AS student_image',
             'user_role_presenters.img_path AS presenter_image',
         ])
@@ -103,6 +105,7 @@ class DashboardController extends Controller
                     'user_name' => $item->user_name,
                     'created_at' => $item->created_at->format('Y/m/d H:i'),
                     'behavior' => $item->behavior,
+                    'user_type' => $item->user_type,
                     'student_image' => $item->student_image,
                     'presenter_image' => $item->presenter_image,
                 ];
@@ -135,6 +138,7 @@ class DashboardController extends Controller
             'studentCount14DaysAgo' => $studentCount14DaysAgo,
             'presenterCount14DaysAgo' => $presenterCount14DaysAgo,
             'chartData' => $chartData,
+            'totalData' => $totalData,
             'selectedType' => $selectedType,
             'startDate' => $startDate,
             'endDate' => $endDate,

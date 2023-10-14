@@ -21,15 +21,12 @@ export default {
     };
   },
   computed: {
-    // 獲取活動資料陣列
     activityData() {
       return this.rtData.activity ?? {};
     },
-    // 獲取活動類別資料陣列
     activityTypeData() {
       return this.rtData.activityTypeData ?? [];
     },
-    // 獲取學員報名資料陣列
     registerData() {
       return this.rtData.registerData ?? [];
     },
@@ -85,12 +82,12 @@ export default {
       </template>
       <template #activity_lowest_number_of_people>
         <span>
-          {{ activityData.activity_lowest_number_of_people }}
+          {{ activityData.activity_lowest_number_of_people.toLocaleString() }}
         </span>
       </template>
       <template #activity_highest_number_of_people>
         <span>
-          {{ activityData.activity_highest_number_of_people }}
+          {{ activityData.activity_highest_number_of_people.toLocaleString() }}
         </span>
       </template>
       <template #activity_start_registration_time>

@@ -221,19 +221,20 @@ export default {
       <div class="w-full h-[728.5px] flex flex-row justify-between gap-5 mb-5">
         <!-- 詳細圖表 -->
         <div class="w-[1008px] rounded-[10px] border-2 border-[#000000] flex flex-col overflow-hidden">
-          <div class="w-full h-[106px] bg-[#397CA4] flex justify-start items-center gap-[20px]">
-            <select v-model="selectedType" class="h-[70%]" id="" @change="searchChart">
+          <div class="ps-[10px] w-full h-[106px] bg-[#397CA4] flex justify-start items-center gap-[20px]">
+            <select v-model="selectedType" class="h-[70%]" @change="searchChart">
               <option value=4>新增網站瀏覽量</option>
               <option value=1>新增活動數量</option>
               <option value=2>新增講師數量</option>
               <option value=3>新增學員數量</option>
             </select>
             <div class="h-[70%] bg-[white] flex gap-1">
-              <input v-model="startDate" type="date" id="" @change="searchChart">
+              <input v-model="startDate" type="date" @change="searchChart">
               <span class="flex items-center">～</span>
-              <input v-model="endDate" type="date" id="" @change="searchChart">
+              <input v-model="endDate" type="date" @change="searchChart">
             </div>
             <button type="button" @click="searchChart" class="w-[90px] h-[38px] bg-[#a0bcc650] rounded-[5px] text-[24px]">搜尋</button>
+            <b class="items-center">共計 : {{ rtData.totalData }}</b>
           </div>
           <Echart class="h-[623px]" :response="chartData"></Echart>
         </div>
@@ -242,7 +243,7 @@ export default {
           <!-- 最新消息表頭 -->
           <div class="w-full h-[106px] ps-5 rounded-t-[10px] bg-[#397AC4] text-[48px] flex items-center">最新消息</div>
           <!-- 最新消息內容 -->
-          <div v-for="(item, index) in newBehaviors" :key="index" class="w-full h-[112px] p-5 bg-[#4D7F95] text-[16px] flex flex-row justify-between items-center">
+          <div v-for="(item, index) in newBehaviors" :key="index" :class="{ 'bg-[#5e2951a0]': item.user_type === '講師', 'bg-[#4d7f95b6]': item.user_type === '學員' }" class="w-full h-[112px] p-5 text-[16px] flex flex-row justify-between items-center">
             <!-- 會員頭像 -->
             <img v-if="item.student_image" :src="item.student_image" class="inline-block h-[66px] w-[66px] rounded-full ring-2 ring-white" alt="學員照片">
             <img v-else-if="item.presenter_image" :src="item.presenter_image" class="inline-block h-[66px] w-[66px] rounded-full ring-2 ring-white" alt="講師照片">
@@ -263,9 +264,9 @@ export default {
         <div class="w-full h-[59px] ps-10 bg-white flex items-center gap-5 text-[48px] font-semibold">
           事件紀錄
           <div class="h-[70%] bg-[white] flex gap-1">
-            <input v-model="startRecordDate" type="date" id="">
+            <input v-model="startRecordDate" type="date">
             <span class="flex items-center">～</span>
-            <input v-model="endRecordDate" type="date" id="">
+            <input v-model="endRecordDate" type="date">
           </div>
           <input v-model="keyword" type="search" placeholder="請輸入搜尋使用者名稱、行為" @search="searchRecord">
           <button type="button" @click="searchRecord" class="w-[86px] h-[38px] bg-[gray] rounded-[4px] text-[22px]">搜尋</button>

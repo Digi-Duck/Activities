@@ -189,12 +189,12 @@ export default {
       </template>
       <template #activity_lowest_number_of_people>
         <span>
-          {{ activityData.activity_lowest_number_of_people }}
+          {{ activityData.activity_lowest_number_of_people.toLocaleString() }}
         </span>
       </template>
       <template #activity_highest_number_of_people>
         <span>
-          {{ activityData.activity_highest_number_of_people }}
+          {{ activityData.activity_highest_number_of_people.toLocaleString() }}
         </span>
       </template>
       <template #activity_start_registration_time>
@@ -246,38 +246,38 @@ export default {
     <form @submit.prevent="submitData()" action="" class="w-full h-[700px] px-10 py-5 bg-[#A9BCC6] flex flex-col gap-3 text-[24px]">
       <!-- 填入會員預設資料 -->
       <div class="w-full h-[30px] flex justify-end items-center gap-3">
-        <div class="w-[274px] h-full bg-white flex justify-center items-center">代入會員資料</div>
-        <input v-model="formData.student_name" type="checkbox" class="w-[25px] h-[25px] rounded-full" name="" id="">
+        <div class="w-[274px] h-full bg-white rounded-[5px] flex justify-center items-center">代入會員資料</div>
+        <input v-model="formData.student_name" type="checkbox" class="w-[25px] h-[25px] rounded-full" name="">
       </div>
       <!-- 填入活動報名資訊 -->
       <div class="w-full h-[30px] flex gap-[150px]">
-        <div class="w-[274px] h-full bg-white flex justify-center items-center">姓名</div>
+        <div class="w-[274px] h-full bg-white rounded-[5px] flex justify-center items-center">姓名</div>
         <slot name="studentName">
-          <input v-model="formData.studentName" type="text" class="w-full" name="" id="">
+          <input v-model="formData.studentName" type="text" class="w-full" name="">
         </slot>
       </div>
       <div class="w-full h-[30px] flex gap-[150px]">
-        <div class="w-[274px] h-full bg-white flex justify-center items-center">連絡電話</div>
+        <div class="w-[274px] h-full bg-white rounded-[5px] flex justify-center items-center">連絡電話</div>
         <slot name="studentPhoneNumber">
-          <input v-model="formData.studentPhoneNumber" type="tel" class="w-full" name="" id="">
+          <input v-model="formData.studentPhoneNumber" type="tel" class="w-full" name="">
         </slot>
       </div>
       <div class="w-full h-[30px] flex gap-[150px]">
-        <div class="w-[274px] h-full bg-white flex justify-center items-center">電子信箱</div>
+        <div class="w-[274px] h-full bg-white rounded-[5px] flex justify-center items-center">電子信箱</div>
         <slot name="studentEmail">
-          <input v-model="formData.studentEmail" type="email" class="w-full" name="" id="">
+          <input v-model="formData.studentEmail" type="email" class="w-full" name="">
         </slot>
       </div>
       <!-- 額外備註的地方 -->
       <div class="w-full h-[300px] flex flex-col justify-start gap-[25px]">
         <div class="w-[217.5px] h-[50px] bg-white flex justify-center items-center">額外備註</div>
         <slot name="studentAdditionalRemark">
-          <textarea v-model="formData.studentAdditionalRemark" name="" id="" class="w-full h-full" cols="30" rows="10" resize="false"></textarea>
+          <textarea v-model="formData.studentAdditionalRemark" name="" class="w-full h-full resize-none" cols="30" rows="10" resize="false"></textarea>
         </slot>
       </div>
       <div class="w-full h-[30px] flex gap-[150px]">
-        <div class="w-[274px] h-full bg-white flex justify-center items-center">確認事項</div>
-        <input type="text" class="w-full" name="" id="" :placeholder="activityData.activity_instruction">
+        <div class="w-[274px] h-full bg-white rounded-[5px] flex justify-center items-center">確認事項</div>
+        <input type="text" class="w-full" name="" :placeholder="activityData.activity_instruction">
       </div>
       <div class="flex w-full justify-center gap-[45px] px-20 py-5">
         <div class="pe-[35%] flex gap-5">

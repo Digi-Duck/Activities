@@ -28,18 +28,15 @@ export default {
     };
   },
   computed: {
-    // 後端回傳資料
     rtData() {
       return this.response?.rt_data ?? {};
     },
     activityData() {
       return this.rtData.activity ?? {};
     },
-    // 獲取活動類別資料陣列
     activityTypeData() {
       return this.rtData.activityTypeData ?? {};
     },
-    // 獲取參加學員資料陣列
     studentData() {
       return this.rtData.studentData ?? {};
     },
@@ -282,40 +279,9 @@ export default {
       <div id="reader" class="w-full min-h-[500px] bg-black"></div>
       <button type="button" class="w-[299px] h-[54px] bg-[#1C8AAD] rounded-[5px] text-white flex justify-center items-center">掃描報到</button>
     </div>
-    <!-- 活動的參加名單 -->
-    <!-- <ActivityDetailTable :table-data="studentData" :type-data="activityTypeData">
-      <template #activity_title_name>
-        <span>
-          電子信箱
-        </span>
-      </template>
-      <template #activity_title_number>
-        <span>
-          額外備註
-        </span>
-      </template>
-      <template #activity_title_type>
-        <span>
-          姓名
-        </span>
-      </template>
-      <template #activity_title_time>
-        <span>
-          連絡電話
-        </span>
-      </template>
-    </ActivityDetailTable> -->
-
     <div class="m-auto w-full max-w-[1400px] h-[505px] p-10 flex flex-col items-center">
       <!-- 搜尋欄位 -->
       <div class="mb-[5px] w-full h-[48px] pt-[10px] border-t-[#000] border-t-[1px] flex justify-end">
-        <!-- 活動種類篩選器 -->
-        <!-- <select v-model="selectedType" @change="searchData" class="h-full bg-[#80808012] text-[10px] flex justify-center" placeholder="活動分類">
-          <option value="">所有活動</option>
-          <option v-for="item in activityTypeData" :key="item.id" :value="item.id">
-            {{ item.name }}
-          </option>
-        </select> -->
         <!-- 文字搜尋框 -->
         <div class="w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-1">
           <input v-model="keyword" type="search" class="w-[80%] h-[80%]" @search="searchData" placeholder="請輸入搜尋資訊">
@@ -326,18 +292,18 @@ export default {
       </div>
       <!-- 搜尋的表頭 -->
       <div class="w-full h-[64px] flex">
-        <div class="flex-none w-[50%] border bg-[#5D8BA3] flex justify-center items-center text-[24px]">
+        <b class="flex-none w-[50%] border bg-[#5D8BA3] flex justify-center items-center text-[24px]">
           <slot name="activity_title_name">電子信箱</slot>
-        </div>
-        <div class="flex-initial w-[10%] border bg-[#82ACC2] flex justify-center items-center text-[24px]">
+        </b>
+        <b class="flex-initial w-[10%] border bg-[#82ACC2] flex justify-center items-center text-[24px]">
           <slot name="activity_title_type">學員姓名</slot>
-        </div>
-        <div class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
+        </b>
+        <b class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
           <slot name="activity_title_time">連絡電話</slot>
-        </div>
-        <div class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
+        </b>
+        <b class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
           <slot name="activity_title_number">額外備註</slot>
-        </div>
+        </b>
       </div>
       <!-- 詳細搜尋內容 -->
       <div v-for="(item, index) in studentData?.data ?? []" :key="index" class="w-full h-[53px] flex">

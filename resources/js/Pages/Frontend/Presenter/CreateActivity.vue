@@ -111,7 +111,7 @@ export default {
       <div class="relative mt-5 w-full h-[901px] bg-[#dac3c3] flex flex-col">
         <div class="relative w-full z-10">
           <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">
-            <select v-model="formData.activityType" name="activity_type" class="h-full text-[10px] border-none flex justify-center" required placeholder="活動分類">
+            <select v-model="formData.activityType" name="activity_type" class="ps-[30px] h-full text-[20px] border-none flex justify-center" required placeholder="活動分類">
               <option disabled selected value>- 請選擇活動類型 -</option>
               <option value="1">文化與藝術</option>
               <option value="2">學術與培訓</option>
@@ -123,21 +123,17 @@ export default {
               <option value="8">科技與創新</option>
               <option value="9">其他</option>
             </select>
-            <div id="triangle" class="absolute left-[175px] -top-[0px] w-[10px] h-[10px] border-s">
-              <div id="triangle-top"></div>
-              <div id="triangle-bottom"></div>
-            </div>
           </div>
           <div class="absolute left-[10%] top-[131px] w-[288px] h-[219px] flex flex-col justify-between items-start gap-3">
             <div class="text-[72px] font-bold">
-              <input v-model="formData.activityName" type="text" name="activity_name" id="" class="border-none text-[72px] font-bold" required placeholder="請輸入活動名稱">
+              <input v-model="formData.activityName" type="text" name="activity_name" class="border-none text-[72px] font-bold" required placeholder="請輸入活動名稱">
             </div>
             <div class="w-[100%] bg-[#ffffff9b] text-[24px]">
-              <input v-model="formData.activityInfo" type="text" name="activity_info" id="" class="border-none text-[24px] font-semibold" required placeholder="請輸入活動Slogan">
+              <input v-model="formData.activityInfo" type="text" name="activity_info" class="border-none text-[24px] font-semibold" required placeholder="請輸入活動Slogan">
             </div>
             <label class="border border-dashed w-[136px] h-[56px] aspect-[4/3] bg-[#FFF] rounded-[8px] flex justify-center items-center text-[16px] text-[#072F54] font-semibold cursor-pointer">
               新增圖片
-              <input type="file" class="hidden" name="" id="" @change="(event) => uploadOtherImage(event)">
+              <input type="file" class="hidden" required @change="(event) => uploadOtherImage(event)">
             </label>
             <div class="flex flex-nowrap gap-[30px]">
               <div v-for="item in formData.activityPhoto" :key="item.id" class="relative">
@@ -145,7 +141,6 @@ export default {
                 <button type="button" class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 rounded-full w-[20px] h-[20px] flex justify-center items-center bg-[red] text-white" @click="removeImage(item.id)">X</button>
               </div>
             </div>
-            <!-- 測試上傳多圖完 -->
           </div>
           <div class="absolute left-[2.5%] top-[415px] w-[95%] flex justify-between">
             <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] z-50 rounded-[50px] bg-white" type="button">
@@ -160,42 +155,42 @@ export default {
             <div class="flex items-center">
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.lowestNumberOfPeople" alt="開課門檻" class="w-[10%] pe-1">
-                <input v-model="formData.activityLowestNumberOfPeople" type="number" name="activity_lowest_number_of_people" id="" class="rounded-[5px] w-full text-2xl font-bold" min="0" required placeholder="請輸入開課門檻">
+                <input v-model="formData.activityLowestNumberOfPeople" type="number" name="activity_lowest_number_of_people" class="rounded-[5px] w-full text-2xl font-bold" min="0" required placeholder="請輸入開課門檻">
               </div>
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.highestNumberOfPeople" alt="人數上限" class="w-[10%] pe-1">
-                <input v-model="formData.activityHighestNumberOfPeople" type="number" name="activity_highest_number_of_people" id="" class="rounded-[5px] w-full text-2xl font-bold" min="0" required placeholder="請輸入人數上限">
+                <input v-model="formData.activityHighestNumberOfPeople" type="number" name="activity_highest_number_of_people" class="rounded-[5px] w-full text-2xl font-bold" min="0" required placeholder="請輸入人數上限">
               </div>
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.registerTime" alt="報名開始時間" class="w-[10%] pe-1">
-                <input v-model="formData.activityStartRegistrationTime" type="datetime-local" name="activity_start_registration_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="開始報名 ex:2000-01-01 10:00">
+                <input v-model="formData.activityStartRegistrationTime" type="datetime-local" name="activity_start_registration_time" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="開始報名 ex:2000-01-01 10:00">
               </div>
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.registerTime" alt="報名截止時間" class="w-[10%] pe-1">
-                <input v-model="formData.activityEndRegistrationTime" type="datetime-local" name="activity_end_registration_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="截止報名 ex:2000-01-01 10:00">
+                <input v-model="formData.activityEndRegistrationTime" type="datetime-local" name="activity_end_registration_time" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="截止報名 ex:2000-01-01 10:00">
               </div>
             </div>
             <div class="flex">
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.activityPresenter" alt="主講者" class="w-[10%] pe-1">
-                <input v-model="formData.activityPresenter" type="text" name="activity_presenter" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請輸入主講者">
+                <input v-model="formData.activityPresenter" type="text" name="activity_presenter" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請輸入主講者">
               </div>
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.activityStartTime" alt="活動開始時間" class="w-[10%] pe-1">
-                <input v-model="formData.activityStartTime" type="datetime-local" name="activity_start_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="活動開始 ex:2000-01-01 10:00">
+                <input v-model="formData.activityStartTime" type="datetime-local" name="activity_start_time" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="活動開始 ex:2000-01-01 10:00">
               </div>
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.activityEndTime" alt="活動結束時間" class="w-[10%] pe-1">
-                <input v-model="formData.activityEndTime" type="datetime-local" name="activity_end_time" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="活動結束 ex:2000-01-01 10:00">
+                <input v-model="formData.activityEndTime" type="datetime-local" name="activity_end_time" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="活動結束 ex:2000-01-01 10:00">
               </div>
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.activityAddress" alt="活動地點" class="w-[10%] pe-1">
-                <input v-model="formData.activityAddress" type="text" name="activity_address" id="" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請輸入活動地點">
+                <input v-model="formData.activityAddress" type="text" name="activity_address" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請輸入活動地點">
               </div>
             </div>
             <div class="flex-1 h-[56px] flex items-center bg-[#ffffff5a] rounded-[14px] px-2">
               <img :src="images.exclamationTriangle" alt="參加須知" class="w-[40px] h-[40px]">
-              <input v-model="formData.activityInstruction" type="text" name="activity_instruction" id="" required placeholder="請輸入參加須知" class="w-full">
+              <input v-model="formData.activityInstruction" type="text" name="activity_instruction" required placeholder="請輸入參加須知" class="w-full">
             </div>
           </div>
         </div>

@@ -217,8 +217,26 @@ class IndexController extends Controller
             ->with('activityPhotos:id,activity_id,activity_img_path')
             ->get()
             ->map(function ($item) {
-                $item->activity_end_registration_time = $item->activity_end_registration_time->format('Y-m-d H:i');
-                return $item;
+                $coverPhoto = $item->activityPhotos->first();
+                $collectionCount = $item->studentActivities->where('activity_type', 1)->count();
+                $registrationCount = $item->studentActivities->where('activity_type', 2)->count();
+
+                return [
+                    'id' => $item->id,
+                    'activity_name' => $item->activity_name,
+                    'activity_info' => $item->activity_info,
+                    'activity_presenter' => $item->activity_presenter,
+                    'activity_type' => $item->activity_type,
+                    'activity_type_name' => $this->activityPresenter->getActivityTypeName($item->activity_type),
+                    'activity_lowest_number_of_people' => $item->activity_lowest_number_of_people,
+                    'activity_highest_number_of_people' => $item->activity_highest_number_of_people,
+                    'activity_end_registration_time' => date('Y-m-d H:i', strtotime($item->activity_end_registration_time)),
+                    'activity_start_time' => date('Y-m-d H:i', strtotime($item->activity_start_time)),
+                    'activity_address' => $item->activity_address,
+                    'cover_photo' => $coverPhoto->activity_img_path ?? '',
+                    'collection_count' => $collectionCount,
+                    'registration_count' => $registrationCount,
+                ];
             });
         $firstHotActivity = RegisterActivity::join('activity_details', 'register_activities.activity_id', '=', 'activity_details.id')
             ->select('activity_details.activity_type', RegisterActivity::raw('COUNT(*) as type_count'))

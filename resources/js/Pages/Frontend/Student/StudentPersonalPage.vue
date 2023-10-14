@@ -21,30 +21,21 @@ export default {
     };
   },
   computed: {
-    // 後端回傳資料
     rtData() {
       return this.response?.rt_data ?? {};
     },
-    // 獲取已報名活動資料陣列
     registerActivityData() {
       return this.rtData.registerActivity ?? {};
     },
-
-    // 獲取已收藏活動資料陣列
     favoriteActivityData() {
       return this.rtData.favoriteActivity ?? {};
     },
-
-    // 獲取全部活動資料陣列
     allActivityData() {
       return this.rtData.allActivity ?? {};
     },
-    // 獲取已完成活動資料陣列
     finishedActivityData() {
       return this.rtData.finishedActivity ?? {};
     },
-
-    // 獲取活動類別資料陣列
     activityTypeData() {
       return this.rtData.activityTypeData ?? [];
     },
@@ -61,7 +52,7 @@ export default {
 </script>
 
 <template>
-  <section id="presenter-personal-page" class="flex flex-col items-center">
+  <section id="presenter-personal-page" class="flex flex-col gap-1 items-center">
     <ActivitySwiper :slide-data="registerActivityData?.data ?? []" href="studentActivityEdit">
       <template #activity_title_name>
         <span>
@@ -69,7 +60,6 @@ export default {
         </span>
       </template>
     </ActivitySwiper>
-    <!-- {{ response.rt_data.favoriteActivity }} -->
     <ActivitySwiper :slide-data="favoriteActivityData?.data ?? []" href="studentActivityDetails">
       <template #activity_title_name>
         <span>
@@ -79,9 +69,7 @@ export default {
     </ActivitySwiper>
 
     <div class="m-auto w-full max-w-[1400px] h-[505px] p-10 flex flex-col items-center">
-      <!-- 搜尋欄位 -->
       <div class="mb-[5px] w-full h-[48px] pt-[10px] border-t-[#000] border-t-[1px] flex justify-end">
-        <!-- 文字搜尋框 -->
         <div class="w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-1">
           <input v-model="keyword" type="search" class="w-[80%] h-[80%]" @search="searchData" placeholder="請輸入搜尋資訊">
           <button type="button" @click="searchData">
@@ -91,18 +79,18 @@ export default {
       </div>
       <!-- 搜尋的表頭 -->
       <div class="w-full h-[64px] flex">
-        <div class="flex-none w-[50%] border bg-[#5D8BA3] flex justify-center items-center text-[24px]">
+        <b class="flex-none w-[50%] border bg-[#5D8BA3] flex justify-center items-center text-[24px]">
           <slot name="activity_title_name">活動名稱</slot>
-        </div>
-        <div class="flex-initial w-[10%] border bg-[#82ACC2] flex justify-center items-center text-[24px]">
+        </b>
+        <b class="flex-initial w-[10%] border bg-[#82ACC2] flex justify-center items-center text-[24px]">
           <slot name="activity_title_type">主講者</slot>
-        </div>
-        <div class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
+        </b>
+        <b class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
           <slot name="activity_title_time">報名截止時間</slot>
-        </div>
-        <div class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
+        </b>
+        <b class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
           <slot name="activity_title_number">人數狀況</slot>
-        </div>
+        </b>
       </div>
       <!-- 詳細搜尋內容 -->
       <div v-for="(item, index) in allActivityData?.data ?? []" :key="index" class="w-full h-[53px] flex">
@@ -114,18 +102,22 @@ export default {
             {{ item.activity_presenter }}
           </slot>
         </div>
-        <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
+        <b class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
           {{ item.activity_end_registration_time }}
-        </div>
+        </b>
         <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-between items-center text-[16px]">
           <slot name="student_additional_remark">
-            <span>
-              門檻:{{ item.activity_lowest_number_of_people }}
-              上限:{{ item.activity_highest_number_of_people }}
-              <div class="pe-3 flex items-center justify-center">
-                目前人數：{{ item.registration_count }}
-              </div>
-            </span>
+            <div>
+              <p>
+                門檻:{{ item.activity_lowest_number_of_people.toLocaleString() }}
+              </p>
+              <p>
+                名額:{{ item.activity_highest_number_of_people.toLocaleString() }}
+              </p>
+            </div>
+            <div class="pe-3 flex items-center justify-center">
+              目前人數：{{ item.registration_count.toLocaleString() }}
+            </div>
           </slot>
         </div>
       </div>

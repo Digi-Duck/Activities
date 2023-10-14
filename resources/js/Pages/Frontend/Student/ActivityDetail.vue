@@ -172,7 +172,8 @@ export default {
     <button v-else @click="cancelFavorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
       取消收藏
     </button>
-    <ActivityDetailSwiper :slide-data="[activityData]">
+    <PrimaryButton class="absolute right-[12.5%] top-[90%] z-50 px-[20px] py-[10px]"><Link href="#studentData">立即加入</Link></PrimaryButton>
+    <ActivityDetailSwiper :slide-data="[activityData]" class="relative">
       <template #activity_type>
         <span v-if="activityData.activity_type === 1">
           文化與藝術
@@ -214,12 +215,12 @@ export default {
       </template>
       <template #activity_lowest_number_of_people>
         <span>
-          {{ activityData.activity_lowest_number_of_people }}
+          {{ activityData.activity_lowest_number_of_people.toLocaleString() }}
         </span>
       </template>
       <template #activity_highest_number_of_people>
         <span>
-          {{ activityData.activity_highest_number_of_people }}
+          {{ activityData.activity_highest_number_of_people.toLocaleString() }}
         </span>
       </template>
       <template #activity_start_registration_time>
@@ -268,41 +269,41 @@ export default {
       <div v-html="activityData.activity_information"></div>
     </div>
     <!-- 學員活動資訊填寫區 -->
-    <form @submit.prevent="submitData()" action="" class="w-full h-[700px] px-10 py-5 bg-[#A9BCC6] flex flex-col gap-3 text-[24px]">
+    <form id="studentData" @submit.prevent="submitData()" action="" class="w-full h-[700px] px-10 py-5 bg-[#A9BCC6] flex flex-col gap-3 text-[24px]">
       <!-- 填入會員預設資料 -->
       <div class="w-full h-[30px] flex justify-end items-center gap-3">
-        <div class="w-[274px] h-full bg-white flex justify-center items-center">代入會員資料</div>
+        <div class="w-[274px] h-full bg-white rounded-[5px] flex justify-center items-center">代入會員資料</div>
         <input type="checkbox" class="w-[25px] h-[25px] rounded-full" @click="fillUserData()">
       </div>
       <!-- 填入活動報名資訊 -->
       <div class="w-full h-[30px] flex gap-[150px]">
-        <div class="w-[274px] h-full bg-white flex justify-center items-center">姓名</div>
+        <div class="w-[274px] h-full bg-white rounded-[5px] flex justify-center items-center">姓名</div>
         <slot name="studentName">
-          <input v-model="formData.studentName" type="text" class="w-full" name="" id="">
+          <input v-model="formData.studentName" type="text" class="w-full" name="">
         </slot>
       </div>
       <div class="w-full h-[30px] flex gap-[150px]">
-        <div class="w-[274px] h-full bg-white flex justify-center items-center">連絡電話</div>
+        <div class="w-[274px] h-full bg-white rounded-[5px] flex justify-center items-center">連絡電話</div>
         <slot name="studentPhoneNumber">
-          <input v-model="formData.studentPhoneNumber" type="tel" class="w-full" name="" id="">
+          <input v-model="formData.studentPhoneNumber" type="tel" class="w-full" name="">
         </slot>
       </div>
       <div class="w-full h-[30px] flex gap-[150px]">
-        <div class="w-[274px] h-full bg-white flex justify-center items-center">電子信箱</div>
+        <div class="w-[274px] h-full bg-white rounded-[5px] flex justify-center items-center">電子信箱</div>
         <slot name="studentEmail">
-          <input v-model="formData.studentEmail" type="email" class="w-full" name="" id="">
+          <input v-model="formData.studentEmail" type="email" class="w-full" name="">
         </slot>
       </div>
       <!-- 額外備註的地方 -->
       <div class="w-full h-[300px] flex flex-col justify-start gap-[25px]">
-        <div class="w-[217.5px] h-[50px] bg-white flex justify-center items-center">額外備註</div>
+        <div class="w-[217.5px] h-[50px] bg-white rounded-[5px] flex justify-center items-center">額外備註</div>
         <slot name="studentAdditionalRemark">
-          <textarea v-model="formData.studentAdditionalRemark" name="" id="" class="w-full h-full" cols="30" rows="10" resize="false"></textarea>
+          <textarea v-model="formData.studentAdditionalRemark" name="" class="w-full h-full resize-none" cols="30" rows="10" resize="false"></textarea>
         </slot>
       </div>
       <div class="w-full h-[30px] flex gap-[150px]">
-        <div class="w-[274px] h-full bg-white flex justify-center items-center">確認事項</div>
-        <input type="text" class="w-full" name="" id="" :placeholder="activityData.activity_instruction">
+        <div class="w-[274px] h-full bg-white rounded-[5px] flex justify-center items-center">確認事項</div>
+        <input type="text" class="w-full" name="" :placeholder="activityData.activity_instruction">
       </div>
       <div class="pt-10 w-full flex justify-center gap-5 text-[24px]">
         <button type="button" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px]">回上一頁</button>
