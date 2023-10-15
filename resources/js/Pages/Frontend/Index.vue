@@ -85,10 +85,10 @@ export default {
 
       <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" class="absolute w-full h-[602px] text-start" :btn-prev="prevButton" :btn-next="nextButton">
         <img :src="slide.cover_photo" class="inline-block w-[90%] h-full object-contain" alt="活動背景圖">
-        <h2 class="absolute top-[100px] w-full pe-[150px] bg-[#ffffff95] text-[64px] text-end text-white">
+        <h2 class="absolute top-0 md:top-[100px] w-full pe-[150px] bg-[#ffffff95] text-[64px] text-end text-white">
           {{ slide.activity_name }}
         </h2>
-        <div class="absolute top-[200px] w-full h-[59px] pe-[150px] bg-[#ffffff3a] text-[48px] text-end text-white">
+        <div class="absolute top-[100px] md:top-[200px] w-full h-[59px] pe-[150px] bg-[#ffffff3a] text-[48px] text-end text-white">
           <h3 class="z-10">
             {{ slide.activity_info }}
           </h3>
@@ -187,7 +187,7 @@ export default {
         </b>
         <div class="flex-1 md:flex-initial w-[30%] xl:w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-between items-center text-[16px]">
           <slot name="student_additional_remark">
-            <div class="hidden md:flex">
+            <div class="hidden md:block">
               <p>
                 門檻:{{ item.activity_lowest_number_of_people.toLocaleString() }}
               </p>
