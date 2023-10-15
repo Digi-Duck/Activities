@@ -35,8 +35,8 @@ export default {
 <template>
   <section id="app-layout">
     <header class="relative h-[160.8px] bg-[#F9565C] flex flex-col">
-      <Link href="" class="absolute top-[10px] left-[10px] h-[98px] w-[239px] rounded-[15px] bg-[#AB4C4C] opacity-75 text-5xl text-center leading-loose">
-        Logo
+      <Link href="" class="absolute top-0 xl:top-[10px] xl:left-[10px] h-[49px] sm:h-[98px] sm:w-[239px] rounded-[5px] xl:bg-[#f4d2d2] opacity-75 text-5xl text-center leading-loose">
+        Activities
       </Link>
       <nav class="h-[37.313%] pe-5 bg-[#FFFFFF] flex justify-end items-center gap-3">
         <div v-if="!$page.props.auth.user" class="flex gap-3">
@@ -90,10 +90,10 @@ export default {
           </a>
         </div>
         <div class="me-28 flex-col items-end">
-          <div class="ms-[275px] mt-[25px] pt-[15px] text-white">
+          <div class="hidden sm:flex ms-[275px] mt-[25px] pt-[15px] text-white">
             Copyright © 2023 Office of Student Affairs, NCHU
           </div>
-          <div class="ms-[275px] mt-[25px] p-3 text-white flex gap-3">
+          <div class="ms-[275px] mt-[25px] hidden p-3 text-white xl:flex gap-3">
             <button type="button">聯絡信箱</button>
             <img class="h-[25px] w-[25px] rounded bg-white border border-x-2" :src="images.envelope" alt="聯絡信箱按鈕" />
             <button type="button">service@gmail.com</button>

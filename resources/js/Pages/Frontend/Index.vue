@@ -95,7 +95,7 @@ export default {
         </div>
       </Swiper>
 
-      <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" :slides-per-view="4" :space-between="300" class="absolute -top-[28%] -left-[3%] border-t-[10px] border-t-[#ffffff9d] rotate-[10deg]" :btn-prev="prevButton" :btn-next="nextButton">
+      <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" :slides-per-view="4" :space-between="300" class="absolute -top-[28%] -left-[3%] border-t-[10px] border-t-[#ffffff9d] lg:rotate-[10deg]" :btn-prev="prevButton" :btn-next="nextButton">
         <Link :href="route('studentActivityDetails', { id: slide.id })" class="inline-block w-[512px] h-[384px] border-[2px] border-[black] border-t-[0px] rounded-[5px] bg-[white]">
           <img :src="slide.cover_photo" class="w-full h-full opacity-80 object-cover hover:opacity-100 hover:transform-[150%]" alt="產業類別圖片">
         </Link>
@@ -104,7 +104,6 @@ export default {
 
     <div v-if="hottestActivityData.activity_type_name" class="w-full max-w-[1400px] h-[765px] pt-[38px] bg-[#F3F3F1] rounded-[64px] flex flex-col justify-center items-center gap-1">
       <div class="text-[17px] flex items-center gap-1">
-        <!-- 活動類型 -->
         <b class="text-[17px]">
           活動類型:
           {{ hottestActivityData.activity_type_name }}
@@ -121,7 +120,6 @@ export default {
           </div>
         </div>
       </b>
-
       <div class="flex flex-col items-center gap-3">
         <b class="text-[55px]">
           {{ hottestActivityData.activity_name }}
@@ -139,7 +137,7 @@ export default {
       <figure class="relative w-full max-w-[1400px] h-[450px] flex">
         <img :src="hottestActivityData.cover_photo" class="absolute xl-hidden w-[770px] h-full rounded-[64px] aspect-square opacity-[20%] bg-green-600" alt="半透明活動主照片">
         <Link :href="route('studentActivityDetails', { id: hottestActivityData.id })">
-          <img :src="hottestActivityData.cover_photo" class="absolute md:ms-[10%] xl:ms-[17.5%] w-[900px] h-full z-10 rounded-[64px] aspect-square" alt="活動主照片">
+          <img :src="hottestActivityData.cover_photo" class="absolute ms-0 lg:ms-[6.5%] xl:ms-[17.5%] w-[900px] h-full z-10 rounded-[64px] aspect-square" alt="活動主照片">
         </Link>
         <img :src="hottestActivityData.cover_photo" class="absolute end-0 w-[770px] h-full rounded-[64px] aspect-square opacity-[20%] bg-blue-600" alt="半透明活動主照片">
       </figure>
@@ -148,11 +146,11 @@ export default {
 
     <ActivitySwiper :slide-data="activityData ?? []" href="studentActivityDetails" />
 
-    <div class="m-auto w-full max-w-[1400px] h-[505px] p-10 flex flex-col items-center">
+    <div class="w-full max-w-[1400px] h-[505px] p-10 flex flex-col items-center">
       <!-- 搜尋欄位 -->
       <div class="mb-[5px] w-full h-[48px] pt-[10px] pe-[10px] border-t-[#000] border-t-[1px] flex justify-end">
         <!-- 文字搜尋框 -->
-        <div class="w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-3">
+        <div class="w-[40%] lg:w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-3">
           <input v-model="keyword" type="search" class="w-[80%] h-[80%]" @search="searchData" placeholder="請輸入搜尋資訊">
           <button type="button" @click="searchData">
             <img :src="images.magnifer" class="w-[16px]" alt="搜尋">
@@ -161,35 +159,35 @@ export default {
       </div>
       <!-- 搜尋的表頭 -->
       <div class="w-full h-[60px] flex">
-        <b class="flex-none w-[50%] border bg-[#5D8BA3] flex justify-center items-center text-[24px]">
+        <b class="flex-1 md:flex-none md:w-[40%] xl:w-[50%] border bg-[#5D8BA3] flex justify-center items-center text-[24px]">
           <slot name="activity_title_name">活動名稱</slot>
         </b>
-        <b class="flex-initial w-[10%] border bg-[#82ACC2] flex justify-center items-center text-[24px]">
+        <b class="flex-1 md:flex-initial w-[15%] border bg-[#82ACC2] flex justify-center items-center text-[24px]">
           <slot name="activity_title_type">主講者</slot>
         </b>
-        <b class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
+        <b class="flex-1 md:flex-initial w-[15%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
           <slot name="activity_title_time">報名截止時間</slot>
         </b>
-        <b class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
+        <b class="flex-1 md:flex-initial w-[30%] xl:w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
           <slot name="activity_title_number">人數狀況</slot>
         </b>
       </div>
       <!-- 詳細搜尋內容 -->
       <div v-for="(item, index) in activityTableData?.data ?? []" :key="index" class="w-full h-[53px] flex">
-        <Link :href="route('studentActivityDetails', { id: item.id })" class="flex-none w-[50%] ps-3 border bg-[#5d8aa37d] flex justify-start items-center text-[16px] font-bold underline decoration-1">
+        <Link :href="route('studentActivityDetails', { id: item.id })" class="flex-1 md:flex-none md:w-[40%] xl:w-[50%] ps-3 border bg-[#5d8aa37d] flex justify-start items-center text-[16px] font-bold underline decoration-1">
           {{ item.activity_name }}
         </Link>
-        <div class="flex-initial w-[10%] border bg-[#82acc27d] flex justify-center items-center text-[16px] font-semibold">
+        <div class="flex-1 md:flex-initial w-[15%] border bg-[#82acc27d] flex justify-center items-center text-[16px] font-semibold">
           <slot name="activity_info_type">
             {{ item.activity_presenter }}
           </slot>
         </div>
-        <b class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
+        <b class="flex-1 md:flex-initial w-[15%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
           {{ item.activity_end_registration_time }}
         </b>
-        <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-between items-center text-[16px]">
+        <div class="flex-1 md:flex-initial w-[30%] xl:w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-between items-center text-[16px]">
           <slot name="student_additional_remark">
-            <div>
+            <div class="hidden md:flex">
               <p>
                 門檻:{{ item.activity_lowest_number_of_people.toLocaleString() }}
               </p>
@@ -212,6 +210,6 @@ export default {
 
 <style lang="scss" scoped>
 #frontend-index {
-  @apply flex justify-center items-center flex-col gap-5;
+  @apply flex justify-center items-center flex-col gap-5 transition-all;
 }
 </style>
