@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      prevButton: null, // 在这里定义 prevButton 和 nextButton
+      prevButton: null,
       nextButton: null,
       images: {
         activityAddress,

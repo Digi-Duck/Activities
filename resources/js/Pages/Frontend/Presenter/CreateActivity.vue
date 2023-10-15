@@ -24,8 +24,7 @@ export default {
   },
   data() {
     return {
-      title: 'Hello World !',
-      prevButton: null, // 在这里定义 prevButton 和 nextButton
+      prevButton: null,
       nextButton: null,
       formData: {
         activityName: '',
@@ -58,7 +57,6 @@ export default {
     };
   },
   mounted() {
-    // 通过类名或其他方式获取按钮元素并赋值给 prevButton 和 nextButton
     this.prevButton = this.$refs.btnPrev;
     this.nextButton = this.$refs.btnNext;
   },
@@ -105,7 +103,7 @@ export default {
 </script>
 
 <template>
-  <section id="create-activity" class="flex flex-col">
+  <section id="create-activity" class="flex flex-col overflow-hidden">
     <!-- 建立活動資訊填寫 -->
     <form @submit.prevent="submitData()" action="">
       <div class="relative mt-5 w-full h-[901px] bg-[#dac3c3] flex flex-col">
@@ -151,8 +149,8 @@ export default {
             </button>
           </div>
           <!-- 活動資訊框 -->
-          <div class="absolute left-[5%] top-[495px] w-[90%] h-[289px] pt-[15px] px-[60px] pb-[15px] rounded-[14px] bg-[#f2f2f2b2] flex flex-col flex-wrap gap-5">
-            <div class="flex items-center">
+          <div class="absolute left-[5%] top-[495px] w-[90%] lg:h-[289px] pt-[10px] px-[5px] md:px-[60px] bg-[#f2f2f2b2] rounded-[15px] flex flex-col gap-2 lg:gap-5">
+            <div class="flex flex-col gap-2 lg:gap-0 lg:flex-row">
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.lowestNumberOfPeople" alt="開課門檻" class="w-[10%] pe-1">
                 <input v-model="formData.activityLowestNumberOfPeople" type="number" name="activity_lowest_number_of_people" class="rounded-[5px] w-full text-2xl font-bold" min="0" required placeholder="請輸入開課門檻">
@@ -170,7 +168,7 @@ export default {
                 <input v-model="formData.activityEndRegistrationTime" type="datetime-local" name="activity_end_registration_time" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="截止報名 ex:2000-01-01 10:00">
               </div>
             </div>
-            <div class="flex">
+            <div class="flex flex-col gap-2 lg:gap-0 lg:flex-row">
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.activityPresenter" alt="主講者" class="w-[10%] pe-1">
                 <input v-model="formData.activityPresenter" type="text" name="activity_presenter" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請輸入主講者">
@@ -202,13 +200,14 @@ export default {
         </Swiper>
       </div>
       <!-- 編輯工具列；所見即所得區 -->
-      <Editor class="h-[500px]" @update-content="information"></Editor>
+      <Editor class="mt-[200px] lg:mt-0 w-full h-[500px]" @update-content="information"></Editor>
       <!-- <editor v-model="editorValue" :init="editorInit" class="min-h-[500px]" @update-content="test" /> -->
       <div class="flex w-full justify-center gap-[45px] py-5">
         <Link :href="route('index')" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消開課</Link>
         <button type="submit" class="px-[30px] py-[15px] bg-[#095269] rounded-[5px] flex justify-center items-center text-white">確認開課</button>
       </div>
     </form>
+    <Link class="fixed right-[2.5%] bottom-[2.5%] text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">回到頁首</Link>
   </section>
 </template>
 
