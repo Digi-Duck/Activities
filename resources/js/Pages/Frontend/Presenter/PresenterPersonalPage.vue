@@ -111,7 +111,9 @@ export default {
           </slot>
         </div>
       </div>
-      <Pagination :pagination-data="activityTableData" class="pt-3" />
+      <div class="w-[313px] h-[56px] bg-white rounded-[30px] border shadow-xl flex justify-center">
+        <Pagination :pagination-data="activityTableData" class="pt-3" />
+      </div>
     </div>
 
     <!-- 已上完的活動資料尚未傳送 -->

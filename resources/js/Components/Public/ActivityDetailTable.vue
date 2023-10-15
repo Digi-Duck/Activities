@@ -88,7 +88,9 @@ export default {
           </slot>
         </div>
       </div>
-      <Pagination :pagination-data="tableData" class="pt-3" />
+      <div class="w-[313px] h-[56px] bg-white rounded-[30px] border shadow-xl flex justify-center">
+        <Pagination :pagination-data="tableData" class="pt-3" />
+      </div>
     </div>
   </section>
 </template>

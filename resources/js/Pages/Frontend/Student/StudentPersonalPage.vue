@@ -121,7 +121,9 @@ export default {
           </slot>
         </div>
       </div>
-      <Pagination :pagination-data="allActivityData?.data" class="pt-3" />
+      <div class="w-[313px] h-[56px] bg-white rounded-[30px] border shadow-xl flex justify-center">
+        <Pagination :pagination-data="allActivityData?.data" class="pt-3" />
+      </div>
     </div>
     <ActivitySwiper :slide-data="finishedActivityData?.data ?? []" href="finishedActivity">
       <template #activity_title_name>
