@@ -4,7 +4,7 @@
 import Pagination from '@/Components/Public/Pagination.vue';
 import { router } from '@inertiajs/vue3';
 import student from '/images/icon/user-group-solid.svg';
-import surfNumber from '/images/icon/arrow-pointer-solid.svg';
+import surfNumber from '/images/icon/computer-mouse-solid.svg';
 import dataUp from '/images/icon/caret-up-solid.svg';
 import dataDown from '/images/icon/caret-down-solid.svg';
 import defaultImage from '/images/icon/default-image.png';
@@ -126,9 +126,9 @@ export default {
     </h1>
     <div class="w-[80%] mb-5 mt-5 flex flex-col justify-between items-center gap-10">
       <!-- 資訊小卡區 -->
-      <div class="w-full flex flex-row justify-between gap-5 mb-5">
+      <div class="w-full flex-wrap flex flex-row justify-center gap-5 mb-5">
         <!-- 資訊預覽小卡 -->
-        <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
+        <div class="w-full md:w-[45%] mb-[30px] lg:flex-1 h-[159px] border rounded-[10px] bg-white flex flex-col">
           <div class="relative h-full p-5 rounded-t-[10px] bg-white flex justify-between">
             <div>
               <div class="border-b-2 text-[36px]">
@@ -137,7 +137,7 @@ export default {
               <div class="text-[24px]">網站瀏覽量</div>
             </div>
             <!-- 資料icon -->
-            <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
+            <img :src="images.surfNumber" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
           <div v-if="websiteViewCount > websiteViewCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
             <span>
@@ -150,7 +150,7 @@ export default {
             <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
-        <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
+        <div class="w-full md:w-[45%] mb-[30px] lg:flex-1 h-[159px] border rounded-[10px] bg-white flex flex-col">
           <div class="relative h-full p-5 rounded-t-[10px] bg-white flex justify-between">
             <div>
               <div class="border-b-2 text-[36px]">
@@ -159,7 +159,7 @@ export default {
               <div class="text-[24px]">新增活動數</div>
             </div>
             <!-- 資料icon -->
-            <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
+            <img :src="images.book" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
           <div v-if="activityCount > activityCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
             <span>
@@ -172,7 +172,7 @@ export default {
             <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
-        <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
+        <div class="w-full md:w-[45%] mb-[30px] lg:flex-1 h-[159px] border rounded-[10px] bg-white flex flex-col">
           <div class="relative h-full p-5 rounded-t-[10px] bg-white flex justify-between">
             <div>
               <div class="border-b-2 text-[36px]">
@@ -194,7 +194,7 @@ export default {
             <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
         </div>
-        <div class="w-full h-[159px] border rounded-[10px] bg-white flex flex-col">
+        <div class="w-full md:w-[45%] mb-[30px] lg:flex-1 h-[159px] border rounded-[10px] bg-white flex flex-col">
           <div class="relative h-full p-5 rounded-t-[10px] bg-white flex justify-between">
             <div>
               <div class="border-b-2 text-[36px]">
@@ -203,7 +203,7 @@ export default {
               <div class="text-[24px]">新增講師數</div>
             </div>
             <!-- 資料icon -->
-            <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
+            <img :src="images.presenter" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
           <div v-if="presenterCount > presenterCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
             <span>
@@ -218,18 +218,18 @@ export default {
         </div>
       </div>
       <!-- 詳細圖表及最新消息區 -->
-      <div class="w-full h-[728.5px] flex flex-row justify-between gap-5 mb-5">
+      <div class="w-full 2xl:h-[728.5px] flex flex-col 2xl:flex-row justify-between gap-5 mb-5">
         <!-- 詳細圖表 -->
-        <div class="w-[1008px] rounded-[10px] border-2 border-[#000000] flex flex-col overflow-hidden">
-          <div class="ps-[30px] w-full h-[106px] bg-[#397AC4] border flex justify-start items-center gap-[20px]">
-            <b class="text-[36px]">{{ rtData.title }}</b>
+        <div class="flex-[0.7] rounded-[10px] border-2 border-[#000000] flex flex-col overflow-hidden">
+          <div class="ps-[30px] w-full h-[106px] bg-[#397AC4] border flex justify-start items-center gap-1 lg:gap-[20px]">
+            <b class="text-[18px] md:text-[24px] lg:text-[36px]">{{ rtData.title }}</b>
             <select v-model="selectedType" class="h-[50%] rounded-[5px]" @change="searchChart">
               <option value=4>網站瀏覽量</option>
               <option value=1>活動數量</option>
               <option value=2>講師數量</option>
               <option value=3>學員數量</option>
             </select>
-            <div class="h-[50%] rounded-[5px] border-black border bg-[white] flex gap-1">
+            <div class="h-[50%] w-[25%] lg:w-[30%] rounded-[5px] border-black border bg-[white] flex gap-1">
               <input v-model="startDate" type="date" class="border-none" @change="searchChart">
               <span class="flex items-center">～</span>
               <input v-model="endDate" type="date" class="border-none" @change="searchChart">
@@ -239,7 +239,7 @@ export default {
           <Echart class="h-[623px]" :response="chartData"></Echart>
         </div>
         <!-- 最新消息 -->
-        <div class="w-[559px] rounded-[10px] border-2 border-[#000000] text-white overflow-hidden flex flex-col gap-3">
+        <div class="flex-[0.3] rounded-[10px] border-2 border-[#000000] text-white overflow-hidden flex flex-col gap-3">
           <!-- 最新消息表頭 -->
           <div class="w-full h-[106px] ps-5 rounded-t-[10px] bg-[#397AC4] text-[48px] flex items-center">最新消息</div>
           <!-- 最新消息內容 -->
@@ -261,14 +261,16 @@ export default {
       <!-- 事件紀錄表 -->
       <div class="w-full h-full p-3 bg-[#234E66] rounded-[10px] flex flex-col items-center gap-3">
         <!-- 搜尋欄 -->
-        <div class="w-full h-[59px] ps-10 bg-white flex items-center gap-5 text-[48px] font-semibold">
-          事件紀錄
-          <div class="h-[70%] rounded-[5px] border-black border bg-[white] flex gap-1">
+        <div class="w-full h-[59px] ps-3 bg-white flex justify-center items-center gap-3 text-[24px] lg:text-[36px] font-semibold">
+          <span class="hidden md:inline">
+            事件紀錄
+          </span>
+          <div class="h-[70%] w-[30%] max-w-[315px] rounded-[5px] border-black border bg-[white] flex gap-1">
             <input v-model="startRecordDate" type="date" class="border-none">
             <span class="flex text-[16px] items-center">～</span>
             <input v-model="endRecordDate" type="date" class="border-none">
           </div>
-          <input v-model="keyword" type="search" placeholder="請輸入搜尋使用者名稱、行為" @search="searchRecord">
+          <input v-model="keyword" type="search" class="w-[30%] max-w-[315px]" placeholder="請輸入搜尋使用者名稱、行為" @search="searchRecord">
           <button type="button" @click="searchRecord" class="w-[86px] h-[38px] bg-[gray] rounded-[4px] text-[22px]">搜尋</button>
         </div>
         <!-- 搜尋內容 -->
