@@ -23,16 +23,16 @@ const submit = () => {
 </script>
 
 <template>
-  <div class="w-[full] p-[100px] bg-[#ebd8d8] flex flex-col justify-center items-center">
+  <div class="w-[full] bg-[#ebd8d8] flex flex-col justify-center items-center gap-5">
     <div class="flex flex-col">
-      <b class="w-full text-[72px]">
+      <b class="w-full text-[56px] md:text-[72px]">
         哈囉，
       </b>
-      <b class="w-full text-[72px]">
+      <b class="w-full text-[56px] md:text-[72px]">
         一起參加活動吧！
       </b>
     </div>
-    <form @submit.prevent="submit" class="w-[35%] p-10 border-[3px] flex flex-col gap-3">
+    <form @submit.prevent="submit" class="mb-[50px] p-10 w-[35%] min-w-[400px] bg-[#FFFFFF] shadow-xl border-[3px] flex flex-col gap-3">
       <div>
         <InputLabel for="email" value="帳號/Email" />
 

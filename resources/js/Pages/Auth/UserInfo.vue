@@ -39,11 +39,10 @@ export default {
 </script>
 
 <template>
-  {{ rtData.phoneNumber }}
   <section id="userInfo" class="w-[full] p-[100px] bg-[#ebd8d8] flex flex-col justify-center items-center">
-    <div class="w-[35%] p-10 border-[3px] flex flex-col gap-3">
+    <div class="p-10 w-[35%] min-w-[400px] bg-white shadow-xl border-[3px] flex flex-col gap-3">
 
-      <div class="ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[yellow] rounded-full overflow-hidden">
+      <div class="ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[#cecece] rounded-full overflow-hidden">
         <img v-if="rtData.imgPath" :src="rtData.imgPath" class="w-full h-full" alt="">
         <img v-else :src="images.defaultImage" alt="">
       </div>

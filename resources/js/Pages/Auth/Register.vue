@@ -29,8 +29,8 @@ const submit = () => {
 </script>
 
 <template>
-  <div class="w-[full] p-[100px] bg-[#ebd8d8] flex flex-col justify-center items-center">
-    <form @submit.prevent="submit" class="w-[35%] p-10 border-[3px] flex flex-col gap-3">
+  <div class="w-[full] bg-[#ebd8d8] flex flex-col justify-center items-center">
+    <form @submit.prevent="submit" class="mt-[25px] mb-[25px] w-[35%] p-10 min-w-[400px] bg-white shadow-xl border-[3px] flex flex-col gap-3">
 
       <label class="cursor-pointer">
         <div class="relative ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[#FFFFFF] rounded-full">
@@ -66,12 +66,12 @@ const submit = () => {
       <div>
         <InputLabel value="連絡電話" />
 
-        <input type="tel"
+        <TextInput type="tel"
           class="mt-1 block w-full"
           v-model="form.phonenumber"
           placeholder="連絡電話"
           required
-          autofocus>
+        />
 
       </div>
 

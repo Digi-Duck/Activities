@@ -102,11 +102,11 @@ export default {
 <template>
   <form @submit.prevent="submitData" action="">
     <section id="changePassword">
-      <div class="w-[full] p-[100px] bg-[#ebd8d8] flex flex-col justify-center items-center">
-        <div class="w-[35%] p-10 border-[3px] bg-[#FEFFFE] flex flex-col gap-3">
+      <div class="w-full bg-[#ebd8d8] flex flex-col justify-center items-center">
+        <div class="mt-[50px] mb-[50px] w-[35%] min-w-[400px] p-10 border-[3px] bg-[#FEFFFE] flex flex-col gap-3">
 
           <label class="cursor-pointer">
-            <div class="relative ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[yellow] rounded-full">
+            <div class="relative ms-[calc(50%-50px)] w-[100px] h-[100px] bg-[#cecece] rounded-full">
               <img v-if="image" :src="image" class="w-full h-full rounded-full" alt="">
               <img v-else-if="rtData.imgPath" :src="rtData.imgPath" class="w-full h-full rounded-full" alt="">
               <img v-else :src="images.defaultImage" alt="">
@@ -145,7 +145,7 @@ export default {
           </div>
 
           <div class="flex flex-col items-center justify-end mt-4 gap-[25px]">
-            <button type="submit" :href="route('userInfoUpdate')" class="w-full h-[50px] bg-[#194F69] text-[37px] flex justify-center items-center cursor-pointer">
+            <button type="submit" :href="route('userInfoUpdate')" class="w-full h-[50px] bg-[#1F2937] text-[37px] rounded-[10px] text-white flex justify-center items-center cursor-pointer">
               確認修改
             </button>
           </div>
