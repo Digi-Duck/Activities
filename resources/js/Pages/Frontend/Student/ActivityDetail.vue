@@ -41,6 +41,20 @@ export default {
     },
   },
   methods: {
+    getActivityType(type) {
+      // 定義活動類型文字轉換
+      const activityTypes = {
+        1: '文化與藝術',
+        2: '學術與培訓',
+        3: '社交與社團',
+        4: '旅遊與戶外',
+        5: '健康與福祉',
+        6: '商業與職業發展',
+        7: '娛樂與文化慶典',
+        8: '科技與創新',
+      };
+      return activityTypes[type] || '其他';
+    },
     fillUserData() {
       router.visit(route('fillUserData'), {
         method: 'get',
@@ -175,33 +189,7 @@ export default {
     <PrimaryButton class="absolute right-[12.5%] top-[82.5%] hidden lg:block z-50 px-[20px] py-[10px]"><Link href="#studentData">立即加入</Link></PrimaryButton>
     <ActivityDetailSwiper :slide-data="[activityData]" class="relative">
       <template #activity_type>
-        <span v-if="activityData.activity_type === 1">
-          文化與藝術
-        </span>
-        <span v-else-if="activityData.activity_type === 2">
-          學術與培訓
-        </span>
-        <span v-else-if="activityData.activity_type === 3">
-          社交與社團
-        </span>
-        <span v-else-if="activityData.activity_type === 4">
-          旅遊與戶外
-        </span>
-        <span v-else-if="activityData.activity_type === 5">
-          健康與福祉
-        </span>
-        <span v-else-if="activityData.activity_type === 6">
-          商業與職業發展
-        </span>
-        <span v-else-if="activityData.activity_type === 7">
-          娛樂與文化慶典
-        </span>
-        <span v-else-if="activityData.activity_type === 8">
-          科技與創新
-        </span>
-        <span v-else>
-          其他
-        </span>
+        <span>{{ getActivityType(activityData.activity_type) }}</span>
       </template>
       <template #activity_name>
         <span>

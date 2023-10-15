@@ -41,6 +41,20 @@ export default {
     },
   },
   methods: {
+    getActivityType(type) {
+      // 定義活動類型文字轉換
+      const activityTypes = {
+        1: '文化與藝術',
+        2: '學術與培訓',
+        3: '社交與社團',
+        4: '旅遊與戶外',
+        5: '健康與福祉',
+        6: '商業與職業發展',
+        7: '娛樂與文化慶典',
+        8: '科技與創新',
+      };
+      return activityTypes[type] || '其他';
+    },
     toggleQRCodeVisibility() {
       this.qrCodeVisible = !this.qrCodeVisible;
     },
@@ -148,7 +162,7 @@ export default {
       <div v-else>
       </div>
     </div>
-    <button v-if="favoriteCheck === 0" @click="favorite()" type="button" class="absolute top-[17.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+    <button v-if="!rtData.favoriteCheck" @click="favorite()" type="button" class="absolute top-[17.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
       點我收藏
     </button>
     <button v-else @click="cancelFavorite()" type="button" class="absolute top-[17.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
@@ -156,33 +170,7 @@ export default {
     </button>
     <ActivityDetailSwiper :slide-data="[activityData]">
       <template #activity_type>
-        <span v-if="activityData.activity_type === 1">
-          文化與藝術
-        </span>
-        <span v-else-if="activityData.activity_type === 2">
-          學術與培訓
-        </span>
-        <span v-else-if="activityData.activity_type === 3">
-          社交與社團
-        </span>
-        <span v-else-if="activityData.activity_type === 4">
-          旅遊與戶外
-        </span>
-        <span v-else-if="activityData.activity_type === 5">
-          健康與福祉
-        </span>
-        <span v-else-if="activityData.activity_type === 6">
-          商業與職業發展
-        </span>
-        <span v-else-if="activityData.activity_type === 7">
-          娛樂與文化慶典
-        </span>
-        <span v-else-if="activityData.activity_type === 8">
-          科技與創新
-        </span>
-        <span v-else>
-          其他
-        </span>
+        <span>{{ getActivityType(activityData.activity_type) }}</span>
       </template>
       <template #activity_name>
         <span>
@@ -246,7 +234,7 @@ export default {
       </template>
     </ActivityDetailSwiper>
     <!-- 這裡是活動詳情 -->
-    <div class="w-full h-[811px] p-[100px] bg-[#d7a5a565]">
+    <div class="mt-[200px] lg:mt-0 w-full h-[811px] p-[100px] bg-[#d7a5a565]">
       <div v-html="activityData.activity_information"></div>
     </div>
     <!-- 學員活動資訊填寫區 -->
