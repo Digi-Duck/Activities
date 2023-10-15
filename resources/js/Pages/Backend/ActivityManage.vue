@@ -4,6 +4,7 @@
 import Pagination from '@/Components/Public/Pagination.vue';
 import { router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
+import optionUp from '/images/icon/chevron-up-solid.svg';
 
 export default {
   components: { Pagination },
@@ -19,6 +20,9 @@ export default {
       title: '活動管理',
       keyword: this.response?.rt_data?.keyword ?? '',
       selectedStatus: this.response?.rt_data?.status ?? '',
+      images: {
+        optionUp,
+      },
     };
   },
   computed: {
@@ -82,19 +86,28 @@ export default {
           <div class="ps-5 flex-1 border font-semibold flex items-center">操作</div>
         </div>
         <!-- 內容 -->
-        <div v-for="(item, index) in activityData?.data ?? []" :key="index" class="w-[100%] h-[55px] bg-[#ABC2CE] flex text-[24px]">
+        <div v-for="(item, index) in activityData?.data ?? []" :key="index" :class="{ 'bg-red-200': item.activity_status === '停權' }" class="w-[100%] h-[55px] bg-[#ABC2CE] flex text-[20px]">
           <div class="w-[10.685%] ps-5 flex-none border font-semibold flex items-center">{{ item.activity_presenter }}</div>
           <div class="w-[23.461%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_name }}</div>
-          <div class="w-[18.641%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_start_time }}~{{ item.activity_end_time }}</div>
+          <div class="w-[18.641%] ps-5 flex-initial border font-semibold flex flex-col items-start justify-center">
+            <p>
+              開始:{{ item.activity_start_time }}
+            </p>
+            <p>
+              結束:{{ item.activity_end_time }}
+            </p>
+          </div>
           <div class="w-[10.743%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_type_name }}</div>
           <div class="w-[18.234%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_address }}</div>
           <div class="w-[9.175%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_status }}</div>
           <div class="ps-5 flex-1 border font-semibold flex justify-between items-center">更改狀態
-            <button type="button" class="me-3 mt-1 rounded-full border" @click="changeStatus(item.id)">^</button>
+            <button type="button" class="me-3 mt-1" @click="changeStatus(item.id)">
+              <img :src="images.optionUp" class="w-[20px] h-[20px]" alt="操作按鈕">
+            </button>
           </div>
         </div>
       </div>
-      <div class="w-[313px] h-[56px] bg-white rounded-[30px] flex justify-center">
+      <div class="w-[313px] h-[56px] bg-white rounded-[30px] border shadow-xl flex justify-center">
         <Pagination :pagination-data="activityData"></Pagination>
       </div>
     </div>

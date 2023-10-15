@@ -33,7 +33,6 @@ class DashboardController extends Controller
         $startRecordDate = $request->startRecordDate ?? $twoWeeksAgo;
         $endRecordDate = $request->endRecordDate ?? now()->format('Y-m-d');
         $currentDate = now()->format('Y-m-d');
-        $passDate = $currentDate ?? $twoWeeksAgo;
 
         $activityCount14DaysAgo = ActivityDetail::whereBetween('created_at', [$twentyeightDaysAgo, $fourteenDaysAgo])->count();
         $studentCount14DaysAgo = UserRoleStudent::whereBetween('created_at', [$twentyeightDaysAgo, $fourteenDaysAgo])->count();
@@ -60,31 +59,31 @@ class DashboardController extends Controller
                 ],
             ],
         ];
-
         $dates = [];
         $data = [];
 
         for ($date = Carbon::parse($startDate); $date <= Carbon::parse($endDate); $date->addDay()) {
             $day = $date->format('Y-m-d');
-
             if ($selectedType == 1) {
                 $count = ActivityDetail::whereDate('created_at', $day)->count();
+                $title = '活動數量';
             } elseif ($selectedType == 2) {
                 $count = UserRolePresenter::whereDate('created_at', $day)->count();
+                $title = '講師數量';
             } elseif ($selectedType == 3) {
                 $count = UserRoleStudent::whereDate('created_at', $day)->count();
+                $title = '學員數量';
             } else {
                 $count = Statistic::whereDate('created_at', $day)->count();
+                $title = '網站瀏覽量';
             }
-
             $dates[] = $date->format('D');
             $data[] = $count;
         }
-
         $chartData['xAxis']['data'] = $dates;
         $chartData['series'][0]['data'] = $data;
-
         $totalData = array_sum($data);
+
         $newBehaviors = UserBehavior::select([
             'user_behaviors.id',
             'user_behaviors.user_name',
@@ -116,7 +115,7 @@ class DashboardController extends Controller
             ->orwhere('behavior', 'like', "%$keyword%")
             ->orWhereBetween('created_at', [$startRecordDate, $endRecordDate])
             ->orderBy('created_at', 'desc')
-            ->paginate(5)
+            ->paginate(10)
             ->through(function ($item) {
                 return [
                     'id' => $item->id,
@@ -128,6 +127,7 @@ class DashboardController extends Controller
             });
 
         $data = (object) [
+            'title' => $title,
             'newBehaviors' => $newBehaviors,
             'websiteViewCount' => $websiteViewCount,
             'activityCount' => $activityCount,

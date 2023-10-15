@@ -28,7 +28,7 @@ export default {
 
     return {
       title: '數據摘要',
-      selectedType: 1,
+      selectedType: 4,
       startDate: fourteenDaysAgo.toISOString().substr(0, 10),
       endDate: today.toISOString().substr(0, 10),
       startRecordDate: fourteenDaysAgo.toISOString().substr(0, 10),
@@ -221,20 +221,20 @@ export default {
       <div class="w-full h-[728.5px] flex flex-row justify-between gap-5 mb-5">
         <!-- 詳細圖表 -->
         <div class="w-[1008px] rounded-[10px] border-2 border-[#000000] flex flex-col overflow-hidden">
-          <div class="ps-[10px] w-full h-[106px] bg-[#397CA4] flex justify-start items-center gap-[20px]">
-            <select v-model="selectedType" class="h-[70%]" @change="searchChart">
-              <option value=4>新增網站瀏覽量</option>
-              <option value=1>新增活動數量</option>
-              <option value=2>新增講師數量</option>
-              <option value=3>新增學員數量</option>
+          <div class="ps-[30px] w-full h-[106px] bg-[#397AC4] border flex justify-start items-center gap-[20px]">
+            <b class="text-[36px]">{{ rtData.title }}</b>
+            <select v-model="selectedType" class="h-[50%] rounded-[5px]" @change="searchChart">
+              <option value=4>網站瀏覽量</option>
+              <option value=1>活動數量</option>
+              <option value=2>講師數量</option>
+              <option value=3>學員數量</option>
             </select>
-            <div class="h-[70%] bg-[white] flex gap-1">
-              <input v-model="startDate" type="date" @change="searchChart">
+            <div class="h-[50%] rounded-[5px] border-black border bg-[white] flex gap-1">
+              <input v-model="startDate" type="date" class="border-none" @change="searchChart">
               <span class="flex items-center">～</span>
-              <input v-model="endDate" type="date" @change="searchChart">
+              <input v-model="endDate" type="date" class="border-none" @change="searchChart">
             </div>
-            <button type="button" @click="searchChart" class="w-[90px] h-[38px] bg-[#a0bcc650] rounded-[5px] text-[24px]">搜尋</button>
-            <b class="items-center">共計 : {{ rtData.totalData }}</b>
+            <b class="text-[24px] flex items-center">共計 : {{ rtData.totalData.toLocaleString() }}</b>
           </div>
           <Echart class="h-[623px]" :response="chartData"></Echart>
         </div>
@@ -263,10 +263,10 @@ export default {
         <!-- 搜尋欄 -->
         <div class="w-full h-[59px] ps-10 bg-white flex items-center gap-5 text-[48px] font-semibold">
           事件紀錄
-          <div class="h-[70%] bg-[white] flex gap-1">
-            <input v-model="startRecordDate" type="date">
-            <span class="flex items-center">～</span>
-            <input v-model="endRecordDate" type="date">
+          <div class="h-[70%] rounded-[5px] border-black border bg-[white] flex gap-1">
+            <input v-model="startRecordDate" type="date" class="border-none">
+            <span class="flex text-[16px] items-center">～</span>
+            <input v-model="endRecordDate" type="date" class="border-none">
           </div>
           <input v-model="keyword" type="search" placeholder="請輸入搜尋使用者名稱、行為" @search="searchRecord">
           <button type="button" @click="searchRecord" class="w-[86px] h-[38px] bg-[gray] rounded-[4px] text-[22px]">搜尋</button>
@@ -274,21 +274,21 @@ export default {
         <!-- 搜尋內容 -->
         <div class="w-full flex flex-col text-[36px] text-white">
           <!-- 表頭 -->
-          <div class="flex bg-[#285F87]">
+          <div class="flex text-[24px] bg-[#285F87]">
             <div class="w-[30%] flex-initial border flex justify-center items-center">日期</div>
             <div class="w-[20%] flex-initial border flex justify-center items-center">使用者名稱</div>
             <div class="w-[10%] flex-initial border flex justify-center items-center">類別</div>
             <div class="w-[40%] flex-initial border flex justify-center items-center">行為</div>
           </div>
           <!-- 詳細資料 -->
-          <div v-for="(item, index) in behaviorRecord?.data ?? []" :key="index" class="bg-[#A9BCC6] flex">
+          <div v-for="(item, index) in behaviorRecord?.data ?? []" :class="{ 'bg-[#5e2951a0]': item.user_type === '講師', 'bg-[#4d7f95b6]': item.user_type === '學員' }" :key="index" class="bg-[#A9BCC6] text-[20px] flex">
             <div class="w-[30%] flex-initial border flex justify-center items-center">{{ item.created_at }}</div>
             <div class="w-[20%] flex-initial border flex justify-center items-center">{{ item.user_name }}</div>
             <div class="w-[10%] flex-initial border flex justify-center items-center">{{ item.user_type }}</div>
             <div class="w-[40%] flex-initial border flex justify-center items-center">{{ item.behavior }}</div>
           </div>
         </div>
-        <div class="w-[313px] h-[56px] bg-white rounded-[30px] flex justify-center">
+        <div class="w-[313px] h-[56px] bg-white rounded-[30px] border shadow-xl flex justify-center">
           <Pagination :pagination-data="behaviorRecord"></Pagination>
         </div>
       </div>

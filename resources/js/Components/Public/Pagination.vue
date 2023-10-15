@@ -110,18 +110,6 @@ const changePage = (page) => {
 <template>
   <div class="pagination-component">
     <div class="pages-block">
-      <!-- <button type="button" class="btn-change-page" :class="{ disabled: paginationData.current_page === 1 }" title="到第一頁" :disabled="paginationData.current_page === 1" @click="changePage(1)">
-        <div class="flex justify-center items-center">
-          <svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <title>到第一頁</title>
-            <path d="M10.7959 2L2.00001 12L10.7959 22" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-          </svg>
-          <svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <title>到第一頁</title>
-            <path d="M10.7959 2L2.00001 12L10.7959 22" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-          </svg>
-        </div>
-      </button> -->
       <button type="button" class="btn-change-page" :class="{ disabled: paginationData.current_page === 1 }" :disabled="paginationData.current_page === 1" @click="changePage('prev')">
         <svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <title>到上一頁</title>
@@ -140,18 +128,6 @@ const changePage = (page) => {
           <path d="M2.2041 2L11 12L2.2041 22" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
         </svg>
       </button>
-      <!-- <button type="button" class="btn-change-page" :class="{ disabled: paginationData.current_page === totalPages || !totalPages }" title="到最後一頁" :disabled="paginationData.current_page === totalPages || !totalPages" @click="changePage(totalPages)">
-        <div class="flex justify-center items-center">
-          <svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <title>到最後一頁</title>
-            <path d="M2.2041 2L11 12L2.2041 22" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-          </svg>
-          <svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <title>到最後一頁</title>
-            <path d="M2.2041 2L11 12L2.2041 22" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-          </svg>
-        </div>
-      </button> -->
     </div>
   </div>
 </template>
