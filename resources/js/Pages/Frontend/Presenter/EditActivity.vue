@@ -131,17 +131,17 @@ export default {
 </script>
 
 <template>
-  <section id="create-activity" class="flex flex-col">
-    <Link :href="route('activityScanner', { id: rtData.activity.id })" class="absolute mt-[2.5%] right-[15%] z-50 px-[50px] py-[10px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+  <section id="create-activity" class="flex flex-col overflow-hidden">
+    <Link :href="route('activityScanner', { id: rtData.activity.id })" class="absolute top-[17.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
       掃描報到
     </Link>
-    <div class="absolute mt-[5%] left-[75%] z-50">
-      <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">倒數
+    <div class="absolute top-[22%] md:top-[25%] right-[5.5%] z-50">
+      <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">倒數
         <div class="ps-5 flex flex-row">
           <span>{{ rtData.timeDifferenceInDays }}天！</span>
         </div>
       </div>
-      <div v-else-if="rtData.timeDifferenceInDays === 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">就是
+      <div v-else-if="rtData.timeDifferenceInDays === 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">就是
         <div class="ps-5 flex flex-row">
           <span>今天！</span>
         </div>
@@ -193,8 +193,8 @@ export default {
               <img :src="images.arrowRight" alt="活動照片海報向右移動按鈕">
             </button>
           </div>
-          <div class="absolute left-[5%] top-[495px] w-[90%] h-[289px] pt-[15px] px-[60px] rounded-[14px] bg-[#f2f2f2b2] flex flex-col flex-wrap gap-5">
-            <div class="flex">
+          <div class="absolute left-[5%] top-[495px] w-[90%] lg:h-[289px] pt-[10px] px-[5px] md:px-[60px] bg-[#f2f2f2b2] rounded-[15px] flex flex-col gap-2 lg:gap-5">
+            <div class="flex flex-col gap-2 lg:gap-0 lg:flex-row">
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.lowestNumberOfPeople" alt="開課門檻" class="w-[10%] pe-1">
                 <input v-model="formData.activityLowestNumberOfPeople" type="number" name="activity_lowest_number_of_people" class="rounded-[5px] w-full text-2xl font-bold" min="0" required placeholder="請輸入開課門檻">
@@ -212,7 +212,7 @@ export default {
                 <input v-model="formData.activityEndRegistrationTime" type="datetime" name="activity_end_registration_time" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請輸入報名截止時間">
               </div>
             </div>
-            <div class="flex">
+            <div class="flex flex-col gap-2 lg:gap-0 lg:flex-row">
               <div class="flex-1 h-[68px] flex border-e-4 border-e-gray-500">
                 <img :src="images.activityPresenter" alt="主講者" class="w-[10%] pe-1">
                 <input v-model="formData.activityPresenter" type="text" name="activity_presenter" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請輸入主講者">
@@ -230,7 +230,7 @@ export default {
                 <input v-model="formData.activityAddress" type="text" name="activity_address" class="rounded-[5px] w-full text-2xl font-bold" required placeholder="請輸入活動地點">
               </div>
             </div>
-            <div class="w-full h-[56px] flex items-center bg-[#ffffff5a] rounded-[14px] px-2">
+            <div class="flex-1 h-[56px] flex items-center bg-[#ffffff5a] rounded-[14px] px-2">
               <img :src="images.exclamationTriangle" alt="參加須知" class="w-[40px] h-[40px]">
               <input v-model="formData.activityInstruction" type="text" name="activity_instruction" required placeholder="請輸入參加須知" class="w-full">
             </div>
@@ -242,13 +242,13 @@ export default {
           </div>
         </Swiper>
       </div>
-      <Editor class="h-[500px]" :editor-data="formData.activityInformation" @update-content="information"></Editor>
-      <div class="flex w-full justify-end gap-[45px] px-20 py-5">
-        <div class="pe-[35%] flex gap-5">
-          <Link :href="route('presenterPersonalPage')" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消修改</Link>
-          <button type="submit" class="px-[30px] py-[15px] bg-[#095269] rounded-[5px] flex justify-center items-center text-white">確認修改</button>
+      <Editor class="mt-[200px] lg:mt-0 w-full h-[500px]" :editor-data="formData.activityInformation" @update-content="information"></Editor>
+      <div class="flex flex-wrap w-full justify-center gap-[10px] px-20 py-5">
+        <div class="ps-[0%] flex gap-5">
+          <Link :href="route('presenterPersonalPage')" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px] flex justify-center items-center">取消修改</Link>
+          <button type="submit" class="w-[228px] h-[40px] bg-[#edc431] rounded-[5px]">確認修改</button>
         </div>
-        <button type="button" class="px-[30px] py-[15px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white" @click="deleteActivity(rtData.activity.id)">刪除活動</button>
+        <button type="button" class="w-[228px] h-[40px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white" @click="deleteActivity(rtData.activity.id)">刪除活動</button>
       </div>
     </form>
   </section>
