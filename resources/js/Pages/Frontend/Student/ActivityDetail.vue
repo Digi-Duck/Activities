@@ -152,13 +152,13 @@ export default {
 
 <template>
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
-    <div class="absolute mt-[5%] left-[75%] z-50">
-      <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">倒數
+    <div class="absolute top-[22.5%] md:top-[25%] right-[5.5%] z-50">
+      <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">倒數
         <div class="ps-5 flex flex-row">
           <span>{{ rtData.timeDifferenceInDays }}天！</span>
         </div>
       </div>
-      <div v-else-if="rtData.timeDifferenceInDays === 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">就是
+      <div v-else-if="rtData.timeDifferenceInDays === 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">就是
         <div class="ps-5 flex flex-row">
           <span>今天！</span>
         </div>
@@ -166,13 +166,13 @@ export default {
       <div v-else>
       </div>
     </div>
-    <button v-if="favoriteCheck === 0" @click="favorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+    <button v-if="favoriteCheck === 0" @click="favorite()" type="button" class="absolute top-[17.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
       點我收藏
     </button>
-    <button v-else @click="cancelFavorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+    <button v-else @click="cancelFavorite()" type="button" class="absolute top-[17.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
       取消收藏
     </button>
-    <PrimaryButton class="absolute right-[12.5%] top-[90%] z-50 px-[20px] py-[10px]"><Link href="#studentData">立即加入</Link></PrimaryButton>
+    <PrimaryButton class="absolute right-[12.5%] top-[82.5%] hidden lg:block z-50 px-[20px] py-[10px]"><Link href="#studentData">立即加入</Link></PrimaryButton>
     <ActivityDetailSwiper :slide-data="[activityData]" class="relative">
       <template #activity_type>
         <span v-if="activityData.activity_type === 1">
@@ -259,13 +259,13 @@ export default {
         </span>
       </template>
       <template #registerPeople>
-        <span class="ps-[10px] text-[72px]">
+        <span class="ps-[10px] text-[52px]">
           {{ rtData.registerPeople }}
         </span>
       </template>
     </ActivityDetailSwiper>
     <!-- 這裡是活動詳情 -->
-    <div class="w-full h-[811px] p-[100px] bg-[#d7a5a565]">
+    <div class="mt-[200px] lg:mt-0 w-full h-[811px] p-[100px] bg-[#d7a5a565]">
       <div v-html="activityData.activity_information"></div>
     </div>
     <!-- 學員活動資訊填寫區 -->
@@ -310,6 +310,7 @@ export default {
         <button type="submit" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px]">確認報名</button>
       </div>
     </form>
+    <Link class="fixed right-[2.5%] bottom-[2.5%] text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">回到頁首</Link>
   </section>
 </template>
 
