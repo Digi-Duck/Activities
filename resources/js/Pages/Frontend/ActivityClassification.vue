@@ -32,8 +32,14 @@ export default {
     },
   },
   methods: {
-    searchData(id) {
-      router.get(route('activityClassification'), { keyword: this.keyword, type: id }, {
+    searchData() {
+      router.get(route('activityClassification'), { keyword: this.keyword }, {
+        preserveState: true,
+        preserveScroll: true,
+      });
+    },
+    searchType(id) {
+      router.get(route('activityClassification'), { type: id }, {
         preserveState: true,
         preserveScroll: true,
       });
@@ -50,7 +56,7 @@ export default {
       <div class="w-full pt-3 px-3 flex justify-between">
         <button type="button" class="px-[15px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold" @click="searchData('')">全部</button>
         <div v-for="(item, index) in rtData.firstHotActivity" :key="index" class="flex gap-3">
-          <button type="button" class="p-[5px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold" @click="searchData(item.activity_type)">{{ item.activity_type_name }}</button>
+          <button type="button" class="p-[5px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold" @click="searchType(item.activity_type)">{{ item.activity_type_name }}</button>
         </div>
         <div class="border bg-white flex items-center">
           <input v-model="keyword" type="search" @search="searchData" class="border-none bg-transparent" placeholder="Search">

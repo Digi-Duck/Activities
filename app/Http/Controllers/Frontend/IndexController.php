@@ -193,13 +193,12 @@ class IndexController extends Controller
 
         return back()->with(['message' => rtFormat($data)]);
     }
-
-
     /**
      * 活動分類
      */
     public function activityClassification(Request $request)
     {
+        // dd($request->all());
         $keyword = $request->keyword ?? '';
         $type = $request->type ?? '';
         $activity = ActivityDetail::where(function ($query) use ($keyword) {
