@@ -23,6 +23,7 @@ export default {
         favorited: 1,
         registered: 2,
       },
+      qrCodeVisible: true,
     };
   },
   computed: {
@@ -40,6 +41,9 @@ export default {
     },
   },
   methods: {
+    toggleQRCodeVisibility() {
+      this.qrCodeVisible = !this.qrCodeVisible;
+    },
     submitData() {
       Swal.fire({
         title: `確認更新: ${this.response.rt_data.activity.activity_name ?? ''}報名資訊?`,
@@ -125,15 +129,18 @@ export default {
 </script>
 
 <template>
-  <img :src="rtData.qrcode.qrcode_path" class="absolute left-[60%] top-[18.5%] z-50 h-[250px] w-[250px]" alt="QRcode圖片">
+  <img v-if="qrCodeVisible" :src="rtData.qrcode.qrcode_path" class="absolute right-[22.5%] top-[37%] md:top-[18.5%] z-[100] h-[250px] w-[250px]" alt="QRcode圖片">
+  <button @click="toggleQRCodeVisibility" type="button" class="absolute top-[21.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+    {{ qrCodeVisible ? '隱藏QRcode' : '顯示QRcode' }}
+  </button>
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
-    <div class="absolute mt-[5%] left-[75%] z-50">
-      <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">倒數
+    <div class="absolute top-[27.5%] md:top-[25%] right-[5.5%] z-50">
+      <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">倒數
         <div class="ps-5 flex flex-row">
           <span>{{ rtData.timeDifferenceInDays }}天！</span>
         </div>
       </div>
-      <div v-else-if="rtData.timeDifferenceInDays === 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">就是
+      <div v-else-if="rtData.timeDifferenceInDays === 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">就是
         <div class="ps-5 flex flex-row">
           <span>今天！</span>
         </div>
@@ -141,10 +148,10 @@ export default {
       <div v-else>
       </div>
     </div>
-    <button v-if="!rtData.favoriteCheck" @click="favorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+    <button v-if="favoriteCheck === 0" @click="favorite()" type="button" class="absolute top-[17.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
       點我收藏
     </button>
-    <button v-else @click="cancelFavorite()" type="button" class="absolute mt-[2.5%] left-[77.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+    <button v-else @click="cancelFavorite()" type="button" class="absolute top-[17.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
       取消收藏
     </button>
     <ActivityDetailSwiper :slide-data="[activityData]">
@@ -279,12 +286,12 @@ export default {
         <div class="w-[274px] h-full bg-white rounded-[5px] flex justify-center items-center">確認事項</div>
         <input type="text" class="w-full" name="" :placeholder="activityData.activity_instruction">
       </div>
-      <div class="flex w-full justify-center gap-[45px] px-20 py-5">
-        <div class="pe-[35%] flex gap-5">
+      <div class="flex flex-wrap w-full justify-center gap-[10px] px-20 py-5">
+        <div class="ps-[0%] flex gap-5">
           <Link :href="route('studentPersonalPage')" class="w-[228px] h-[40px] bg-[#1C8AAD] rounded-[5px] flex justify-center items-center">回個人頁</Link>
           <button type="submit" class="w-[228px] h-[40px] bg-[#edc431] rounded-[5px]">更新資訊</button>
         </div>
-        <button type="button" class="px-[30px] py-[15px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white" @click="deleteRegister(rtData.registerData.activity_id)">取消報名</button>
+        <button type="button" class="w-[228px] h-[40px] bg-[#690926b9] rounded-[5px] flex justify-center items-center text-white" @click="deleteRegister(rtData.registerData.activity_id)">取消報名</button>
       </div>
     </form>
   </section>
