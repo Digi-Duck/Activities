@@ -102,7 +102,9 @@ export default {
       </div>
     </div>
   </section>
-  <div class="fixed top-0 left-0 w-full h-[100vh] flex md:hidden justify-center items-center bg-black text-white text-[72px]">為了您的用戶體驗，請使用電腦查看本網頁，謝謝！</div>
+  <div class="fixed top-0 left-0 w-full h-[100vh] flex md:hidden justify-center items-center bg-black text-white text-[72px]">
+    為了您的用戶體驗，請使用電腦查看本網頁，謝謝！
+  </div>
 </template>
 
 <style lang="scss" scoped>

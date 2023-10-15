@@ -74,22 +74,22 @@ export default {
         <button type="button" @click="searchData" class="w-[90px] h-[38px] bg-[#a0bcc650] rounded-[5px] text-[24px]">搜尋</button>
       </div>
       <!-- 表格內容 -->
-      <div class="w-[100%] h-[385px] flex flex-col">
+      <div class="w-full h-[385px] flex flex-col">
         <!-- 表頭 -->
-        <div class="w-[100%] h-[55px] bg-[#5D8BA3] flex text-[24px]">
-          <div class="w-[10.685%] ps-5 flex-none border font-semibold flex items-center">活動講師</div>
-          <div class="w-[23.461%] ps-5 flex-initial border font-semibold flex items-center">活動名稱</div>
-          <div class="w-[18.641%] ps-5 flex-initial border font-semibold flex items-center">活動時間</div>
-          <div class="w-[10.743%] ps-5 flex-initial border font-semibold flex items-center">活動分類</div>
-          <div class="w-[18.234%] ps-5 flex-initial border font-semibold flex items-center">活動地點</div>
-          <div class="w-[9.175%] ps-5 flex-initial border font-semibold flex items-center">活動狀態</div>
-          <div class="ps-5 flex-1 border font-semibold flex items-center">操作</div>
+        <div class="w-full h-[55px] bg-[#5D8BA3] flex text-[24px]">
+          <div class="flex-[0.1068] ps-5 border font-semibold flex items-center">活動講師</div>
+          <div class="flex-[0.2346] ps-5 border font-semibold flex items-center">活動名稱</div>
+          <div class="flex-[0.1864] ps-5 border font-semibold flex items-center">活動時間</div>
+          <div class="flex-[0.1743] ps-5 border font-semibold flex items-center">活動分類</div>
+          <div class="flex-[0.1823] ps-5 border font-semibold flex items-center">活動地點</div>
+          <div class="flex-[0.0917] ps-5 border font-semibold flex items-center">活動狀態</div>
+          <div class="ps-5 flex-[0.0911] border font-semibold flex items-center">操作</div>
         </div>
         <!-- 內容 -->
-        <div v-for="(item, index) in activityData?.data ?? []" :key="index" :class="{ 'bg-red-200': item.activity_status === '停權' }" class="w-[100%] h-[55px] bg-[#ABC2CE] flex text-[20px]">
-          <div class="w-[10.685%] ps-5 flex-none border font-semibold flex items-center">{{ item.activity_presenter }}</div>
-          <div class="w-[23.461%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_name }}</div>
-          <div class="w-[18.641%] ps-5 flex-initial border font-semibold flex flex-col items-start justify-center">
+        <div v-for="(item, index) in activityData?.data ?? []" :key="index" :class="{ 'bg-red-200': item.activity_status === '停權' }" class="w-full h-[55px] bg-[#ABC2CE] flex text-[20px]">
+          <div class="flex-[0.1068] ps-5 border font-semibold flex items-center">{{ item.activity_presenter }}</div>
+          <div class="flex-[0.2346] ps-5 border font-semibold flex items-center">{{ item.activity_name }}</div>
+          <div class="flex-[0.1864] ps-5 border font-semibold flex flex-col items-start justify-center">
             <p>
               開始:{{ item.activity_start_time }}
             </p>
@@ -97,10 +97,10 @@ export default {
               結束:{{ item.activity_end_time }}
             </p>
           </div>
-          <div class="w-[10.743%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_type_name }}</div>
-          <div class="w-[18.234%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_address }}</div>
-          <div class="w-[9.175%] ps-5 flex-initial border font-semibold flex items-center">{{ item.activity_status }}</div>
-          <div class="ps-5 flex-1 border font-semibold flex justify-between items-center">更改狀態
+          <div class="flex-[0.1743] ps-5 border font-semibold flex items-center">{{ item.activity_type_name }}</div>
+          <div class="flex-[0.1823] ps-5 border font-semibold flex items-center">{{ item.activity_address }}</div>
+          <div class="flex-[0.0917] ps-5 border font-semibold flex items-center">{{ item.activity_status }}</div>
+          <div class="ps-5 flex-[0.0911] border font-semibold flex justify-between items-center">更改狀態
             <button type="button" class="me-3 mt-1" @click="changeStatus(item.id)">
               <img :src="images.optionUp" class="w-[20px] h-[20px]" alt="操作按鈕">
             </button>
@@ -111,9 +111,10 @@ export default {
         <Pagination :pagination-data="activityData"></Pagination>
       </div>
     </div>
-    <!-- <Link :href="route('register')" class="btn-base">註冊</Link>
-    <Link :href="route('dashboard')" class="btn-base">登入</Link> -->
   </section>
+  <div class="fixed top-0 left-0 w-full h-[100vh] flex 2xl:hidden justify-center items-center bg-black text-white text-[72px]">
+    為了您的用戶體驗，請使用電腦查看本網頁，謝謝！
+  </div>
 </template>
 
 <style lang="scss" scoped>

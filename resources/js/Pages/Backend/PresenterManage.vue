@@ -74,22 +74,22 @@ export default {
         <button type="button" @click="searchData" class="w-[90px] h-[38px] bg-[#a0bcc650] rounded-[5px] text-[24px]">搜尋</button>
       </div>
       <!-- 表格內容 -->
-      <div class="w-[100%] h-[385px] flex flex-col">
+      <div class="w-full h-[385px] flex flex-col">
         <!-- 表頭 -->
-        <div class="w-[100%] h-[55px] bg-[#5D8BA3] flex text-[24px]">
-          <div class="w-[17.828%] ps-5 flex-none border font-semibold flex items-center">講師名稱</div>
-          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">電子信箱</div>
-          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">加入時間</div>
-          <div class="w-[9.175%] ps-5 flex-initial border font-semibold flex items-center">狀態</div>
-          <div class="ps-5 flex-1 border font-semibold flex items-center">操作</div>
+        <div class="w-full h-[55px] bg-[#5D8BA3] flex text-[24px]">
+          <div class="flex-[0.2] ps-5 border font-semibold flex items-center">講師名稱</div>
+          <div class="flex-[0.25] ps-5 border font-semibold flex items-center">電子信箱</div>
+          <div class="flex-[0.25] ps-5 border font-semibold flex items-center">加入時間</div>
+          <div class="flex-[0.1] ps-5 border font-semibold flex items-center">狀態</div>
+          <div class="ps-5 flex-[0.2] border font-semibold flex items-center">操作</div>
         </div>
         <!-- 內容 -->
         <div v-for="(item, index) in presenterData?.data ?? []" :key="index" :class="{ 'bg-red-200': item.status === '停權' }" class="w-[100%] h-[55px] bg-[#ABC2CE] flex text-[20px]">
-          <div class="w-[17.828%] ps-5 flex-none border font-semibold flex items-center">{{ item.name }}</div>
-          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">{{ item.email }}</div>
-          <div class="w-[31.939%] ps-5 flex-initial border font-semibold flex items-center">{{ item.created_at }}</div>
-          <div class="w-[9.175%] ps-5 flex-initial border font-semibold flex items-center">{{ item.status }}</div>
-          <div class="ps-5 flex-1 border font-semibold flex justify-between items-center">更改狀態
+          <div class="flex-[0.2] ps-5 border font-semibold flex items-center">{{ item.name }}</div>
+          <div class="flex-[0.25] ps-5 border font-semibold flex items-center">{{ item.email }}</div>
+          <div class="flex-[0.25] ps-5 border font-semibold flex items-center">{{ item.created_at }}</div>
+          <div class="flex-[0.1] ps-5 border font-semibold flex items-center">{{ item.status }}</div>
+          <div class="ps-5 flex-[0.2] border font-semibold flex justify-between items-center">更改狀態
             <button type="button" class="me-3 mt-1" @click="changeStatus(item.id)">
               <img :src="images.optionUp" class="w-[20px] h-[20px]" alt="操作按鈕">
             </button>
@@ -103,6 +103,9 @@ export default {
     <!-- <Link :href="route('register')" class="btn-base">註冊</Link>
     <Link :href="route('dashboard')" class="btn-base">登入</Link> -->
   </section>
+  <div class="fixed top-0 left-0 w-full h-[100vh] flex md:hidden justify-center items-center bg-black text-white text-[72px]">
+    為了您的用戶體驗，請使用電腦查看本網頁，謝謝！
+  </div>
 </template>
 
 <style lang="scss" scoped>
