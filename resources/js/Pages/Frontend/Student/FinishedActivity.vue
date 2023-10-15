@@ -18,6 +18,7 @@ export default {
         studentEmail: this.response?.rt_data?.registerData.student_email ?? '',
         studentAdditionalRemark: this.response?.rt_data?.registerData.student_additional_remark ?? '',
       },
+      qrCodeVisible: true,
     };
   },
   computed: {
@@ -31,44 +32,37 @@ export default {
       return this.rtData.registerData ?? [];
     },
   },
+  methods: {
+    getActivityType(type) {
+      const activityTypes = {
+        1: '文化與藝術',
+        2: '學術與培訓',
+        3: '社交與社團',
+        4: '旅遊與戶外',
+        5: '健康與福祉',
+        6: '商業與職業發展',
+        7: '娛樂與文化慶典',
+        8: '科技與創新',
+      };
+      return activityTypes[type] || '其他';
+    },
+    toggleQRCodeVisibility() {
+      this.qrCodeVisible = !this.qrCodeVisible;
+    },
+  },
 };
 </script>
 
 <template>
+  <img v-if="qrCodeVisible" :src="rtData.qrcode.qrcode_path" class="absolute right-[22.5%] top-[37%] md:top-[18.5%] z-[100] h-[250px] w-[250px]" alt="QRcode圖片">
+  <button @click="toggleQRCodeVisibility" type="button" class="absolute top-[21.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+    {{ qrCodeVisible ? '隱藏QRcode' : '顯示QRcode' }}
+  </button>
   <section id="presenter-finished-activity" class="relative flex flex-col justify-between items-center gap-5">
     <!-- 這是QRcode的位置 -->
-    <div class="absolute top-[5%] right-[20%] z-50">
-      <img :src="rtData.qrcode.qrcode_path" class="w-[261px] h-[261px] bg-black" alt="QRcode圖片">
-    </div>
     <ActivityDetailSwiper :slide-data="[activityData]">
       <template #activity_type>
-        <span v-if="activityData.activity_type === 1">
-          文化與藝術
-        </span>
-        <span v-else-if="activityData.activity_type === 2">
-          學術與培訓
-        </span>
-        <span v-else-if="activityData.activity_type === 3">
-          社交與社團
-        </span>
-        <span v-else-if="activityData.activity_type === 4">
-          旅遊與戶外
-        </span>
-        <span v-else-if="activityData.activity_type === 5">
-          健康與福祉
-        </span>
-        <span v-else-if="activityData.activity_type === 6">
-          商業與職業發展
-        </span>
-        <span v-else-if="activityData.activity_type === 7">
-          娛樂與文化慶典
-        </span>
-        <span v-else-if="activityData.activity_type === 8">
-          科技與創新
-        </span>
-        <span v-else>
-          其他
-        </span>
+        <span>{{ getActivityType(activityData.activity_type) }}</span>
       </template>
       <template #activity_name>
         <span>
@@ -131,7 +125,7 @@ export default {
         </span>
       </template>
     </ActivityDetailSwiper>
-    <div class="w-full h-[811px] p-[100px] bg-[#d7a5a565]">
+    <div class="mt-[200px] lg:mt-0 w-full h-[811px] p-[100px] bg-[#d7a5a565]">
       <div v-html="activityData.activity_information"></div>
     </div>
   </section>
