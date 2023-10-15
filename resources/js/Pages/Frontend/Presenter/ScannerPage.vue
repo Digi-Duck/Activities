@@ -48,6 +48,19 @@ export default {
     this.openCamera();
   },
   methods: {
+    getActivityTypeLabel(activityType) {
+      const activityTypeLabels = {
+        1: '文化與藝術',
+        2: '學術與培訓',
+        3: '社交與社團',
+        4: '旅遊與戶外',
+        5: '健康與福祉',
+        6: '商業與職業發展',
+        7: '娛樂與文化慶典',
+        8: '科技與創新',
+      };
+      return activityTypeLabels[activityType] || '其他';
+    },
     /**
      * 開啟相機
      */
@@ -157,13 +170,13 @@ export default {
 
 <template>
   <section id="presenter-scanner">
-    <div class="absolute mt-[5%] left-[75%] z-50">
-      <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">倒數
+    <div class="absolute top-[22%] md:top-[25%] right-[5.5%] z-50">
+      <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">倒數
         <div class="ps-5 flex flex-row">
           <span>{{ rtData.timeDifferenceInDays }}天！</span>
         </div>
       </div>
-      <div v-else-if="rtData.timeDifferenceInDays === 0" class="z-50 w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col text-[48px] font-extrabold">就是
+      <div v-else-if="rtData.timeDifferenceInDays === 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">就是
         <div class="ps-5 flex flex-row">
           <span>今天！</span>
         </div>
@@ -173,33 +186,7 @@ export default {
     </div>
     <ActivityDetailSwiper :slide-data="[activityData]">
       <template #activity_type>
-        <span v-if="activityData.activity_type === 1">
-          文化與藝術
-        </span>
-        <span v-else-if="activityData.activity_type === 2">
-          學術與培訓
-        </span>
-        <span v-else-if="activityData.activity_type === 3">
-          社交與社團
-        </span>
-        <span v-else-if="activityData.activity_type === 4">
-          旅遊與戶外
-        </span>
-        <span v-else-if="activityData.activity_type === 5">
-          健康與福祉
-        </span>
-        <span v-else-if="activityData.activity_type === 6">
-          商業與職業發展
-        </span>
-        <span v-else-if="activityData.activity_type === 7">
-          娛樂與文化慶典
-        </span>
-        <span v-else-if="activityData.activity_type === 8">
-          科技與創新
-        </span>
-        <span v-else>
-          其他
-        </span>
+        <span>{{ getActivityTypeLabel(activityData.activity_type) }}</span>
       </template>
       <template #activity_name>
         <span>
@@ -263,7 +250,7 @@ export default {
       </template>
     </ActivityDetailSwiper>
     <!-- 掃描區域 -->
-    <div class="relative w-full p-5 bg-[#194e694e] flex flex-col items-center gap-5">
+    <div class="relative mt-[150px] md:mt-[300px] lg:mt-0 w-full p-5 bg-[#194e694e] flex flex-col items-center gap-5">
       <!-- 顯示報到狀況人數 -->
       <div class="flex gap-[100px] text-[35px]">
         <div class="flex items-center gap-3">
@@ -283,7 +270,7 @@ export default {
       <!-- 搜尋欄位 -->
       <div class="mb-[5px] w-full h-[48px] pt-[10px] border-t-[#000] border-t-[1px] flex justify-end">
         <!-- 文字搜尋框 -->
-        <div class="w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-1">
+        <div class="w-[40%] lg:w-[15%] h-full bg-[#80808012] flex justify-center items-center gap-3">
           <input v-model="keyword" type="search" class="w-[80%] h-[80%]" @search="searchData" placeholder="請輸入搜尋資訊">
           <button type="button" @click="searchData">
             <img :src="images.magnifer" class="w-[16px]" alt="搜尋">
@@ -292,33 +279,33 @@ export default {
       </div>
       <!-- 搜尋的表頭 -->
       <div class="w-full h-[64px] flex">
-        <b class="flex-none w-[50%] border bg-[#5D8BA3] flex justify-center items-center text-[24px]">
+        <b class="flex-1 md:flex-none md:w-[40%] xl:w-[50%] border bg-[#5D8BA3] flex justify-center items-center text-[24px]">
           <slot name="activity_title_name">電子信箱</slot>
         </b>
-        <b class="flex-initial w-[10%] border bg-[#82ACC2] flex justify-center items-center text-[24px]">
+        <b class="flex-1 md:flex-initial w-[15%] border bg-[#82ACC2] flex justify-center items-center text-[24px]">
           <slot name="activity_title_type">學員姓名</slot>
         </b>
-        <b class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
+        <b class="flex-1 md:flex-initial w-[15%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
           <slot name="activity_title_time">連絡電話</slot>
         </b>
-        <b class="flex-initial w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
+        <b class="flex-1 md:flex-initial w-[30%] xl:w-[20%] border bg-[#A9BCC6] flex justify-center items-center text-[24px]">
           <slot name="activity_title_number">額外備註</slot>
         </b>
       </div>
       <!-- 詳細搜尋內容 -->
       <div v-for="(item, index) in studentData?.data ?? []" :key="index" class="w-full h-[53px] flex">
-        <Link :href="route('studentActivityDetails', { id: item.id })" class="flex-none w-[50%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
+        <Link :href="route('studentActivityDetails', { id: item.id })" class="flex-1 md:flex-none md:w-[40%] xl:w-[50%] ps-3 border bg-[#5d8aa37d] flex justify-start items-center text-[16px] font-bold underline decoration-1">
           {{ item.student_email }}
         </Link>
-        <div class="flex-initial w-[10%] border bg-[#82acc27d] flex justify-center items-center text-[16px] font-semibold">
+        <div class="flex-1 md:flex-initial w-[15%] border bg-[#82acc27d] flex justify-center items-center text-[16px] font-semibold">
           <slot name="activity_info_type">
             {{ item.student_name }}
           </slot>
         </div>
-        <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
+        <b class="flex-1 md:flex-initial w-[15%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
           {{ item.student_phone_number }}
-        </div>
-        <div class="flex-initial w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-between items-center text-[16px]">
+        </b>
+        <div class="flex-1 md:flex-initial w-[30%] xl:w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-between items-center text-[16px]">
           <slot name="student_additional_remark">
             {{ item.student_additional_remark }}
           </slot>
