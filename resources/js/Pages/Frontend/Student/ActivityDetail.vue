@@ -253,7 +253,7 @@ export default {
       </template>
     </ActivityDetailSwiper>
     <!-- 這裡是活動詳情 -->
-    <div class="mt-[200px] lg:mt-0 w-full h-[811px] p-[100px] bg-[#d7a5a565]">
+    <div class="mt-[200px] lg:mt-0 w-full p-[100px] bg-[#d7a5a565]">
       <div v-html="activityData.activity_information"></div>
     </div>
     <!-- 學員活動資訊填寫區 -->

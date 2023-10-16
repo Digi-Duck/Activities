@@ -53,7 +53,7 @@ export default {
         </slot>
       </b>
     </div>
-    <div class="absolute top-[50%] z-10 w-[97.5%] max-w-[1400px] flex justify-between">
+    <div class="absolute top-[50%] z-10 w-[97.5%] flex justify-between">
       <button ref="btnPrev" id="prevBtn" class="h-[50px] w-[50px] rounded-[50px] bg-white" type="button">
         <img :src="images.arrowLeft" alt="活動照片海報向左移動按鈕">
       </button>

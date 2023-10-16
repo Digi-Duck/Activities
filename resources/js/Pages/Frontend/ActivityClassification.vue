@@ -49,7 +49,7 @@ export default {
 </script>
 
 <template>
-  <section class="flex flex-col px-[250px] pt-[75px]">
+  <section class="flex flex-col px-[50px] lg:px-[250px] pt-[75px]">
     <!-- 功能按鈕 -->
     <div class="w-full pb-3 flex flex-col">
       <div class="pb-[10px] bg-[#FAFAFA] border-b-[1px] border-b-black text-5xl text-black font-bold">{{ title }}</div>
@@ -69,12 +69,12 @@ export default {
     <!-- 主要卡片區 -->
     <div v-for="(item, index) in activityClassification" :key="index" class="pt-6 pb-6 border-b-[1px] border-b-black flex flex-col items-center">
       <div class="w-full max-w-[1400px] h-[345px] flex flex-row justify-center">
-        <img :src="item.cover_photo ?? ''" alt="活動封面圖" class="inline-block flex-[0.7] max-w-[800px] object-cover bg-slate-500">
-        <div class="flex-[0.33] h-[345px] bg-[#974a4a] p-16 flex flex-col justify-evenly gap-2">
-          <div class="w-full text-white text-[36px]">{{ item.activity_name }}</div>
-          <b class="w-full text-black text-[18px] flex items-center">報名截止時間 : {{ item.activity_end_registration_time }}</b>
-          <div class="w-full text-white text-[18px]">{{ item.activity_info }}</div>
-          <PrimaryButton class="w-[25%] flex justify-center">
+        <img :src="item.cover_photo ?? ''" alt="活動封面圖" class="inline-block w-[70%] md:w-[50%] 2xl:w-[65%] max-w-[800px] object-cover bg-slate-500">
+        <div class="w-[50%] 2xl:w-[35%] h-[345px] bg-[#974a4a] p-8 lg:p-16 flex flex-col justify-evenly gap-2">
+          <div class="w-full text-white text-[16px] md:text-[24px] xl:text-[36px]">{{ item.activity_name }}</div>
+          <b class="w-full text-black text-[12px] hidden sm:flex xl:text-[18px] items-center">報名截止時間 : {{ item.activity_end_registration_time }}</b>
+          <div class="w-full text-white text-[12px] hidden lg:flex xl:text-[18px]">{{ item.activity_info }}</div>
+          <PrimaryButton class="flex justify-center">
             <Link :href="route('studentActivityDetails', { id: item.id })">
               查看詳情
             </Link>

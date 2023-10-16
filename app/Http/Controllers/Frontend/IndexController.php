@@ -198,7 +198,6 @@ class IndexController extends Controller
      */
     public function activityClassification(Request $request)
     {
-        // dd($request->all());
         $keyword = $request->keyword ?? '';
         $type = $request->type ?? '';
         $activity = ActivityDetail::where(function ($query) use ($keyword) {

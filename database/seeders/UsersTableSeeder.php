@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+        $randomDate = Carbon::now()->subDays(rand(1, 120))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
         User::create([
             'name' => '管理',
             'email' => 'admin@gmail.com',
@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
             'status' => 1,
             'created_at' => $randomDate,
         ]);
-        $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+        $randomDate = Carbon::now()->subDays(rand(1, 120))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
         User::create([
             'name' => '大講師',
             'email' => 'k5020420@gmail.com',
@@ -37,7 +37,7 @@ class UsersTableSeeder extends Seeder
             'status' => 1,
             'created_at' => $randomDate,
         ]);
-        $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+        $randomDate = Carbon::now()->subDays(rand(1, 120))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
         User::create([
             'name' => '小學員',
             'email' => 'k5020420+123@gmail.com',
@@ -47,7 +47,7 @@ class UsersTableSeeder extends Seeder
             'created_at' => $randomDate,
         ]);
         for ($i = 4; $i <= 200; $i++) {
-            $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+            $randomDate = Carbon::now()->subDays(rand(1, 120))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
             User::create([
                 'name' => 'User ' . $i,
                 'email' => 'user' . $i . '@example.com',
@@ -58,7 +58,7 @@ class UsersTableSeeder extends Seeder
             ]);
         }
         for ($i = 201; $i <= 300; $i++) {
-            $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+            $randomDate = Carbon::now()->subDays(rand(1, 120))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
             User::create([
                 'name' => 'User ' . $i,
                 'email' => 'user' . $i . '@example.com',
@@ -68,13 +68,13 @@ class UsersTableSeeder extends Seeder
                 'created_at' => $randomDate,
             ]);
         }
-        $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+        $randomDate = Carbon::now()->subDays(rand(1, 120))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
         UserRoleAdmin::create([
             'id' => 1,
             'user_id' => 1,
             'created_at' => $randomDate,
         ]);
-        $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+        $randomDate = Carbon::now()->subDays(rand(1, 120))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
         UserRolePresenter::create([
             'id' => 1,
             'user_id' => 2,
@@ -82,7 +82,7 @@ class UsersTableSeeder extends Seeder
             'phone_number' => '0987654321',
             'created_at' => $randomDate,
         ]);
-        $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+        $randomDate = Carbon::now()->subDays(rand(1, 120))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
         UserRoleStudent::create([
             'id' => 1,
             'user_id' => 3,
@@ -91,7 +91,7 @@ class UsersTableSeeder extends Seeder
             'created_at' => $randomDate,
         ]);
         for ($i = 2; $i <= 198; $i++) {
-            $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+            $randomDate = Carbon::now()->subDays(rand(1, 120))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
             UserRoleStudent::create([
                 'id' => $i,
                 'user_id' => $i+2,
@@ -101,7 +101,7 @@ class UsersTableSeeder extends Seeder
             ]);
         }
         for ($i = 199; $i <= 298; $i++) {
-            $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+            $randomDate = Carbon::now()->subDays(rand(1, 120))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
             UserRolePresenter::create([
                 'id' => $i,
                 'user_id' => $i+2,
@@ -111,7 +111,7 @@ class UsersTableSeeder extends Seeder
             ]);
         }
         for ($i=1; $i <= 100000; $i++) { 
-            $randomDate = Carbon::now()->subDays(rand(1, 60))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
+            $randomDate = Carbon::now()->subDays(rand(1, 120))->subHours(rand(1, 24))->subMinutes(rand(1, 60));
             Statistic::create([
                 'id' => $i,
                 'website_view' => 1,

@@ -107,7 +107,7 @@ export default {
     <!-- 建立活動資訊填寫 -->
     <form @submit.prevent="submitData()" action="">
       <div class="relative mt-5 w-full h-[901px] bg-[#dac3c3] flex flex-col">
-        <div class="relative w-full z-10">
+        <div class="relative z-10 w-full flex">
           <div class="absolute top-[80px] w-[175px] h-[41px] bg-white text-[20px] font-semibold flex justify-center items-center">
             <select v-model="formData.activityType" name="activity_type" class="ps-[30px] h-full text-[20px] border-none flex justify-center" required placeholder="活動分類">
               <option disabled selected value>- 請選擇活動類型 -</option>
@@ -122,12 +122,12 @@ export default {
               <option value="9">其他</option>
             </select>
           </div>
-          <div class="absolute left-[10%] top-[131px] w-[288px] h-[219px] flex flex-col justify-between items-start gap-3">
+          <div class="absolute left-[10%] top-[131px] w-[full] h-[219px] flex flex-col justify-between items-start gap-3">
             <div class="text-[72px] font-bold">
               <input v-model="formData.activityName" type="text" name="activity_name" class="border-none text-[72px] font-bold" required placeholder="請輸入活動名稱">
             </div>
-            <div class="w-[100%] bg-[#ffffff9b] text-[24px]">
-              <input v-model="formData.activityInfo" type="text" name="activity_info" class="border-none text-[24px] font-semibold" required placeholder="請輸入活動Slogan">
+            <div class="w-full bg-[#ffffff9b] text-[24px]">
+              <input v-model="formData.activityInfo" type="text" name="activity_info" class="w-full border-none text-[24px] font-semibold" required placeholder="請輸入活動Slogan">
             </div>
             <label class="border border-dashed w-[136px] h-[56px] aspect-[4/3] bg-[#FFF] rounded-[8px] flex justify-center items-center text-[16px] text-[#072F54] font-semibold cursor-pointer">
               新增圖片
@@ -199,9 +199,7 @@ export default {
           </div>
         </Swiper>
       </div>
-      <!-- 編輯工具列；所見即所得區 -->
       <Editor class="mt-[200px] lg:mt-0 w-full h-[500px]" @update-content="information"></Editor>
-      <!-- <editor v-model="editorValue" :init="editorInit" class="min-h-[500px]" @update-content="test" /> -->
       <div class="flex w-full justify-center gap-[45px] py-5">
         <Link :href="route('index')" class="px-[30px] py-[15px] bg-[#690926] rounded-[5px] flex justify-center items-center text-white">取消開課</Link>
         <button type="submit" class="px-[30px] py-[15px] bg-[#095269] rounded-[5px] flex justify-center items-center text-white">確認開課</button>

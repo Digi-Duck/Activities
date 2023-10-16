@@ -85,10 +85,10 @@ export default {
 
       <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" class="absolute w-full h-[602px] text-start" :btn-prev="prevButton" :btn-next="nextButton">
         <img :src="slide.cover_photo" class="inline-block w-[90%] h-full object-contain" alt="活動背景圖">
-        <h2 class="absolute top-0 md:top-[100px] w-full pe-[150px] bg-[#ffffff95] text-[64px] text-end text-white">
+        <h2 class="absolute top-0 md:top-[100px] w-full pe-[150px] bg-[#3f3d3d95] text-[64px] text-end text-white">
           {{ slide.activity_name }}
         </h2>
-        <div class="absolute top-[100px] md:top-[200px] w-full h-[59px] pe-[150px] bg-[#ffffff3a] text-[48px] text-end text-white">
+        <div class="absolute top-[100px] md:top-[200px] w-full h-[59px] pe-[150px] hidden 2xl:block bg-[#ffffff3a] text-[48px] text-end text-white">
           <h3 class="z-10">
             {{ slide.activity_info }}
           </h3>
@@ -137,7 +137,7 @@ export default {
       <figure class="relative w-full max-w-[1400px] h-[450px] flex">
         <img :src="hottestActivityData.cover_photo" class="absolute xl-hidden w-[770px] h-full rounded-[64px] aspect-square opacity-[20%] bg-green-600" alt="半透明活動主照片">
         <Link :href="route('studentActivityDetails', { id: hottestActivityData.id })">
-          <img :src="hottestActivityData.cover_photo" class="absolute ms-0 lg:ms-[6.5%] xl:ms-[17.5%] w-[900px] h-full z-10 rounded-[64px] aspect-square" alt="活動主照片">
+          <img :src="hottestActivityData.cover_photo" class="absolute ms-0 lg:ms-[6.5%] xl:ms-[17.5%] w-[900px] h-full z-10 rounded-[64px] object-cover" alt="活動主照片">
         </Link>
         <img :src="hottestActivityData.cover_photo" class="absolute end-0 w-[770px] h-full rounded-[64px] aspect-square opacity-[20%] bg-blue-600" alt="半透明活動主照片">
       </figure>

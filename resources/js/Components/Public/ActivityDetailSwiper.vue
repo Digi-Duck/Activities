@@ -64,8 +64,8 @@ export default {
             <div id="triangle-bottom"></div>
           </div>
         </div>
-        <div class="absolute left-[50px] lg:left-[265px] top-[90px] w-[full] h-[219px] flex flex-col justify-center items-start">
-          <div class="text-[72px] font-bold">
+        <div class="absolute left-[20px] lg:left-[150px] top-[90px] lg:top-[120px] w-[full] h-[219px] bg-[#d1d0d050] flex flex-col justify-center items-start">
+          <div class="text-[50px] lg:text-[72px] font-bold">
             <slot name="activity_name">活動名稱</slot>
           </div>
           <div class="w-full text-[36px]">

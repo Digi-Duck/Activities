@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\PresenterController;
 use App\Http\Controllers\Frontend\StudentController;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/activityClassification', [IndexController::class, 'activityClassification'])->name('activityClassification');
@@ -38,4 +42,42 @@ Route::middleware(['auth', 'role.weight:3', 'verified'])->prefix('/student')->gr
     Route::post('/createFavorite', [StudentController::class, 'createFavorite'])->name('createFavorite');
     Route::get('/fillUserData', [StudentController::class, 'fillUserData'])->name('fillUserData');
     Route::delete('/cancelFavorite', [StudentController::class, 'cancelFavorite'])->name('cancelFavorite');
+});
+
+Route::get('/facebook/redirect', function () {
+    return Socialite::driver('facebook')->redirect();
+})->name('facebookLogin');
+
+Route::post('/facebook/callback', function () {
+    $facebookUser = Socialite::driver('facebook')->user();
+    $user = User::updateOrCreate([
+        'facebook_id' => $facebookUser->id,
+    ], [
+        'name' => $facebookUser->name,
+        'email' => $facebookUser->email,
+        'facebook_token' => $facebookUser->token,
+        'facebook_refresh_token' => $facebookUser->refreshToken,
+    ]);
+    Auth::login($user);
+    return redirect('/');
+});
+
+Route::get('/google/redirect', function () {
+    return Socialite::driver('google')->redirect();
+})->name('googleLogin');
+
+Route::get('/auth/google/callback', function () {
+
+    $googleUser = Socialite::driver('google')->stateless()->user();
+
+    $user = User::updateOrCreate([
+        'google_id' => $googleUser->id,
+    ], [
+        'name' => $googleUser->name,
+        'email' => $googleUser->email,
+        'google_token' => $googleUser->token,
+        'google_refresh_token' => $googleUser->refreshToken,
+    ]);
+    Auth::login($user);
+    return redirect('/');
 });

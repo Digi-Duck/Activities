@@ -9,22 +9,17 @@ export default {
   },
   data() {
     return {
-      title: 'Hello World !',
     };
   },
-  created() {
+  methods: {
   },
 };
 </script>
 
 <template>
-  <section id="test">
-    <h1 class="title">{{ title }}</h1>
-    <div class="flex justify-center gap-5 mb-5">
-      <Link :href="route('register')" class="btn-base">註冊</Link>
-      <Link :href="route('dashboard')" class="btn-base">登入</Link>
-    </div>
-  </section>
+  <div>
+    <a :href="route('googleLogin')">Login with Google</a>
+  </div>
 </template>
 
 <style lang="scss" scoped>
