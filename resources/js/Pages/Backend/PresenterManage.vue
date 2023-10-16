@@ -76,7 +76,7 @@ export default {
       <!-- 表格內容 -->
       <div class="w-full h-[385px] flex flex-col">
         <!-- 表頭 -->
-        <div class="w-full h-[55px] bg-[#5D8BA3] flex text-[24px]">
+        <div class="w-full h-[55px] bg-[#5D8BA3] flex text-[20px]">
           <div class="flex-[0.2] ps-5 border font-semibold flex items-center">講師名稱</div>
           <div class="flex-[0.25] ps-5 border font-semibold flex items-center">電子信箱</div>
           <div class="flex-[0.25] ps-5 border font-semibold flex items-center">加入時間</div>
@@ -84,7 +84,7 @@ export default {
           <div class="ps-5 flex-[0.2] border font-semibold flex items-center">操作</div>
         </div>
         <!-- 內容 -->
-        <div v-for="(item, index) in presenterData?.data ?? []" :key="index" :class="{ 'bg-red-200': item.status === '停權' }" class="w-[100%] h-[55px] bg-[#ABC2CE] flex text-[20px]">
+        <div v-for="(item, index) in presenterData?.data ?? []" :key="index" :class="{ 'bg-red-200': item.status === '停權' }" class="w-[100%] h-[55px] bg-[#ABC2CE] flex text-[16px]">
           <div class="flex-[0.2] ps-5 border font-semibold flex items-center">{{ item.name }}</div>
           <div class="flex-[0.25] ps-5 border font-semibold flex items-center">{{ item.email }}</div>
           <div class="flex-[0.25] ps-5 border font-semibold flex items-center">{{ item.created_at }}</div>

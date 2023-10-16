@@ -64,11 +64,11 @@ export default {
             <div id="triangle-bottom"></div>
           </div>
         </div>
-        <div class="absolute left-[20px] lg:left-[150px] top-[90px] lg:top-[120px] w-[full] h-[219px] bg-[#d1d0d050] flex flex-col justify-center items-start">
-          <div class="text-[50px] lg:text-[72px] font-bold">
+        <div class="absolute left-[20px] lg:left-[100px] top-[90px] lg:top-[120px] w-[full] h-[219px] bg-[#d1d0d050] flex flex-col justify-center items-start">
+          <div class="text-[28px] sm:text-[50px] lg:text-[72px] font-bold">
             <slot name="activity_name">活動名稱</slot>
           </div>
-          <div class="w-full text-[36px]">
+          <div class="w-full text-[20px] sm:text-[36px]">
             <slot name="activity_info">活動Slogan</slot>
           </div>
         </div>

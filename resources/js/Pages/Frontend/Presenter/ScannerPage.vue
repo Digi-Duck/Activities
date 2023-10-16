@@ -170,7 +170,7 @@ export default {
 
 <template>
   <section id="presenter-scanner">
-    <div class="absolute top-[22%] md:top-[25%] right-[5.5%] z-50">
+    <div class="absolute top-[27.5%] md:top-[27.5%] right-[5.5%] z-50">
       <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">倒數
         <div class="ps-5 flex flex-row">
           <span>{{ rtData.timeDifferenceInDays }}天！</span>

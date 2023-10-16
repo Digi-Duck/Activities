@@ -76,7 +76,7 @@ export default {
       <!-- 表格內容 -->
       <div class="w-full h-[385px] flex flex-col">
         <!-- 表頭 -->
-        <div class="w-full h-[55px] bg-[#5D8BA3] flex text-[24px]">
+        <div class="w-full h-[55px] bg-[#5D8BA3] flex text-[20px]">
           <div class="flex-[0.1068] ps-5 border font-semibold flex items-center">活動講師</div>
           <div class="flex-[0.2346] ps-5 border font-semibold flex items-center">活動名稱</div>
           <div class="flex-[0.1864] ps-5 border font-semibold flex items-center">活動時間</div>
@@ -86,7 +86,7 @@ export default {
           <div class="ps-5 flex-[0.0911] border font-semibold flex items-center">操作</div>
         </div>
         <!-- 內容 -->
-        <div v-for="(item, index) in activityData?.data ?? []" :key="index" :class="{ 'bg-red-200': item.activity_status === '停權' }" class="w-full h-[55px] bg-[#ABC2CE] flex text-[20px]">
+        <div v-for="(item, index) in activityData?.data ?? []" :key="index" :class="{ 'bg-red-200': item.activity_status === '停權' }" class="w-full h-[55px] bg-[#ABC2CE] flex text-[16px]">
           <div class="flex-[0.1068] ps-5 border font-semibold flex items-center">{{ item.activity_presenter }}</div>
           <div class="flex-[0.2346] ps-5 border font-semibold flex items-center">{{ item.activity_name }}</div>
           <div class="flex-[0.1864] ps-5 border font-semibold flex flex-col items-start justify-center">

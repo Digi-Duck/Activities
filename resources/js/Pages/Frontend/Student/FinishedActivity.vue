@@ -54,8 +54,8 @@ export default {
 </script>
 
 <template>
-  <img v-if="qrCodeVisible" :src="rtData.qrcode.qrcode_path" class="absolute right-[22.5%] top-[37%] md:top-[18.5%] z-[100] h-[250px] w-[250px]" alt="QRcode圖片">
-  <button @click="toggleQRCodeVisibility" type="button" class="absolute top-[21.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+  <img v-if="qrCodeVisible" :src="rtData.qrcode.qrcode_path" class="absolute right-[22.5%] top-[37%] md:top-[25%] z-[100] h-[250px] w-[250px]" alt="QRcode圖片">
+  <button @click="toggleQRCodeVisibility" type="button" class="absolute top-[27%] left-[35%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
     {{ qrCodeVisible ? '隱藏QRcode' : '顯示QRcode' }}
   </button>
   <section id="presenter-finished-activity" class="relative flex flex-col justify-between items-center gap-5">
@@ -125,7 +125,7 @@ export default {
         </span>
       </template>
     </ActivityDetailSwiper>
-    <div class="mt-[200px] lg:mt-0 w-full h-[811px] p-[100px] bg-[#d7a5a565]">
+    <div class="mt-[200px] lg:mt-0 w-full p-[100px] bg-[#d7a5a565]">
       <div v-html="activityData.activity_information"></div>
     </div>
   </section>

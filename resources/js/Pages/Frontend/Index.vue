@@ -85,7 +85,7 @@ export default {
 
       <Swiper v-slot="{ slide }" :slide-data="activityData ?? []" class="absolute w-full h-[602px] text-start" :btn-prev="prevButton" :btn-next="nextButton">
         <img :src="slide.cover_photo" class="inline-block w-[90%] h-full object-contain" alt="活動背景圖">
-        <h2 class="absolute top-0 md:top-[100px] w-full pe-[150px] bg-[#3f3d3d95] text-[64px] text-end text-white">
+        <h2 class="absolute top-10 sm:top-0 md:top-[100px] w-full pe-[150px] bg-[#3f3d3d95] text-[32px] md:text-[64px] text-end text-white">
           {{ slide.activity_name }}
         </h2>
         <div class="absolute top-[100px] md:top-[200px] w-full h-[59px] pe-[150px] hidden 2xl:block bg-[#ffffff3a] text-[48px] text-end text-white">
