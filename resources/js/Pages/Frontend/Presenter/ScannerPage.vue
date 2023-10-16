@@ -305,7 +305,7 @@ export default {
         <b class="flex-1 md:flex-initial w-[15%] ps-3 border bg-[#a9bcc67e] flex justify-start items-center text-[16px]">
           {{ item.student_phone_number }}
         </b>
-        <div class="flex-1 md:flex-initial w-[30%] xl:w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-between items-center text-[16px]">
+        <div class="flex-[0.8] md:flex-initial w-[30%] xl:w-[20%] ps-3 border bg-[#a9bcc67e] flex justify-between items-center text-[16px]">
           <slot name="student_additional_remark">
             {{ item.student_additional_remark }}
           </slot>

@@ -26,7 +26,7 @@ class PresenterController extends Controller
     public function presenterPersonalPage(Request $request)
     {
         $keyword = $request->keyword ?? '';
-        $activity = ActivityDetail::orderBy('id', 'desc')
+        $activity = ActivityDetail::orderBy('activity_start_time', 'asc')
             ->where('presenter_id', $request->user()->UserRolePresenter->id)
             ->where(function ($query) use ($keyword) {
                 $query->where('activity_name', 'like', "%$keyword%")

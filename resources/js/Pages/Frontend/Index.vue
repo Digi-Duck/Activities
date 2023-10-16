@@ -27,25 +27,18 @@ export default {
     };
   },
   computed: {
-    // 後端回傳資料
     rtData() {
       return this.response?.rt_data ?? {};
     },
-    // 獲取活動資料陣列
     activityData() {
       return this.rtData.activity ?? [];
     },
-    // 獲取活動搜尋欄資料陣列
     activityTableData() {
       return this.rtData.activityTable ?? {};
     },
-
-    // 獲取最夯活動單筆資料
     hottestActivityData() {
       return this.rtData.hottestActivity ?? {};
     },
-
-    // 獲取活動類別資料陣列
     activityTypeData() {
       return this.rtData.activityTypeData ?? [];
     },
@@ -177,7 +170,7 @@ export default {
         <Link :href="route('studentActivityDetails', { id: item.id })" class="flex-1 md:flex-none md:w-[40%] xl:w-[50%] ps-3 border bg-[#5d8aa37d] flex justify-start items-center text-[16px] font-bold underline decoration-1">
           {{ item.activity_name }}
         </Link>
-        <div class="flex-1 md:flex-initial w-[15%] border bg-[#82acc27d] flex justify-center items-center text-[16px] font-semibold">
+        <div class="flex-1 md:flex-initial w-[15%] ps-3 border bg-[#82acc27d] flex justify-start items-center text-[16px] font-semibold">
           <slot name="activity_info_type">
             {{ item.activity_presenter }}
           </slot>

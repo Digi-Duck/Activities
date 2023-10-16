@@ -46,13 +46,13 @@ export default {
         </div>
         <div v-else class="flex gap-3">
           <div class="h-[38px] rounded-[4px] flex justify-center items-center font-semibold">哈囉！{{ $page.props.auth.user.name }}</div>
-          <Link v-if="userRole === 1" :href="route('dashboard')" class="btn">系統後台</Link>
+          <Link v-if="userRole === 1" :href="route('index')" class="btn">首頁</Link>
           <Link v-else :href="route('userInfo')" class="btn">會員中心</Link>
           <button type="button" class="btn" @click.prevent="logout">登出</button>
         </div>
       </nav>
       <nav v-if="userRole === 1" class="pt-6 pe-5 flex justify-end gap-3">
-        <Link :href="route('index')" class="function-btn">首頁</Link>
+        <Link :href="route('dashboard')" class="function-btn">資訊總覽</Link>
         <Link :href="route('studentManage')" class="function-btn">學員管理</Link>
         <Link :href="route('presenterManage')" class="function-btn">講師管理</Link>
         <Link :href="route('activityManage')" class="function-btn">活動管理</Link>

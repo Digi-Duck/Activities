@@ -166,7 +166,7 @@ export default {
               <option value="9">其他</option>
             </select>
           </div>
-          <div class="absolute left-[10%] top-[131px] w-[288px] h-[219px] flex flex-col justify-between items-start gap-3">
+          <div class="absolute left-[10%] top-[131px] h-[219px] flex flex-col justify-between items-start gap-3">
             <div class="text-[72px] font-bold">
               <input v-model="formData.activityName" type="text" name="activity_name" class="border-none text-[72px] font-bold" required placeholder="請輸入活動名稱">
             </div>
