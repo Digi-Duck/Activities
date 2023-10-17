@@ -185,7 +185,7 @@ export default {
   <button v-else @click="cancelFavorite()" type="button" class="absolute top-[22.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#d4a8a8] text-[20px] font-semibold flex justify-center items-center">
     取消收藏
   </button>
-  <PrimaryButton class="absolute right-[12.5%] top-[900px] hidden lg:block z-50 px-[20px] py-[10px]"><Link href="#studentData">立即加入</Link></PrimaryButton>
+  <PrimaryButton class="absolute right-[12.5%] top-[950px] hidden lg:block z-50 px-[20px] py-[10px]"><Link href="#studentData">立即加入</Link></PrimaryButton>
   <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
     <ActivityDetailSwiper :slide-data="[activityData]" class="relative">
       <template #activity_type>

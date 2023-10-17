@@ -250,7 +250,7 @@ export default {
       </template>
     </ActivityDetailSwiper>
     <!-- 掃描區域 -->
-    <div class="relative mt-[150px] md:mt-[300px] lg:mt-0 w-full p-5 bg-[#194e694e] flex flex-col items-center gap-5">
+    <div class="relative mt-[230px] md:mt-[300px] lg:mt-0 w-full p-5 bg-[#194e694e] flex flex-col items-center gap-5">
       <!-- 顯示報到狀況人數 -->
       <div class="flex gap-[100px] text-[35px]">
         <div class="flex items-center gap-3">

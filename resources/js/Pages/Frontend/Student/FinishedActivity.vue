@@ -54,8 +54,8 @@ export default {
 </script>
 
 <template>
-  <img v-if="qrCodeVisible" :src="rtData.qrcode.qrcode_path" class="absolute right-[300px] top-[30%] md:top-[25%] z-[100] h-[250px] w-[250px]" alt="QRcode圖片">
-  <button @click="toggleQRCodeVisibility" type="button" class="absolute top-[175px] md:top-[215px] left-[40px] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+  <img v-if="qrCodeVisible" :src="rtData.qrcode.qrcode_path" class="absolute left-[50px] md:right-[300px] top-[30%] md:top-[25%] z-[100] h-[250px] w-[250px]" alt="QRcode圖片">
+  <button @click="toggleQRCodeVisibility" type="button" class="absolute top-[175px] md:top-[175px] left-[40px] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
     {{ qrCodeVisible ? '隱藏QRcode' : '顯示QRcode' }}
   </button>
   <section id="presenter-finished-activity" class="relative flex flex-col justify-between items-center gap-5">

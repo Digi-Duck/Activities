@@ -45,7 +45,6 @@ export default {
     };
   },
   mounted() {
-    // 通过类名或其他方式获取按钮元素并赋值给 prevButton 和 nextButton
     this.prevButton = this.$refs.btnPrev;
     this.nextButton = this.$refs.btnNext;
   },
@@ -136,7 +135,7 @@ export default {
           </div>
           <div class="w-full h-[56px] flex items-center rounded-[14px] px-2">
             <!-- 活動須知 -->
-            <div class="flex w-[50%]">
+            <div class="flex w-full">
               <img :src="images.exclamationTriangle" alt="參加須知" class="w-[40px] h-[40px]">
               <div type="text" name="" placeholder="請輸入參加須知" class="w-full bg-transparent">
                 <slot name="activity_instruction">參加須知</slot>
