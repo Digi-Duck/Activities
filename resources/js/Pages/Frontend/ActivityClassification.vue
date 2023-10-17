@@ -53,12 +53,12 @@ export default {
     <!-- 功能按鈕 -->
     <div class="w-full pb-3 flex flex-col">
       <div class="pb-[10px] bg-[#FAFAFA] border-b-[1px] border-b-black text-5xl text-black font-bold">{{ title }}</div>
-      <div class="w-full pt-3 px-3 flex justify-between">
-        <button type="button" class="px-[15px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold" @click="searchData('')">全部</button>
-        <div v-for="(item, index) in rtData.firstHotActivity" :key="index" class="flex gap-3">
-          <button type="button" class="p-[5px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold" @click="searchType(item.activity_type)">{{ item.activity_type_name }}</button>
-        </div>
-        <div class="border bg-white flex items-center">
+      <div class="w-full pt-3 px-3 flex flex-col sm:flex-row justify-between gap-1">
+        <button type="button" class="p-[5px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold" @click="searchData('')">全部</button>
+        <!-- <div v-for="(item, index) in rtData.firstHotActivity" :key="index" class="flex gap-3"> -->
+        <button v-for="(item, index) in rtData.firstHotActivity" :key="index" type="button" class="p-[5px] rounded-[100px] bg-[#d48f8f45] text-[28px] font-semibold" @click="searchType(item.activity_type)">{{ item.activity_type_name }}</button>
+        <!-- </div> -->
+        <div class="h-[15%] border bg-white flex items-center">
           <input v-model="keyword" type="search" @search="searchData" class="border-none bg-transparent" placeholder="Search">
           <button type="button" @click="searchData" class="pe-[10px]">
             <img :src="images.magnifer" class="ms-[15px] w-[20px] h-[20px]" alt="我是放大鏡">

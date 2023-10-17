@@ -165,28 +165,28 @@ export default {
 </script>
 
 <template>
-  <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
-    <div class="absolute top-[27.5%] md:top-[27.5%] right-[5.5%] z-50">
-      <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">倒數
-        <div class="ps-5 flex flex-row">
-          <span>{{ rtData.timeDifferenceInDays }}天！</span>
-        </div>
-      </div>
-      <div v-else-if="rtData.timeDifferenceInDays === 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">就是
-        <div class="ps-5 flex flex-row">
-          <span>今天！</span>
-        </div>
-      </div>
-      <div v-else>
+  <div class="absolute top-[27.5%] md:top-[27.5%] right-[5.5%] z-50">
+    <div v-if="rtData.timeDifferenceInDays > 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">倒數
+      <div class="ps-5 flex flex-row">
+        <span>{{ rtData.timeDifferenceInDays }}天！</span>
       </div>
     </div>
-    <button v-if="!rtData.favoriteCheck" @click="favorite()" type="button" class="absolute top-[27%] left-[25px] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
-      點我收藏
-    </button>
-    <button v-else @click="cancelFavorite()" type="button" class="absolute top-[27%] left-[25px] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#d4a8a8] text-[20px] font-semibold flex justify-center items-center">
-      取消收藏
-    </button>
-    <PrimaryButton class="absolute right-[12.5%] -bottom-[10%] hidden lg:block z-50 px-[20px] py-[10px]"><Link href="#studentData">立即加入</Link></PrimaryButton>
+    <div v-else-if="rtData.timeDifferenceInDays === 0" class="z-50 w-[100px] md:w-[200px] p-3 bg-[#FFDD55] rounded-[5px] flex flex-col md:text-[48px] font-extrabold">就是
+      <div class="ps-5 flex flex-row">
+        <span>今天！</span>
+      </div>
+    </div>
+    <div v-else>
+    </div>
+  </div>
+  <button v-if="!rtData.favoriteCheck" @click="favorite()" type="button" class="absolute top-[22.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#fff] text-[20px] font-semibold flex justify-center items-center">
+    點我收藏
+  </button>
+  <button v-else @click="cancelFavorite()" type="button" class="absolute top-[22.5%] right-[5.5%] z-50 w-[140px] h-[40px] rounded-[15px] bg-[#d4a8a8] text-[20px] font-semibold flex justify-center items-center">
+    取消收藏
+  </button>
+  <PrimaryButton class="absolute right-[12.5%] top-[900px] hidden lg:block z-50 px-[20px] py-[10px]"><Link href="#studentData">立即加入</Link></PrimaryButton>
+  <section id="presenter-finished-activity" class="flex flex-col justify-between items-center gap-5">
     <ActivityDetailSwiper :slide-data="[activityData]" class="relative">
       <template #activity_type>
         <span>{{ getActivityType(activityData.activity_type) }}</span>

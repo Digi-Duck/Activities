@@ -145,7 +145,7 @@ export default {
           </div>
 
           <div class="flex flex-col items-center justify-end mt-4 gap-[25px]">
-            <button type="submit" :href="route('userInfoUpdate')" class="w-full h-[50px] bg-[#1F2937] text-[37px] rounded-[10px] text-white flex justify-center items-center cursor-pointer">
+            <button type="submit" :href="route('userInfoUpdate')" class="w-full h-[50px] bg-[#1F2937] text-[24px] rounded-[10px] text-white flex justify-center items-center cursor-pointer">
               確認修改
             </button>
           </div>

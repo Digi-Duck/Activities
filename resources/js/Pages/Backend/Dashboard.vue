@@ -139,13 +139,13 @@ export default {
             <!-- 資料icon -->
             <img :src="images.surfNumber" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
-          <div v-if="websiteViewCount > websiteViewCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
+          <div v-if="websiteViewCount > websiteViewCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#ED9E9E] text-[16px] flex justify-between">
             <span>
               上升{{ ((websiteViewCount - websiteViewCount14DaysAgo) / websiteViewCount14DaysAgo * 100).toFixed(2) }}%
             </span>
             <img :src="images.dataUp" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
-          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[green] text-[16px] flex justify-between">
+          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[#B4E9B5] text-[16px] flex justify-between">
             下降{{ ((websiteViewCount - websiteViewCount14DaysAgo) / websiteViewCount14DaysAgo * 100).toFixed(2) }}%
             <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
@@ -161,13 +161,13 @@ export default {
             <!-- 資料icon -->
             <img :src="images.book" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
-          <div v-if="activityCount > activityCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
+          <div v-if="activityCount > activityCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#ED9E9E] text-[16px] flex justify-between">
             <span>
               上升{{ ((activityCount - activityCount14DaysAgo) / activityCount14DaysAgo * 100).toFixed(2) }}%
             </span>
             <img :src="images.dataUp" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
-          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[green] text-[16px] flex justify-between">
+          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[#B4E9B5] text-[16px] flex justify-between">
             下降{{ ((activityCount - activityCount14DaysAgo) / activityCount14DaysAgo * 100).toFixed(2) }}%
             <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
@@ -183,13 +183,13 @@ export default {
             <!-- 資料icon -->
             <img :src="images.student" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
-          <div v-if="studentCount > studentCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
+          <div v-if="studentCount > studentCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#ED9E9E] text-[16px] flex justify-between">
             <span>
               上升{{ ((studentCount - studentCount14DaysAgo) / studentCount14DaysAgo * 100).toFixed(2) }}%
             </span>
             <img :src="images.dataUp" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
-          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[green] text-[16px] flex justify-between">
+          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[#B4E9B5] text-[16px] flex justify-between">
             下降{{ ((studentCount - studentCount14DaysAgo) / studentCount14DaysAgo * 100).toFixed(2) }}%
             <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
@@ -205,13 +205,13 @@ export default {
             <!-- 資料icon -->
             <img :src="images.presenter" class="absolute right-[50px] top-[25px] w-[48.15px] h-[56.65px]" alt="數據圖標">
           </div>
-          <div v-if="presenterCount > presenterCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#F08B8B] text-[16px] flex justify-between">
+          <div v-if="presenterCount > presenterCount14DaysAgo" class="h-[112px] p-5 rounded-b-[10px] bg-[#ED9E9E] text-[16px] flex justify-between">
             <span>
               上升{{ ((presenterCount - presenterCount14DaysAgo) / presenterCount14DaysAgo * 100).toFixed(2) }}%
             </span>
             <img :src="images.dataUp" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
-          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[green] text-[16px] flex justify-between">
+          <div v-else class="h-[112px] p-5 rounded-b-[10px] bg-[#B4E9B5] text-[16px] flex justify-between">
             下降{{ ((presenterCount - presenterCount14DaysAgo) / presenterCount14DaysAgo * 100).toFixed(2) }}%
             <img :src="images.dataDown" class="w-[33px] h-[33px]" alt="數據狀態圖標">
           </div>
@@ -243,7 +243,7 @@ export default {
           <!-- 最新消息表頭 -->
           <div class="w-full h-[106px] ps-5 rounded-t-[10px] bg-[#397AC4] text-[48px] flex items-center">最新消息</div>
           <!-- 最新消息內容 -->
-          <div v-for="(item, index) in newBehaviors" :key="index" :class="{ 'bg-[#5e2951a0]': item.user_type === '講師', 'bg-[#4d7f95b6]': item.user_type === '學員' }" class="w-full h-[112px] p-5 text-[16px] flex flex-row justify-between items-center">
+          <div v-for="(item, index) in newBehaviors" :key="index" :class="{ 'bg-[#F4797C]': item.user_type === '講師', 'bg-[#50788C]': item.user_type === '學員' }" class="w-full h-[112px] p-5 text-[16px] flex flex-row justify-between items-center">
             <!-- 會員頭像 -->
             <img v-if="item.student_image" :src="item.student_image" class="inline-block h-[66px] w-[66px] rounded-full ring-2 ring-white" alt="學員照片">
             <img v-else-if="item.presenter_image" :src="item.presenter_image" class="inline-block h-[66px] w-[66px] rounded-full ring-2 ring-white" alt="講師照片">
@@ -259,7 +259,7 @@ export default {
         </div>
       </div>
       <!-- 事件紀錄表 -->
-      <div class="w-full h-full p-3 bg-[#234E66] rounded-[10px] flex flex-col items-center gap-3">
+      <div class="w-full h-full p-3 bg-[#4B7992] rounded-[10px] flex flex-col items-center gap-3">
         <!-- 搜尋欄 -->
         <div class="w-full h-[59px] ps-3 bg-white flex justify-center items-center gap-3 text-[24px] lg:text-[36px] font-semibold">
           <span class="hidden md:inline">
@@ -276,14 +276,14 @@ export default {
         <!-- 搜尋內容 -->
         <div class="w-full flex flex-col text-[36px] text-white">
           <!-- 表頭 -->
-          <div class="flex text-[24px] bg-[#285F87]">
+          <div class="flex text-[24px] bg-[#5D8AA2]">
             <div class="w-[30%] flex-initial border flex justify-center items-center">日期</div>
             <div class="w-[20%] flex-initial border flex justify-center items-center">使用者名稱</div>
             <div class="w-[10%] flex-initial border flex justify-center items-center">類別</div>
             <div class="w-[40%] flex-initial border flex justify-center items-center">行為</div>
           </div>
           <!-- 詳細資料 -->
-          <div v-for="(item, index) in behaviorRecord?.data ?? []" :class="{ 'bg-[#5e2951a0]': item.user_type === '講師', 'bg-[#4d7f95b6]': item.user_type === '學員' }" :key="index" class="bg-[#A9BCC6] text-[20px] flex">
+          <div v-for="(item, index) in behaviorRecord?.data ?? []" :class="{ 'bg-[#FEA3A4]': item.user_type === '講師', 'bg-[#ABC0CF]': item.user_type === '學員' }" :key="index" class="bg-[#A9BCC6] text-[20px] flex">
             <div class="w-[30%] flex-initial border flex justify-center items-center">{{ item.created_at }}</div>
             <div class="w-[20%] flex-initial border flex justify-center items-center">{{ item.user_name }}</div>
             <div class="w-[10%] flex-initial border flex justify-center items-center">{{ item.user_type }}</div>

@@ -122,7 +122,7 @@ export default {
           </slot>
         </div>
       </div>
-      <div class="w-[313px] h-[56px] bg-white rounded-[30px] border shadow-xl flex justify-center">
+      <div class="mt-[15px] w-[313px] h-[56px] bg-white rounded-[30px] border shadow-xl flex justify-center">
         <Pagination :pagination-data="allActivityData?.data" class="pt-3" />
       </div>
     </div>
